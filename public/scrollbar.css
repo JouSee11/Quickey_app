@@ -1,0 +1,18 @@
+/* WebKit (Chrome, Safari, Edge) */
+textarea::-webkit-scrollbar {
+    width: 10px; /* Scrollbar width */
+  }
+  
+  textarea::-webkit-scrollbar-track {
+    background: #f1f1f100; /* Track background */
+    border-radius: 10px;
+  }
+  
+  textarea::-webkit-scrollbar-thumb {
+    background: #434343; /* Scrollbar color */
+    border-radius: 10px;
+  }
+  
+  textarea::-webkit-scrollbar-thumb:hover {
+    background: #919191; /* Scrollbar color on hover */
+  }

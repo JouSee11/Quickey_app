@@ -6,6 +6,7 @@ const defaultMsg = "Press to bind"
 let capturing = false
 let capturingButton = null
 let keyBindingValues = new Map()
+let keyBindingDisplay = new Map()
 
 // get all buttons and assign listener to them
 const buttonsList = document.querySelectorAll(".button-bind")
@@ -13,10 +14,13 @@ buttonsList.forEach((button) => {
     const buttonNumber = Number(button.dataset.keyNum)
     //add all buttons to the bindings map
     keyBindingValues.set(buttonNumber, new Set([]))
+    keyBindingDisplay.set(buttonNumber, new Set([]))
 
     //assign even listener on click
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (e) => {
         buttonClickListener(button, buttonNumber)
+        e.stopPropagation()
+
     })
 })
 
@@ -32,6 +36,7 @@ const buttonClickListener = (buttonElement, buttonNumber) => {
 
     //check if some binding is already set and delete it
     keyBindingValues.set(capturingButton, new Set([]))
+    keyBindingDisplay.set(capturingButton, new Set([]))
     
     buttonElement.textContent = capturingMsg
 }
@@ -60,9 +65,12 @@ document.addEventListener("keydown", (event) => {
 
     //get the current values
     let currentSet = keyBindingValues.get(capturingButton)
+    let currentSetDisplay = keyBindingDisplay.get(capturingButton)
     currentSet.add(event.code)
+    currentSetDisplay.add(event.key)
     
     keyBindingValues.set(capturingButton, currentSet)
+    keyBindingDisplay.set(capturingButton, currentSetDisplay)
 
 })
 
@@ -71,7 +79,8 @@ document.addEventListener("keyup", (event) => {
     // console.log(pressedKeys1)
     if (!capturing) return
     
-    const currentSet = keyBindingValues.get(capturingButton)
+    //display the key combination the the button
+    const currentSet = keyBindingDisplay.get(capturingButton)
     const keyCombination = Array.from(currentSet).join(" + ")
     getButtonByNum(capturingButton).textContent = keyCombination 
     

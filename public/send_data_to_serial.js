@@ -1,51 +1,12 @@
 // This code runs in the browser and interacts with the Pico via Web Serial API
-
 //html elements
 const buttonSend = document.getElementById("submit-button")
-const statusMsg = document.getElementById("status-message")
-const logArea = document.getElementById("log-area")
-
-//connection area elements
-const conIco = document.getElementById("connection-icon")
-const conMsg = document.getElementById("connection-msg")
 const buttonConnect = document.getElementById("connect-button")
 
 let picoPort;
 let writer;
+let reader;
 let connected = false
-
-
-//ui functions
-function addLogs(textLog) {
-    logArea.value += textLog + "\n"
-}
-
-function showSuccessMsg() {
-    statusMsg.className = "successfull"
-    statusMsg.textContent = "Data send successfully"
-    setTimeout(() => statusMsg.textContent = "", 3000)
-}
-
-function changeConnectionState(state){
-    //if the serial is connected
-    if (state) {
-        conIco.className = "connected"
-        conMsg.className = "connected"
-        buttonConnect.className = "connected"
-
-        conMsg.textContent = "Connected"
-        buttonConnect.textContent = "Disconnect"
-    } 
-    else { // serial is disconnected
-        conIco.className = "not-connected"
-        conMsg.className = "not-connected"
-        buttonConnect.className = "not-connected"
-
-        conMsg.textContent = "Disconnected"
-        buttonConnect.textContent = "Connect"
-    }
-}
-
 
 // sending through serial - logic
 async function connectToPico() {
@@ -53,7 +14,7 @@ async function connectToPico() {
         picoPort = await navigator.serial.requestPort();
         await picoPort.open({ baudRate: 9600 });
   
-        const reader = picoPort.readable.getReader();
+        reader = picoPort.readable.getReader();
         writer = picoPort.writable.getWriter();
         connected = true
         changeConnectionState(connected)
@@ -85,7 +46,12 @@ async function connectToPico() {
 async function disconnectFromPico() {
     try {
         if (writer) {
+            await writer.close();
             writer.releaseLock();
+        }
+        if (reader) {
+            await reader.cancel();
+            reader.releaseLock();
         }
         if (picoPort) {
             await picoPort.close();
@@ -142,14 +108,12 @@ buttonConnect.addEventListener("click", () =>{
         disconnectFromPico()
     }
 });
-document.getElementById("submit-button").addEventListener("click", () => {
+buttonSend.addEventListener("click", () => {
+    if (!connected) return // dont try to send anything if we are not connected
+
     const dataToSend = {}
     keyBindingValues.forEach((value, key) => {
         dataToSend[key] = Array.from(value)
     })
     saveKeys(dataToSend);
 });
-
-
-//change the initial connection state
-changeConnectionState()

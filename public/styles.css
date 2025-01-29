@@ -1,6 +1,7 @@
+
 *{
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: "Roboto Mono", sans-serif;
 }
 
 body{
@@ -14,10 +15,29 @@ body{
 }
 
 #content-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+#left-section{
+    grid-column: 1;
+}
+
+#center-section{
+    grid-column: 2;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+}
+
+#right-section{
+    grid-column: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
 }
 
 /* connection container */
@@ -27,19 +47,26 @@ body{
     justify-content: center;
     align-items: center;
 }
+
 #connection-icon {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     margin-right: 5px;
+    animation: blink 1s infinite alternate;
 }
 #connection-icon.connected{
-    background-color: green;
+    background-color: rgb(71, 229, 71);
     box-shadow: 0 0 15px rgba(16, 223, 16, 0.153);
 }
 #connection-icon.not-connected{
     background-color: red;
     box-shadow: 0 0 15px rgba(224, 79, 7, 0.742);
+}
+/* Blinking Animation */
+@keyframes blink {
+    0% { opacity: 1; }   /* Fully visible */
+    100% { opacity: 0.5; } /* Fades out */
 }
 
 #connection-msg{
@@ -50,12 +77,13 @@ body{
 }
 
 #connect-button{
-    width: 80px;
+    width: 100px;
     height: 25px;
     border: none;
     border-radius: 10px;
-    padding: 5px;
+    padding: 5px 10px;
     color: whitesmoke;
+    line-height: 10px;
 }
 #connect-button:hover{
     filter: brightness(1.5);
@@ -87,31 +115,41 @@ body{
     border-radius: 10px;
     font-size: 17px;
     font-weight: 700;
-    background-color: rgb(117, 93, 28);
+    background-color: rgb(109, 108, 106);
     color: antiquewhite;
+    outline: none;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.7s ease;
 }
 
 .button-bind.binded{
-    background-color: rgb(27, 150, 129);;
+    background-color: rgb(29, 163, 83);
+    box-shadow: 0 0 20px rgba(13, 198, 124, 0.221);
 }
-
 .button-bind.active{
-    box-shadow: 0 0 30px rgba(44, 212, 162, 0.411);
+    background-color: rgba(80, 163, 205, 0.644);
+    box-shadow: 0 0 30px rgba(44, 153, 207, 0.644);
 }
 
 #submit-button{
     width: 150px;
     height: 50px;
     font-size: 17px;
+    font-weight: 700;
     border: none;
     border-radius: 10px;
     margin-top: 20px;
-    background-color: rgb(15, 87, 75);
+    background-color: rgb(16, 137, 101);
     color: antiquewhite;
-    cursor: pointer;
 }
-
-#submit-button:hover{
+#submit-button.allowed{
+    cursor: pointer;
+    filter: brightness(1);
+}
+#submit-button.disabled{
+    cursor: not-allowed;
+    filter: brightness(0.5);
+}
+#submit-button.allowed:hover{
     filter: brightness(1.3);
     
 }
@@ -129,3 +167,39 @@ body{
     color: rgb(194, 116, 93)
 }
 
+#log-area{
+    width: 400px;
+    height: 500px;
+    border-radius: 15px;
+    background-color: rgb(43, 43, 43);
+    margin-top: 10px;
+    color: whitesmoke;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+    cursor: default;
+    resize: none;
+    border: none;
+    outline: none;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+#log-area.hidden{
+    height: 0;
+    opacity: 0;
+    /* transform: translate(); */
+}
+#log-area.visible{
+    display: block;
+    /* transform: translate(0); */
+}
+
+#toggle-textarea{
+    background-color: rgb(32, 32, 32);
+    padding: 8px 17px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    color: whitesmoke;
+    cursor: pointer;
+    font-size: 15px;
+}
