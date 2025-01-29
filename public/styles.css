@@ -20,6 +20,58 @@ body{
     align-items: center;
 }
 
+/* connection container */
+#connection-cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#connection-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+#connection-icon.connected{
+    background-color: green;
+    box-shadow: 0 0 15px rgba(16, 223, 16, 0.153);
+}
+#connection-icon.not-connected{
+    background-color: red;
+    box-shadow: 0 0 15px rgba(224, 79, 7, 0.742);
+}
+
+#connection-msg{
+    color: antiquewhite;
+    margin-right: 15px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+#connect-button{
+    width: 80px;
+    height: 25px;
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    color: whitesmoke;
+}
+#connect-button:hover{
+    filter: brightness(1.5);
+    cursor: pointer;
+}
+#connect-button.connected{
+    background-color: rgb(79, 98, 79);
+}
+#connect-button.not-connected{
+    background-color: rgb(113, 64, 64);
+}
+
+
+
+/* buttons container  */
+
 #buttons-container{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -76,3 +128,4 @@ body{
 #status-message.error{
     color: rgb(194, 116, 93)
 }
+

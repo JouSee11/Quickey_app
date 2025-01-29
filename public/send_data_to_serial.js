@@ -2,17 +2,52 @@
 
 //html elements
 const buttonSend = document.getElementById("submit-button")
-const buttonConnect = document.getElementById("connect-button")
 const statusMsg = document.getElementById("status-message")
 const logArea = document.getElementById("log-area")
 
+//connection area elements
+const conIco = document.getElementById("connection-icon")
+const conMsg = document.getElementById("connection-msg")
+const buttonConnect = document.getElementById("connect-button")
+
 let picoPort;
 let writer;
+let connected = false
 
+
+//ui functions
 function addLogs(textLog) {
     logArea.value += textLog + "\n"
 }
 
+function showSuccessMsg() {
+    statusMsg.className = "successfull"
+    statusMsg.textContent = "Data send successfully"
+    setTimeout(() => statusMsg.textContent = "", 3000)
+}
+
+function changeConnectionState(state){
+    //if the serial is connected
+    if (state) {
+        conIco.className = "connected"
+        conMsg.className = "connected"
+        buttonConnect.className = "connected"
+
+        conMsg.textContent = "Connected"
+        buttonConnect.textContent = "Disconnect"
+    } 
+    else { // serial is disconnected
+        conIco.className = "not-connected"
+        conMsg.className = "not-connected"
+        buttonConnect.className = "not-connected"
+
+        conMsg.textContent = "Disconnected"
+        buttonConnect.textContent = "Connect"
+    }
+}
+
+
+// sending through serial - logic
 async function connectToPico() {
     try {
         picoPort = await navigator.serial.requestPort();
@@ -20,6 +55,8 @@ async function connectToPico() {
   
         const reader = picoPort.readable.getReader();
         writer = picoPort.writable.getWriter();
+        connected = true
+        changeConnectionState(connected)
 
     // Read data from the serial port
     while (true) {
@@ -38,18 +75,23 @@ async function connectToPico() {
         addLogs(`Connected to Pico and ready to send data`)
         console.log("Connected to Pico and ready to send data");
     } catch (err) {
+        connected = false
+        changeConnectionState(connected)
         addLogs(`Error connecting to serial port: ${err}`)
         console.error("Error connecting to serial port:", err);
     }
 }
 
-async function closePort() {
+async function disconnectFromPico() {
     try {
         if (writer) {
             writer.releaseLock();
         }
         if (picoPort) {
             await picoPort.close();
+
+            connected = false
+            changeConnectionState(connected)
             addLogs("Serial port closed") 
             console.log("Serial port closed");
         }
@@ -61,7 +103,7 @@ async function closePort() {
 
 // Close port when the user exits the page
 window.addEventListener('beforeunload', async () => {
-    await closePort();
+    await disconnectFromPico();
 });
 
 
@@ -70,7 +112,8 @@ async function sendToPico(data) {
     try {
         const dataToSend = data + "\r\n"; // Ensure newline
         await writer.write(new TextEncoder().encode(dataToSend));
-    
+        
+        showSuccessMsg()
         addLogs(`Data sent and flushed successfully: ${dataToSend}`)
         console.log("Data sent and flushed:", dataToSend);
     } catch (err) {
@@ -92,7 +135,13 @@ async function saveKeys(dataToSend) {
 }
 
 // Trigger the connection and data sending on page load or an event
-buttonConnect.addEventListener("click", connectToPico);
+buttonConnect.addEventListener("click", () =>{
+    if (!connected) { // if we are not connected we want to connect
+        connectToPico()
+    } else { // disconnect if we are connected
+        disconnectFromPico()
+    }
+});
 document.getElementById("submit-button").addEventListener("click", () => {
     const dataToSend = {}
     keyBindingValues.forEach((value, key) => {
@@ -100,3 +149,7 @@ document.getElementById("submit-button").addEventListener("click", () => {
     })
     saveKeys(dataToSend);
 });
+
+
+//change the initial connection state
+changeConnectionState()
