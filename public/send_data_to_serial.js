@@ -3,10 +3,12 @@
 const buttonSend = document.getElementById("submit-button")
 const buttonConnect = document.getElementById("connect-button")
 
+
 let picoPort;
 let writer;
 let reader;
 let connected = false
+let serialBuffer = ""
 
 // sending through serial - logic
 async function connectToPico() {
@@ -27,9 +29,23 @@ async function connectToPico() {
             reader.releaseLock();
             break;
         }
-            // Process the data received from the serial port
-            addLogs(`[Pico Debug]: ${new TextDecoder().decode(value)}`)
-            console.log("[Pico Debug]:", new TextDecoder().decode(value));
+
+        //wait for all the data to come, before processing it
+        const chunk = new TextDecoder().decode(value)
+        serialBuffer += chunk
+
+        if (serialBuffer.includes("\n")) {
+            addLogs(`[Pico Debug]: ${serialBuffer}`)
+            console.log("[Pico Debug]:", serialBuffer);
+
+            if (serialBuffer.startsWith("_import_")) {
+                console.log("in the if statement")
+                importDataHandler(serialBuffer)
+            }
+
+            serialBuffer = ""
+        }
+        // Process the data received from the serial port
         }
   
         writer.releaseLock();
@@ -79,7 +95,8 @@ async function sendToPico(data) {
         const dataToSend = data + "\r\n"; // Ensure newline
         await writer.write(new TextEncoder().encode(dataToSend));
         
-        showSuccessMsg()
+        //show sucess msg only when we send data not import
+        if (data !== "import data") showSuccessMsg()
         addLogs(`Data sent and flushed successfully: ${dataToSend}`)
         console.log("Data sent and flushed:", dataToSend);
     } catch (err) {
@@ -112,6 +129,7 @@ buttonSend.addEventListener("click", () => {
     if (!connected) return // dont try to send anything if we are not connected
 
     const dataToSend = {}
+    console.log(keyBindingValues)
     keyBindingValues.forEach((value, key) => {
         dataToSend[key] = Array.from(value)
     })

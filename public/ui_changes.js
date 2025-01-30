@@ -114,3 +114,7 @@ toggleLogBtn.addEventListener("click", toggleLogArea)
 document.body.addEventListener("click", disableCaptureAll)
 
 buttonReset.addEventListener("click", resetButtons)
+
+buttonImport.addEventListener("click", async () =>{
+    await sendToPico("import data")
+})
