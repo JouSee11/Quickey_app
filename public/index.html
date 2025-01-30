@@ -13,7 +13,12 @@
 </head>
 <body>
     <div id="content-container">¨
-        <div id="left-section"></div>
+        <div id="left-section">
+            <div id="button-cont">
+                <button id="reset-button">Reset</button>
+                <button id="import-button">Import current data</button>
+            </div>
+        </div>
         <div id="center-section">
             <div id="connection-cont">
                 <div id="connection-icon"></div>
@@ -34,7 +39,7 @@
                 <button class="button-bind" id="key-8" data-key-num="8">Press to bind</button>
                 <button class="button-bind" id="key-9" data-key-num="9">Press to bind</button>
             </div>
-            <button type="submit" id="submit-button" class="">Submit</button>
+            <button type="submit" id="submit-button">Submit</button>
         </div>
 
         <div id="right-section">
@@ -51,7 +56,8 @@
 
 <!-- <script src="send_data_to_server.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="bind_buttons.js"></script>
+<script src="bind_keys.js"></script>
 <script src="send_data_to_serial.js"></script>
 <script src="ui_changes.js"></script>
+<script src="import_current_data.js"></script>
 </html>

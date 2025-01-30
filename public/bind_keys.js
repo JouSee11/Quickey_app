@@ -6,6 +6,7 @@ const defaultMsg = "Press to bind"
 let capturing = false
 let capturingButton = null
 let keyBindingValues = new Map()
+//can delete this
 let keyBindingDisplay = new Map()
 
 // get all buttons and assign listener to them
@@ -41,15 +42,6 @@ const buttonClickListener = (buttonElement, buttonNumber) => {
     buttonElement.textContent = capturingMsg
 }
 
-const disableCaptureAll = () => {
-    buttonsList.forEach((button) => {
-        if (button.textContent === capturingMsg) {
-            button.textContent = defaultMsg
-            button.classList.remove("binded")
-        }
-        button.classList.remove("active")
-    })
-}
 
 const getButtonByNum = (btnNum) => {
     const buttonsArray = Array.from(buttonsList)
@@ -80,9 +72,12 @@ document.addEventListener("keyup", (event) => {
     if (!capturing) return
     
     //display the key combination the the button
-    const currentSet = keyBindingDisplay.get(capturingButton)
+    const currentSet = keyBindingValues.get(capturingButton)
     const keyCombination = Array.from(currentSet).join(" + ")
-    getButtonByNum(capturingButton).textContent = keyCombination 
+    console.log(keyCombination.length)
+    const activeBtnElement = getButtonByNum(capturingButton)
+    activeBtnElement.textContent = keyCombination
+    activeBtnElement.classList.remove("active")
     
     capturing = false
     capturingButton = null

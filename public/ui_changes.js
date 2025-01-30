@@ -3,6 +3,8 @@ const conIco = document.getElementById("connection-icon")
 const conMsg = document.getElementById("connection-msg")
 const logArea = document.getElementById("log-area")
 const toggleLogBtn = document.getElementById("toggle-textarea")
+const buttonReset = document.getElementById("reset-button")
+const buttonImport = document.getElementById("import-button")
 
 
 //change the initial connection state
@@ -34,6 +36,9 @@ function changeConnectionState(state){
         console.log(buttonSend.classList)
         buttonSend.classList.add("allowed")
         buttonSend.classList.remove("disabled")
+
+        buttonImport.classList.remove("disabled")
+        buttonImport.classList.add("allowed")
     } 
     else { // serial is disconnected
         conIco.className = "not-connected"
@@ -46,6 +51,9 @@ function changeConnectionState(state){
         //disable submit button
         buttonSend.classList.add("disabled")
         buttonSend.classList.remove("allowed")
+
+        buttonImport.classList.remove("allowed")
+        buttonImport.classList.add("disabled")
     }
 }
 
@@ -60,13 +68,49 @@ function toggleLogArea() {
     }
 }
 
-function focusOutOfButtons() {
+//disable capturing on the previous capturing button
+function disableCaptureAll() {
     buttonsList.forEach((button) => {
+        if (button.textContent === capturingMsg) {
+            button.textContent = defaultMsg
+            button.classList.remove("binded")
+            capturing = false
+            capturingButton = null
+            button.classList.add("removed")
+            setTimeout(() => {
+                button.classList.remove("removed")
+            }, 300)
+        }
         button.classList.remove("active")
     })
 }
 
+function resetButtons() {
+    if (confirm("Are you sure you want to delete the current binding?")) {
+        buttonsList.forEach((button) => {
+            button.textContent = defaultMsg
+            button.classList.remove("binded")
+            capturing = false
+            capturingButton = null
+            keyBindingValues = new Map()
+        })
+    }
+}
+
+// function focusOutOfButtons() {
+//     buttonsList.forEach((button) => {
+//         if (button.textContent === capturingMsg) {
+//             button.classList.remove("binded")
+//             button.textContent = defaultMsg
+//         }
+//         button.classList.remove("active")
+//     })
+// }
+
 
 toggleLogBtn.addEventListener("click", toggleLogArea)
 
-document.body.addEventListener("click", focusOutOfButtons)
+//disable all capturing when we press out of the buttons
+document.body.addEventListener("click", disableCaptureAll)
+
+buttonReset.addEventListener("click", resetButtons)
