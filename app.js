@@ -4,6 +4,7 @@ const app = express()
 
 //middleware
 app.use(express.json())
+app.set("view engine", "ejs")
 app.use(express.static("./public"))
 // app.use("/save-to-device", keysRouter)
 

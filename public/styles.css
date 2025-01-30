@@ -27,7 +27,8 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: end;
+
 }
 #center-section{
     grid-column: 2;
@@ -200,7 +201,8 @@ body{
     /* transform: translate(0); */
 }
 
-#toggle-textarea{
+#toggle-textarea,
+#controls-button{
     background-color: rgb(32, 32, 32);
     padding: 8px 17px;
     border-radius: 10px;
@@ -215,13 +217,24 @@ body{
 /* buttons area */
 #button-cont{
     width: 400px;
-    height: 500px;
+    height: auto;
     background-color: rgb(41, 41, 41);
     border-radius: 15px;
     padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+#button-cont.hidden{
+    height: 0;
+    opacity: 0;
+}
+
+#button-cont.hidden button{
+    display: none;
 }
 
 #button-cont button{
+    display: inline-block;
     padding: 10px 10px;
     background-color: rgb(36, 143, 137);
     border: none;
@@ -244,7 +257,9 @@ body{
     filter: brightness(0.5);
 }
 
-.section-title{
-    color: whitesmoke;
-    font-size: 20px;
+#profile-link{
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: black;
 }

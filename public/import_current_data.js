@@ -5,6 +5,8 @@
 function importDataHandler(data) {
     if (!confirm("Import current data and overwrite the current binding?")) return
     const jsonData = JSON.parse(data.substring(8))
+    console.log(`Original data ${data}`)
+    console.log(`Converted data ${JSON.stringify(jsonData)}`)
     
     buttonsList.forEach((button) => {
         const buttonNumber = button.dataset.keyNum
@@ -16,6 +18,8 @@ function importDataHandler(data) {
             button.textContent = Array.from(curData).join(" + ")
             button.classList.add("binded")
             console.log(curData)
+        } else {
+            keyBindingValues.set(Number(buttonNumber), new Set([]))
         }
         
     })

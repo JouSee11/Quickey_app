@@ -1,8 +1,12 @@
 const statusMsg = document.getElementById("status-message")
 const conIco = document.getElementById("connection-icon")
 const conMsg = document.getElementById("connection-msg")
+
 const logArea = document.getElementById("log-area")
 const toggleLogBtn = document.getElementById("toggle-textarea")
+const btnArea = document.getElementById("button-cont")
+const controlsBtn = document.getElementById("controls-button")
+
 const buttonReset = document.getElementById("reset-button")
 const buttonImport = document.getElementById("import-button")
 
@@ -63,10 +67,23 @@ function toggleLogArea() {
 
     if (logArea.classList.contains("hidden")) {
         toggleLogBtn.textContent = "Show log"
+
     } else {
         toggleLogBtn.textContent = "Hide log"
     }
 }
+
+function toggleControls() {
+    btnArea.classList.toggle("hidden")
+
+    if (btnArea.classList.contains("hidden")) {
+        controlsBtn.textContent = "Show controls"
+
+    } else {
+        controlsBtn.textContent = "Hide controls"
+    }
+}
+
 
 //disable capturing on the previous capturing button
 function disableCaptureAll() {
@@ -92,7 +109,8 @@ function resetButtons() {
             button.classList.remove("binded")
             capturing = false
             capturingButton = null
-            keyBindingValues = new Map()
+            const btnNumber = Number(button.dataset.keyNum)
+            keyBindingValues.set(btnNumber, new Set([]))
         })
     }
 }
@@ -109,6 +127,7 @@ function resetButtons() {
 
 
 toggleLogBtn.addEventListener("click", toggleLogArea)
+controlsBtn.addEventListener("click", toggleControls)
 
 //disable all capturing when we press out of the buttons
 document.body.addEventListener("click", disableCaptureAll)
@@ -116,5 +135,7 @@ document.body.addEventListener("click", disableCaptureAll)
 buttonReset.addEventListener("click", resetButtons)
 
 buttonImport.addEventListener("click", async () =>{
-    await sendToPico("import data")
+    if (!buttonImport.classList.contains("disabled")){
+        await sendToPico("import data")
+    }
 })

@@ -12,14 +12,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="content-container">¨
+
+    <a id="profile-link" href="login.html">Profile</a>
+
+    <div id="content-container">
+
         <div id="left-section">
-            <p class="section-title">Controls</p>
-            <div id="button-cont">
-                <button id="reset-button">Reset</button>
+            <div id="button-cont" class="hidden">
+                <button id="reset-button">Reset all</button>
                 <button id="import-button">Import current data</button>
             </div>
+            <button id="controls-button">Show controls</button>
         </div>
+
         <div id="center-section">
             <div id="connection-cont">
                 <div id="connection-icon"></div>
