@@ -3,7 +3,7 @@
 // })
 
 function importDataHandler(data) {
-    console.log(data)
+    if (!confirm("Import current data and overwrite the current binding?")) return
     const jsonData = JSON.parse(data.substring(8))
     
     buttonsList.forEach((button) => {
@@ -17,7 +17,7 @@ function importDataHandler(data) {
             button.classList.add("binded")
             console.log(curData)
         }
-
+        
     })
-
+    
 }

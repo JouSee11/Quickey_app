@@ -7,23 +7,28 @@
 body{
     
     height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
-    background-color: rgb(4, 26, 24);
+    background-color: rgb(4, 29, 27);
 }
 
+/* main content sections */
 #content-container{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr;
+    width: 100vw;
 }
-
 #left-section{
     grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-
 #center-section{
     grid-column: 2;
     display: flex;
@@ -31,7 +36,6 @@ body{
     /* justify-content: center; */
     align-items: center;
 }
-
 #right-section{
     grid-column: 3;
     display: flex;
@@ -209,6 +213,28 @@ body{
 
 
 /* buttons area */
+#button-cont{
+    width: 400px;
+    height: 500px;
+    background-color: rgb(41, 41, 41);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+#button-cont button{
+    padding: 10px 10px;
+    background-color: rgb(36, 143, 137);
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    font-size: 15px;
+    color: whitesmoke;
+    margin: 10px;
+    cursor: pointer;
+}
+#button-cont button:hover{
+    filter: brightness(1.2);
+}
 #import-button.allowed{
     cursor: pointer;
     filter: brightness(1);
@@ -216,4 +242,9 @@ body{
 #import-button.disabled{
     cursor: not-allowed;
     filter: brightness(0.5);
+}
+
+.section-title{
+    color: whitesmoke;
+    font-size: 20px;
 }
