@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="css/scrollbar.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <!-- page styles -->
+    <% if (stylesheets) { %>
+        <% stylesheets.forEach((stylesheet) => { %>
+            <link rel="stylesheet" href="css/<%= stylesheet %>">
+        <% }); %>
+    <% } %>
+</head>
+<body>
+    <header>
+        <% if (headerBool) { %>
+            <%- include("layout/header") %>
+        <% } %>
+    </header>
+    <main>
+        <%- include(content) %>
+    </main>
+    <footer>
+        <% if (footerBool) { %>
+            <%- include("layout/footer") %>
+        <% } %>
+    </footer>
+
+</body>
+
+    <!-- page scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <% if (scripts) { %>
+        <% scripts.forEach(function(script) { %>
+            <script src="js/<%= script %>"></script>
+        <% }); %>
+    <% } %>
+</html>
