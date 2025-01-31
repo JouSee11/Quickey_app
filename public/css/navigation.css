@@ -1,0 +1,8 @@
+#main-nav{
+    width: 100vw;
+    height: var(--navbar-height);
+    background-color: wheat;
+    position: fixed;
+    left: 0;
+    top: 0;
+}

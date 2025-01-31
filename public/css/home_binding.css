@@ -1,9 +1,4 @@
 
-*{
-    box-sizing: border-box;
-    font-family: "Roboto Mono", sans-serif;
-}
-
 body{
     
     height: 100vh;
@@ -12,7 +7,7 @@ body{
     justify-content: center;
     align-items: center;
     margin: 0;
-    background-color: rgb(4, 29, 27);
+    background-color: var(--main-bg-color);
 }
 
 /* main content sections */

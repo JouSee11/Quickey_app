@@ -1,0 +1,14 @@
+*{
+    box-sizing: border-box;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+:root{
+    --main-bg-color: rgb(4, 29, 27);
+    --navbar-height: 60px;
+}
+
+
+body{
+    margin-top: calc(var(--navbar-height) + 10px);
+}

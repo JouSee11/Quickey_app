@@ -19,4 +19,5 @@ const getBindingPage = (req, res) => {
 }
 
 
+
 export {getBindingPage}
