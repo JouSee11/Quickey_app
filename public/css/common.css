@@ -4,11 +4,43 @@
 }
 
 :root{
-    --main-bg-color: rgb(4, 29, 27);
-    --navbar-height: 60px;
+    --navbar-height: 40px;
+    
+    /* fonts */
+    --small-text: 0.7em;
+    --smaller-text: 0.9em;
+    --normal-text: 1em;
+    --bigger-text: 1.4em;
+
+      /* COLORS  */
+    /* primary */
+    --primary-0: #fff5ec;
+    --primary-100: #c1beff;
+    --primary-200: #478ccc;
+    --primary-400: #6e779c;
+    /* main */
+    --primary-600: #2e5475;
+    --primary-800: #151e27;
+    --primary-1000: #040d16;
+
+    /* rest */
+    --green-vivid: rgb(71, 229, 71);
+    --green-bright: rgb(29, 163, 83);
+    --green-dark: rgb(79, 98, 79);
+    --red-vivid: rgb(219, 57, 45);
+    --red-dark: rgb(113, 64, 64);
+    --gray-main: rgb(102, 111, 117);
+    --gray-dark: rgb(43, 46, 48);
+
+    /* SHAPES */
+    --border-rad-main: 10px;
+    --border-rad-smaller: 8px;
+    --border-rad-bigger: 15px;
+
 }
 
 
 body{
     margin-top: calc(var(--navbar-height) + 10px);
+    margin: 0;
 }

@@ -9,7 +9,7 @@ const getLoginPage = (req, res) => {
         ],
         "login",
         true,
-        true
+        false
     )
     res.render("index", pageParams.getDetails())
 }

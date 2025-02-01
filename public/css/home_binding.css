@@ -1,13 +1,11 @@
 
 body{
-    
     height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    background-color: var(--main-bg-color);
+    background-color: var(--primary-1000);
 }
 
 /* main content sections */
@@ -56,11 +54,11 @@ body{
     animation: blink 1s infinite alternate;
 }
 #connection-icon.connected{
-    background-color: rgb(71, 229, 71);
+    background-color: var(--green-vivid);
     box-shadow: 0 0 15px rgba(16, 223, 16, 0.153);
 }
 #connection-icon.not-connected{
-    background-color: red;
+    background-color: var(--red-vivid);
     box-shadow: 0 0 15px rgba(224, 79, 7, 0.742);
 }
 /* Blinking Animation */
@@ -70,19 +68,19 @@ body{
 }
 
 #connection-msg{
-    color: antiquewhite;
+    color: var(--primary-0);
     margin-right: 15px;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: var(--small-text);
 }
 
 #connect-button{
     width: 100px;
     height: 25px;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--border-rad-main);
     padding: 5px 10px;
-    color: whitesmoke;
+    color: var(--primary-0);
     line-height: 10px;
 }
 #connect-button:hover{
@@ -90,10 +88,10 @@ body{
     cursor: pointer;
 }
 #connect-button.connected{
-    background-color: rgb(79, 98, 79);
+    background-color: var(--green-dark);
 }
 #connect-button.not-connected{
-    background-color: rgb(113, 64, 64);
+    background-color: var(--red-dark);
 }
 
 
@@ -112,16 +110,16 @@ body{
     height: 150px;
     margin: 10px;
     border: none;
-    border-radius: 10px;
-    font-size: 17px;
+    border-radius: var(--border-rad-main);
+    font-size: var(--normal-text);
     font-weight: 700;
-    background-color: rgb(109, 108, 106);
-    color: antiquewhite;
+    background-color: var(--gray-main);
+    color: var(--primary-0);
     outline: none;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.7s ease;
 }
 .button-bind.binded{
-    background-color: rgb(29, 163, 83);
+    background-color: var(--green-bright);
     box-shadow: 0 0 20px rgba(13, 198, 124, 0.221);
 }
 .button-bind.active{
@@ -129,19 +127,18 @@ body{
     box-shadow: 0 0 30px rgba(44, 153, 207, 0.644);
 }
 .button-bind.removed{
-    background-color: rgb(218, 62, 62);
+    background-color: var(--red-vivid);
     box-shadow: 0 0 30px rgba(179, 32, 39, 0.644);
 }
 
 #submit-button{
-    width: 150px;
-    height: 50px;
-    font-size: 17px;
+    padding: 15px 40px;
+    font-size: var(--normal-text);
     font-weight: 700;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--border-rad-main);
     margin-top: 20px;
-    background-color: rgb(16, 137, 101);
+    background-color: var(--green-dark);
     color: antiquewhite;
 }
 #submit-button.allowed{
@@ -158,25 +155,25 @@ body{
 }
 
 #status-message{
-    color: antiquewhite;
-    font-size: 23px;
+    color: var(--primary-0);
+    font-size: var(--bigger-text);
     margin-bottom: 15px;
 }
 
 #status-message.successfull{
-    color: rgb(105, 184, 105)
+    color: var(--green-bright);
 }
 #status-message.error{
-    color: rgb(194, 116, 93)
+    color: var(--red-vivid)
 }
 
 #log-area{
     width: 400px;
     height: 500px;
-    border-radius: 15px;
-    background-color: rgb(43, 43, 43);
+    border-radius: var(--border-rad-bigger);
+    background-color: var(--primary-800);
     margin-top: 10px;
-    color: whitesmoke;
+    color: var(--primary-0);
     padding: 15px 10px;
     margin-bottom: 15px;
     cursor: default;
@@ -198,14 +195,14 @@ body{
 
 #toggle-textarea,
 #controls-button{
-    background-color: rgb(32, 32, 32);
+    background-color: var(--gray-dark);
     padding: 8px 17px;
-    border-radius: 10px;
+    border-radius: var(--border-rad-main);
     outline: none;
     border: none;
-    color: whitesmoke;
+    color: var(--primary-0);
     cursor: pointer;
-    font-size: 15px;
+    font-size: var(--smaller-text);
 }
 
 
@@ -213,8 +210,8 @@ body{
 #button-cont{
     width: 400px;
     height: auto;
-    background-color: rgb(41, 41, 41);
-    border-radius: 15px;
+    background-color: var(--primary-800);
+    border-radius: var(--border-rad-bigger);
     padding: 20px;
     margin-bottom: 20px;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, height 0.3s ease-in-out;
@@ -231,12 +228,12 @@ body{
 #button-cont button{
     display: inline-block;
     padding: 10px 10px;
-    background-color: rgb(36, 143, 137);
+    background-color: var(--green-dark);
     border: none;
     outline: none;
-    border-radius: 8px;
-    font-size: 15px;
-    color: whitesmoke;
+    border-radius: var(--border-rad-smaller);
+    font-size: var(--smaller-text);
+    color: var(--primary-0);
     margin: 10px;
     cursor: pointer;
 }
@@ -250,11 +247,4 @@ body{
 #import-button.disabled{
     cursor: not-allowed;
     filter: brightness(0.5);
-}
-
-#profile-link{
-    position: absolute;
-    right: 0;
-    top: 0;
-    color: black;
 }
