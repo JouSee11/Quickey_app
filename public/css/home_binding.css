@@ -5,7 +5,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--primary-1000);
+    background: linear-gradient(to top, var(--primary-1000), rgb(18, 24, 33));
 }
 
 /* main content sections */
@@ -113,7 +113,7 @@ body{
     border-radius: var(--border-rad-main);
     font-size: var(--normal-text);
     font-weight: 700;
-    background-color: var(--gray-main);
+    background-color: var(--gray-dark);
     color: var(--primary-0);
     outline: none;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.7s ease;
