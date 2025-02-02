@@ -6,7 +6,7 @@ body{
     background-color: var(--primary-1000);
 }
 
-#login-cont{
+#register-cont{
     display: flex;
     flex-direction: column;
     padding: 50px 70px;
@@ -44,6 +44,6 @@ form button{
 
 }
 
-#login-cont p{
+#register-cont p{
     color: var(--primary-0)
 }
