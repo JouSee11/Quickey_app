@@ -18,7 +18,32 @@ class ViewParams {
             footerBool: this.footerBool
         }
     }
-
 }
 
-export default ViewParams
+class ViewParamsForm {
+    constructor(title, stylesheets, scripts, content, headerBool, footerBool, errors, formData) {
+        this.title = title
+        this.stylesheets = stylesheets
+        this.scripts = scripts
+        this.content = content
+        this.headerBool = headerBool
+        this.footerBool = footerBool
+        this.errors = errors
+        this.formData = formData
+    }
+
+    getDetails() {
+        return {
+            title: this.title,
+            stylesheets: this.stylesheets,
+            scripts: this.scripts,
+            content: this.content,
+            headerBool: this.headerBool,
+            footerBool: this.footerBool,
+            errors: this.errors,
+            formData: this.formData
+        }
+    }
+}
+
+export  {ViewParams, ViewParamsForm }

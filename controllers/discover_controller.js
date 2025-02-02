@@ -1,4 +1,4 @@
-import ViewParams from "../views/view_class.js"
+import {ViewParams} from "../views/view_class.js"
 
 
 const getDiscoverPage = (req, res) => {

@@ -38,12 +38,26 @@ form input{
     outline: none;
 }
 
+.inputError{
+    border: red solid 3px;
+}
+
+.inputCorrect{
+    border: none
+}
+
+.err-msg{
+    font-size: var(--small-text);
+    color: var(--red-dark);
+    color: red
+}
+
 form button{
     font-size: var(--normal-text);
     margin-top: 15px;
 
 }
 
-#register-cont p{
+#register-cont label{
     color: var(--primary-0)
 }
