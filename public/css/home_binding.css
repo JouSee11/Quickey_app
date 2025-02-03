@@ -248,3 +248,21 @@ body{
     cursor: not-allowed;
     filter: brightness(0.5);
 }
+
+
+/* greeting messagae  */
+#greeting-msg{
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translate(-50%);
+    color: var(--primary-0);
+    font-size: var(--bigger-text);
+}
+
+#username-display{
+    font-weight: bold;
+    /* text-transform: uppercase; */
+    color: var(--green-bright);
+
+}

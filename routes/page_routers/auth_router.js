@@ -1,5 +1,5 @@
 import express from "express"
-import { getLoginPage, handleLogin } from "../../controllers/login_controller.js"
+import { getLoginPage, handleLogin, logoutUser } from "../../controllers/login_controller.js"
 import { getRegisterPage } from "../../controllers/register_controller.js"
 import { getRegisterSucPage } from "../../controllers/register_controller.js"
 import { handleRegister } from "../../controllers/register_controller.js"
@@ -14,6 +14,9 @@ router.use(express.static("./public"))
 router.route("/login")
 .get(getLoginPage)
 .post(loginFormValidation, handleLogin)
+
+router.route("/logout")
+.get(logoutUser)
 
 router.route("/register")
 .get(getRegisterPage)

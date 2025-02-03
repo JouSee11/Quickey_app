@@ -56,6 +56,16 @@ const discoverHomePage = new ViewParams(
     true
 )
 
+const profilePage = new ViewParams(
+    "Profile",
+    ["profile_page.css"],
+    [
+        "profile.js",
+    ],
+    "profile",
+    true,
+    false
+)
 
 
-export {homeBindingPage, loginPage, registerPage, registerSuccess, discoverHomePage}
+export {homeBindingPage, loginPage, registerPage, registerSuccess, discoverHomePage, profilePage}

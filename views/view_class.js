@@ -8,6 +8,7 @@ class ViewParams {
         this.footerBool = footerBool
         this.errors = []
         this.formData = []
+        this.extraData = [] 
     }
 
     setErrors(errorList) {
@@ -16,6 +17,10 @@ class ViewParams {
 
     setFormData(formData) {
         this.formData = formData
+    }
+
+    insertData(data) {
+        this.extraData.push(data)
     }
 
     getDetails() {
@@ -27,7 +32,8 @@ class ViewParams {
             headerBool: this.headerBool,
             footerBool: this.footerBool,
             errors: this.errors,
-            formData: this.formData
+            formData: this.formData,
+            extraData: this.extraData
         }
     }
 }
