@@ -6,11 +6,9 @@
     errors.forEach(error => { 
         errorInputs.push(error.inputField)
         // console.log(error)
-    });%>
-
-    <%
-        const usernameVal = formData.username ? formData.username : ""
-        const emailVal = formData.email ? formData.email : ""
+    })
+    const usernameVal = formData.username ? formData.username : ""
+    const emailVal = formData.email ? formData.email : ""
     %>
 
 

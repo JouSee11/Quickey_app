@@ -1,10 +1,32 @@
+<% 
+let inputClass = "inputCorrect"
+let errMsg = ""
+let usernameVal = ""
+// check if we comeback to the login form with some error
+console.log(errors)
+if (typeof errors === "string") {
+    inputClass = "inputError"
+    errMsg = errors
+    usernameVal = formData.username
+}
+
+
+console.log("inputClass:", inputClass);
+console.log("errMsg:", errMsg);
+console.log("usernameVal:", usernameVal);
+%>
+
+
 <div id="login-cont">
     <form method="post">
         <label for="name">Username:</label>
-        <input type="text" name="username" placeholder="username123">
+        <input type="text" name="username" placeholder="username123" value="<%= usernameVal %>" class="<%= inputClass %>">
+        
         <label for="password">Password:</label> 
-        <input type="password" name="password" placeholder="keyboard@email.com"> 
+        <input type="password" name="password" placeholder="keyboard@email.com" class="<%= inputClass %>"> 
+        
         <button type="submit">Log in</button> 
     </form>
+    <p><%= errMsg %></p>
     <p>Dont have account? <a href="/auth/register">Register</a></p>
 </div>

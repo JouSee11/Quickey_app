@@ -12,6 +12,10 @@
 </head>
 <body> -->
 
+<% if (session.username) { %>
+    <p>Hello, <%= session.username  %></p>
+
+<% } %>
 <div id="content-container">
 
     <div id="left-section">

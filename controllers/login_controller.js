@@ -5,7 +5,9 @@ const getLoginPage = (req, res) => {
 }
 
 const handleLogin = (req, res) => {
-    res.send(`Welcome ${req.body.username}`)
+    req.session.username = req.body.user.profile.username
+
+    res.send(`Welcome ${req.session.username}`)
 }
 
 export {getLoginPage, handleLogin}

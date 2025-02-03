@@ -17,7 +17,7 @@ router.route("/login")
 
 router.route("/register")
 .get(getRegisterPage)
-.post(registerFormValidation ,handleRegister)
+.post(registerFormValidation, handleRegister)
 
 router.route("/register/success")
 .get(getRegisterSucPage)

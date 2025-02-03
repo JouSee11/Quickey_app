@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import router from "./routes/router.js"
 import connectDB from "./db/connect.js"
+import session from "express-session"
 
 
 // import keysRouter from "./routes/key-bindings.js"
@@ -13,6 +14,12 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.set("view engine", "ejs")
 app.use(express.static("./public"))
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+}))
 
 app.use("", router)
 

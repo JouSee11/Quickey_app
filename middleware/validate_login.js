@@ -17,7 +17,7 @@ const loginFormValidation = async (req, res, next) => {
         loginPageCopy.setFormData({username: username})
         return res.render("index", loginPageCopy.getDetails())
     }
-
+    req.body.user = await getUserByUsername(username)
     next()
 }
 
