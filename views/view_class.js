@@ -6,29 +6,15 @@ class ViewParams {
         this.content = content
         this.headerBool = headerBool
         this.footerBool = footerBool
+        this.errors = []
+        this.formData = []
     }
 
-    getDetails() {
-        return {
-            title: this.title,
-            stylesheets: this.stylesheets,
-            scripts: this.scripts,
-            content: this.content,
-            headerBool: this.headerBool,
-            footerBool: this.footerBool
-        }
+    setErrors(errorList) {
+        this.errors = errorList
     }
-}
 
-class ViewParamsForm {
-    constructor(title, stylesheets, scripts, content, headerBool, footerBool, errors, formData) {
-        this.title = title
-        this.stylesheets = stylesheets
-        this.scripts = scripts
-        this.content = content
-        this.headerBool = headerBool
-        this.footerBool = footerBool
-        this.errors = errors
+    setFormData(formData) {
         this.formData = formData
     }
 
@@ -46,4 +32,38 @@ class ViewParamsForm {
     }
 }
 
-export  {ViewParams, ViewParamsForm }
+// class ViewParamsForm {
+//     constructor(title, stylesheets, scripts, content, headerBool, footerBool) {
+//         this.title = title
+//         this.stylesheets = stylesheets
+//         this.scripts = scripts
+//         this.content = content
+//         this.headerBool = headerBool
+//         this.footerBool = footerBool
+//         this.errors = []
+//         this.formData = []
+//     }
+
+//     setErrors(errorList) {
+//         this.errors = errorList
+//     }
+
+//     setFormData(formData) {
+//         this.formData = formData
+//     }
+
+//     getDetails() {
+//         return {
+//             title: this.title,
+//             stylesheets: this.stylesheets,
+//             scripts: this.scripts,
+//             content: this.content,
+//             headerBool: this.headerBool,
+//             footerBool: this.footerBool,
+//             errors: this.errors,
+//             formData: this.formData
+//         }
+//     }
+// }
+
+export  {ViewParams}

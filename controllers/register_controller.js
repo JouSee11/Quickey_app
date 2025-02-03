@@ -1,20 +1,8 @@
-import {ViewParamsForm} from "../views/view_class.js"
+import {registerPage, registerSuccess} from "../views/view_pages.js"
 import User from "../models/user.js"
 
 const getRegisterPage = (req, res) => {
-    const pageParams = new ViewParamsForm(
-        "Register now!",
-        ["register.css"],
-        [
-            "register.js",
-        ],
-        "register",
-        true,
-        false,
-        [],
-        {username: "", email: ""}
-    )
-    res.render("index", pageParams.getDetails())
+    res.render("index", registerPage.getDetails())
 }
 
 const handleRegister =  async (req, res, next) => {
@@ -28,7 +16,11 @@ const handleRegister =  async (req, res, next) => {
 
     await newUser.save()
 
-    res.send(`User ${username} was successfully registered, with email ${email}`)
+    res.redirect("/auth/register/success")
 }
 
-export {getRegisterPage, handleRegister}
+const getRegisterSucPage = (req, res) => {
+    res.render("index", registerSuccess.getDetails())
+}
+
+export {getRegisterPage, handleRegister, getRegisterSucPage}

@@ -1,0 +1,25 @@
+body{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-1000);
+}
+
+#content-div{
+    display: flex;
+    flex-direction: column;
+    padding: 50px 70px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-800);
+    border-radius: var(--border-rad-main);
+}
+
+#content-div p{
+    color: var(--primary-0)
+}
+
+#content-div a{
+    color: var(--primary-400)
+}

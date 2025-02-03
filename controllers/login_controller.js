@@ -1,19 +1,11 @@
-import {ViewParams} from "../views/view_class.js"
+import {loginPage} from "../views/view_pages.js"
 
 const getLoginPage = (req, res) => {
-    const pageParams = new ViewParams(
-        "Login page",
-        ["login.css"],
-        [
-            "login.js",
-        ],
-        "login",
-        true,
-        false
-    )
-    res.render("index", pageParams.getDetails())
+    res.render("index", loginPage.getDetails())
 }
 
+const handleLogin = (req, res) => {
+    res.send(`Welcome ${req.body.username}`)
+}
 
-
-export {getLoginPage}
+export {getLoginPage, handleLogin}

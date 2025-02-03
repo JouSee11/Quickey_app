@@ -1,16 +1,16 @@
 //register validation
 import validator from "validator"
-import { ViewParamsForm } from "../views/view_class.js"
+import { registerPage } from "../views/view_pages.js"
 import User from "../models/user.js"
 
 const registerFormValidation = async (req, res, next) => {
     const { username, email, password, passwordConfirm } = req.body
     let errors = []
 
-    // Example validation checks
-    if (!username || !email || !password || !passwordConfirm) {
-        errors.push({inputField: "general",msg: "All fields are required."})
-    }
+    // // Example validation checks
+    // if (!username || !email || !password || !passwordConfirm) {
+    //     errors.push({inputField: "general",msg: "All fields are required."})
+    // }
     if (!(await usernameUnique(username))) {
         errors.push({inputField: "username",msg: "Username is already taken"});
     }
@@ -32,19 +32,10 @@ const registerFormValidation = async (req, res, next) => {
 
     if (errors.length > 0) {
         // Render the form again with error messages and prefilled values
-        const pageParams = new ViewParamsForm(
-            "Register now!",
-            ["register.css"],
-            [
-                "register.js",
-            ],
-            "register",
-            true,
-            false,
-            errors,
-            {username: username, email: email}
-        )
-        return res.render("index", pageParams.getDetails())
+        const registerPageCopy = Object.create(registerPage)
+        registerPageCopy.setErrors(errors)
+        registerPageCopy.setFormData({username: username, email: email})
+        return res.render("index", registerPageCopy.getDetails())
     }
 
     next() //if there are no errors write the user to the db
@@ -65,7 +56,7 @@ const usernameValid = (username) => {
 
 //email validation
 const emailUnique = async (email) => {
-    const user = User.findByEmail(email)
+    const user = await User.findByEmail(email)
     return !user
 }
 
