@@ -1,4 +1,5 @@
 import {ViewParamsForm} from "../views/view_class.js"
+import User from "../models/user.js"
 
 const getRegisterPage = (req, res) => {
     const pageParams = new ViewParamsForm(
@@ -17,12 +18,17 @@ const getRegisterPage = (req, res) => {
 }
 
 const handleRegister =  async (req, res, next) => {
-    const {username, email, password, passwordConfirm} = req.body
+    const {username, email, password} = req.body
 
-    res.send("you good bro")
+    const newUser = new User({
+        username: username,
+        email: email,
+        password: password
+    })
 
+    await newUser.save()
 
-    //validate informations
+    res.send(`User ${username} was successfully registered, with email ${email}`)
 }
 
 export {getRegisterPage, handleRegister}

@@ -15,10 +15,13 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.9.6",
     "serialport": "^13.0.0",
     "validator": "^13.12.0"
   }

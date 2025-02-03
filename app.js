@@ -1,6 +1,8 @@
 import express from "express"
 import dotenv from "dotenv"
 import router from "./routes/router.js"
+import connectDB from "./db/connect.js"
+
 
 // import keysRouter from "./routes/key-bindings.js"
 const app = express()
@@ -21,6 +23,17 @@ app.use("", router)
 
 
 const PORT = process.env.PORT || 3000
-app.listen(3000, () => {
-    console.log(`App is listening on port ${PORT}...`)
-})
+
+const start = async () => {
+    try{
+        await connectDB(process.env.MONGO_URI).then(() => console.log("DB connection established"))
+        
+        // start the server only when we are connected to the db
+        app.listen(PORT, () => {
+            console.log(`Server is listening on the port ${PORT}...`)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+start()

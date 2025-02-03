@@ -1,0 +1,2 @@
+- do controls na home pridat icony do tlacited
+- na homepage pridat pro prihlasene uzivatele - Hello, Username!

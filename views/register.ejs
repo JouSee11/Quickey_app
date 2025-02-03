@@ -5,8 +5,8 @@
     let errorInputs = []
     errors.forEach(error => { 
         errorInputs.push(error.inputField)
-        console.log(error)
-    }); console.log(errorInputs)%>
+        // console.log(error)
+    });%>
 
     <%
         const usernameVal = formData.username ? formData.username : ""
@@ -26,15 +26,40 @@
         <% } else { %>
             <input type="text" name="username" placeholder="username123" value="<%= usernameVal %>" class="inputCorret" data-err-msg="">
         <% } %>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" placeholder="example@email.com" value="<%= emailVal %>">
-
-        <label for="password">Password:</label> 
-        <input type="password" name="password" placeholder="Secret password"> 
         
-        <label for="passwordConfirm">Password confirm:</label> 
-        <input type="password" name="passwordConfirm" placeholder="Secret password again"> 
+        
+        <label for="email">Email:</label>
+        <% if (errorInputs.includes("email")) {
+            const errMsg = errors.find(error => error.inputField === "email").msg
+        %>
+            <input type="email" name="email" placeholder="example@email.com" value="<%= emailVal %>" class="inputError" data-err-msg="<%= errMsg %>">
+            <p class="err-msg"><%= errMsg  %></p>
+        <% } else { %>
+            <input type="email" name="email" placeholder="example@email.com" value="<%= emailVal %>" class="inputCorrect" data-err-msg="">
+        <% } %>
+
+        
+        
+        <label for="password">Password:</label>
+        <% if (errorInputs.includes("password")) {
+            const errMsg = errors.find(error => error.inputField === "password").msg
+        %>
+            <input type="password" name="password" placeholder="Secret password" class="inputError" data-err-msg="<%= errMsg %>"> 
+            <p class="err-msg"><%= errMsg  %></p>
+        <% } else { %>
+            <input type="password" name="password" placeholder="Secret password" class="inputCorrect" data-err-msg=""> 
+        <% } %>
+        
+
+        <label for="passwordConfirm">Password confirm:</label>
+        <% if (errorInputs.includes("password-conf")) {
+            const errMsg = errors.find(error => error.inputField === "password-conf").msg
+        %>
+            <input type="password" name="passwordConfirm" placeholder="Secret password again" class="inputError" data-err-msg="<%= errMsg %>"> 
+            <p class="err-msg"><%= errMsg  %></p>
+        <% } else { %>
+            <input type="password" name="passwordConfirm" placeholder="Secret password again" class="inputCorrect" data-err-msg=""> 
+        <% } %>
         
          
 

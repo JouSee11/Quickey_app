@@ -1,9 +1,9 @@
 //register validation
 import validator from "validator"
 import { ViewParamsForm } from "../views/view_class.js"
+import User from "../models/user.js"
 
-
-const registerFormValidation = (req, res, next) => {
+const registerFormValidation = async (req, res, next) => {
     const { username, email, password, passwordConfirm } = req.body
     let errors = []
 
@@ -11,13 +11,13 @@ const registerFormValidation = (req, res, next) => {
     if (!username || !email || !password || !passwordConfirm) {
         errors.push({inputField: "general",msg: "All fields are required."})
     }
-    if (!usernameUnique(username)) {
+    if (!(await usernameUnique(username))) {
         errors.push({inputField: "username",msg: "Username is already taken"});
     }
     if (!usernameValid(username)) {
         errors.push({inputField: "username",msg: "Username length must be 3-20"});
     }
-    if (!emailUnique(email)) {
+    if (!(await emailUnique(email))) {
         errors.push({inputField: "email", msg: "Email is already taken"});
     }
     if (!emailValid(email)) {
@@ -51,8 +51,9 @@ const registerFormValidation = (req, res, next) => {
 }
 
 //username validation
-const usernameUnique = (username) => {
-    return true
+const usernameUnique = async (username) => {
+    const user = await User.findByUsername(username)
+    return !user;
 }
 const usernameValid = (username) => {
     if (username.length < 3 || username.length > 20) {
@@ -63,8 +64,9 @@ const usernameValid = (username) => {
 }
 
 //email validation
-const emailUnique = (email) => {
-    return true
+const emailUnique = async (email) => {
+    const user = User.findByEmail(email)
+    return !user
 }
 
 const emailValid = (email) => {
