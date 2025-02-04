@@ -19,17 +19,17 @@
         </div>
 
         <!-- username input -->
+        <div class="input-err-cont input-cont-username">
         <% if (errorInputs.includes("username")) {
             const errMsg = errors.find(error => error.inputField === "username").msg
         %>
-            <div class="input-err-cont">
-                <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="inputError" data-err-msg="<%= errMsg %>">
-                <i class="fa-solid fa-circle-info tooltip-icon"></i>    
-                <span class="tooltip-text"><%= errMsg  %></span>
-            </div>
+            <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="inputError" data-err-msg="<%= errMsg %>">
+            <i class="fa-solid fa-circle-info tooltip-icon .username-error-icon"></i>    
+            <span class="tooltip-text .username-error-msg"><%= errMsg  %></span>
         <% } else { %>
-            <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="inputCorret" data-err-msg="">
+            <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="" data-err-msg="">
         <% } %>
+        </div>
         
         
         
@@ -38,11 +38,11 @@
         %>
             <div class="input-err-cont">
                 <input type="email" name="email" placeholder="Email" value="<%= emailVal %>" class="inputError" data-err-msg="<%= errMsg %>">
-                <i class="fa-solid fa-circle-info tooltip-icon"></i>    
-                <p class="tooltip-text"><%= errMsg  %></p>
+                <i class="fa-solid fa-circle-info tooltip-icon .email-error-icon"></i>    
+                <p class="tooltip-text .email-error-msg"><%= errMsg  %></p>
             </div>
         <% } else { %>
-            <input type="email" name="email" placeholder="Email" value="<%= emailVal %>" class="inputCorrect" data-err-msg="">
+            <input type="email" name="email" placeholder="Email" value="<%= emailVal %>" class="" data-err-msg="">
         <% } %>
 
         
@@ -52,11 +52,11 @@
         %>
             <div class="input-err-cont">
                 <input type="password" name="password" placeholder="Password" class="inputError" data-err-msg="<%= errMsg %>"> 
-                <i class="fa-solid fa-circle-info tooltip-icon"></i>    
-                <p class="tooltip-text"><%= errMsg  %></p>
+                <i class="fa-solid fa-circle-info tooltip-icon .pwd-error-icon"></i>    
+                <p class="tooltip-text .pwd-error-msg"><%= errMsg  %></p>
             </div>
         <% } else { %>
-            <input type="password" name="password" placeholder="Password" class="inputCorrect" data-err-msg=""> 
+            <input type="password" name="password" placeholder="Password" class="" data-err-msg=""> 
         <% } %>
         
 
@@ -65,11 +65,11 @@
         %>
             <div class="input-err-cont">
                 <input type="password" name="passwordConfirm" placeholder="Password confirm" class="inputError" data-err-msg="<%= errMsg %>"> 
-                <i class="fa-solid fa-circle-info tooltip-icon"></i>    
-                <p class="tooltip-text"><%= errMsg  %></p>
+                <i class="fa-solid fa-circle-info tooltip-icon .pwd-conf-error-icon"></i>    
+                <p class="tooltip-text .pwd-conf-error-msg"><%= errMsg  %></p>
             </div>
         <% } else { %>
-            <input type="password" name="passwordConfirm" placeholder="Password confirm" class="inputCorrect" data-err-msg=""> 
+            <input type="password" name="passwordConfirm" placeholder="Password confirm" class="" data-err-msg=""> 
         <% } %>
         
          
