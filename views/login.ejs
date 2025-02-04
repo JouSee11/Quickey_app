@@ -11,16 +11,22 @@ if (error) {
 %>
 
 
-<div id="login-cont">
+<div id="form-cont">
     <form method="post">
-        <label for="name">Username:</label>
-        <input type="text" name="username" placeholder="username123" value="<%= usernameVal %>" class="<%= inputClass %>">
+        <div id="title-cont">
+            <i class="fa-solid fa-user"></i>
+            <h2>Login</h2>
+        </div>
+        <!-- <label for="name">Username:</label> -->
+        <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="<%= inputClass %>">
         
-        <label for="password">Password:</label> 
-        <input type="password" name="password" placeholder="keyboard@email.com" class="<%= inputClass %>"> 
+        <!-- <label for="password">Password:</label>  -->
+        <input type="password" name="password" placeholder="Password" class="<%= inputClass %>"> 
         
-        <button type="submit">Log in</button> 
+        <div id="btn-msg-cont">
+            <button type="submit"><i class="fa-solid fa-right-to-bracket"></i>Log in</button> 
+            <p id="info-msg">Dont have account? <a href="/auth/register">Register</a></p>
+        </div>
     </form>
-    <p><%= errMsg %></p>
-    <p>Dont have account? <a href="/auth/register">Register</a></p>
+    <p id="err-msg"><%= errMsg %></p>
 </div>

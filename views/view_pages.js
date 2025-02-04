@@ -59,7 +59,7 @@ class LoginPage extends ViewParams {
     constructor() {
         super(
             "Login page",
-            ["login.css"],
+            ["login.css", "form_auth.css"],
             [
                 "login.js",
             ],
@@ -101,7 +101,7 @@ class RegisterPage extends ViewParams {
     constructor() {
         super(
             "Register now!",
-            ["register.css"],
+            ["register.css", "form_auth.css"],
             [
                 "register.js",
             ],

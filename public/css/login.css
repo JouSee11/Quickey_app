@@ -1,49 +1,5 @@
-body{
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--primary-1000);
+#form-cont{
+    width: 600px;
+    height: 400px;
 }
 
-#login-cont{
-    display: flex;
-    flex-direction: column;
-    padding: 50px 70px;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--primary-800);
-    border-radius: var(--border-rad-bigger);
-}
-
-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-form label{
-    font-size: var(--normal-text);
-    color: var(--primary-0);
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
-
-form input{
-    font-size: var(--normal-text);
-    padding: 8px 10px;
-    border-radius: var(--border-rad-main);
-    border: none;
-    outline: none;
-}
-
-form button{
-    font-size: var(--normal-text);
-    margin-top: 15px;
-
-}
-
-#login-cont p{
-    color: var(--primary-0)
-}

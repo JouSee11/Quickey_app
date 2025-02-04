@@ -1,5 +1,3 @@
-<div id="register-cont">
-
     <!-- show errors -->
     <% 
     let errorInputs = []
@@ -12,56 +10,72 @@
     %>
 
 
+<div id="form-cont">
+
     <form method="post" action="/auth/register">
+        <div id="title-cont">
+            <i class="fa-solid fa-user-plus"></i>
+            <h2>Register</h2>
+        </div>
 
         <!-- username input -->
-        <label for="name">Username:</label>
         <% if (errorInputs.includes("username")) {
             const errMsg = errors.find(error => error.inputField === "username").msg
         %>
-            <input type="text" name="username" placeholder="username123" value="<%= usernameVal %>" class="inputError" data-err-msg="<%= errMsg %>">
-            <p class="err-msg"><%= errMsg  %></p>
+            <div class="input-err-cont">
+                <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="inputError" data-err-msg="<%= errMsg %>">
+                <i class="fa-solid fa-circle-info tooltip-icon"></i>    
+                <span class="tooltip-text"><%= errMsg  %></span>
+            </div>
         <% } else { %>
-            <input type="text" name="username" placeholder="username123" value="<%= usernameVal %>" class="inputCorret" data-err-msg="">
+            <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="inputCorret" data-err-msg="">
         <% } %>
         
         
-        <label for="email">Email:</label>
+        
         <% if (errorInputs.includes("email")) {
             const errMsg = errors.find(error => error.inputField === "email").msg
         %>
-            <input type="email" name="email" placeholder="example@email.com" value="<%= emailVal %>" class="inputError" data-err-msg="<%= errMsg %>">
-            <p class="err-msg"><%= errMsg  %></p>
+            <div class="input-err-cont">
+                <input type="email" name="email" placeholder="Email" value="<%= emailVal %>" class="inputError" data-err-msg="<%= errMsg %>">
+                <i class="fa-solid fa-circle-info tooltip-icon"></i>    
+                <p class="tooltip-text"><%= errMsg  %></p>
+            </div>
         <% } else { %>
-            <input type="email" name="email" placeholder="example@email.com" value="<%= emailVal %>" class="inputCorrect" data-err-msg="">
+            <input type="email" name="email" placeholder="Email" value="<%= emailVal %>" class="inputCorrect" data-err-msg="">
         <% } %>
 
         
         
-        <label for="password">Password:</label>
         <% if (errorInputs.includes("password")) {
             const errMsg = errors.find(error => error.inputField === "password").msg
         %>
-            <input type="password" name="password" placeholder="Secret password" class="inputError" data-err-msg="<%= errMsg %>"> 
-            <p class="err-msg"><%= errMsg  %></p>
+            <div class="input-err-cont">
+                <input type="password" name="password" placeholder="Password" class="inputError" data-err-msg="<%= errMsg %>"> 
+                <i class="fa-solid fa-circle-info tooltip-icon"></i>    
+                <p class="tooltip-text"><%= errMsg  %></p>
+            </div>
         <% } else { %>
-            <input type="password" name="password" placeholder="Secret password" class="inputCorrect" data-err-msg=""> 
+            <input type="password" name="password" placeholder="Password" class="inputCorrect" data-err-msg=""> 
         <% } %>
         
 
-        <label for="passwordConfirm">Password confirm:</label>
         <% if (errorInputs.includes("password-conf")) {
             const errMsg = errors.find(error => error.inputField === "password-conf").msg
         %>
-            <input type="password" name="passwordConfirm" placeholder="Secret password again" class="inputError" data-err-msg="<%= errMsg %>"> 
-            <p class="err-msg"><%= errMsg  %></p>
+            <div class="input-err-cont">
+                <input type="password" name="passwordConfirm" placeholder="Password confirm" class="inputError" data-err-msg="<%= errMsg %>"> 
+                <i class="fa-solid fa-circle-info tooltip-icon"></i>    
+                <p class="tooltip-text"><%= errMsg  %></p>
+            </div>
         <% } else { %>
-            <input type="password" name="passwordConfirm" placeholder="Secret password again" class="inputCorrect" data-err-msg=""> 
+            <input type="password" name="passwordConfirm" placeholder="Password confirm" class="inputCorrect" data-err-msg=""> 
         <% } %>
         
          
-
-        <button type="submit">Register</button> 
+        <div id="btn-msg-cont">
+            <button type="submit"><i class="fa-solid fa-right-to-bracket"></i>Register</button> 
+            <p id="info-msg">Dont have account? <a href="/auth/login">Login</a></p>
+        </div>
     </form>
-    <p>Already have account? <a href="/auth/login">Login</a></p>
 </div>
