@@ -4,8 +4,11 @@ import { RegisterPage } from "../views/view_pages.js"
 import User from "../models/user.js"
 
 const registerFormValidation = async (req, res, next) => {
-    const { username, email, password, passwordConfirm } = req.body
+    let { username, email, password, passwordConfirm } = req.body
     let errors = []
+    //trim the spaces for username and email
+    username = username.trim() 
+    email = email.trim()
 
     // // Example validation checks
     // if (!username || !email || !password || !passwordConfirm) {

@@ -13,8 +13,8 @@ const handleRegister =  async (req, res, next) => {
     const {username, email, password} = req.body
 
     const newUser = new User({
-        username: username,
-        email: email,
+        username: username.trim(),
+        email: email.trim(),
         password: password
     })
 

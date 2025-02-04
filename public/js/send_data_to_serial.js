@@ -12,6 +12,13 @@ let serialBuffer = ""
 
 // sending through serial - logic
 async function connectToPico() {
+    //check if the browser supports WebSerial API
+    if (!("serial" in navigator)) {
+        // TODO: show message that the browser doenst support the webserial api, install extenstion 
+        console.log("Web serial API is not supported")
+        addLogs("Web serial API is not supported by your browser")
+    }
+
     try {
         picoPort = await navigator.serial.requestPort();
         await picoPort.open({ baudRate: 9600 });
