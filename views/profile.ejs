@@ -1,3 +1,9 @@
-<p>Username</p>
+<% 
+let usernameVal = ""
+if (username) {
+    usernameVal = username    
+}
+%>
+<p>Profile of:  <%= usernameVal  %></p>
 
 <a id="logout-btn" href="/auth/logout">Log out</a>

@@ -13,9 +13,8 @@
 <body> -->
 
 <% 
-const usernameItem = extraData.find(item => "username" in item);
-if (usernameItem) { %>
-    <p id="greeting-msg">Welcome back <span id="username-display"><%= usernameItem.username  %></span>!</p>
+if (username) { %>
+    <p id="greeting-msg">Welcome back <span id="username-display"><%= username  %></span>!</p>
 
 <% } %>
 <div id="content-container">

@@ -21,6 +21,13 @@ app.use(session({
     saveUninitialized: true,
 }))
 
+//make sure the session values are avilible in the templates
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+  });
+  
+
 app.use("", router)
 
 //for errpr pages

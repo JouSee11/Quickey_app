@@ -1,6 +1,6 @@
 //register validation
 import validator from "validator"
-import { registerPage } from "../views/view_pages.js"
+import { RegisterPage } from "../views/view_pages.js"
 import User from "../models/user.js"
 
 const registerFormValidation = async (req, res, next) => {
@@ -32,10 +32,10 @@ const registerFormValidation = async (req, res, next) => {
 
     if (errors.length > 0) {
         // Render the form again with error messages and prefilled values
-        const registerPageCopy = Object.create(registerPage)
-        registerPageCopy.setErrors(errors)
-        registerPageCopy.setFormData({username: username, email: email})
-        return res.render("index", registerPageCopy.getDetails())
+        const registerPage = new RegisterPage()
+        registerPage.setErrors(errors)
+        registerPage.setFormData({username: username, email: email})
+        return res.render("index", registerPage.getDetails())
     }
 
     next() //if there are no errors write the user to the db

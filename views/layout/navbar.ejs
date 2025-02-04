@@ -1,5 +1,9 @@
 <nav id="main-nav">
     <a href="/">Home</a>
-    <a href="/auth/login">Login</a>
+    <% if (session.username) { %>
+        <a href="/profile">Profile</a>
+    <% } else { %>
+            <a href="/auth/login">Login</a>
+    <% } %>
     <a href="/discover" >Discover</a>
 </nav>

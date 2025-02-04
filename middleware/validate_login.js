@@ -1,5 +1,5 @@
 import User from "../models/user.js"
-import { loginPage } from "../views/view_pages.js"
+import { LoginPage } from "../views/view_pages.js"
 
 const loginFormValidation = async (req, res, next) => {
     const {username, password} = req.body
@@ -12,10 +12,11 @@ const loginFormValidation = async (req, res, next) => {
     }
 
     if (error) {
-        const loginPageCopy = Object.create(loginPage)
-        loginPageCopy.setErrors(error)
-        loginPageCopy.setFormData({username: username})
-        return res.render("index", loginPageCopy.getDetails())
+        //if there is error stay on the login page with errors
+        const loginPage = new LoginPage()
+        loginPage.setErrors(error)
+        loginPage.setFormData({username: username})
+        return res.render("index", loginPage.getDetails())
     }
     req.body.user = await getUserByUsername(username)
     next()

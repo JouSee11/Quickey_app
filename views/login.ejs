@@ -3,17 +3,11 @@ let inputClass = "inputCorrect"
 let errMsg = ""
 let usernameVal = ""
 // check if we comeback to the login form with some error
-console.log(errors)
-if (typeof errors === "string") {
+if (error) {
     inputClass = "inputError"
-    errMsg = errors
+    errMsg = error
     usernameVal = formData.username
 }
-
-
-console.log("inputClass:", inputClass);
-console.log("errMsg:", errMsg);
-console.log("usernameVal:", usernameVal);
 %>
 
 

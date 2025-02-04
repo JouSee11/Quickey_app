@@ -1,14 +1,14 @@
-import {homeBindingPage} from "../views/view_pages.js"
+import {HomeBindingPage} from "../views/view_pages.js"
 
 
 const getBindingPage = (req, res) => {
-    const homePageCopy = Object.create(homeBindingPage)
+    const homePage = new HomeBindingPage()
     // const homePageCopy =  Object.assign(Object.create(Object.getPrototypeOf(homeBindingPage)), homeBindingPage);
     if (req.session.username) {
         console.log("here the session value:" + req.session.username)
-        homePageCopy.insertData({username: req.session.username})
+        homePage.setUsername(req.session.username)
     }
-    res.render("index", homePageCopy.getDetails())
+    res.render("index", homePage.getDetails())
 }
 
 

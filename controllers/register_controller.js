@@ -1,7 +1,11 @@
-import {registerPage, registerSuccess} from "../views/view_pages.js"
+import {RegisterPage, registerSuccess} from "../views/view_pages.js"
 import User from "../models/user.js"
 
 const getRegisterPage = (req, res) => {
+    if (req.session.username) {
+        return res.redirect("/profile")
+    }
+    const registerPage = new RegisterPage()
     res.render("index", registerPage.getDetails())
 }
 
