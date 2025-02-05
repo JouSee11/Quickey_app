@@ -10,6 +10,12 @@ const controlsBtn = document.getElementById("controls-button")
 const buttonReset = document.getElementById("reset-button")
 const buttonImport = document.getElementById("import-button")
 
+//icon on the item
+const iconWranch = Object.assign(document.createElement("i"), { className: "fa-solid fa-wrench" });
+// iconDisplay.classList.add("fa-solid", "fa-wrench")
+
+//icon for connect
+// const iconConnect = Object.assign(document.createElement("i"), { className: "fa-brands fa-usb" });
 
 //change the initial connection state
 changeConnectionState()
@@ -58,6 +64,7 @@ function changeConnectionState(state){
 
         buttonImport.classList.remove("allowed")
         buttonImport.classList.add("disabled")
+
     }
 }
 
@@ -91,6 +98,7 @@ function disableCaptureAll() {
         if (button.textContent === capturingMsg) {
             button.textContent = defaultMsg
             button.classList.remove("binded")
+            button.prepend(iconWranch.cloneNode(true))
             capturing = false
             capturingButton = null
             button.classList.add("removed")
@@ -107,6 +115,7 @@ function resetButtons() {
         buttonsList.forEach((button) => {
             button.textContent = defaultMsg
             button.classList.remove("binded")
+            button.prepend(iconWranch.cloneNode(true))
             capturing = false
             capturingButton = null
             const btnNumber = Number(button.dataset.keyNum)

@@ -46,6 +46,7 @@
     /* shadows */
     --blue-vivid-shadow: #6727f23d;
     --green-vivid-shadow: rgba(29, 163, 83, 0.356);
+    --green-vivid-shadow-mild: rgba(29, 163, 83, 0.089);
 
     /* SHAPES */
     --border-rad-main: 10px;
