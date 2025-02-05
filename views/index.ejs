@@ -39,11 +39,12 @@
 </body>
 
     <!-- page scripts -->
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://kit.fontawesome.com/979578c736.js" crossorigin="anonymous"></script>
     <% if (scripts) { %>
         <% scripts.forEach(function(script) { %>
-            <script src="js/<%= script %>"></script>
+            <script src="<%= script %>"></script>
         <% }); %>
     <% } %>
 </html>

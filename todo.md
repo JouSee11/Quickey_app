@@ -1,2 +1,4 @@
 - do controls na home pridat icony do tlacited
-- na homepage pridat pro prihlasene uzivatele - Hello, Username!
+
+4.2.25
+- upravit stranku pro uspesnou registraci

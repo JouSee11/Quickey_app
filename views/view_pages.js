@@ -21,10 +21,10 @@ class HomeBindingPage extends ViewParams {
             "Key binding",
             ["home_binding.css"],
             [
-                "bind_keys.js",
-                "import_current_data.js",
-                "send_data_to_serial.js",
-                "ui_changes.js",
+                "js/bind_keys.js",
+                "js/import_current_data.js",
+                "js/send_data_to_serial.js",
+                "js/ui_changes.js",
             ],
             "home_binding",
             true,
@@ -61,7 +61,7 @@ class LoginPage extends ViewParams {
             "Login page",
             ["login.css", "form_auth.css"],
             [
-                "login.js",
+                "js/login.js",
             ],
             "login",
             true,
@@ -103,7 +103,8 @@ class RegisterPage extends ViewParams {
             "Register now!",
             ["register.css", "form_auth.css"],
             [
-                "register.js",
+                "js/register.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
             ],
             "register",
             true,
@@ -142,7 +143,7 @@ const discoverHomePage = new ViewParams(
     "Discover",
     ["discover_page.css"],
     [
-        "discover.js",
+        "js/discover.js",
     ],
     "discover",
     true,
@@ -166,7 +167,7 @@ class ProfilePage extends ViewParams {
             "Profile",
             ["profile_page.css"],
             [
-                "profile.js",
+                "js/profile.js",
             ],
             "profile",
             true,
