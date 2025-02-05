@@ -1,4 +1,4 @@
-import {RegisterPage, registerSuccess} from "../views/view_pages.js"
+import {RegisterPage, RegisterSucPage} from "../views/view_pages.js"
 import User from "../models/user.js"
 
 const getRegisterPage = (req, res) => {
@@ -24,7 +24,8 @@ const handleRegister =  async (req, res, next) => {
 }
 
 const getRegisterSucPage = (req, res) => {
-    res.render("index", registerSuccess.getDetails())
+    const regSucPage = new RegisterSucPage() 
+    res.render("index", regSucPage.getDetails())
 }
 
 export {getRegisterPage, handleRegister, getRegisterSucPage}

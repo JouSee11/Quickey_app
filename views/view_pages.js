@@ -130,14 +130,29 @@ class RegisterPage extends ViewParams {
 }
 
 
-const registerSuccess = new ViewParams(
-    "Registration successfull!",
-    ["register_success.css"],
-    [""],
-    "registration_success",
-    true,
-    false
-)
+
+
+// const registerSuccess = new ViewParams(
+//     "Registration successfull!",
+//     ["register_success.css"],
+//     [""],
+//     "registration_success",
+//     true,
+//     false
+// )
+
+class RegisterSucPage extends ViewParams {
+    constructor() {
+        super(
+            "Registration successfull!",
+            ["register_success.css", "form_auth.css"],
+            [""],
+            "registration_success",
+            true,
+            false
+        )
+    }
+}
 
 const discoverHomePage = new ViewParams(
     "Discover",
@@ -147,7 +162,7 @@ const discoverHomePage = new ViewParams(
     ],
     "discover",
     true,
-    true
+    false
 )
 
 // const profilePage = new ViewParams(
@@ -189,4 +204,4 @@ class ProfilePage extends ViewParams {
 
 
 
-export {registerSuccess, discoverHomePage, HomeBindingPage, LoginPage, RegisterPage, ProfilePage}
+export {RegisterSucPage, discoverHomePage, HomeBindingPage, LoginPage, RegisterPage, ProfilePage}

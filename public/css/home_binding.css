@@ -5,8 +5,23 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to top, var(--primary-1000), rgb(18, 24, 33));
+    /* background: linear-gradient(to top, var(--primary-1000), rgb(18, 24, 33)); */
+
+    /* Background color if needed */
+    background-color: var(--primary-1000);
+
+    /* /*     /* Two gradients: one for vertical lines and one for horizontal lines */
+    background-image:
+      linear-gradient(to right, var(--blue-dark) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--blue-dark) 1px, transparent 1px);
+  
+    /* Size of the grid cells (adjust as needed) */
+    background-size: 100px 100px;
+    overflow: hidden;
+
+    transition: all 0.3s ease-in-out;
 }
+
 
 /* main content sections */
 #content-container{
