@@ -125,7 +125,20 @@ function resetButtons() {
 }
 
 function addInitialValuesUI() {
-    button
+    buttonsList.forEach((button) => {
+        //get info about button
+        const buttonNumber = Number(button.dataset.keyNum)
+        const currentSet = keyBindingValues.get(buttonNumber)
+        //if no values are set to the button
+        if (currentSet.size === 0) {
+            return
+        }
+        console.log(currentSet)
+
+        const keyCombination = Array.from(currentSet).join(" + ")
+        button.textContent = keyCombination
+        button.classList.add("binded")
+    })
 }
 
 

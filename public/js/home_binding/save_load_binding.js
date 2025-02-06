@@ -23,7 +23,7 @@ async function saveToSession(e) {
         }
         
     } catch (error) {
-        alert("Error: Data not saved!")
+        console.log(error)
     }
     
 
@@ -41,11 +41,13 @@ async function laodFromSession(e) {
 
         const responseData = await response.json()
         
+        //handle the incoming data with seting it to a local list of binding and updating the ui
         addLoadedDataToList(responseData)
         addInitialValuesUI()
+        console.log(responseData)
 
-    } catch {
-        alert("Error, data not loaded")
+    } catch (error){
+        alert(error)
     }
 }
 
