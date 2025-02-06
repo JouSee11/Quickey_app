@@ -124,15 +124,9 @@ function resetButtons() {
     }
 }
 
-// function focusOutOfButtons() {
-//     buttonsList.forEach((button) => {
-//         if (button.textContent === capturingMsg) {
-//             button.classList.remove("binded")
-//             button.textContent = defaultMsg
-//         }
-//         button.classList.remove("active")
-//     })
-// }
+function addInitialValuesUI() {
+    button
+}
 
 
 toggleLogBtn.addEventListener("click", toggleLogArea)
