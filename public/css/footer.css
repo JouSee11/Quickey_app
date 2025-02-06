@@ -1,0 +1,44 @@
+footer{
+    display: flex;
+    width: 100vw;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    padding: 0.5em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: transparent;
+    background: linear-gradient(to top, var(--primary-1000), transparent)
+}
+
+footer a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: var(--normal-text);
+    color: var(--blue-dark);
+    transition: all 0.1s ease-in-out;
+    margin-left: 50px;
+    transition: color 0.2s ease-in-out;
+}
+
+footer a:hover, 
+footer p:hover{
+    color: var(--primary-0);
+    text-shadow: 0 0 15px var(--primary-0-shadow);
+}
+
+#icons-links{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+footer p{
+    color: var(--blue-dark);
+}
+
+footer #icons-links a i {
+    padding: 10px;
+}

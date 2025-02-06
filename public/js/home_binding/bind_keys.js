@@ -82,5 +82,6 @@ document.addEventListener("keyup", (event) => {
     capturing = false
     capturingButton = null
     console.log(keyBindingValues)
+    console.log(Object.fromEntries(keyBindingValues))
 
 })

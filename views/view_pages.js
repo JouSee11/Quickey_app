@@ -25,10 +25,11 @@ class HomeBindingPage extends ViewParams {
                 "js/home_binding/import_current_data.js",
                 "js/home_binding/send_data_to_serial.js",
                 "js/home_binding/ui_changes.js",
+                "js/home_binding/save_load_binding.js"
             ],
             "home_binding",
             true,
-            false
+            true
         )
         this.username = null
     }
@@ -65,7 +66,7 @@ class LoginPage extends ViewParams {
             ],
             "login",
             true,
-            false
+            true
         )
         this.errors = null
         this.formData = null
@@ -108,7 +109,7 @@ class RegisterPage extends ViewParams {
             ],
             "register",
             true,
-            false
+            true
         )
         this.errors = []
         this.formData = {username: "", email: ""}
@@ -186,7 +187,7 @@ class ProfilePage extends ViewParams {
             ],
             "profile",
             true,
-            false
+            true
         )
         this.username = null
     }

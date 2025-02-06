@@ -3,7 +3,8 @@ import authRouter from "./page_routers/auth_router.js"
 import dicoverRouter from "./page_routers/discover_router.js"
 import {getBindingPage} from "../controllers/home_binding_controller.js"
 import profileRouter from "./page_routers/profile_router.js"
-import apiAuthRouter from "./page_routers/api_auth_router.js"
+import apiAuthRouter from "./api_routers/api_auth_router.js"
+import apiSessionRouter from "./api_routers/api_session_router.js"
 
 const router = express.Router()
 
@@ -22,6 +23,8 @@ router.use("/discover", dicoverRouter)
 //routes for api
 router.use("/api/auth", apiAuthRouter)
 
+//routes for session
+router.use("/api/session", apiSessionRouter)
 
 
 

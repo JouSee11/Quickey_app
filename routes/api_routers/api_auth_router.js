@@ -1,5 +1,5 @@
 import express from "express"
-import {checkUniqueUsername, checkUniqueEmail} from "../../controllers/api_auth_controller.js"
+import {checkUniqueUsername, checkUniqueEmail} from "../../controllers/api_controllers/api_auth_controller.js"
 
 
 const router = express.Router()

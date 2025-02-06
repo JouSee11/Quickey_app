@@ -30,11 +30,10 @@
     <main>
         <%- include(content) %>
     </main>
-    <footer>
-        <% if (footerBool) { %>
-            <%- include("layout/footer") %>
-        <% } %>
-    </footer>
+    <% if (footerBool) { %>
+        <%- include("layout/footer") %>
+    <% } %>
+
 
 </body>
 
