@@ -17,9 +17,20 @@ function saveToSession(e) {
             this.alert("Data cannot be saved")
         })
 
-    e.preventDefault(); // Required in some browsers
-    e.returnValue = "Are you sure you want to leave?";
+    // e.preventDefault(); // Required in some browsers
+    // e.returnValue = "Are you sure you want to leave?";
 }
 
+function laodFromSession(e) {
+    axios.get("/api/session/get-binding")
+        .then(response => {
+            console.log(`loaded data:`)
+            console.log(response.data)
+        })
+        .catch(error => {
+            e.preventDefault()
+            this.alert("Data cannot be saved")
+        })
+}
 
 
