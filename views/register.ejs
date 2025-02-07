@@ -23,11 +23,11 @@
         <% if (errorInputs.includes("username")) {
             const errMsg = errors.find(error => error.inputField === "username").msg
         %>
-            <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="inputError" data-err-msg="<%= errMsg %>">
+            <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="inputError" data-err-msg="<%= errMsg %>" minlength="3" maxlength="20">
             <i class="fa-solid fa-circle-info tooltip-icon .username-error-icon"></i>    
             <span class="tooltip-text .username-error-msg"><%= errMsg  %></span>
         <% } else { %>
-            <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="" data-err-msg="">
+            <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="" data-err-msg="" minlength="3" maxlength="20" >
         <% } %>
         </div>
         
@@ -51,11 +51,11 @@
         <% if (errorInputs.includes("password")) {
             const errMsg = errors.find(error => error.inputField === "password").msg
         %>
-                <input type="password" name="password" placeholder="Password" class="inputError" data-err-msg="<%= errMsg %>"> 
+                <input type="password" name="password" placeholder="Password" class="inputError" data-err-msg="<%= errMsg %>" minlength="8" maxlength="256"> 
                 <i class="fa-solid fa-circle-info tooltip-icon .pwd-error-icon"></i>    
                 <p class="tooltip-text .pwd-error-msg"><%= errMsg  %></p>
         <% } else { %>
-                <input type="password" name="password" placeholder="Password" class="" data-err-msg=""> 
+                <input type="password" name="password" placeholder="Password" class="" data-err-msg="" minlength="8" maxlength="256"> 
         <% } %>
         </div>
         

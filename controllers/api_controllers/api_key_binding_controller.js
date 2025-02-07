@@ -5,10 +5,6 @@ const checkUniqueName = (req, res) =>{
 }
 
 const saveKeyBinding = async (req, res) => {
-    if (!req.session.userId) {
-        return res.status(401).json({status: "error", msg: "Unauthorized user"})
-    }
-
     try {
         const {name, description, bindingValues} = req.body 
         const newBinding = new KeyBinding({
@@ -21,7 +17,7 @@ const saveKeyBinding = async (req, res) => {
         await newBinding.save()
         return res.status(201).json({status: "success", msg: "binding successfully saved"})
     } catch (error) {
-        return res.status(500).json({status: "error", msg: error})
+        return res.status(500).json({status: "error", msg: "Name must be unique! Must be logged in!"})
         
     }
 }

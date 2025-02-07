@@ -3,12 +3,16 @@
     justify-content: center;
     align-items: start;
     width: 600px;
+    height: 350px;
     border: none;
     background-color: var(--blue-dark);
     border-radius: var(--border-rad-bigger);
     box-shadow: 10px 10px 0 var(--primary-600);
+    transition: height 0.3s ease-in-out;
 }
-
+#save-binding-dialog.with-error{
+    height: 400px;
+}
 
 #save-binding-dialog input{
     font-size: var(--normal-text);
@@ -111,3 +115,10 @@ input::placeholder{
     filter: blur(1.1);
     box-shadow: none;
 }
+ 
+/*error message */ 
+#dialog-error-msg{
+    color: var(--red-vivid);
+    margin-top: 30px;
+}
+

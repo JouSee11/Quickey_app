@@ -44,14 +44,21 @@ async function showSaveDialog() {
 }
 
 async function saveToDb(nameInput, descriptionInput, saveDialog) {
+    const nameVal = nameInput.value
+    const descriptionVal = descriptionInput.value
+
+    //validate the data client side
+    const validation = checkData(nameVal, descriptionVal) 
+    if (!validation.status) {
+        showErrorMsg(validation.msg, saveDialog)
+        return
+    }
+
     try {
         const keyBindingArray = Array.from(keyBindingValues, ([key, value]) => ({
             keyIndex: Number(key),
             keyValues: Array.from(value)
         }))
-
-        const nameVal = nameInput.value
-        const descriptionVal = descriptionInput.value
 
         const response = await fetch("/api/key-binding/save-key-binding", {
             method: "POST",
@@ -63,13 +70,19 @@ async function saveToDb(nameInput, descriptionInput, saveDialog) {
             })
         })
         
-        if (!response.ok) {
-            //show error msg
-            return alert("Response not ok")
-        }
+        // if (!response.ok) {
+        //     //show error msg
+        //     return alert("Response not ok")
+        // }
 
         const responseData = await response.json()
-        console.log(responseData) 
+        if (responseData.status === "error") {
+            showErrorMsg(responseData.msg, saveDialog)
+            console.log(responseData) 
+            return
+        } else {
+            console.log(responseData)
+        }
 
         saveDialog.close()
         
@@ -90,11 +103,27 @@ function checkData (nameVal, descriptionVal) {
     }
     //check name
     if (nameVal.length > 50 || nameVal.length < 1) {
-        return {status: false, msg: "Max name length is 50 characters"}
+        return {status: false, msg: "Name must be provided! Max length 50 chars!"}
     }
 
     return {status: true, msg: "Client validation valid"}
 
 
     
+}
+
+function showErrorMsg(errorMsg, saveDialog) {
+    if (!document.getElementById("dialog-error-msg")) {
+        const parMsg = document.createElement("p")
+        parMsg.textContent = errorMsg
+        parMsg.id = "dialog-error-msg"
+        saveDialog.appendChild(parMsg)
+        saveDialog.classList.add("with-error")
+        setTimeout(() => {
+            saveDialog.removeChild(document.getElementById("dialog-error-msg"))
+            saveDialog.classList.remove("with-error")
+        }, 2000)
+    }
+
+
 }
