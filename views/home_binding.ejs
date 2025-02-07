@@ -1,7 +1,11 @@
 <% 
-if (username) { %>
+let saveBtnClass = "disabled"
+if (username) {
+     // meaning user is logged in 
+     saveBtnClass = ""
+     %>
     <p id="greeting-msg">Welcome back <span id="username-display"><%= username  %></span>!</p>
-
+    
 <% } %>
 <div id="content-container">
 
@@ -9,7 +13,7 @@ if (username) { %>
         <div id="button-cont" class="hidden">
             <button id="reset-button"><i class="fa-solid fa-rotate-left"></i>Reset all</button>
             <button id="import-button"><i class="fa-solid fa-file-import"></i>Import from device</button>
-            <button id="save-button"><i class="fa-solid fa-floppy-disk"></i>Save current</button>
+            <button id="save-button" class="<%= saveBtnClass %>"><i class="fa-solid fa-floppy-disk"></i>Save current</button>
         </div>
         <button id="controls-button">Show controls</button>
     </div>

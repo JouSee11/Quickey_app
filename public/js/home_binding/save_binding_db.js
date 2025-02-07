@@ -2,7 +2,11 @@
 
 const saveButton = document.getElementById("save-button")
 
-saveButton.addEventListener("click", showSaveDialog)
+saveButton.addEventListener("click", () => {
+    if (!saveButton.classList.contains("disabled")) {
+        showSaveDialog()
+    }
+})
 
 
 async function showSaveDialog() {
