@@ -1,6 +1,6 @@
 <nav id="main-nav">
     <a href="/">Home</a>
-    <% if (session.username) { %>
+    <% if (session.userId) { %>
         <a href="/profile">Profile</a>
     <% } else { %>
             <a href="/auth/login">Login</a>

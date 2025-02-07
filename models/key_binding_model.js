@@ -6,6 +6,12 @@ const keyBindingSchema = new mongoose.Schema({
         ref: "User",
         required: [true, "Must assign the binding to some user"]
     },
+    name: {
+        type: String,
+        required: true,
+        minlength: [1, "Must provide name"],
+        maxlength: [50, "Max key binding save name is 50 chars"]
+    },
     keyBinding: [
         {
             keyIndex: Number,
@@ -15,7 +21,8 @@ const keyBindingSchema = new mongoose.Schema({
     description: {
         type: String,
         required: false,
-        default: null
+        default: null,
+        maxlength: [2000, "Description cannot exceed 2000 characters"]
     },
     createdAt: {
         type: Date,
@@ -26,6 +33,9 @@ const keyBindingSchema = new mongoose.Schema({
         default: Date.now
     } 
 })
+
+// Create a compound index on userId and name to ensure uniqueness per user
+keyBindingSchema.index({ userId: 1, name: 1 }, { unique: true });
 
 const KeyBinding = mongoose.model("keyBinding", keyBindingSchema)
 

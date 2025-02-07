@@ -5,6 +5,7 @@ import {getBindingPage} from "../controllers/home_binding_controller.js"
 import profileRouter from "./page_routers/profile_router.js"
 import apiAuthRouter from "./api_routers/api_auth_router.js"
 import apiSessionRouter from "./api_routers/api_session_router.js"
+import apiBindingRouter from "./api_routers/api_key_binding_router.js"
 
 const router = express.Router()
 
@@ -26,6 +27,8 @@ router.use("/api/auth", apiAuthRouter)
 //routes for session
 router.use("/api/session", apiSessionRouter)
 
+//routes for key bindings
+router.use("/api/key-binding", apiBindingRouter)
 
 
 export default router

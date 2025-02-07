@@ -2,7 +2,7 @@ import {RegisterPage, RegisterSucPage} from "../views/view_pages.js"
 import User from "../models/user_model.js"
 
 const getRegisterPage = (req, res) => {
-    if (req.session.username) {
+    if (req.session.userId) {
         return res.redirect("/profile")
     }
     const registerPage = new RegisterPage()

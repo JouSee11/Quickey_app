@@ -212,6 +212,7 @@ body{
 #log-area{
     width: 400px;
     height: 500px;
+    max-width: 90%;
     border-radius: var(--border-rad-bigger);
     background-color: var(--primary-800);
     margin-top: 10px;

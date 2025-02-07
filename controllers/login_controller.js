@@ -1,7 +1,7 @@
 import {LoginPage} from "../views/view_pages.js"
 
 const getLoginPage = (req, res) => {
-    if (req.session.username) {
+    if (req.session.userId) {
         return res.redirect("/profile")
     }
     const loginPage = new LoginPage()
@@ -10,7 +10,7 @@ const getLoginPage = (req, res) => {
 
 const handleLogin = (req, res) => {
     // save user data to session
-    req.session.username = req.body.user.profile.username
+    req.session.userId = req.body.user.profile.id
 
     res.redirect("/profile")
 }
