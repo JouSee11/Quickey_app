@@ -14,8 +14,6 @@ const sessionSaveBinding = (req, res) => {
     //send data to the session
     Object.entries(keyData).forEach(([key, value]) => {
         req.session.binding[key] = value
-        console.log(`Key: ${key}`)
-        console.log(` Value: ${value}`)
     });
 
     return res.status(200).json({status: "success", msg: "data recieved"})

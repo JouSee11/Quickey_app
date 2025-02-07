@@ -19,13 +19,17 @@ class HomeBindingPage extends ViewParams {
     constructor() {
         super(
             "Key binding",
-            ["home_binding.css"],
+            [
+                "home_binding.css",
+                "save_binding_dialog.css"
+            ],
             [
                 "js/home_binding/bind_keys.js",
                 "js/home_binding/import_current_data.js",
                 "js/home_binding/send_data_to_serial.js",
                 "js/home_binding/ui_changes.js",
-                "js/home_binding/save_load_binding.js"
+                "js/home_binding/save_load_binding.js",
+                "js/home_binding/save_binding_db.js"
             ],
             "home_binding",
             true,

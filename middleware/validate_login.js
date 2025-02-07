@@ -1,4 +1,4 @@
-import User from "../models/user.js"
+import User from "../models/user_model.js"
 import { LoginPage } from "../views/view_pages.js"
 
 const loginFormValidation = async (req, res, next) => {

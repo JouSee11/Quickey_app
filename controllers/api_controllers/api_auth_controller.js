@@ -1,4 +1,4 @@
-import User from "../../models/user.js"
+import User from "../../models/user_model.js"
 
 const checkUniqueUsername = async (req, res) => {
     const username = req.body.username

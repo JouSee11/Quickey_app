@@ -250,7 +250,8 @@ body{
 
 /* buttons area */
 #button-cont{
-    width: 400px;
+    /* width: 400px; */
+    max-width: 90%;
     height: auto;
     background-color: var(--primary-800);
     border-radius: var(--border-rad-bigger);
@@ -290,6 +291,15 @@ body{
     cursor: not-allowed;
     filter: brightness(0.5);
 }
+#import-button.disabled:hover{
+    background-color: var(--red-dark);
+    filter: brightness(0.8)
+}
+
+#button-cont button i{
+    margin-right: 5px;
+}
+
 
 
 /* greeting messagae  */

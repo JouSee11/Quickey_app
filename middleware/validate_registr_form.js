@@ -1,7 +1,7 @@
 //register validation
 import validator from "validator"
 import { RegisterPage } from "../views/view_pages.js"
-import User from "../models/user.js"
+import User from "../models/user_model.js"
 
 const registerFormValidation = async (req, res, next) => {
     let { username, email, password, passwordConfirm } = req.body
