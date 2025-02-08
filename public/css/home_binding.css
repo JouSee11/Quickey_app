@@ -311,13 +311,18 @@ body{
     left: 50%;
     top: 20px;
     transform: translate(-50%);
-    color: var(--primary-0);
+    color: var(--gray-main);
     font-size: var(--bigger-text);
+    transition: color 0.2s ease-in-out;
 }
 
-#username-display{
+#greeting-msg:hover{
+    color: var(--primary-0);
+    text-shadow: 0 0 10px var(--primary-0-shadow);
+}
+
+/* #username-display{
     font-weight: bold;
-    /* text-transform: uppercase; */
     color: var(--green-bright);
 
-}
+} */
