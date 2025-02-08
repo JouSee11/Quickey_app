@@ -5,22 +5,7 @@ class ViewParams {
         this.scripts = scripts
         this.content = content
         this.headerBool = headerBool
-        this.footerBool = footerBool
-        // this.errors = []
-        // this.formData = []
-        // this.extraData = [] 
-    }
-
-    // setErrors(errorList) {
-    //     this.errors = errorList
-    // }
-
-    // setFormData(formData) {
-    //     this.formData = formData
-    // }
-
-    insertData(data) {
-        this.extraData.push(data)
+        this.footerBool = footerBool 
     }
 
     getDetails() {
@@ -31,9 +16,6 @@ class ViewParams {
             content: this.content,
             headerBool: this.headerBool,
             footerBool: this.footerBool,
-            // errors: this.errors,
-            // formData: this.formData,
-            // extraData: this.extraData
         }
     }
 }

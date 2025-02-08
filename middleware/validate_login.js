@@ -20,17 +20,17 @@ const loginFormValidation = async (req, res, next) => {
         loginPage.setFormData({username: username})
         return res.render("index", loginPage.getDetails())
     }
-    req.body.user = await getUserByUsername(username)
+    req.body.user = await User.findByUsername(username)
     next()
 }
 
-const getUserByUsername = async (username) => {
-    const user = await User.findByUsername(username)
-    return user
-}
+// const getUserByUsername = async (username) => {
+//     const user = await User.findByUsername(username)
+//     return user
+// }
 
 const loginValid = async (username, password) => {
-    const user = await getUserByUsername(username)
+    const user = await User.findByUsername(username)
     //check if the entered username exists
     if (!user) return false
 

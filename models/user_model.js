@@ -65,6 +65,11 @@ userSchema.statics.findByEmail = function (email) {
     return this.findOne({ email })
 }
 
+//find user by id - this is buiild in function
+// userSchema.statics.findById = function (id) {
+//     return this.findOne({ id })
+// }
+
 // Virtual property to return a simplified user profile
 userSchema.virtual('profile').get(function () {
     return {
