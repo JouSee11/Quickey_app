@@ -80,11 +80,13 @@ async function saveToDb(nameInput, descriptionInput, saveDialog) {
             showErrorMsg(responseData.msg, saveDialog)
             console.log(responseData) 
             return
-        } else {
-            console.log(responseData)
         }
 
+        showSuccessMsg("Preset saved successfully!")
         saveDialog.close()
+        console.log(responseData)
+        nameInput.value = ""
+        descriptionInput.value = ""
         
     } catch (error) {
         //show error

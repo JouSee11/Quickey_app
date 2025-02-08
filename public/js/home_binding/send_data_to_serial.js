@@ -103,7 +103,7 @@ async function sendToPico(data) {
         await writer.write(new TextEncoder().encode(dataToSend));
         
         //show sucess msg only when we send data not import
-        if (data !== "import data") showSuccessMsg()
+        if (data !== "import data") showSuccessMsg("Data send successfully")
         addLogs(`Data sent and flushed successfully: ${dataToSend}`)
         console.log("Data sent and flushed:", dataToSend);
     } catch (err) {

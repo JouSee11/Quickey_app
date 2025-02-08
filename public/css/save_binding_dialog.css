@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: start;
     width: 600px;
-    height: 350px;
+    height: 400px;
     border: none;
     background-color: var(--blue-dark);
     border-radius: var(--border-rad-bigger);
@@ -11,7 +11,7 @@
     transition: height 0.3s ease-in-out;
 }
 #save-binding-dialog.with-error{
-    height: 400px;
+    height: 450px;
 }
 
 #save-binding-dialog input{
@@ -26,11 +26,11 @@
     color: var(--primary-0);
     transition: all 0.2s ease-in-out;
 }
-input:focus{
-    box-shadow: 0 0 10px var(--green-vivid-shadow);
-}
+/* input:focus{
+    box-shadow: 0 0 10px var(--primary-0-shadow);
+} */
 input::placeholder{
-    color: var(--green-dark);
+    color: var(--gray-main);
 }
 
 #save-binding-dialog textarea{
@@ -41,9 +41,10 @@ input::placeholder{
     border-radius: var(--border-rad-main);
     border: none;
     outline: none;
+    height: 100px;
     margin: 10px 0 10px 0 ;
     background-color: var(--primary-800);
-    color: var(--primary-0);
+    color: var(--primary-50);
     transition: all 0.2s ease-in-out;
 
 }
@@ -118,7 +119,8 @@ input::placeholder{
  
 /*error message */ 
 #dialog-error-msg{
+    position: absolute;
+    bottom: 20px;
     color: var(--red-vivid);
-    margin-top: 30px;
 }
 

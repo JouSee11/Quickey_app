@@ -26,9 +26,10 @@ function addLogs(textLog) {
     logArea.scrollTop = logArea.scrollHeight
 }
 
-function showSuccessMsg() {
+function showSuccessMsg(message) {
     statusMsg.className = "successfull"
-    statusMsg.textContent = "Data send successfully"
+    // statusMsg.textContent = "Data send successfully"
+    statusMsg.textContent = message
     setTimeout(() => statusMsg.textContent = "", 3000)
 }
 
