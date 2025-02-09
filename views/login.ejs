@@ -18,7 +18,7 @@ if (error) {
             <h2>Login</h2>
         </div>
         <!-- <label for="name">Username:</label> -->
-        <input type="text" name="username" placeholder="Username" value="<%= usernameVal %>" class="<%= inputClass %>">
+        <input type="text" name="username" placeholder="Username or Email" value="<%= usernameVal %>" class="<%= inputClass %>">
         
         <!-- <label for="password">Password:</label>  -->
         <input type="password" name="password" placeholder="Password" class="<%= inputClass %>"> 
@@ -28,6 +28,6 @@ if (error) {
             <p id="info-msg">Dont have account? <a href="/auth/register">Register</a></p>
         </div>
     </form>
-    <a href="/auth/google"><i class="fa-brands fa-google"></i>Google</a>
+    <a href="/auth/sso/google"><i class="fa-brands fa-google"></i>Google</a>
     <p id="err-msg"><%= errMsg %></p>
 </div>
