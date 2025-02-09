@@ -28,6 +28,10 @@ if (error) {
             <p id="info-msg">Dont have account? <a href="/auth/register">Register</a></p>
         </div>
     </form>
-    <a href="/auth/sso/google"><i class="fa-brands fa-google"></i>Google</a>
+
+    <div id="sso-icons-cont">
+        <a id="google-login" href="/auth/sso/google"><i class="fa-brands fa-google"></i></a>
+        <a id="google-login" href="/auth/sso/github"><i class="fa-brands fa-github"></i></a>
+    </div>
     <p id="err-msg"><%= errMsg %></p>
 </div>

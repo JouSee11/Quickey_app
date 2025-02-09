@@ -140,6 +140,26 @@ form button i {
     margin-right: 5px;
 }
 
+/* sso incons */
+#sso-icons-cont{
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#sso-icons-cont i{
+    color: var(--gray-main);
+    font-size: var(--big-title-text);
+    margin-right: 20px;
+}
+
+#sso-icons-cont i:hover{
+    color: var(--primary-0);
+    text-shadow: 0 0 15px var(--primary-0-shadow);
+}
+
+
 
 /* error states */
 #err-msg{
