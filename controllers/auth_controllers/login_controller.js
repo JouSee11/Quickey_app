@@ -1,4 +1,4 @@
-import {LoginPage} from "../views/view_pages.js"
+import {LoginPage} from "../../views/view_pages.js"
 
 const getLoginPage = (req, res) => {
     if (req.session.userId) {

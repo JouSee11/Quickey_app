@@ -1,5 +1,5 @@
-import {RegisterPage, RegisterSucPage} from "../views/view_pages.js"
-import User from "../models/user_model.js"
+import {RegisterPage, RegisterSucPage} from "../../views/view_pages.js"
+import User from "../../models/user_model.js"
 
 const getRegisterPage = (req, res) => {
     if (req.session.userId) {

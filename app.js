@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import router from "./routes/router.js"
 import connectDB from "./db/connect.js"
 import session from "express-session"
+import passport from "passport"
 
 
 // import keysRouter from "./routes/key-bindings.js"
@@ -20,6 +21,9 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 //make sure the session values are avilible in the templates
 app.use((req, res, next) => {

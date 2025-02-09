@@ -3,15 +3,23 @@ import { LoginPage } from "../views/view_pages.js"
 
 const loginFormValidation = async (req, res, next) => {
     const password = req.body.password
-    const username = req.body.username.trim()
+    const username = req.body.username ? req.body.username.trim() : "";
     let error = null
 
-
     if (!username || !password) {
-        error = "Please fill both inputs"
-    } else if (! (await loginValid(username, password))){
-        error = "Invalid credentials"
+        error = "Please fill both inputs";
+    } else {
+        const user = await findUser(username)
+        if (!user) {
+            error = "Invalid credentials";
+        } else if (user.profile.registerType === "sso") {
+            error = "Try login with external methods (SSO)";
+        } else if (!(await loginValid(user, password))) {
+            error = "Invalid credentials";
+        }
     }
+    
+    
 
     if (error) {
         //if there is error stay on the login page with errors
@@ -20,7 +28,7 @@ const loginFormValidation = async (req, res, next) => {
         loginPage.setFormData({username: username})
         return res.render("index", loginPage.getDetails())
     }
-    req.body.user = await User.findByUsername(username)
+    req.body.user = await findUser(username)
     next()
 }
 
@@ -28,12 +36,22 @@ const loginFormValidation = async (req, res, next) => {
 //     const user = await User.findByUsername(username)
 //     return user
 // }
+const findUser = async (username) => {
+    const user = await User.findOne({
+        $or: [
+          { username: username },
+          { email: username }
+        ]
+      });
 
-const loginValid = async (username, password) => {
-    const user = await User.findByUsername(username)
-    //check if the entered username exists
-    if (!user) return false
+    return user
+}
 
+const loginValid = async (user, password) => {
+    // const user = await User.findByUsername(username)
+    // //check if the entered username exists
+    // if (!user) return false
+    
     return await user.comparePassword(password)
 }
 

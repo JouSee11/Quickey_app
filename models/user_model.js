@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "Role error, not set role"],
         default: "user"
     },
+    registerType : {
+        type: String,
+        required: true,
+        default: "local"
+    },
     profilePicture: {
         type: String,
         default: null,
@@ -76,6 +81,7 @@ userSchema.virtual('profile').get(function () {
         id: this._id,
         username: this.username,
         email: this.email,
+        registerType: this.registerType,
         profilePicture: this.profilePicture,
         createdAt: this.createdAt
     };
