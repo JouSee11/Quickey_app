@@ -134,6 +134,34 @@ class RegisterPage extends ViewParams {
     }
 }
 
+class EmailVerifyPage extends ViewParams {
+    constructor() {
+        super(
+            "Verify email",
+            ["form_auth.css"],
+            [
+                "js/email_verify.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
+            ],
+            "verify_email",
+            true,
+            true
+        )
+        this.email = ""
+    }
+
+    setEmail(email) {
+        this.email = email
+    }
+
+    getDetails() {
+        const baseDetails = super.getDetails()
+
+        return {...baseDetails, email: this.email}
+    }
+}
+
+
 
 
 
@@ -209,4 +237,4 @@ class ProfilePage extends ViewParams {
 
 
 
-export {RegisterSucPage, discoverHomePage, HomeBindingPage, LoginPage, RegisterPage, ProfilePage}
+export {RegisterSucPage, discoverHomePage, HomeBindingPage, LoginPage, RegisterPage, ProfilePage, EmailVerifyPage}

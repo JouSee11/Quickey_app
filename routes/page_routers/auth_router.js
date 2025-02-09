@@ -1,9 +1,9 @@
 import express from "express"
 import { getLoginPage, handleLogin, logoutUser } from "../../controllers/auth_controllers/login_controller.js"
-import { getRegisterPage } from "../../controllers/auth_controllers/register_controller.js"
-import { getRegisterSucPage } from "../../controllers/auth_controllers/register_controller.js"
+import { getRegisterPage, getRegisterSucPage, getVerifyPage } from "../../controllers/auth_controllers/register_controller.js"
 import { handleRegister } from "../../controllers/auth_controllers/register_controller.js"
-import registerFormValidation from "../../middleware/validate_registr_form.js"
+import {registerFormValidation, createPendingUser} from "../../middleware/validate_registr_form.js"
+import verifyEmail from "../../middleware/verify_email.js"
 import loginFormValidation from "../../middleware/validate_login.js"
 import ssoRouter from "./sso_router.js"
 
@@ -21,7 +21,11 @@ router.route("/logout")
 
 router.route("/register")
 .get(getRegisterPage)
-.post(registerFormValidation, handleRegister)
+.post(registerFormValidation, createPendingUser)
+// .post(registerFormValidation, verifyEmail, handleRegister)
+
+router.route("/register/verify")
+.get(getVerifyPage)
 
 router.route("/register/success")
 .get(getRegisterSucPage)

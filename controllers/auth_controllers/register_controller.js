@@ -1,4 +1,4 @@
-import {RegisterPage, RegisterSucPage} from "../../views/view_pages.js"
+import {RegisterPage, RegisterSucPage, EmailVerifyPage} from "../../views/view_pages.js"
 import User from "../../models/user_model.js"
 
 const getRegisterPage = (req, res) => {
@@ -28,4 +28,11 @@ const getRegisterSucPage = (req, res) => {
     res.render("index", regSucPage.getDetails())
 }
 
-export {getRegisterPage, handleRegister, getRegisterSucPage}
+const getVerifyPage = (req, res) => {
+    const email = req.session.registerEmail
+    const emailVerifyPage = new EmailVerifyPage();
+    emailVerifyPage.setEmail(email);
+    return res.render("index", emailVerifyPage.getDetails());
+}
+
+export {getRegisterPage, handleRegister, getRegisterSucPage, getVerifyPage}

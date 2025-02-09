@@ -13,7 +13,7 @@ const loginFormValidation = async (req, res, next) => {
         if (!user) {
             error = "Invalid credentials";
         } else if (user.profile.registerType === "sso") {
-            error = "Try login with external methods (SSO)";
+            error = "Email/username logged with external methods (SSO)";
         } else if (!(await loginValid(user, password))) {
             error = "Invalid credentials";
         }

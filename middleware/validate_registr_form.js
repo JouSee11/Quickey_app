@@ -1,7 +1,11 @@
 //register validation
 import validator from "validator"
-import { RegisterPage } from "../views/view_pages.js"
+import { RegisterPage, EmailVerifyPage } from "../views/view_pages.js"
 import User from "../models/user_model.js"
+import PendingRegistration from "../models/pending_registration_model.js"
+import crypto from "crypto"
+import nodemailer from "nodemailer";
+import { configDotenv } from "dotenv"
 
 const registerFormValidation = async (req, res, next) => {
     let { username, email, password, passwordConfirm } = req.body
@@ -42,6 +46,66 @@ const registerFormValidation = async (req, res, next) => {
     }
 
     next() //if there are no errors write the user to the db
+}
+
+
+const createPendingUser = async(req, res) => {
+    let { username, email, password} = req.body
+
+    const verificationToken = crypto.randomBytes(3).toString("hex")
+
+    try{
+        // Remove previous pending registrations with the same email.
+        await PendingRegistration.deleteMany({ email });
+        
+        //create new pending
+        await PendingRegistration.create({
+            username,
+            email,
+            password,
+            verificationToken
+        })
+    } catch (err) {
+        console.error("Error saving pending registration:", err);
+        return res.status(500).send("Error processing registration.");
+    }
+    
+    // Optionally, send the verification email here using your email service...
+    // Set up nodemailer transporter.
+    let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_FROM,   // e.g., '"Your App" <no-reply@yourapp.com>'
+        to: email,
+        subject: "Please verify your email address",
+        text: `Hello ${username},
+
+Thank you for registering. Your verification code is: ${verificationToken}.
+Please enter this code on the verification page. The code will expire in 10 minutes.
+
+Best regards,
+Qucik Key Team`
+    };
+
+    try {
+        // Send the verification email.
+        await transporter.sendMail(mailOptions);
+    } catch (err) {
+        console.error("Error sending verification email:", err);
+        return res.status(500).send("Error sending verification email.");
+    }
+
+
+
+    // Render the email verification page, passing along minimal details (like email)
+    req.session.registerEmail = email
+    return res.redirect("/auth/register/verify");
 }
 
 //username validation
@@ -85,4 +149,4 @@ const passwordValid = (password) => {
 }
 
 
-export default registerFormValidation
+export {registerFormValidation, createPendingUser}
