@@ -6,7 +6,7 @@ const verifyEmailCheck = async (req, res, next) => {
     const email = req.session.registerEmail
 
     if (!token || !email) {
-        return showVerifyErr("Token or email not provided", email, res)
+        return showVerifyErr("Token not provided", email, res)
     }
 
     try{

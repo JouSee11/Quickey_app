@@ -140,7 +140,7 @@ class EmailVerifyPage extends ViewParams {
             "Verify email",
             ["form_auth.css", "email_verify.css"],
             [
-                "js/email_verify.js",
+                "/js/verify_email.js",
                 "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
             ],
             "verify_email",

@@ -40,7 +40,7 @@ const handleRegister =  async (req, res, next) => {
         // Remove previous pending registrations with the same email.
         await PendingRegistration.deleteMany({ email }); 
         delete req.session.registerEmail
-        
+
     } catch (error) {
         return res.send(error + " - error saving user")
     }
@@ -55,6 +55,8 @@ const getRegisterSucPage = (req, res) => {
 }
 
 const getVerifyPage = (req, res) => {
+    //if user didnt some here thought the registration form
+    if (!req.session.registerEmail) return res.redirect("/auth/register")
     const email = req.session.registerEmail
     const emailVerifyPage = new EmailVerifyPage();
     emailVerifyPage.setEmail(email);
