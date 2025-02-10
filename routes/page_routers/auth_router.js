@@ -3,7 +3,7 @@ import { getLoginPage, handleLogin, logoutUser } from "../../controllers/auth_co
 import { getRegisterPage, getRegisterSucPage, getVerifyPage } from "../../controllers/auth_controllers/register_controller.js"
 import { handleRegister } from "../../controllers/auth_controllers/register_controller.js"
 import {registerFormValidation, createPendingUser} from "../../middleware/validate_registr_form.js"
-import verifyEmail from "../../middleware/verify_email.js"
+import {verifyEmailCheck} from "../../middleware/verify_email.js"
 import loginFormValidation from "../../middleware/validate_login.js"
 import ssoRouter from "./sso_router.js"
 
@@ -26,6 +26,7 @@ router.route("/register")
 
 router.route("/register/verify")
 .get(getVerifyPage)
+.post(verifyEmailCheck, handleRegister)
 
 router.route("/register/success")
 .get(getRegisterSucPage)

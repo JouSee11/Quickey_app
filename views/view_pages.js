@@ -138,7 +138,7 @@ class EmailVerifyPage extends ViewParams {
     constructor() {
         super(
             "Verify email",
-            ["form_auth.css"],
+            ["form_auth.css", "email_verify.css"],
             [
                 "js/email_verify.js",
                 "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
@@ -148,16 +148,21 @@ class EmailVerifyPage extends ViewParams {
             true
         )
         this.email = ""
+        this.error = ""
     }
 
     setEmail(email) {
         this.email = email
     }
 
+    setError(error) {
+        this.error = error
+    }
+
     getDetails() {
         const baseDetails = super.getDetails()
 
-        return {...baseDetails, email: this.email}
+        return {...baseDetails, email: this.email, error: this.error}
     }
 }
 

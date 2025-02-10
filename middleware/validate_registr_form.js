@@ -73,7 +73,9 @@ const createPendingUser = async(req, res) => {
     // Optionally, send the verification email here using your email service...
     // Set up nodemailer transporter.
     let transporter = nodemailer.createTransport({
-        service: "gmail",
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: true,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS,
@@ -83,7 +85,7 @@ const createPendingUser = async(req, res) => {
     const mailOptions = {
         from: process.env.EMAIL_FROM,   // e.g., '"Your App" <no-reply@yourapp.com>'
         to: email,
-        subject: "Please verify your email address",
+        subject: "Quick Key Email Verification",
         text: `Hello ${username},
 
 Thank you for registering. Your verification code is: ${verificationToken}.
