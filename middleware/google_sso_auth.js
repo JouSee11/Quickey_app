@@ -15,15 +15,24 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
-        // Here, implement your user lookup/creation logic. For instance:
+        // check if user with the specified email does alreasy exist - login
         let user = await User.findOne({ email: profile.emails[0].value });
         if (!user) {
-          //generate random password
+          //generate random password - user with sso wont user the password anyway
           const pwdGenerated = crypto.randomBytes(32).toString("hex")
+
+          //check if there is some user with same username but different email - generate username
+          let usernameSave = profile.displayName
+          const userSameName = await User.findOne({ username: usernameSave})
+          if (userSameName) {
+            const baseName = usernameSave.split(" ")[0]
+            const number = crypto.randomInt(1000, 10000)
+            usernameSave = `${baseName}_${number}`
+          }
 
           // Create a new user, adjust values accordingly.
           user = await User.create({
-            username: profile.displayName,
+            username: usernameSave,
             email: profile.emails[0].value,
             password: pwdGenerated, // Dummy (or handle accordingly),
             registerType: "sso"

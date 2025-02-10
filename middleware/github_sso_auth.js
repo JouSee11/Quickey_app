@@ -31,7 +31,14 @@ passport.use(
           const pwdGenerated = crypto.randomBytes(32).toString("hex");
           
           // Use displayName if available, otherwise fall back to username.
-          const username = profile.displayName || profile.username;
+          let username = profile.displayName || profile.username;
+          //check if there is some user with same username but different email - generate username
+          const userSameName = await User.findOne({ username: username})
+          if (userSameName) {
+            const baseName = username.split(" ")[0]
+            const number = crypto.randomInt(1000, 10000)
+            username = `${baseName}_${number}`
+          }
           
           // Create new user document
           user = await User.create({
