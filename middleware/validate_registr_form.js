@@ -6,6 +6,8 @@ import PendingRegistration from "../models/pending_registration_model.js"
 import crypto from "crypto"
 import nodemailer from "nodemailer";
 import { configDotenv } from "dotenv"
+import fs from "fs"
+import path from "path"
 
 const registerFormValidation = async (req, res, next) => {
     let { username, email, password, passwordConfirm } = req.body
@@ -48,68 +50,6 @@ const registerFormValidation = async (req, res, next) => {
     next() //if there are no errors write the user to the db
 }
 
-
-const createPendingUser = async(req, res) => {
-    let { username, email, password} = req.body
-
-    const verificationToken = crypto.randomBytes(3).toString("hex")
-
-    try{
-        // Remove previous pending registrations with the same email.
-        await PendingRegistration.deleteMany({ email });
-        
-        //create new pending
-        await PendingRegistration.create({
-            username,
-            email,
-            password,
-            verificationToken
-        })
-    } catch (err) {
-        console.error("Error saving pending registration:", err);
-        return res.status(500).send("Error processing registration.");
-    }
-    
-    // Optionally, send the verification email here using your email service...
-    // Set up nodemailer transporter.
-    let transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        secure: true,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        }
-    });
-
-    const mailOptions = {
-        from: process.env.EMAIL_FROM,   // e.g., '"Your App" <no-reply@yourapp.com>'
-        to: email,
-        subject: "Quick Key Email Verification",
-        text: `Hello ${username},
-
-Thank you for registering. Your verification code is: ${verificationToken}.
-Please enter this code on the verification page. The code will expire in 10 minutes.
-
-Best regards,
-Qucik Key Team`
-    };
-
-    try {
-        // Send the verification email.
-        await transporter.sendMail(mailOptions);
-    } catch (err) {
-        console.error("Error sending verification email:", err);
-        return res.status(500).send("Error sending verification email.");
-    }
-
-
-
-    // Render the email verification page, passing along minimal details (like email)
-    req.session.registerEmail = email
-    return res.redirect("/auth/register/verify");
-}
-
 //username validation
 const usernameUnique = async (username) => {
     const user = await User.findByUsername(username)
@@ -148,6 +88,80 @@ const passwordValid = (password) => {
         return false
     }
     return true
+}
+
+const generateEmailHtml = (username, verificationToken) => {
+    // Read the original template.
+    const templatePath = path.join(process.cwd(), "views", "verification_email.html");
+    const emailTemplate = fs.readFileSync(templatePath, "utf8");
+  
+    // Replace dynamic values and the image cid with the data URI.
+    return emailTemplate
+      .replace(/{{username}}/g, username)
+      .replace(/{{verificationToken}}/g, verificationToken)
+}
+
+//send to token to email
+const createPendingUser = async(req, res) => {
+    let { username, email, password} = req.body
+    
+    const verificationToken = crypto.randomBytes(3).toString("hex")
+        
+    try{
+        // Remove previous pending registrations with the same email.
+        await PendingRegistration.deleteMany({ email });
+        
+        //create new pending
+        await PendingRegistration.create({
+            username,
+            email,
+            password,
+            verificationToken
+        })
+    } catch (err) {
+        console.error("Error saving pending registration:", err);
+        return res.status(500).send("Error processing registration.");
+    }
+    
+    // Optionally, send the verification email here using your email service...
+    // Set up nodemailer transporter.
+    let transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: true,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_FROM,   // e.g., '"Your App" <no-reply@yourapp.com>'
+        to: email,
+        subject: "Quick Key Email Verification",
+        html: generateEmailHtml(username, verificationToken),
+        attachments: [
+            {
+              filename: 'logo.png',
+              path: path.join(process.cwd(), 'public', 'images', 'logo.png'), // absolute path derived with path.join
+              cid: 'logoImage'
+            }
+        ]
+    };
+
+    try {
+        // Send the verification email.
+        await transporter.sendMail(mailOptions);
+    } catch (err) {
+        console.error("Error sending verification email:", err);
+        return res.status(500).send("Error sending verification email.");
+    }
+
+
+
+    // Render the email verification page, passing along minimal details (like email)
+    req.session.registerEmail = email
+    return res.redirect("/auth/register/verify");
 }
 
 
