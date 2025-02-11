@@ -234,16 +234,21 @@ class ProfilePage extends ViewParams {
             true
         )
         this.username = null
+        this.email = null
     }
 
     setUsername(data) {
         this.username = data
     }
 
+    setEmail(data) {
+        this.email = data
+    }
+
     getDetails() {
         const baseDetails = super.getDetails()
 
-        return {...baseDetails, username: this.username}
+        return {...baseDetails, username: this.username, email: this.email}
     }
 }
 

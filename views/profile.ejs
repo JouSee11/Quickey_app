@@ -1,7 +1,11 @@
 <% 
 let usernameVal = ""
+let emailVal = ""
 if (username) {
     usernameVal = username    
+}
+if (email) {
+    emailVal = email
 }
 %>
 
@@ -16,7 +20,7 @@ if (username) {
 
                 <div id="username-email-cont">
                     <p id="profile-username"><%= username  %></p>
-                    <p id="profile-email">email@email.com</p>
+                    <p id="profile-email"><%= emailVal %></p>
                 </div>
             </div>
 

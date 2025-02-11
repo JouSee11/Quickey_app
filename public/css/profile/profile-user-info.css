@@ -28,6 +28,7 @@
     border-radius: 50%;
     font-size: 3em;
     margin-right: 20px;
+    transition: background-color 0.3s ease-in-out;
 }
 
 #profile-username{
@@ -38,7 +39,9 @@
 
 
 #profile-email{
-    color: var(--gray-main)
+    color: var(--gray-main);
+    transition: color 0.2 ease-in-out;
+    
 }
 
 #username-email-cont{
@@ -61,6 +64,7 @@
 #user-stats-btn-cont p{
     margin: 5px;
     color: var(--gray-main);
+    transition: color 0.2s ease-in-out;
 }
 
 #user-stats-cont{
@@ -118,4 +122,13 @@
     #user-info i{
         background-color: var(--primary-800);
     }
+
+    #user-stats-btn-cont p{
+        color: var(--primary-0);
+    }
+
+    #profile-email{
+        color: var(--green-dark);
+    }
+
 }

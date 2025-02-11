@@ -12,8 +12,10 @@ const getProfilePage = async (req, res) => {
 
     const userObject = await User.findById(req.session.userId)
     const username = userObject.profile.username
+    const email = userObject.profile.email
 
     profilePage.setUsername(username)
+    profilePage.setEmail(email)
 
     res.render("index", profilePage.getDetails())
 }
