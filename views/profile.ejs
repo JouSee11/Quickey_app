@@ -4,6 +4,45 @@ if (username) {
     usernameVal = username    
 }
 %>
-<p>Profile of:  <%= usernameVal  %></p>
 
-<a id="logout-btn" href="/auth/logout">Log out</a>
+<div id="content-container">
+
+    <div id="section-left">
+
+        <div id="user-cont">
+
+            <div id="user-info">
+                <i class="fa-solid fa-user"></i>
+
+                <div id="username-email-cont">
+                    <p id="profile-username"><%= username  %></p>
+                    <p id="profile-email">email@email.com</p>
+                </div>
+            </div>
+
+            <div id="user-stats-btn-cont">
+                <div id="user-stats-cont">
+                    <p>Likes: <span class="user-stat-val">2</span></p>
+                    <p>Liked: <span class="user-stat-val">6</span></p>
+                    <p>Saved: <span class="user-stat-val">28</span></p>
+                    <p>Member for: <span class="user-stat-val">486 days</span></p>
+                </div>
+
+                <div id="user-buttons">
+                    <a id="logout-btn" href="/auth/logout"><i class="fa-solid fa-right-from-bracket"></i>Log out</a>
+                    <a id="delete-acc" href="/auth/delete-account"><i class="fa-solid fa-heart-crack"></i>Destroy</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="user-settings-cont">
+
+        </div>
+    </div>
+
+    <div id="section-right">
+
+    </div>
+
+</div>

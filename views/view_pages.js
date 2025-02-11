@@ -218,7 +218,14 @@ class ProfilePage extends ViewParams {
     constructor() {
         super(
             "Profile",
-            ["profile_page.css"],
+            [
+                "profile/profile-main.css",
+                "profile/profile-user-info.css",
+                "profile/profile-data.css",
+                "profile/profile-settings.css",
+
+
+            ],
             [
                 "js/profile.js",
             ],
