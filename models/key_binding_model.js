@@ -24,10 +24,15 @@ const keyBindingSchema = new mongoose.Schema({
         default: null,
         maxlength: [2000, "Description cannot exceed 2000 characters"]
     },
-    likes : {
+    likes: {
         type: Number,
         required: [true, "The number of likes must be initialized"],
         default: 0
+    },
+    public: {
+        type: Boolean,
+        required: true,
+        default: false
     },
     createdAt: {
         type: Date,
