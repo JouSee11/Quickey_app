@@ -223,11 +223,12 @@ class ProfilePage extends ViewParams {
                 "profile/profile-user-info.css",
                 "profile/profile-data.css",
                 "profile/profile-settings.css",
-                "profile/profile-common.css"
+                "profile/profile-common.css",
+                "save_template.css"
 
             ],
             [
-                "js/profile.js",
+                "js/profile/profile_load_saves.js",
             ],
             "profile",
             true,

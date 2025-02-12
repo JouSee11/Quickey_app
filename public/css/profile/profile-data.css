@@ -64,9 +64,20 @@
     margin-right: 15px;
 }
 
-
-
-
+/* display saves container */
+#saves-display-area{
+    width: 100%;
+    display: flex;
+    /* flex-grow: 1; */
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: start;
+    margin-top: 50px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    column-gap: 30px;
+    row-gap: 30px;
+}
 
 
 
