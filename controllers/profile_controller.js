@@ -1,5 +1,6 @@
 import { ProfilePage } from "../views/view_pages.js"
 import User from "../models/user_model.js"
+import KeyBinding from "../models/key_binding_model.js"
 
 
 const getProfilePage = async (req, res) => {
@@ -13,11 +14,23 @@ const getProfilePage = async (req, res) => {
     const userObject = await User.findById(req.session.userId)
     const username = userObject.profile.username
     const email = userObject.profile.email
+    //calculate days
+    const registerDate = userObject.profile.createdAt
+    const memberLength = calcMemberLength(registerDate)
 
-    profilePage.setUsername(username)
-    profilePage.setEmail(email)
+    //get number of saves
+    const savedBindingCount = await KeyBinding.countDocuments({userId: req.session.userId})
+
+    profilePage.setUserStats(username, email, memberLength, savedBindingCount)
 
     res.render("index", profilePage.getDetails())
+}
+
+const calcMemberLength = (regDate) => {
+    const dateNow = Date.now()
+    const timeDiff = dateNow - new Date(regDate).getTime()
+    const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
+    return daysDiff
 }
 
 export {getProfilePage}

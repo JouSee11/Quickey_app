@@ -92,13 +92,13 @@
     font-size: var(--normal-text);
     color: var(--primary-0);
     background-color: var(--gray-dark);
-
     border: none;
     outline: none;
     padding: 7px 10px;
     border-radius: var(--border-rad-main);
     cursor: pointer;
     text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
 }
 
 #user-buttons a i {
@@ -119,6 +119,7 @@
 /* hover action */
 #user-cont:hover {
     box-shadow: 15px 15px 0 var(--primary-400);
+
     #user-info i{
         background-color: var(--primary-800);
     }
@@ -129,6 +130,10 @@
 
     #profile-email{
         color: var(--green-dark);
+    }
+
+    .user-stat-val{
+        color: var(--green-bright)
     }
 
 }

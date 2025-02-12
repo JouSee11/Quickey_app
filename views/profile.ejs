@@ -1,12 +1,8 @@
 <% 
-let usernameVal = ""
-let emailVal = ""
-if (username) {
-    usernameVal = username    
-}
-if (email) {
-    emailVal = email
-}
+let usernameVal = username ? username : ""
+let emailVal = email ? email : ""
+let memberDays = memberLength ? memberLength : "0"
+let savedBindNum = savesNum ? savesNum : "0"
 %>
 
 <div id="content-container">
@@ -26,10 +22,10 @@ if (email) {
 
             <div id="user-stats-btn-cont">
                 <div id="user-stats-cont">
-                    <p>Likes: <span class="user-stat-val">2</span></p>
-                    <p>Liked: <span class="user-stat-val">6</span></p>
-                    <p>Saved: <span class="user-stat-val">28</span></p>
-                    <p>Member for: <span class="user-stat-val">486 days</span></p>
+                    <p>Likes: <span class="user-stat-val">??</span></p>
+                    <p>Liked: <span class="user-stat-val">??</span></p>
+                    <p>Saved: <span class="user-stat-val"><%= savedBindNum %></span></p>
+                    <p>Member for: <span class="user-stat-val"><%= memberDays %> days</span></p>
                 </div>
 
                 <div id="user-buttons">
