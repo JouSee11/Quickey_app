@@ -224,7 +224,8 @@ class ProfilePage extends ViewParams {
                 "profile/profile-data.css",
                 "profile/profile-settings.css",
                 "profile/profile-common.css",
-                "save_template.css"
+                "save_template.css",
+                "scrollbar.css"
 
             ],
             [

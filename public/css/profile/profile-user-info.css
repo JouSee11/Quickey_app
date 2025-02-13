@@ -22,6 +22,7 @@
 
 #user-info i {
     width: 100px;
+    height: 100px;
     aspect-ratio: 1;
     display: flex;
     justify-content: center;

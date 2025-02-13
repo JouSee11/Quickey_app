@@ -12,9 +12,11 @@ const getSavesDefault = async (req, res) => {
         // Find key bindings for the specific user.
         // Use .select() to return only specific fields (e.g. "name" and "value")
         const savedData = await KeyBinding.find({ userId })
-            .select("name keyBinding likes public updatedAt")
+            .select("name userId keyBinding likes public updatedAt")
             .sort({ createdAt: -1 })
+            .populate("userId", "username")
             .exec()
+
 
         return res.status(200).json({status: "success", data: savedData})
 
