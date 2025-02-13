@@ -25,8 +25,15 @@ const getSavesDefault = async (req, res) => {
         return res.status(500).json({ status: "error", msg: "Internal server error" });
     }
 
+}
 
+const getItemData = async (req,res) => {
+    const itemId = req.query.id
+
+    const itemData = await KeyBinding.find({ _id: itemId})
+
+    res.json(itemData)
 }
 
 
-export {getSavesDefault}
+export {getSavesDefault, getItemData}

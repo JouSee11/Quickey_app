@@ -1,0 +1,159 @@
+body{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+
+    /* Background color if needed */
+    background-color: var(--primary-1000);
+
+    /* /*     /* Two gradients: one for vertical lines and one for horizontal lines */
+    background-image:
+      linear-gradient(to right, var(--blue-dark) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--blue-dark) 1px, transparent 1px);
+
+      
+  
+    /* Size of the grid cells (adjust as needed) */
+    background-size: 100px 100px;
+    overflow: hidden;
+
+    transition: all 0.3s ease-in-out;
+}
+
+#content-container{
+    width: 90vw;
+    height: 80%;
+    position: relative;
+
+    padding: 20px 20px;
+    margin-top: calc(var(--navbar-height) + 70px);
+    /* background-color: var(--primary-800); */
+    backdrop-filter: blur(5px);
+    backdrop-filter: brightness(0.9) blur(5px);
+
+    border-radius: var(--border-rad-bigger);
+}
+#left-section{
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+
+}
+#center-section{
+    grid-column: 2;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#right-section{
+    grid-column: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+}
+
+.back-button{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: aliceblue;
+    font-size: 3em;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    margin-left: 10px;
+}
+.back-button:hover{
+    transform: scale(1.1);
+}
+
+
+#buttons-container{
+    display: grid;
+    width: auto;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+
+.button-bind{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    border: none;
+    border-radius: var(--border-rad-main);
+    font-size: var(--normal-text);
+    font-weight: 700;
+    background-color: var(--gray-dark);
+    color: var(--gray-main);
+    outline: none;
+    box-shadow: 5px 5px 0 var(--gray-main);
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.5s ease;
+}
+.button-bind.binded{
+    background-color: var(--green-bright);
+    box-shadow: 5px 5px 0 var(--green-dark) ,0 0 20px rgba(13, 198, 124, 0.221);
+    color: var(--primary-0);
+}
+
+.button-bind i{
+    font-size: var(--bigger-text);
+    margin-bottom: 7px;
+}
+
+/* buttons actions */
+#action-buttons-center{
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button{
+    width: 130px;
+    height: 35px;
+    text-align: center;
+    font-size: var(--normal-text);
+    color: var(--gray-main);
+    background-color: var(--gray-dark);
+    border: none;
+    outline: none;
+    padding: 7px 10px;
+    border-radius: var(--border-rad-main);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.button i{
+    margin-right: 10px;
+}
+
+#button-use{
+    margin-right: 15px;
+    background-color: var(--green-dark);
+    color: var(--primary-0);
+}
+#button-use:hover{
+    box-shadow: 0 0 15px var(--green-vivid-shadow);
+}
+
+#button-delete{
+    margin-right: 15px;
+    background-color: var(--red-dark);
+    color: var(--primary-0);
+}
+#button-delete:hover{
+    box-shadow: 0 0 15px rgba(255, 17, 0, 0.281);
+}

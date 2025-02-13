@@ -1,6 +1,7 @@
-import { ProfilePage } from "../views/view_pages.js"
+import { ProfilePage, ItemEditProfilePage } from "../views/view_pages.js"
 import User from "../models/user_model.js"
 import KeyBinding from "../models/key_binding_model.js"
+
 
 
 const getProfilePage = async (req, res) => {
@@ -34,7 +35,9 @@ const calcMemberLength = (regDate) => {
 }
 
 const getSavedItemPage = (req, res) => {
-    res.send(req.query.id)
+    const itemEditPage = new ItemEditProfilePage()
+
+    res.render("index", itemEditPage)
 }
 
 export {getProfilePage, getSavedItemPage}

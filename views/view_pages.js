@@ -49,16 +49,7 @@ class HomeBindingPage extends ViewParams {
     }
 }
 
-// const loginPage = new ViewParams(
-//     "Login page",
-//     ["login.css"],
-//     [
-//         "login.js",
-//     ],
-//     "login",
-//     true,
-//     false
-// )
+
 
 class LoginPage extends ViewParams {
     constructor() {
@@ -90,17 +81,6 @@ class LoginPage extends ViewParams {
         return {...baseDetails, error: this.errors, formData: this.formData}
     }
 }
-
-// const registerPage = new ViewParams(
-//     "Register now!",
-//     ["register.css"],
-//     [
-//         "register.js",
-//     ],
-//     "register",
-//     true,
-//     false
-// )
 
 class RegisterPage extends ViewParams {
     constructor() {
@@ -170,14 +150,6 @@ class EmailVerifyPage extends ViewParams {
 
 
 
-// const registerSuccess = new ViewParams(
-//     "Registration successfull!",
-//     ["register_success.css"],
-//     [""],
-//     "registration_success",
-//     true,
-//     false
-// )
 
 class RegisterSucPage extends ViewParams {
     constructor() {
@@ -203,16 +175,6 @@ const discoverHomePage = new ViewParams(
     false
 )
 
-// const profilePage = new ViewParams(
-//     "Profile",
-//     ["profile_page.css"],
-//     [
-//         "profile.js",
-//     ],
-//     "profile",
-//     true,
-//     false
-// )
 
 class ProfilePage extends ViewParams {
     constructor() {
@@ -259,5 +221,47 @@ class ProfilePage extends ViewParams {
 }
 
 
+class ItemEditProfilePage extends ViewParams {
+    constructor() {
+        super(
+            "Edit item",
+            [
+                "profile/profile_item_edit.css",
+                "scrollbar.css"
+            ],
+            [
+                "js/item_edit_profile/load_item_binding.js",
+            ],
+            "profile_item_edit",
+            true,
+            true
+        )
+    }
 
-export {RegisterSucPage, discoverHomePage, HomeBindingPage, LoginPage, RegisterPage, ProfilePage, EmailVerifyPage}
+    
+
+    // getDetails() {
+    //     const baseDetails = super.getDetails()
+
+    //     return {
+    //         ...baseDetails, 
+    //         username: this.username, 
+    //         email: this.email, 
+    //         memberLength: this.memberLength,
+    //         savesNum: this.savesNum
+    //     }
+    // }
+}
+
+
+
+export {
+    RegisterSucPage,
+    discoverHomePage,
+    HomeBindingPage,
+    LoginPage,
+    RegisterPage,
+    ProfilePage,
+    EmailVerifyPage,
+    ItemEditProfilePage
+}
