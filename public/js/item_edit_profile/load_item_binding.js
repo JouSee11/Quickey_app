@@ -7,9 +7,17 @@ async function loadItemBinding() {
     const response = await fetch("/api/profile/item?id=" + encodeURIComponent(itemId))
     
     const jsonData = await response.json()
+    
+    //add the data to the 
+    updateTexts(jsonData[0])
+    
     const {keyBinding} = jsonData[0]
-
     updateButtonsUI(keyBinding)
+}
+
+function updateTexts(data) {
+    document.querySelector("#item-name").textContent = data.name
+    document.querySelector("#item-description").value = data.description
 }
 
 

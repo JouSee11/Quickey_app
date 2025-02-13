@@ -8,6 +8,8 @@ const sessionSaveBinding = (req, res) => {
         return res.status(400).json({status: "error", msg: "no data recieved"})
     }
 
+    console.log(keyData)
+
     // Ensure req.session.binding is initialized
     initSessionBinding(req)
 
@@ -22,8 +24,7 @@ const sessionSaveBinding = (req, res) => {
             console.error("Session save error:", err);
             return res.status(500).json({status: "error", msg: "Failed to save session"});
         }
-        
-        console.log("Saved data:", req.session.binding);
+    
         return res.status(200).json({status: "success", msg: "data received"});
     });
     
@@ -38,17 +39,11 @@ const sessionGetBinding = (req, res) => {
     // Ensure req.session.binding is initialized
     initSessionBinding(req)
 
-    console.log("sending data to cliend:")
-    console.log(req.session)
-
-    console.log(req.session.passport)
-
     res.json(req.session.binding)
 }
 
 const initSessionBinding = (req) => {
     if (!req.session.binding) {
-        console.log("initialiing")
         req.session.binding = {
             1: [],
             2: [],
