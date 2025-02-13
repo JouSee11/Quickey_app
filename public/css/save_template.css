@@ -1,3 +1,7 @@
+.save-block-link{
+    text-decoration: none;
+}
+
 .save-cont{
     position: relative;
     display: flex;

@@ -59,6 +59,8 @@ async function showSaves() {
             cloneTemplate.querySelector(".save-username").textContent = saveRecord.userId.username
             cloneTemplate.querySelector(".save-likes-num").textContent = saveRecord.likes
             cloneTemplate.querySelector(".save-public-state").classList.add(...public_private_ico.split(" "))
+            cloneTemplate.querySelector(".save-block-link").href = "/profile/item?id=" + encodeURIComponent(saveRecord._id)
+
 
 
             savesContainer.appendChild(cloneTemplate)

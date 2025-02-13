@@ -33,4 +33,8 @@ const calcMemberLength = (regDate) => {
     return daysDiff
 }
 
-export {getProfilePage}
+const getSavedItemPage = (req, res) => {
+    res.send(req.query.id)
+}
+
+export {getProfilePage, getSavedItemPage}
