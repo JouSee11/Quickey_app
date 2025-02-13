@@ -35,5 +35,29 @@ const getItemData = async (req,res) => {
     res.json(itemData)
 }
 
+const deleteItemProfile = async (req, res) => {
+    try {
+        const {deleteId} = req.body
 
-export {getSavesDefault, getItemData}
+        // Check if deleteId is provided
+        if (!deleteId) {
+            return res.status(400).json({ status: "error", msg: "No item ID provided" });
+        }
+
+        const deletedItem = await KeyBinding.findByIdAndDelete(deleteId);
+
+        if (!deletedItem) {
+            return res.status(404).json({ status: "error", msg: "Item not found" });
+        }
+
+        return res.status(200).json({ status: "success", msg: "Item successfully deleted" });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ status: "error", msg: "Internal server error" });
+    }
+
+}
+
+
+export {getSavesDefault, getItemData, deleteItemProfile}

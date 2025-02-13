@@ -27,9 +27,6 @@ function updateButtonsUI(keyBindingData) {
             button.classList.add("binded")
             button.textContent = Array.from(curBindingData).join(" + ")
         }
-
-        console.log(curBindingData)
-
     })
 
 }
