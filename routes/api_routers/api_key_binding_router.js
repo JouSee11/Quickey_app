@@ -1,5 +1,5 @@
 import express from "express"
-import {checkUniqueName, saveKeyBinding} from "../../controllers/api_controllers/api_key_binding_controller.js"
+import {checkUniqueName, saveKeyBinding, editInfo} from "../../controllers/api_controllers/api_key_binding_controller.js"
 
 
 const router = express.Router()
@@ -9,6 +9,10 @@ router.route("/unique-name")
 
 router.route("/save-key-binding")
 .post(saveKeyBinding)
+
+router.route("/edit-info")
+.patch(editInfo)
+
 
 // router.route("/unique-email")
 // .post(checkUniqueEmail)

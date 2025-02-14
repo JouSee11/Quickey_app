@@ -9,8 +9,8 @@ const saveKeyBinding = async (req, res) => {
         const {name, description, bindingValues} = req.body 
         const newBinding = new KeyBinding({
             userId: req.session.userId,
-            name: name,
-            description: description,
+            name: name.trim(),
+            description: description.trim(),
             keyBinding: bindingValues
         })
 
@@ -22,5 +22,31 @@ const saveKeyBinding = async (req, res) => {
     }
 }
 
+const editInfo = async (req, res) => {
+    try {
+        const {name, description, itemId} = req.body
+        console.log(itemId)
 
-export {checkUniqueName, saveKeyBinding}
+
+        const updatedRecord = await KeyBinding.findByIdAndUpdate(
+            itemId,
+            {
+                name: name.trim(),
+                description: description.trim()
+            },
+            { new: true} // return the updated document
+        )
+
+        if (!updatedRecord) {
+            return res.status(404).json({ status: "error", msg: "Item not found" });
+        }
+
+        return res.status(200).json({ status: "success", msg: "Record updated"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: "error", msg: "Name must be unique!"});
+    }
+}
+
+
+export {checkUniqueName, saveKeyBinding, editInfo}

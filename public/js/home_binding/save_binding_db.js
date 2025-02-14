@@ -64,8 +64,8 @@ async function saveToDb(nameInput, descriptionInput, saveDialog) {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                name: nameVal,
-                description: descriptionVal,
+                name: nameVal.trim(),
+                description: descriptionVal.trim(),
                 bindingValues: keyBindingArray
             })
         })
@@ -126,6 +126,4 @@ function showErrorMsg(errorMsg, saveDialog) {
             saveDialog.classList.remove("with-error")
         }, 2000)
     }
-
-
 }
