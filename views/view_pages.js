@@ -233,6 +233,7 @@ class ItemEditProfilePage extends ViewParams {
                 "js/item_edit_profile/load_item_binding.js",
                 "js/item_edit_profile/delete_item.js",
                 "js/item_edit_profile/use_item.js",
+                "js/item_edit_profile/edit_item_name_desc.js",
             ],
             "profile_item_edit",
             true,

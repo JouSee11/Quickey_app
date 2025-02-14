@@ -16,8 +16,10 @@ async function loadItemBinding() {
 }
 
 function updateTexts(data) {
-    document.querySelector("#item-name").textContent = data.name
-    document.querySelector("#item-description").value = data.description
+    nameValInit = data.name
+    descValInit = data.description
+    document.querySelector("#item-name").value = data.name
+    document.querySelector("#item-desc").value = data.description
 }
 
 

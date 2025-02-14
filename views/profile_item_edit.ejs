@@ -2,8 +2,14 @@
     <a href="/profile" class="back-button"><i class="fa-solid fa-caret-left"></i></a>
     
     <div id="left-section">
-        <p id="item-name">name placeholder</p>
-        <textarea id="item-description" placeholder="Description..." readonly>Text in the area</textarea>
+        <input id="item-name" maxlength="" placeholder="Save name">
+
+        <textarea id="item-desc" placeholder="Description...">Text in the area</textarea>
+
+        <div id="item-edit-buttons-cont">
+            <button class="button disabled" id="confirm-changes"><i class="fa-solid fa-sliders"></i>Confirm</button>
+            <button class="button disabled" id="cancel-changes"><i class="fa-solid fa-rotate-left"></i>Cancel</button>
+        </div>
 
     </div>
     
@@ -20,15 +26,14 @@
             <button class="button-bind" id="key-9" data-key-num="9"><i class="fa-solid fa-minus"></i> Not binded</button>
         </div>
 
+    </div>
+
+    <div id="right-section">
         <div id="action-buttons-center">
             <button class="button" id="button-use"><i class="fa-solid fa-circle-check"></i>Use</button>
             
             <button class="button" id="button-delete"><i class="fa-regular fa-trash-can"></i>Delete</button>
         </div>
-    </div>
-
-    <div id="right-section">
-
     </div>
 
 
