@@ -7,11 +7,14 @@ const getSavesDefault = async (req, res) => {
     }
     
     const userId = req.session.userId
+    const searchQuery = req.query.search || "";
+    const regex = new RegExp(searchQuery, "i") // case-insensitive search
 
     try {
+        const findCriteria = searchQuery ? { userId, name: regex } : { userId };
         // Find key bindings for the specific user.
         // Use .select() to return only specific fields (e.g. "name" and "value")
-        const savedData = await KeyBinding.find({ userId })
+        const savedData = await KeyBinding.find(findCriteria)
             .select("name userId keyBinding likes public updatedAt")
             .sort({ createdAt: -1 })
             .populate("userId", "username")

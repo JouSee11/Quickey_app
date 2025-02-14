@@ -1,4 +1,5 @@
 #section-right{
+    position: relative;
     border-radius: var(--border-rad-main);
     padding: 30px 30px;
     box-shadow: 10px 10px 0 var(--primary-600);
@@ -78,11 +79,36 @@
     overflow-x: hidden;
     column-gap: 30px;
     row-gap: 30px;
+    position: relative;
 }
 
+.no-saves-msg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: var(--bigger-text);
+    color: var(--gray-main);
+}
 
 
 /* while container hover */
 #section-right:hover{
     box-shadow: 20px 20px 0 var(--primary-400);
 }
+
+/* animation for the single square element */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }

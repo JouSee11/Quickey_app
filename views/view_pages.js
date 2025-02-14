@@ -192,6 +192,7 @@ class ProfilePage extends ViewParams {
             ],
             [
                 "js/profile/profile_load_saves.js",
+                "js/profile/search_items.js",
             ],
             "profile",
             true,
