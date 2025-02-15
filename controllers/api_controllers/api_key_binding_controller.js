@@ -1,4 +1,5 @@
 import KeyBinding from "../../models/key_binding_model.js"
+import Like from "../../models/likes_model.js"
 
 const checkUniqueName = (req, res) =>{
     return
@@ -72,5 +73,40 @@ const editState = async (req, res) => {
     }
 }
 
+const toggleBindingLike = async (req, res) => {
+    const {itemId} = req.body
+    const userId = req.session.userId
+    //check if all data is present
+    if (!userId || !itemId) {
+        return res.status(400).json({status: "error", msg: "not all data provided"})
+    }
 
-export {checkUniqueName, saveKeyBinding, editInfo, editState}
+    try {
+        const result = await Like.toggleLike(userId, itemId)
+        return res.status(200).json({status: "success", msg: "Like toggled successfully", curStatus: result.liked})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: "error", msg: error });
+    }
+
+}
+
+const checkUserLike = async (req, res) => {
+    const {itemId} = req.body
+    const userId = req.session.userId
+    //check if all data is present
+    if (!userId || !itemId) {
+        return res.status(400).json({status: "error", msg: "not all data provided"})
+    }
+
+    try {
+        const result = await Like.hasUserLiked(userId, itemId)
+        return res.status(200).json({status: "success", msg: "Like recieved success successfully", curStatus: result})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: "error", msg: error });
+    }
+}
+
+
+export {checkUniqueName, saveKeyBinding, editInfo, editState, toggleBindingLike, checkUserLike}
