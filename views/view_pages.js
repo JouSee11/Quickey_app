@@ -227,7 +227,8 @@ class ItemEditProfilePage extends ViewParams {
         super(
             "Edit item",
             [
-                "profile/profile_item_edit.css",
+                "profile_item/profile_item_main.css",
+                "profile_item/profile_item_toggle.css",
                 "scrollbar.css"
             ],
             [
@@ -235,6 +236,7 @@ class ItemEditProfilePage extends ViewParams {
                 "js/item_edit_profile/delete_item.js",
                 "js/item_edit_profile/use_item.js",
                 "js/item_edit_profile/edit_item_name_desc.js",
+                "js/item_edit_profile/public_priv_switch.js",
             ],
             "profile_item_edit",
             true,

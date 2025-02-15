@@ -20,6 +20,11 @@ function updateTexts(data) {
     descValInit = data.description
     document.querySelector("#item-name").value = data.name
     document.querySelector("#item-desc").value = data.description
+    
+    //update the public/privete state
+    if (data.public) {
+        document.querySelector("#public-priv-toggle").checked = true
+    }
 }
 
 

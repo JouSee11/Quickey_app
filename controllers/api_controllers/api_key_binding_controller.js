@@ -48,5 +48,29 @@ const editInfo = async (req, res) => {
     }
 }
 
+const editState = async (req, res) => {
+    try {
+        const { isPublic, itemId } = req.body
 
-export {checkUniqueName, saveKeyBinding, editInfo}
+        const updatedRecord = await KeyBinding.findByIdAndUpdate(
+            itemId,
+            {
+                public: isPublic
+            },
+            { new: true}
+        )
+
+        if (!updatedRecord) {
+            return res.status(404).json({ status: "error", msg: "Item not found" });
+        }
+
+        return res.status(200).json({ status: "success", msg: "Record updated"});
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: "error", msg: "Internal error - try again later!"});
+    }
+}
+
+
+export {checkUniqueName, saveKeyBinding, editInfo, editState}

@@ -54,11 +54,20 @@ async function saveToDb(nameInput, descriptionInput, saveDialog) {
         return
     }
 
+    const keyBindingArray = Array.from(keyBindingValues, ([key, value]) => ({
+        keyIndex: Number(key),
+        keyValues: Array.from(value)
+    }))
+
+    //check if the usre is not saving empty data
+    const allEmpty = keyBindingArray.every(item => item.keyValues.length === 0)
+    if (allEmpty) {
+        showErrorMsg("Can't save empty values!", saveDialog)
+        return
+
+    }
+
     try {
-        const keyBindingArray = Array.from(keyBindingValues, ([key, value]) => ({
-            keyIndex: Number(key),
-            keyValues: Array.from(value)
-        }))
 
         const response = await fetch("/api/key-binding/save-key-binding", {
             method: "POST",
