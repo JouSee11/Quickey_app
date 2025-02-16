@@ -243,3 +243,13 @@ body{
 #edit-error-msg.success{
     color: var(--green-bright)
 }
+
+
+#error-msg-main{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%);
+    font-size: var(--bigger-text);
+    color: var(--primary-0);
+}

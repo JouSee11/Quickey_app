@@ -32,10 +32,26 @@ const getSavesDefault = async (req, res) => {
 
 const getItemData = async (req,res) => {
     const itemId = req.query.id
+    
+    //check id user is logged in and is owner of the item
+    if (!req.session.userId) {
+        return res.status(401).json({status: "error", msg: "User is not authorized"})
+    }
+    try {
+        const itemData = await KeyBinding.find({ _id: itemId, userId: req.session.userId})
 
-    const itemData = await KeyBinding.find({ _id: itemId})
+        if (itemData.length === 0) {
+            return res.status(401).json({status: "error", msg: "User is not authorized"})
+        }
 
-    res.json(itemData)
+        console.log(itemData)
+
+        res.json({status: "success", data: itemData})
+        
+    } catch (error) {
+        return res.status(500).json({status: "error", msg: "Server error"})
+    }
+
 }
 
 const deleteItemProfile = async (req, res) => {
@@ -47,7 +63,10 @@ const deleteItemProfile = async (req, res) => {
             return res.status(400).json({ status: "error", msg: "No item ID provided" });
         }
 
-        const deletedItem = await KeyBinding.findByIdAndDelete(deleteId);
+        const deletedItem = await KeyBinding.findOneAndDelete({
+            _id: deleteId,
+            userId: req.session.userId
+        });
 
         if (!deletedItem) {
             return res.status(404).json({ status: "error", msg: "Item not found" });

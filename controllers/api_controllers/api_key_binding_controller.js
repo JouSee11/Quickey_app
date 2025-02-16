@@ -6,6 +6,7 @@ const checkUniqueName = (req, res) =>{
 }
 
 const saveKeyBinding = async (req, res) => {
+
     try {
         const {name, description, bindingValues} = req.body 
         const newBinding = new KeyBinding({
@@ -26,11 +27,13 @@ const saveKeyBinding = async (req, res) => {
 const editInfo = async (req, res) => {
     try {
         const {name, description, itemId} = req.body
-        console.log(itemId)
-
-
-        const updatedRecord = await KeyBinding.findByIdAndUpdate(
-            itemId,
+        
+        if (!name || !itemId || description === undefined) {
+            return res.status(400).json({ status: "error", msg: "Not all nessesary data was provided" });
+        }
+  
+        const updatedRecord = await KeyBinding.findOneAndDelete(
+            {_id: itemId, userId: req.session.userId},
             {
                 name: name.trim(),
                 description: description.trim()
@@ -45,7 +48,7 @@ const editInfo = async (req, res) => {
         return res.status(200).json({ status: "success", msg: "Record updated"});
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ status: "error", msg: "Name must be unique!"});
+        return res.status(500).json({ status: "error", msg: "Name must be unique! ( or unauthorized)"});
     }
 }
 
@@ -53,8 +56,8 @@ const editState = async (req, res) => {
     try {
         const { isPublic, itemId } = req.body
 
-        const updatedRecord = await KeyBinding.findByIdAndUpdate(
-            itemId,
+        const updatedRecord = await KeyBinding.findOneAndUpdate(
+            {_id: itemId, userId: req.session.userId},
             {
                 public: isPublic
             },
@@ -78,7 +81,7 @@ const toggleBindingLike = async (req, res) => {
     const userId = req.session.userId
     //check if all data is present
     if (!userId || !itemId) {
-        return res.status(400).json({status: "error", msg: "not all data provided"})
+        return res.status(400).json({status: "error", msg: "Not all data provided"})
     }
 
     try {

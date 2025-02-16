@@ -35,6 +35,11 @@ const calcMemberLength = (regDate) => {
 }
 
 const getSavedItemPage = (req, res) => {
+    //if user is not logged in
+    if(!req.session.userId) {
+        return res.redirect("/auth/login")
+    }
+
     const itemEditPage = new ItemEditProfilePage()
 
     res.render("index", itemEditPage)
