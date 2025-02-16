@@ -20,8 +20,9 @@ class HomeBindingPage extends ViewParams {
         super(
             "Key binding",
             [
-                "home_binding.css",
-                "save_binding_dialog.css"
+                "home/home_binding.css",
+                "home/save_binding_dialog.css",
+                "home/custom_context_menu.css"
             ],
             [
                 "js/home_binding/bind_keys.js",
@@ -29,7 +30,8 @@ class HomeBindingPage extends ViewParams {
                 "js/home_binding/send_data_to_serial.js",
                 "js/home_binding/ui_changes.js",
                 "js/home_binding/save_load_binding.js",
-                "js/home_binding/save_binding_db.js"
+                "js/home_binding/save_binding_db.js",
+                "js/home_binding/show_context_menu.js"
             ],
             "home_binding",
             true,
@@ -55,7 +57,7 @@ class LoginPage extends ViewParams {
     constructor() {
         super(
             "Login page",
-            ["login.css", "form_auth.css"],
+            ["auth/login.css", "auth/form_auth.css"],
             [
                 "js/login.js",
             ],
@@ -86,7 +88,7 @@ class RegisterPage extends ViewParams {
     constructor() {
         super(
             "Register now!",
-            ["register.css", "form_auth.css"],
+            ["auth/register.css", "auth/form_auth.css"],
             [
                 "js/register.js",
                 "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
@@ -118,7 +120,7 @@ class EmailVerifyPage extends ViewParams {
     constructor() {
         super(
             "Verify email",
-            ["form_auth.css", "email_verify.css"],
+            ["auth/form_auth.css", "auth/email_verify.css"],
             [
                 "/js/verify_email.js",
                 "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
@@ -155,7 +157,7 @@ class RegisterSucPage extends ViewParams {
     constructor() {
         super(
             "Registration successfull!",
-            ["register_success.css", "form_auth.css"],
+            ["auth/register_success.css", "auth/form_auth.css"],
             [""],
             "registration_success",
             true,
@@ -186,7 +188,7 @@ class ProfilePage extends ViewParams {
                 "profile/profile-data.css",
                 "profile/profile-settings.css",
                 "profile/profile-common.css",
-                "save_template.css",
+                "profile/save_template.css",
                 "scrollbar.css"
 
             ],

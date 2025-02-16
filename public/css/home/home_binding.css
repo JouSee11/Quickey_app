@@ -5,6 +5,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     /* background: linear-gradient(to top, var(--primary-1000), rgb(18, 24, 33)); */
 
     /* Background color if needed */

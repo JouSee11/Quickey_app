@@ -95,6 +95,10 @@ function toggleControls() {
 
 //disable capturing on the previous capturing button
 function disableCaptureAll() {
+    if (document.getElementById("custom-context-menu")) {
+        document.getElementById("custom-context-menu").remove()
+    }
+
     buttonsList.forEach((button) => {
         if (button.textContent === capturingMsg) {
             button.textContent = defaultMsg
