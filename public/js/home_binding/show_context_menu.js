@@ -4,6 +4,7 @@ buttonsList.forEach((button) => {
 })
 
 async function showCustomContextMenu(e) {
+    disableCaptureAll()
     this.classList.add("active")
     e.preventDefault()
     try {
