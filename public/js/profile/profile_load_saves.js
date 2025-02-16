@@ -1,11 +1,11 @@
 
 //load all binding initially 
-document.addEventListener("DOMContentLoaded", () => {showSaves("")})
+document.addEventListener("DOMContentLoaded", () => {showSaves("", false)})
 const savesContainer = document.getElementById("saves-display-area")
 
-async function showSaves(searchText) {
+async function showSaves(searchText, liked) {
     try {
-        const response = await fetch("/api/profile/get-default?search=" + encodeURIComponent(searchText))
+        const response = await fetch(`/api/profile/get-default?search=${encodeURIComponent(searchText)}&liked=${liked} `)
         
         const dataResponse = await response.json()
 

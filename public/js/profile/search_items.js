@@ -14,7 +14,7 @@ function debounce(func, delay) {
 // Debounce the search function for 300ms delay
 const debouncedSearch = debounce((event) => {
     const query = event.target.value;
-    showSaves(query);
+    showSaves(query, filterLiked);
 }, 300);
 
 searchInput.addEventListener("input", debouncedSearch);

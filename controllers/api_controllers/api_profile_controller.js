@@ -1,4 +1,5 @@
 import KeyBinding from "../../models/key_binding_model.js"
+import Like from "../../models/likes_model.js"
 
 const getSavesDefault = async (req, res) => {
     //check if user is logged in
@@ -7,21 +8,41 @@ const getSavesDefault = async (req, res) => {
     }
     
     const userId = req.session.userId
-    const searchQuery = req.query.search || "";
+    const searchQuery = req.query.search || ""
+    const likedQuery = req.query.liked || "false"
     const regex = new RegExp(searchQuery, "i") // case-insensitive search
 
     try {
+        //if there is some search criteria search with the text
         const findCriteria = searchQuery ? { userId, name: regex } : { userId };
+
+        //if we are looking only for the liked ones
+        if (likedQuery === "true") {
+            // Find all liked records for this user.
+            const likedRecords = await Like.find({userId}).select("itemId").lean()
+            const likedIds = likedRecords.map((record) => record.itemId)
+
+            // Add a condition to only fetch key bindings whose _id is in the likedIds array.
+            findCriteria._id = { $in: likedIds }
+        }
+
         // Find key bindings for the specific user.
-        // Use .select() to return only specific fields (e.g. "name" and "value")
         const savedData = await KeyBinding.find(findCriteria)
             .select("name userId keyBinding likes public updatedAt")
             .sort({ createdAt: -1 })
             .populate("userId", "username")
+            .lean() // returns plain JavaScript objects so we can attach new fields
             .exec()
+        
+        // Map over the results and attach a likes count from the Likes model
+        const savedDataWithLikes = await Promise.all(savedData.map(async (save) => {
+            // Count likes documents where saveId matches the current save _id
+            const likesCount = await Like.countDocuments({ itemId: save._id });
+            return { ...save, likes: likesCount };
+        }));
 
 
-        return res.status(200).json({status: "success", data: savedData})
+        return res.status(200).json({status: "success", data: savedDataWithLikes})
 
     } catch (error) {
         console.error(err);

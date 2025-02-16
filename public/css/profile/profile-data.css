@@ -65,6 +65,11 @@
     margin-right: 15px;
 }
 
+#liked-button.selected{
+    color: var(--primary-0);
+    background-color: var(--red-dark);
+}
+
 /* display saves container */
 #saves-display-area{
     width: 100%;
