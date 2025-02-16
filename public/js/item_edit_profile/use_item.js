@@ -33,7 +33,7 @@ async function getFormatedBinding(){
         
         const response = await fetch("/api/profile/item?id=" + encodeURIComponent(itemId))
         const jsonData = await response.json()
-        const {keyBinding} = jsonData[0]
+        const {keyBinding} = jsonData.data[0]
     
         const keyBindingFormated = {}
     

@@ -34,6 +34,7 @@ async function showSaves(searchText) {
 }
 
 function showNoRecordMsg() {
+    if (document.querySelector(".no-saves-msg")) { return }
     const infoMsg = document.createElement("p")
     infoMsg.textContent = "No saves availible"
     infoMsg.className = "no-saves-msg"
@@ -52,7 +53,6 @@ function showNoRecordMsg() {
             //empty the container
             //delete the empty info message if it is there
             const infoMsg = document.querySelector(".no-saves-msg")
-            console.log(infoMsg)
             if (infoMsg) {infoMsg.remove()}
             templateElement.innerHTML = displayTemplate;
             

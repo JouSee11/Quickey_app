@@ -1,10 +1,6 @@
 import KeyBinding from "../../models/key_binding_model.js"
 import Like from "../../models/likes_model.js"
 
-const checkUniqueName = (req, res) =>{
-    return
-}
-
 const saveKeyBinding = async (req, res) => {
 
     try {
@@ -32,7 +28,7 @@ const editInfo = async (req, res) => {
             return res.status(400).json({ status: "error", msg: "Not all nessesary data was provided" });
         }
   
-        const updatedRecord = await KeyBinding.findOneAndDelete(
+        const updatedRecord = await KeyBinding.findOneAndUpdate(
             {_id: itemId, userId: req.session.userId},
             {
                 name: name.trim(),
@@ -112,4 +108,4 @@ const checkUserLike = async (req, res) => {
 }
 
 
-export {checkUniqueName, saveKeyBinding, editInfo, editState, toggleBindingLike, checkUserLike}
+export {saveKeyBinding, editInfo, editState, toggleBindingLike, checkUserLike}

@@ -1,11 +1,9 @@
 import express from "express"
-import {checkUniqueName, saveKeyBinding, editInfo, editState, toggleBindingLike, checkUserLike} from "../../controllers/api_controllers/api_key_binding_controller.js"
+import {saveKeyBinding, editInfo, editState, toggleBindingLike, checkUserLike} from "../../controllers/api_controllers/api_key_binding_controller.js"
 
 
 const router = express.Router()
 
-router.route("/unique-name")
-.post(checkUniqueName)
 
 router.route("/save-key-binding")
 .post(saveKeyBinding)
