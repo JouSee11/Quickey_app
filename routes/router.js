@@ -7,6 +7,7 @@ import apiAuthRouter from "./api_routers/api_auth_router.js"
 import apiSessionRouter from "./api_routers/api_session_router.js"
 import apiBindingRouter from "./api_routers/api_key_binding_router.js"
 import apiProfileRouter from "./api_routers/api_profile_router.js"
+import showNotFoundPage from "../controllers/not_found_controller.js"
 
 const router = express.Router()
 
@@ -33,6 +34,10 @@ router.use("/api/key-binding", apiBindingRouter)
 
 //routes for profile api
 router.use("/api/profile", apiProfileRouter)
+
+
+// 404 error for all unused routes
+router.use(showNotFoundPage)
 
 
 export default router

@@ -246,20 +246,19 @@ class ItemEditProfilePage extends ViewParams {
             true
         )
     }
+}
 
-    
-
-    // getDetails() {
-    //     const baseDetails = super.getDetails()
-
-    //     return {
-    //         ...baseDetails, 
-    //         username: this.username, 
-    //         email: this.email, 
-    //         memberLength: this.memberLength,
-    //         savesNum: this.savesNum
-    //     }
-    // }
+class NotFoundPage extends ViewParams {
+    constructor() {
+        super(
+            "404 - not found",
+            ["not_found.css"],
+            [],
+            "not_found_404",
+            true,
+            true
+        )
+    }
 }
 
 
@@ -272,5 +271,6 @@ export {
     RegisterPage,
     ProfilePage,
     EmailVerifyPage,
-    ItemEditProfilePage
+    ItemEditProfilePage,
+    NotFoundPage
 }
