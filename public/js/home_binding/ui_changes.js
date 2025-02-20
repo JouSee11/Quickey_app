@@ -95,6 +95,7 @@ function toggleControls() {
 
 //disable capturing on the previous capturing button
 function disableCaptureAll() {
+    //if the custom menu is visible delete it
     if (document.getElementById("custom-context-menu")) {
         document.getElementById("custom-context-menu").remove()
     }
@@ -147,7 +148,6 @@ function addInitialValuesUI() {
         if (currentSet.size === 0) {
             return
         }
-        console.log(currentSet)
 
         const keyCombination = Array.from(currentSet).join(" + ")
         button.textContent = keyCombination

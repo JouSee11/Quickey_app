@@ -22,7 +22,9 @@ class HomeBindingPage extends ViewParams {
             [
                 "home/home_binding.css",
                 "home/save_binding_dialog.css",
-                "home/custom_context_menu.css"
+                "home/custom_context_menu.css",
+                "home/multi_select/multi_select_dialog.css",
+                "home/multi_select/multi_select_common.css",
             ],
             [
                 "js/home_binding/bind_keys.js",
@@ -31,7 +33,8 @@ class HomeBindingPage extends ViewParams {
                 "js/home_binding/ui_changes.js",
                 "js/home_binding/save_load_binding.js",
                 "js/home_binding/save_binding_db.js",
-                "js/home_binding/show_context_menu.js"
+                "js/home_binding/show_context_menu.js",
+                "js/home_binding/multi_binding.js"
             ],
             "home_binding",
             true,

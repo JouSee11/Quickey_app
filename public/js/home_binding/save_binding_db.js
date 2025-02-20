@@ -40,7 +40,6 @@ async function showSaveDialog() {
     } catch (error) {
         console.log(error)
     }
-
 }
 
 async function saveToDb(nameInput, descriptionInput, saveDialog) {

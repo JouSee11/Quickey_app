@@ -35,10 +35,15 @@ async function showCustomContextMenu(e) {
             insertedMenu.style.left = `${e.pageX}px`
         }
 
+        const buttonNumber = e.target.dataset.keyNum
+
         //add events to the buttons in the context
-        const buttonNummber = e.target.dataset.keyNum
         const deleteButton = document.getElementById("context-delete-btn")
-        deleteButton.addEventListener("click", () => {resetSingleButton(buttonNummber)})
+        deleteButton.addEventListener("click", () => {resetSingleButton(buttonNumber)})
+
+        //show edit dialog when the edit button is pressed
+        const buttonEdit = document.getElementById("context-action-btn")
+        buttonEdit.addEventListener("click", () => {showMultiBindingDialog(buttonNumber)})
 
     } catch (error) {
         console.error(error)

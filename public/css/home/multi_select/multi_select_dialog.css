@@ -1,0 +1,78 @@
+#multi-binding-dialog{
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+
+    width: 70%;
+    height: 80%;
+    position: relative;
+
+    border: none;
+    border-radius: var(--border-rad-bigger);
+    background-color: var(--blue-dark);
+    box-shadow: 10px 10px 0 var(--primary-600);
+    /* background: transparent; */
+    /* backdrop-filter: blur(20px) brightness(0.8); */
+    /* transition: height 0.3s ease-in-out; */
+
+    padding: 30px 30px 15px;
+}
+
+#multi-binding-dialog h1{
+    position: absolute;
+    left: 30px;;
+    top: 10px;
+    color: var(--primary-0);
+}
+#multi-binding-dialog h1 i{
+    margin-right: 10px;
+}
+
+#multi-items-cont{
+    /* width: 60%; */
+    flex-grow: 1;
+    margin: 0;
+    margin-right: 15px;
+    height: 80%;
+    background-color: var(--primary-800);
+    border-radius: var(--border-rad-main);
+}
+
+#multi-selection-conts{
+    width: 35%;
+    max-width: 350px;
+    height: 80%;
+    background-color: var(--primary-800);
+    margin: 0;
+    margin-left: 15px;
+    border-radius: var(--border-rad-main);
+
+}
+
+#multi-control-btn-cont{
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+}
+
+
+
+#multi-submit-button{
+    background-color: var(--blue-vivid);
+    color: var(--primary-0);
+    margin-right: 20px;
+
+}
+#multi-submit-button:hover{
+    box-shadow: 0 0 30px var(--blue-vivid-shadow);
+    filter: brightness(1.1);
+}
+
+#multi-cancel-button{
+    background-color: var(--red-dark);
+    color: var(--primary-0);
+}
+#multi-cancel-button:hover{
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.185);
+    filter: brightness(1.1);
+}
