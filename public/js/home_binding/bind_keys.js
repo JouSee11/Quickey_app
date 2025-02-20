@@ -28,6 +28,9 @@ buttonsList.forEach((button) => {
 
 // listener on click function
 const buttonClickListener = (buttonElement, buttonNumber) => {
+    //if it is already binded dont rebind it with the click
+    if(keyBindingValues.get(buttonNumber).size !== 0) return
+
     // when somethin elese was capturing disable it 
     disableCaptureAll()
     capturing = true

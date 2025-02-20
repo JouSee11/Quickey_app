@@ -129,6 +129,15 @@ function resetButtons() {
     }
 }
 
+function resetSingleButton(resetBtnNum) {
+    console.log("here" + resetBtnNum)
+    const buttonReset = Array.from(buttonsList).find((button) => button.dataset.keyNum === resetBtnNum)
+    buttonReset.textContent = defaultMsg
+    buttonReset.classList.remove("binded")
+    buttonReset.prepend(iconWranch.cloneNode(true))
+    keyBindingValues.set(Number(resetBtnNum), new Set([]))
+}
+
 function addInitialValuesUI() {
     buttonsList.forEach((button) => {
         //get info about button

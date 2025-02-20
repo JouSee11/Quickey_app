@@ -34,6 +34,12 @@ async function showCustomContextMenu(e) {
             insertedMenu.style.top = `${e.pageY}px`
             insertedMenu.style.left = `${e.pageX}px`
         }
+
+        //add events to the buttons in the context
+        const buttonNummber = e.target.dataset.keyNum
+        const deleteButton = document.getElementById("context-delete-btn")
+        deleteButton.addEventListener("click", () => {resetSingleButton(buttonNummber)})
+
     } catch (error) {
         console.error(error)
     }
