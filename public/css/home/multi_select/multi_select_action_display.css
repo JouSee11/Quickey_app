@@ -1,0 +1,115 @@
+#multi-action-cont{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: relative;
+
+    /* Change these properties */
+    overflow-y: auto;  /* Change to auto for better behavior */
+    overflow-x: hidden;  /* Prevent horizontal scroll */
+
+    /* width: 60%; */
+    flex-grow: 1;
+    margin: 0;
+    margin-right: 15px;
+    height: 80%;
+    background-color: var(--primary-800);
+    border-radius: var(--border-rad-main);
+
+    padding: 10px 10px;
+}
+
+
+#multi-action-cont p{
+    position: absolute;
+    color: var(--gray-main);
+    bottom: 10px;
+    right: 30px;
+    margin: 0;
+}
+
+/* !!! action node template for all !!! */
+.action-node{
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 100%;
+    height: 70px;
+
+    position: relative;
+
+    background-color: var(--primary-1000);
+    color: var(--primary-0);
+    border-radius: var(--border-rad-smaller);
+    cursor: pointer;
+
+    margin-bottom: 15px;
+    padding: 10px 20px;
+}
+.action-node:hover{
+    filter: brightness(1.1);
+}
+
+.action-node i{
+    font-size: var(--bigger-text);
+    margin-right: 20px;
+}
+
+.node-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.node-name{
+    font-size: var(--small-text);
+    margin: 0;
+    margin-bottom: 5px;
+    color: var(--gray-main);
+}
+
+.delete-btn{
+    position: absolute;
+    right: 10px;
+    padding: 10px;
+    background-color: var(--red-dark);
+    border-radius: var(--border-rad-smaller);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+.delete-btn:hover{
+    filter: brightness(1.2);
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.342);
+}
+
+.not-binded .node-content-key{
+    color: var(--red-dark);
+}
+/* single items on the actions sequence  */
+
+/* inputs for the nodes */
+.node-delay-input{
+    width: 150px;
+    height: 25px;
+    border: none;
+    background-color: var(--primary-600);
+    color: var(--primary-0);
+    border-radius: var(--border-rad-smaller);
+    text-align: center;
+    margin-right: 10px;
+    outline: none;
+    font-size: var(--normal-text);
+}
+
+.node-write-input{
+    width: 400px;
+    height: 25px;
+    border: none;
+    background-color: var(--primary-600);
+    color: var(--primary-0);
+    border-radius: var(--border-rad-smaller);
+    text-align: left;
+    margin-right: 10px;
+    outline: none;
+    font-size: var(--normal-text);
+    padding: 0 10px;   
+}

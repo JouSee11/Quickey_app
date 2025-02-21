@@ -25,6 +25,8 @@ class HomeBindingPage extends ViewParams {
                 "home/custom_context_menu.css",
                 "home/multi_select/multi_select_dialog.css",
                 "home/multi_select/multi_select_common.css",
+                "home/multi_select/multi_select_options.css",
+                "home/multi_select/multi_select_action_display.css",
             ],
             [
                 "js/home_binding/bind_keys.js",
