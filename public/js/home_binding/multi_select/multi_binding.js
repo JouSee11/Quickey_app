@@ -1,6 +1,10 @@
 // global variables used for multi action
 const curMultipleSet = new Set([])
 
+let capturingMulti = false
+let capturingMultiItem = null 
+let capturingMultiAction = null
+
 async function showMultiBindingDialog(buttonNumber) {
     try {
         const response = await fetch("/html/multi_binding_dialog.html")
@@ -30,7 +34,7 @@ async function showMultiBindingDialog(buttonNumber) {
         //listeners for buttons
         cancelBtn.addEventListener("click", () => multiDialog.close());
         // on submit add the "multiplAction" to the curMultipleSet on first position
-        // submitBtn.addEventListener("click", () => saveToDb(nameInput, descriptionInput, saveDialog)) 
+        submitBtn.addEventListener("click", () => console.log(curMultipleSet)) 
      
 
     } catch (error) {
@@ -72,7 +76,7 @@ async function showNodeGeneral(nodeFileName, actionName) {
         const response = await fetch(`/html/multi_action_nodes/${nodeFileName}.html`)
         const nodeHtml = await response.text();
         
-        // Create temporary container to parse HTML
+        // Create temporary container to parse HsTML
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = nodeHtml;
         
@@ -81,12 +85,15 @@ async function showNodeGeneral(nodeFileName, actionName) {
 
         // add the node value to the set (initial empty value) - format is: !!! nodePositionActionType_value !!!
         const nodeNumber = curMultipleSet.size
-        node.dataset.nodePostion = nodeNumber;
+        node.dataset.nodePosition = nodeNumber;
         curMultipleSet.add(`${nodeNumber}_${actionName}_`);
 
         // event listener for the delete button
         const deleteBtn = node.querySelector(".delete-btn");
-        deleteBtn.addEventListener("click", () => handleNodeRemove(node));
+        deleteBtn.addEventListener("click", (e) => {
+            handleNodeRemove(node),
+            e.stopPropagation()
+        });
         
         // Add to container
         actionContainer.appendChild(node);
@@ -99,8 +106,16 @@ async function showNodeGeneral(nodeFileName, actionName) {
 
 // handle node remove and refactor the set so that the numbers are in order
 function handleNodeRemove(node) {
-    const nodeNumberDel = node.dataset.nodePostion;
+    const nodeNumberDel = node.dataset.nodePosition;
     node.remove();
+
+    // af the deleted node was capturing, reset the capturing
+    if (node.classList.contains("active")) {
+        console.log("reseting")
+        capturingMulti = false
+        capturingMultiItem = null 
+        capturingMultiAction = null
+    }
 
     // Remove item from Set
     const itemToDelete = Array.from(curMultipleSet).find(item => item.startsWith(nodeNumberDel));
@@ -111,11 +126,11 @@ function handleNodeRemove(node) {
     // Get all remaining nodes and update their positions
     const remainingNodes = document.querySelectorAll('.action-node');
     remainingNodes.forEach((node, index) => {
-        const oldPosition = parseInt(node.dataset.nodePostion);
+        const oldPosition = parseInt(node.dataset.nodePosition);
         if (oldPosition > nodeNumberDel) {
             // Update node position
             const newPosition = oldPosition - 1;
-            node.dataset.nodePostion = newPosition;
+            node.dataset.nodePosition = newPosition;
 
             // Update corresponding item in Set
             const oldItem = Array.from(curMultipleSet).find(item => item.startsWith(oldPosition + '_'));
@@ -134,19 +149,42 @@ function handleNodeRemove(node) {
 
 
 // !!! handle specific button press !!!
-
 async function addNodePressRelease() {
-    showNodeGeneral("node_press_release", "pressRelease")
+    const pressReleaseNode = await showNodeGeneral("node_press_release", "pressRelease")
+    
+    //start captring the key press
+    pressReleaseNode.addEventListener("click", (e) => {
+        const nodeNumber = pressReleaseNode.dataset.nodePosition
+        console.log(nodeNumber)
+        buttonClickListenerMulti(pressReleaseNode, nodeNumber, "pressRelease")
+        e.stopPropagation()
+    })
 
 
 }
 
-function addNodeHold() {
-    showNodeGeneral("node_hold", "hold")
+async function addNodeHold() {
+    const pressReleaseNode = await showNodeGeneral("node_hold", "hold")
+    
+    //start captring the key press
+    pressReleaseNode.addEventListener("click", (e) => {
+        const nodeNumber = pressReleaseNode.dataset.nodePosition
+        console.log(nodeNumber)
+        buttonClickListenerMulti(pressReleaseNode, nodeNumber, "hold")
+        e.stopPropagation()
+    })
 }
 
-function addNodeRelease() {
-    showNodeGeneral("node_release", "release")
+async function addNodeRelease() {
+    const pressReleaseNode = await showNodeGeneral("node_release", "release")
+    
+    //start captring the key press
+    pressReleaseNode.addEventListener("click", (e) => {
+        const nodeNumber = pressReleaseNode.dataset.nodePosition
+        console.log(nodeNumber)
+        buttonClickListenerMulti(pressReleaseNode, nodeNumber, "release")
+        e.stopPropagation()
+    })
 }
 
 function addNodeReleaseAll() {
@@ -155,7 +193,7 @@ function addNodeReleaseAll() {
 
 async function addNodeDelay() {
     const delayNode = await showNodeGeneral("node_delay", "delay")
-    const nodeNumber = delayNode.dataset.nodePostion
+    const nodeNumber = delayNode.dataset.nodePosition
 
     const delayInput = delayNode.querySelector(`.node-delay-input`)
 
@@ -168,13 +206,12 @@ async function addNodeDelay() {
         //add the new item
         curMultipleSet.add(`${nodeNumber}_delay_${delayInput.value}`)
 
-        console.log(curMultipleSet)
     })
 }
 
 async function addNodeWrite() {
     const writeNode = await showNodeGeneral("node_write", "write")
-    const nodeNumber = writeNode.dataset.nodePostion
+    const nodeNumber = writeNode.dataset.nodePosition
 
     const writeInput = writeNode.querySelector(`.node-write-input`)
 
@@ -190,3 +227,61 @@ async function addNodeWrite() {
         console.log(curMultipleSet)
     })
 }
+
+// !!! handle capturing key press!!!
+function getItemByNumMulti(itemNum) {
+    const item = document.querySelector(`[data-node-Position="${itemNum}"]`)
+    return item;
+}
+
+
+//capturing the key press general for multi
+function buttonClickListenerMulti(nodeElement, nodeNumber, actionType) {
+    console.log(curMultipleSet)
+
+    //when something else was capturing disable it
+    disableCaptureAllMulti()
+    capturingMulti = true
+    capturingMultiItem = Number(nodeNumber)
+    capturingMultiAction = actionType
+
+    nodeElement.classList.remove("binded")
+    nodeElement.classList.add("active")
+
+    //check if some binding is already set and delete it
+    const displayText = nodeElement.querySelector(".node-content-key")
+    displayText.textContent = capturingMsg
+
+}
+
+//capture the keydown event when capturing multi
+document.addEventListener("keydown", (event) => {
+    //if no button is "listening", I dont want to capture anything 
+    if (!capturingMulti) return;
+
+    event.preventDefault();
+
+    //get the current values
+    let pressedKey = event.code
+
+    //get the element that is capturing and change classes and text
+    const nodeElement = getItemByNumMulti(capturingMultiItem)
+    nodeElement.querySelector(".node-content-key").textContent = pressedKey
+    nodeElement.classList.remove("active")
+    nodeElement.classList.add("binded")
+
+    // Find and remove the old item from Set
+    const existingItem = Array.from(curMultipleSet).find(item => 
+        item.startsWith(`${capturingMultiItem}_`)
+    );
+    if (existingItem) {
+        curMultipleSet.delete(existingItem);
+    }
+
+    // Add new item with updated key value
+    curMultipleSet.add(`${capturingMultiItem}_${capturingMultiAction}_${pressedKey}`);
+
+    capturingMulti = false
+    capturingMultiItem = null
+
+})

@@ -81,8 +81,16 @@
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.342);
 }
 
-.not-binded .node-content-key{
+.node-content-key{
     color: var(--red-dark);
+}
+
+.active .node-content-key{
+    color: var(--primary-600);
+}
+
+.binded .node-content-key{
+    color: var(--green-bright);
 }
 /* single items on the actions sequence  */
 
