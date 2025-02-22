@@ -4,64 +4,20 @@ import digitalio
 import usb_hid
 import storage  # For filesystem control
 import supervisor
-from adafruit_hid.keyboard import Keyboard
-from adafruit_hid.keycode import Keycode
-import json
 import sys
-from key_code_conversion import JS_TO_ADAFRUIT_HID
+#from adafruit_hid.keyboard import Keyboard
+#from adafruit_hid.keycode import Keycode
 
-def print_data(data):
-    print(data + "\n")
-
-def read_data():
-    try:
-        with open("config_data.json", "r") as file:
-            data = json.load(file)
-        
-        print_data(f"Loaded data {data}")
-        return data
-    except Exception as e:
-        print_data(f"Error reading data: {e}")
-        return None
-
-
-# Function to save data from serial input
-def save_data(data):
-    try:
-        print_data(f"[Pico] Received: {data}")  # Confirm via serial
-        converted_data = json.loads(data)
-        with open('config_data.json', 'w') as f:
-            json.dump(converted_data, f)  # Write data to filesystem
-        print_data("[Pico] Data saved successfully!")  # Success message
-    except Exception as e:
-        print_data(f"Error saving data: {e}")
-        
-def handle_key_press(key_num):
-    all_keys = btn_keys[str(key_num)]
-    
-    for js_keycode in all_keys:
-        adafruit_keycode = JS_TO_ADAFRUIT_HID.get(js_keycode, None)
-        keyboard.press(adafruit_keycode)
-        
-    keyboard.release_all()
-
-def export_data_to_browser():
-    data = read_data()
-    print_data(f"_import_{json.dumps(data)}")
-    #js_keycode = btn_keys[str(key_num)][0]
-    #adafruit_keycode = JS_TO_ADAFRUIT_HID.get(js_keycode, None)
-    #keyboard.press(adafruit_keycode)
-    #keyboard.release(adafruit_keycode)
+#from key_code_conversion import JS_TO_ADAFRUIT_HID
+from globals import keyboard
+import globals
+from read_save_data import *
 
 # Initialize the onboard LED
 led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
 
-# Initialize the keyboard
-keyboard = Keyboard(usb_hid.devices)
-
 #buttons functionality
-btn_keys = read_data()
 
 time_sleep = 0.2
 
@@ -117,6 +73,10 @@ while True:
                     save_data(data)  # Save to filesystem
                     supervisor.reload() # reload the device when we save the data to it
         
+        if not btn1.value and not btn2.value:
+            print("mode change")
+            time.sleep(time_sleep)
+        
         # Check button presses and send HID keycodes
         if not btn1.value:
             handle_key_press(1)
@@ -153,7 +113,7 @@ while True:
 
         if not btn9.value:
             handle_key_press(9)
-            time.sleep(time_sleep)
+            time.sleep(time_sleep)        
 
         time.sleep(0.01)  # Short delay for stability
 

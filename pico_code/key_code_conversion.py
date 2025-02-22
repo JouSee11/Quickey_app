@@ -46,5 +46,9 @@ JS_TO_ADAFRUIT_HID = {
     "BracketLeft": Keycode.LEFT_BRACKET, "BracketRight": Keycode.RIGHT_BRACKET,
     "Backslash": Keycode.BACKSLASH, "Semicolon": Keycode.SEMICOLON,
     "Quote": Keycode.QUOTE, "Comma": Keycode.COMMA, "Period": Keycode.PERIOD,
-    "Slash": Keycode.FORWARD_SLASH, "Backquote": Keycode.GRAVE_ACCENT
+    "Slash": Keycode.FORWARD_SLASH, "Backquote": Keycode.GRAVE_ACCENT,
+    
+    #meta keys
+    "MetaLeft": Keycode.GUI,
+    "MetaRight": Keycode.GUI
 }
