@@ -128,6 +128,7 @@ function resetButtons() {
             keyBindingValues.set(btnNumber, new Set([]))
         })
     }
+    console.log(keyBindingValues)
 }
 
 function resetSingleButton(resetBtnNum) {
@@ -149,10 +150,24 @@ function addInitialValuesUI() {
             return
         }
 
-        const keyCombination = Array.from(currentSet).join(" + ")
-        button.textContent = keyCombination
+        //check if it is a multi binding or simple
+        if (currentSet.has("multi")) {
+            button.innerHTML = "<i class='fa-solid fa-layer-group'></i>Multi"
+        } else {
+            const keyCombination = Array.from(currentSet).join(" + ")
+            button.textContent = keyCombination
+        }
+
         button.classList.add("binded")
     })
+}
+
+function multiKeySubmitBtnUi(buttonNumber) {
+    console.log("here")
+    // const buttonEdited = Array.from(buttonsList).find((button) => button.dataset.keyNum === buttonNumber)
+    const buttonEdited = document.querySelector(`[data-key-num="${buttonNumber}"]`)
+    buttonEdited.classList.add("binded")
+    buttonEdited.innerHTML = "<i class='fa-solid fa-layer-group'></i>Multi"
 }
 
 

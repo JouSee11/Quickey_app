@@ -38,6 +38,7 @@ class HomeBindingPage extends ViewParams {
                 "js/home_binding/show_context_menu.js",
                 "js/home_binding/multi_select/multi_binding.js",
                 "js/home_binding/multi_select/multi_binding_ui.js",
+                "js/home_binding/multi_select/multi_binding_save_load.js",
             ],
             "home_binding",
             true,

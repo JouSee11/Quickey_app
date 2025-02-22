@@ -1,5 +1,5 @@
 // global variables used for multi action
-const curMultipleSet = new Set([])
+let curMultipleSet = new Set([])
 
 let capturingMulti = false
 let capturingMultiItem = null 
@@ -14,7 +14,11 @@ async function showMultiBindingDialog(buttonNumber) {
         if (!document.getElementById("multi-binding-dialog")) {
             document.body.insertAdjacentHTML("beforeend", multiDialogHtml);
         } 
-
+        
+        //restat the container
+        document.getElementById("multi-action-cont").innerHTML = ""
+        curMultipleSet = new Set([])
+        
         //get the dialog elements
         const multiDialog = document.getElementById("multi-binding-dialog")
 
@@ -32,11 +36,16 @@ async function showMultiBindingDialog(buttonNumber) {
         optionsDiv.addEventListener("click", handleOptionBtnPress)
 
         //listeners for buttons
-        cancelBtn.addEventListener("click", () => multiDialog.close());
+        cancelBtn.addEventListener("click", () => multiDialog.close(), {once: true});
         // on submit add the "multiplAction" to the curMultipleSet on first position
-        submitBtn.addEventListener("click", () => console.log(curMultipleSet)) 
-     
+        submitBtn.addEventListener("click", () => {
+            saveMultiAction(buttonNumber)
+            multiDialog.close()
+        }, {once: true}); 
 
+        //load the data 
+        loadMultiAction(buttonNumber)
+     
     } catch (error) {
         console.log(error)
     }
@@ -68,9 +77,9 @@ function handleOptionBtnPress(e) {
 
 }
 
-// !!! handle the node add !!!
+// !!! handle node add !!!
 
-async function showNodeGeneral(nodeFileName, actionName) {
+async function showNodeGeneral(nodeFileName, actionName, value = "") {
     const actionContainer = document.getElementById("multi-action-cont")
     try {
         const response = await fetch(`/html/multi_action_nodes/${nodeFileName}.html`)
@@ -86,7 +95,15 @@ async function showNodeGeneral(nodeFileName, actionName) {
         // add the node value to the set (initial empty value) - format is: !!! nodePositionActionType_value !!!
         const nodeNumber = curMultipleSet.size
         node.dataset.nodePosition = nodeNumber;
-        curMultipleSet.add(`${nodeNumber}_${actionName}_`);
+        curMultipleSet.add(`${nodeNumber}_${actionName}_${value}`);
+
+        //if there is a set value make the node binded
+        if (value) {
+            console.log(value)
+            showInitNodeValue(node, actionName, value)
+            // node.querySelector(".node-content-key").textContent = value
+            // node.classList.add("binded")
+        }
 
         // event listener for the delete button
         const deleteBtn = node.querySelector(".delete-btn");
@@ -101,6 +118,23 @@ async function showNodeGeneral(nodeFileName, actionName) {
         return node
     } catch (error) {
         console.error(error);
+    }
+}
+
+function showInitNodeValue(node, actionName, value) {
+    node.classList.add("binded")
+    switch(actionName) {
+        case "pressRelease":
+        case "hold":
+        case "release":
+            node.querySelector(".node-content-key").textContent = value
+            break
+        case "delay":
+            node.querySelector(".node-delay-input").value = value
+            break
+        case "write":
+            node.querySelector(".node-write-input").value = value
+            break
     }
 }
 
@@ -149,8 +183,8 @@ function handleNodeRemove(node) {
 
 
 // !!! handle specific button press !!!
-async function addNodePressRelease() {
-    const pressReleaseNode = await showNodeGeneral("node_press_release", "pressRelease")
+async function addNodePressRelease(value = "") {
+    const pressReleaseNode = await showNodeGeneral("node_press_release", "pressRelease", value)
     
     //start captring the key press
     pressReleaseNode.addEventListener("click", (e) => {
@@ -163,8 +197,8 @@ async function addNodePressRelease() {
 
 }
 
-async function addNodeHold() {
-    const pressReleaseNode = await showNodeGeneral("node_hold", "hold")
+async function addNodeHold(value = "") {
+    const pressReleaseNode = await showNodeGeneral("node_hold", "hold", value)
     
     //start captring the key press
     pressReleaseNode.addEventListener("click", (e) => {
@@ -175,8 +209,8 @@ async function addNodeHold() {
     })
 }
 
-async function addNodeRelease() {
-    const pressReleaseNode = await showNodeGeneral("node_release", "release")
+async function addNodeRelease(value = "") {
+    const pressReleaseNode = await showNodeGeneral("node_release", "release", value)
     
     //start captring the key press
     pressReleaseNode.addEventListener("click", (e) => {
@@ -187,12 +221,12 @@ async function addNodeRelease() {
     })
 }
 
-function addNodeReleaseAll() {
-    showNodeGeneral("node_release_all", "releaseAll")
+async function addNodeReleaseAll() {
+    await showNodeGeneral("node_release_all", "releaseAll")
 }
 
-async function addNodeDelay() {
-    const delayNode = await showNodeGeneral("node_delay", "delay")
+async function addNodeDelay(value = "") {
+    const delayNode = await showNodeGeneral("node_delay", "delay", value)
     const nodeNumber = delayNode.dataset.nodePosition
 
     const delayInput = delayNode.querySelector(`.node-delay-input`)
@@ -209,8 +243,8 @@ async function addNodeDelay() {
     })
 }
 
-async function addNodeWrite() {
-    const writeNode = await showNodeGeneral("node_write", "write")
+async function addNodeWrite(value = "") {
+    const writeNode = await showNodeGeneral("node_write", "write", value)
     const nodeNumber = writeNode.dataset.nodePosition
 
     const writeInput = writeNode.querySelector(`.node-write-input`)

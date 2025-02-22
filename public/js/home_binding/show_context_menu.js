@@ -35,7 +35,15 @@ async function showCustomContextMenu(e) {
             insertedMenu.style.left = `${e.pageX}px`
         }
 
-        const buttonNumber = e.target.dataset.keyNum
+        //get the button number, if we press on the text it will also get the parent element
+        const buttonElement = e.target.closest('[data-key-num]')
+        const buttonNumber = buttonElement ? buttonElement.dataset.keyNum : null
+
+        if (!buttonNumber) {
+            console.error('No button number found')
+            return
+        }
+
 
         //add events to the buttons in the context
         const deleteButton = document.getElementById("context-delete-btn")
