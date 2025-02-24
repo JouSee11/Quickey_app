@@ -48,8 +48,12 @@ def handle_key_press(key_num):
             
             print(action_name)
             print(action_value)
-
-            if action_name == "pressRelease":
+            
+            #check if there is some value assigned to the node
+            if not action_value:
+                print("no value assigned to the node!")
+                
+            elif action_name == "pressRelease":
                 adafruit_keycode = JS_TO_ADAFRUIT_HID.get(action_value, None)
                 keyboard.press(adafruit_keycode)
                 time.sleep(0.1)
@@ -67,7 +71,10 @@ def handle_key_press(key_num):
                 keyboard.release_all()
 
             elif action_name == "delay":
-                time.sleep(float(action_value) / 1000)
+                try:
+                    time.sleep(float(action_value) / 1000)
+                except:
+                    print("empty delay node")
                 
             elif action_name == "write":
                 keyboardLayout.write(action_value + "\n")
