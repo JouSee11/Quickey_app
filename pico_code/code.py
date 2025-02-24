@@ -9,7 +9,7 @@ import sys
 #from adafruit_hid.keycode import Keycode
 
 #from key_code_conversion import JS_TO_ADAFRUIT_HID
-from globals import keyboard
+from globals import keyboard, mouse
 import globals
 from read_save_data import *
 

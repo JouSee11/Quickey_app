@@ -1,6 +1,6 @@
 import json
 import time
-from globals import keyboard, btn_keys, keyboardLayout
+from globals import keyboard, btn_keys, keyboardLayout, mouse
 from key_code_conversion import JS_TO_ADAFRUIT_HID
 
 
@@ -32,6 +32,9 @@ def save_data(data):
         
 def handle_key_press(key_num):
     all_keys = btn_keys[str(key_num)]
+    
+    
+    if len(all_keys) == 0: return
     
     #check if it is a regular key press or multi key
     if all_keys[0] != "multi":
@@ -68,6 +71,13 @@ def handle_key_press(key_num):
                 
             elif action_name == "write":
                 keyboardLayout.write(action_value + "\n")
+            
+            elif action_name == "mouseMove":
+                horizontal_dir, vertical_dir, horiz_val, vert_val = action_value.split("&")
+                horiz_sign = -1 if horizontal_dir.lower() == "left" else 1
+                vert_sign = -1 if vertical_dir.lower() == "up" else 1
+                mouse.move(int(horiz_val) * horiz_sign, int(vert_val) * vert_sign)
+                
             
             time.sleep(0.1)
         

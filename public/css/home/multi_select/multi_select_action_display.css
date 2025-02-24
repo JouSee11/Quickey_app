@@ -121,3 +121,26 @@
     font-size: var(--normal-text);
     padding: 0 10px;   
 }
+
+.node-mouse-input{
+    width: 100px;
+    height: 25px;
+    border: none;
+    background-color: var(--primary-600);
+    color: var(--primary-0);
+    border-radius: var(--border-rad-smaller);
+    text-align: left;
+    margin-right: 10px;
+    outline: none;
+    font-size: var(--normal-text);
+    padding: 0 10px;   
+}
+
+.node-mouse-select{
+    background-color: var(--primary-800);
+    border: none;
+    outline: none;
+    color: var(--primary-0);
+    border-radius: var(--border-rad-smaller);
+    padding: 5px 10px;
+}

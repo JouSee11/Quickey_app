@@ -53,8 +53,10 @@ async function showMultiBindingDialog(buttonNumber) {
 
 // !!! handle the genearl options button press !!!
 function handleOptionBtnPress(e) {
+    console.log(e.target.id)
     switch(e.target.id) {
         case "btn-press-release": 
+            console.log("here switchc one")
             addNodePressRelease()
             break
         case "btn-hold": 
@@ -71,6 +73,10 @@ function handleOptionBtnPress(e) {
             break
         case "btn-write": 
             addNodeWrite()
+            break
+        case "btn-mouse-move":
+            console.log("here switchc two")
+            addNodeMouseMove()
             break
         default: return
     }
@@ -134,6 +140,14 @@ function showInitNodeValue(node, actionName, value) {
             break
         case "write":
             node.querySelector(".node-write-input").value = value
+            break
+        case "mouseMove":
+            const valuesList = value.split('&')
+            node.querySelector(".select-mouse-move-horizontal").value = valuesList[0]
+            node.querySelector(".select-mouse-move-vertical").value = valuesList[1]
+            node.querySelector(".node-mouse-move-input-horizontal").value = valuesList[2]
+            node.querySelector(".node-mouse-move-input-vertical").value = valuesList[3]
+
             break
     }
 }
@@ -260,6 +274,41 @@ async function addNodeWrite(value = "") {
 
         console.log(curMultipleSet)
     })
+}
+
+async function addNodeMouseMove(value = "left&up&0&0") {
+    const mouseNode = await showNodeGeneral("node_mouse_move", "mouseMove", value)
+    const nodeNumber = mouseNode.dataset.nodePosition
+
+    const horizontalSelect = mouseNode.querySelector(`.select-mouse-move-horizontal`)
+    const horizontalInput = mouseNode.querySelector(`.node-mouse-move-input-horizontal`)
+
+    const verticalSelect = mouseNode.querySelector(`.select-mouse-move-vertical`)
+    const verticalInput = mouseNode.querySelector(`.node-mouse-move-input-vertical`)
+    
+    //change the saved value when user changes the settings
+    const changeSavedState = () => {
+        const horizontalDirection = horizontalSelect.value
+        const verticalDirection = verticalSelect.value
+
+        const horizontalValue = horizontalInput.value ? horizontalInput.value : 0
+        const verticalValue = verticalInput.value ? verticalInput.value : 0
+
+        // delethe the old record
+        const existingItem = Array.from(curMultipleSet).find(item => item.startsWith(nodeNumber));
+        if (existingItem) {
+            curMultipleSet.delete(existingItem);
+        }
+        //add the new record
+        curMultipleSet.add(`${nodeNumber}_mouseMove_${horizontalDirection}&${verticalDirection}&${horizontalValue}&${verticalValue}`)
+
+        // console.log(`${nodeNumber}_mouseMove_${horizontalDirection}_${verticalDirection}_${horizontalValue}_${verticalValue}`)
+    }
+
+    horizontalSelect.addEventListener("change", changeSavedState)
+    verticalSelect.addEventListener("change", changeSavedState)
+    horizontalInput.addEventListener("change", changeSavedState)
+    verticalInput.addEventListener("change", changeSavedState)
 }
 
 // !!! handle capturing key press!!!

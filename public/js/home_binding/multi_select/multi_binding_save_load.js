@@ -41,7 +41,10 @@ async function loadMultiAction(buttonNumber) {
         //remove the multi from the set
         const currentArray = Array.from(currentSet).slice(1);
         for (let item of currentArray) {
-            const keyValue = item.split('_')[2] ? item.split('_')[2] : "";
+            const parts = item.split('_');
+            const keyValue = parts.length > 2 ? parts.slice(2).join('_') : "";
+            console.log(keyValue)
+            // const keyValue = item.split('_')[2] ? item.split('_')[2] : "";
             console.log(keyValue)
             switch (item.split('_')[1]) {
                 case "pressRelease":
@@ -61,6 +64,9 @@ async function loadMultiAction(buttonNumber) {
                     break;
                 case "write":
                     await addNodeWrite(keyValue);
+                    break;
+                case "mouseMove":
+                    await addNodeMouseMove(keyValue);
                     break;
                     
             }
