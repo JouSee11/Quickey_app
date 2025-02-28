@@ -20,13 +20,6 @@
 }
 
 
-#multi-action-cont p{
-    position: absolute;
-    color: var(--gray-main);
-    bottom: 10px;
-    right: 30px;
-    margin: 0;
-}
 
 /* !!! action node template for all !!! */
 .action-node{
@@ -42,12 +35,16 @@
     color: var(--primary-0);
     border-radius: var(--border-rad-smaller);
     cursor: pointer;
+    user-select: none;
 
     margin-bottom: 15px;
     padding: 10px 20px;
 }
 .action-node:hover{
     filter: brightness(1.1);
+}
+.action-node:hover i{
+    text-shadow: 0 0 15px var(--blue-vivid-shadow);
 }
 
 .action-node i{
@@ -82,11 +79,11 @@
 }
 
 .node-content-key{
-    color: var(--red-dark);
+    color: var(--gray-main);
 }
 
 .active .node-content-key{
-    color: var(--primary-600);
+    color: var(--primary-100);
 }
 
 .binded .node-content-key{
@@ -144,3 +141,4 @@
     border-radius: var(--border-rad-smaller);
     padding: 5px 10px;
 }
+

@@ -75,8 +75,10 @@ function handleOptionBtnPress(e) {
             addNodeWrite()
             break
         case "btn-mouse-move":
-            console.log("here switchc two")
             addNodeMouseMove()
+            break
+        case "btn-mouse-click":
+            addNodeMouseClick();
             break
         default: return
     }
@@ -120,6 +122,7 @@ async function showNodeGeneral(nodeFileName, actionName, value = "") {
         
         // Add to container
         actionContainer.appendChild(node);
+        actionContainer.scrollTop = actionContainer.scrollHeight;
         
         return node
     } catch (error) {
@@ -147,7 +150,9 @@ function showInitNodeValue(node, actionName, value) {
             node.querySelector(".select-mouse-move-vertical").value = valuesList[1]
             node.querySelector(".node-mouse-move-input-horizontal").value = valuesList[2]
             node.querySelector(".node-mouse-move-input-vertical").value = valuesList[3]
-
+            break
+        case "mouseClick":
+            node.querySelector(".select-mouse-click").value = value
             break
     }
 }
@@ -309,6 +314,24 @@ async function addNodeMouseMove(value = "left&up&0&0") {
     verticalSelect.addEventListener("change", changeSavedState)
     horizontalInput.addEventListener("change", changeSavedState)
     verticalInput.addEventListener("change", changeSavedState)
+}
+
+async function addNodeMouseClick(value = "") {
+    const mouseNode = await showNodeGeneral("node_mouse_click", "mouseClick", value)
+    const nodeNumber = mouseNode.dataset.nodePosition
+
+    const clickSelect = mouseNode.querySelector(`.select-mouse-click`)
+    
+    clickSelect.addEventListener("change", () => {
+        // find the old value and delete it
+        const existingItem = Array.from(curMultipleSet).find(item => item.startsWith(nodeNumber));
+        if (existingItem) {
+            curMultipleSet.delete(existingItem);
+        }
+        //add the new item
+        curMultipleSet.add(`${nodeNumber}_mouseClick_${clickSelect.value}`)
+        }
+    )
 }
 
 // !!! handle capturing key press!!!

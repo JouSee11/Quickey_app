@@ -42,10 +42,9 @@ async function loadMultiAction(buttonNumber) {
         const currentArray = Array.from(currentSet).slice(1);
         for (let item of currentArray) {
             const parts = item.split('_');
-            const keyValue = parts.length > 2 ? parts.slice(2).join('_') : "";
+            let keyValue = parts[2];
             console.log(keyValue)
-            // const keyValue = item.split('_')[2] ? item.split('_')[2] : "";
-            console.log(keyValue)
+
             switch (item.split('_')[1]) {
                 case "pressRelease":
                      await addNodePressRelease(keyValue);
@@ -67,6 +66,10 @@ async function loadMultiAction(buttonNumber) {
                     break;
                 case "mouseMove":
                     await addNodeMouseMove(keyValue);
+                    break;
+                case "mouseClick":
+                    
+                    await addNodeMouseClick(keyValue);
                     break;
                     
             }
