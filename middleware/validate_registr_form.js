@@ -153,8 +153,9 @@ const createPendingUser = async(req, res) => {
         // Send the verification email.
         await transporter.sendMail(mailOptions);
     } catch (err) {
+        //when user set give wrong email that doesnt work
         console.error("Error sending verification email:", err);
-        return res.status(500).send("Error sending verification email.");
+        return res.redirect("/auth/register");
     }
 
 
