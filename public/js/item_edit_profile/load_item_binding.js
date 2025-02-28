@@ -60,6 +60,9 @@ function updateButtonsUI(keyBindingData) {
         //if the data for the specific key is empty dont show anyting
         if (curBindingData.length === 0) {
             return 
+        } else if (curBindingData.includes("multi")) { //check if it is a multi binding or simple
+            button.innerHTML = "<i class='fa-solid fa-layer-group'></i>Multi"
+            button.classList.add("binded")
         } else {
             button.classList.add("binded")
             button.textContent = Array.from(curBindingData).join(" + ")

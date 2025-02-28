@@ -27,6 +27,7 @@ function saveMultiAction(buttonNumber) {
     console.log(keyBindingValues)
 }
 
+
 async function loadMultiAction(buttonNumber) {
     const currentSet = keyBindingValues.get(Number(buttonNumber));
     if (!currentSet) return;

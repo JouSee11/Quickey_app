@@ -16,7 +16,7 @@ async function showMultiBindingDialog(buttonNumber) {
         } 
         
         //restat the container
-        document.getElementById("multi-action-cont").innerHTML = ""
+        // document.getElementById("multi-action-cont").innerHTML = ""
         curMultipleSet = new Set([])
         
         //get the dialog elements
@@ -30,21 +30,29 @@ async function showMultiBindingDialog(buttonNumber) {
 
         //edit the elements
         dialogTitle.innerHTML = `<i class="fa-solid fa-pen"></i>Multi Keys - key ${buttonNumber}`
-        multiDialog.showModal() // function for dialog, disables the backgorund and centers it self
 
-        //hander for the action button press
+        // Add event listeners
+        const cleanup = () => {
+            optionsDiv.removeEventListener("click", handleOptionBtnPress)
+            multiDialog.remove()
+        }
+
         optionsDiv.addEventListener("click", handleOptionBtnPress)
 
-        //listeners for buttons
-        cancelBtn.addEventListener("click", () => multiDialog.close(), {once: true});
-        // on submit add the "multiplAction" to the curMultipleSet on first position
+        cancelBtn.addEventListener("click", () => {
+            cleanup()
+            multiDialog.close()
+        })
+
         submitBtn.addEventListener("click", () => {
             saveMultiAction(buttonNumber)
+            cleanup()
             multiDialog.close()
-        }, {once: true}); 
+        })
 
-        //load the data 
+        multiDialog.showModal()
         loadMultiAction(buttonNumber)
+
      
     } catch (error) {
         console.log(error)
