@@ -1,0 +1,12 @@
+import digitalio
+import board
+import time
+
+page_switch = digitalio.DigitalInOut(board.GP9)
+page_switch.direction = digitalio.Direction.INPUT
+page_switch.pull = digitalio.Pull.UP
+
+
+while True:
+    print(page_switch.value)
+    time.sleep(0.3)
