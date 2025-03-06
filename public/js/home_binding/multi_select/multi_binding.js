@@ -39,11 +39,18 @@ async function showMultiBindingDialog(buttonNumber) {
 
         optionsDiv.addEventListener("click", handleOptionBtnPress)
 
+        //handle cancel button
         cancelBtn.addEventListener("click", () => {
             cleanup()
-            multiDialog.close()
         })
 
+        //handle ESC button
+        multiDialog.addEventListener("close", () => {
+            console.log("esc key pressed")            
+            cleanup()
+        })
+
+        //handle submit button
         submitBtn.addEventListener("click", () => {
             saveMultiAction(buttonNumber)
             cleanup()

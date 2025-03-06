@@ -1,5 +1,6 @@
 //add the context menu listender for each button
 buttonsList.forEach((button) => {
+    button.addEventListener("dblclick", showCustomContextMenu)
     button.addEventListener("contextmenu", showCustomContextMenu)
 })
 
