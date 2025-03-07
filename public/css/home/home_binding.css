@@ -27,7 +27,7 @@ body{
 /* main content sections */
 #content-container{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr 1fr;
     grid-template-rows: 1fr;
     width: 100vw;
 }
@@ -114,11 +114,27 @@ body{
 
 
 /* buttons container  */
+#buttons-pages-cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+#pages-switch-cont{
+    display: flex;
+    flex-direction: column;
+    /* position: absolute; */
+
+}
 
 #buttons-container{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    margin-right: 25px;
 }
 
 

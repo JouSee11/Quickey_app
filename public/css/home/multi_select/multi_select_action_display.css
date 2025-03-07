@@ -55,6 +55,7 @@
 .node-content{
     display: flex;
     flex-direction: column;
+    width: 90%;
 }
 
 .node-name{
@@ -106,7 +107,8 @@
 }
 
 .node-write-input{
-    width: 400px;
+    width: 80%;
+    max-width: 500px;
     height: 25px;
     border: none;
     background-color: var(--primary-600);
