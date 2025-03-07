@@ -14,7 +14,8 @@ dotenv.config()
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.set("view engine", "ejs")
-app.use(express.static("./public", {maxAge: 1_200_000}))
+// app.use(express.static("./public", {maxAge: 1_200_000}))
+app.use(express.static("./public"))
 
 app.use(session({
     secret: process.env.SESSION_SECRET,

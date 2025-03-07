@@ -170,6 +170,15 @@ function multiKeySubmitBtnUi(buttonNumber) {
     buttonEdited.innerHTML = "<i class='fa-solid fa-layer-group'></i>Multi"
 }
 
+function pageBtnChangeColor(buttonActive) {
+    pageOneBtn.classList.remove("active")
+    pageTwoBtn.classList.remove("active")
+    pageThreeBtn.classList.remove("active")
+
+    buttonActive.classList.add("active")
+
+}
+
 
 toggleLogBtn.addEventListener("click", toggleLogArea)
 controlsBtn.addEventListener("click", toggleControls)
