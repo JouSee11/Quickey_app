@@ -55,6 +55,14 @@
     background-color: var(--blue-dark);
 }
 
+.page-num-display{
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: var(--small-text);
+    color: var(--gray-main);
+}
+
+
 .save-name{
     font-weight: bold;
     margin-bottom: 10px;
@@ -63,7 +71,7 @@
 
 .save-stats-bottom{
     position: relative;
-    margin-top: 30px;
+    margin-top: 10px;
     width: 100%;
 }
 

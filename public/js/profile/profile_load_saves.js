@@ -77,14 +77,26 @@ function showNoRecordMsg() {
                     pageTwoCont.classList.remove("active")
                     pageThreeCont.classList.remove("active")
 
-                    console.log("hovering")
-
                     cont.classList.add("active")
                     
                     cont.classList.add("change")
                     setTimeout(() => {  // Use global setTimeout, not cont.setTimeout
                         cont.classList.remove("change")
                     }, 1);  // Match your CSS transition time (0.3s = 300ms)
+
+                    // change the page display number
+                    const pageNumber = cont.closest(".save-cont").querySelector(".page-num-val")
+                    switch (cont.dataset.page) {
+                        case "1":
+                            pageNumber.innerHTML = "1"
+                            break
+                        case "2":
+                            pageNumber.innerHTML = "2"
+                            break
+                        case "3":
+                            pageNumber.innerHTML = "3"
+                            break
+                    }
                 }
 
                 const pageOneHover = cloneTemplate.querySelector(".hover-page-one")
