@@ -11,7 +11,7 @@ import globals
 from light_control import *
 from read_save_data import *
 
-time_sleep = 0.2
+time_sleep = 0.1
 
 #show the start animation and switch to current page
 start_light()
@@ -62,6 +62,9 @@ btn9.pull = digitalio.Pull.UP
 
 print_data("Pico is running. Press buttons or send data over serial.")
 
+def calc_cur_btn_num(btn_num):
+    return btn_num + page_num * 9
+
 def key_press_action(btn_num):
     blink_key_press(page_num)
     handle_key_press(btn_num)
@@ -82,32 +85,32 @@ while True:
         
         # Check button presses and send HID keycodes
         if not btn1.value:
-            key_press_action(1)
+            key_press_action(calc_cur_btn_num(1))
 
         if not btn2.value:
-            key_press_action(2)
+            key_press_action(calc_cur_btn_num(2))
 
         if not btn3.value:
-            key_press_action(3)
+            key_press_action(calc_cur_btn_num(3))
 
 
         if not btn4.value:
-            key_press_action(4)
+            key_press_action(calc_cur_btn_num(4))
 
         if not btn5.value:
-            key_press_action(5)
+            key_press_action(calc_cur_btn_num(5))
 
         if not btn6.value:
-            key_press_action(6)
+            key_press_action(calc_cur_btn_num(6))
 
         if not btn7.value:
-            key_press_action(7)
+            key_press_action(calc_cur_btn_num(7))
 
         if not btn8.value:
-            key_press_action(8)
+            key_press_action(calc_cur_btn_num(8))
 
         if not btn9.value:
-            key_press_action(9)
+            key_press_action(calc_cur_btn_num(9))
         
         #change the page number
         if not page_switch.value:
