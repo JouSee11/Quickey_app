@@ -70,6 +70,41 @@ function showNoRecordMsg() {
     
                 //public or private - put appropriate icon
                 const public_private_ico = saveRecord.public ? "fa-solid fa-globe" : "fa-solid fa-lock"
+
+                //show the curent page on hover
+                function changeVisibePage(cont) {
+                    pageOneCont.classList.remove("active")
+                    pageTwoCont.classList.remove("active")
+                    pageThreeCont.classList.remove("active")
+
+                    console.log("hovering")
+
+                    cont.classList.add("active")
+                    
+                    cont.classList.add("change")
+                    setTimeout(() => {  // Use global setTimeout, not cont.setTimeout
+                        cont.classList.remove("change")
+                    }, 1);  // Match your CSS transition time (0.3s = 300ms)
+                }
+
+                const pageOneHover = cloneTemplate.querySelector(".hover-page-one")
+                const pageTwoHover = cloneTemplate.querySelector(".hover-page-two")
+                const pageThreeHover = cloneTemplate.querySelector(".hover-page-three")
+
+                const pageOneCont = cloneTemplate.querySelector("[data-page='1']")
+                const pageTwoCont = cloneTemplate.querySelector("[data-page='2']")
+                const pageThreeCont = cloneTemplate.querySelector("[data-page='3']")
+
+                pageOneHover.addEventListener("mouseover", () => {
+                    changeVisibePage(pageOneCont)
+                })
+                pageTwoHover.addEventListener("mouseover", () => {
+                    changeVisibePage(pageTwoCont)
+                })
+                pageThreeHover.addEventListener("mouseover", () => {
+                    changeVisibePage(pageThreeCont)
+                })
+
     
                 //handle binded and not binded keys
                 const allKeys = cloneTemplate.querySelectorAll(".save-key")
