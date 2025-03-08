@@ -106,11 +106,15 @@ body{
     color: var(--gray-main);
     outline: none;
     box-shadow: 5px 5px 0 var(--gray-main);
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.5s ease;
+    transition: background-color 0.3s ease,
+    color 0.3s ease, 
+    box-shadow 0.5s ease, 
+    filter 0.5s ease;
+
 }
 .button-bind.binded{
-    background-color: var(--green-bright);
-    box-shadow: 5px 5px 0 var(--green-dark) ,0 0 20px rgba(13, 198, 124, 0.116);
+    background-color: var(--green-dark);
+    box-shadow: 5px 5px 0 var(--green-bright) ,0 0 20px rgba(13, 198, 124, 0.116);
     color: var(--primary-0);
 }
 

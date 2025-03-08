@@ -241,6 +241,7 @@ class ItemEditProfilePage extends ViewParams {
                 "profile_item/profile_item_main.css",
                 "profile_item/profile_item_toggle.css",
                 "profile_item/profile_item_like_button.css",
+                "profile_item/page_selection.css",
                 "scrollbar.css"
             ],
             [
@@ -250,6 +251,7 @@ class ItemEditProfilePage extends ViewParams {
                 "js/item_edit_profile/edit_item_name_desc.js",
                 "js/item_edit_profile/public_priv_switch.js",
                 "js/item_edit_profile/item_toggle_like.js",
+                "js/item_edit_profile/page_selection.js",
             ],
             "profile_item_edit",
             true,
