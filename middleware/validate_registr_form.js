@@ -142,8 +142,8 @@ const createPendingUser = async(req, res) => {
         html: generateEmailHtml(username, verificationToken),
         attachments: [
             {
-              filename: 'logo.png',
-              path: path.join(process.cwd(), 'public', 'images', 'logo.png'), // absolute path derived with path.join
+              filename: 'main-logo.svg',
+              path: path.join(process.cwd(), 'public', 'images', 'icons', 'main-logo.svg'), // absolute path derived with path.join
               cid: 'logoImage'
             }
         ]

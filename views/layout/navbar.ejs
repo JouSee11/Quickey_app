@@ -1,9 +1,13 @@
 <nav id="main-nav">
-    <a href="/">Home</a>
-    <% if (session.userId) { %>
-        <a href="/profile">Profile</a>
-    <% } else { %>
-            <a href="/auth/login">Login</a>
-    <% } %>
-    <a href="/discover" >Discover</a>
+    <img src="/images/icons/main-logo.svg" alt="logo" id="logo">
+
+    <div id="navigation">
+        <a href="/">Home</a>
+        <% if (session.userId) { %>
+            <a href="/profile">Profile</a>
+        <% } else { %>
+                <a href="/auth/login">Login</a>
+        <% } %>
+        <a href="/discover" >Discover</a>
+    </div>
 </nav>
