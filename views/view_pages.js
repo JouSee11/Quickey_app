@@ -197,6 +197,7 @@ class ProfilePage extends ViewParams {
                 "profile/profile-settings.css",
                 "profile/profile-common.css",
                 "profile/save_template.css",
+                "saves_pagination.css",
                 "scrollbar.css"
 
             ],
@@ -204,6 +205,7 @@ class ProfilePage extends ViewParams {
                 "js/profile/profile_load_saves.js",
                 "js/profile/search_items.js",
                 "js/profile/profile_filter_liked.js",
+                "js/profile/saves_pagination.js",
             ],
             "profile",
             true,

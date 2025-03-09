@@ -1,11 +1,22 @@
-
 //load all binding initially 
-document.addEventListener("DOMContentLoaded", () => {showSaves("", false)})
+document.addEventListener("DOMContentLoaded", () => {showSaves("", false, 1)})
 const savesContainer = document.getElementById("saves-display-area")
 
-async function showSaves(searchText, liked) {
+//pagination data
+let currentPage = 1
+let currentSearch = ""
+let currentLiked = false
+let totalPages = 1
+const ITEMS_PER_PAGE = 20 //sets the number of items per page
+
+
+async function showSaves(searchText, liked, page = 1) {
     try {
-        const response = await fetch(`/api/profile/get-default?search=${encodeURIComponent(searchText)}&liked=${liked} `)
+        currentSearch = searchText
+        currentLiked = liked
+        currentPage = page
+
+        const response = await fetch(`/api/profile/get-default?search=${encodeURIComponent(searchText)}&liked=${liked}&page=${page}&limit=${ITEMS_PER_PAGE}`)
         
         const dataResponse = await response.json()
 
@@ -16,7 +27,12 @@ async function showSaves(searchText, liked) {
 
         const savedRecords = dataResponse.data
         savesContainer.innerHTML = "" //clear the previous data
-
+        
+        //update pagination data
+        if(dataResponse.pagination) {
+            totalPages = dataResponse.pagination.pages
+            updatePaginationControls(dataResponse.pagination)
+        }
 
 
         //check if there are any records from the response 

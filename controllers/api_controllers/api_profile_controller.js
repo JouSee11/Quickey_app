@@ -10,6 +10,12 @@ const getSavesDefault = async (req, res) => {
     const userId = req.session.userId
     const searchQuery = req.query.search || ""
     const likedQuery = req.query.liked || "false"
+
+    //pagination data
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 20
+    const skip = (page - 1) * limit
+
     const regex = new RegExp(searchQuery, "i") // case-insensitive search
 
     try {
@@ -26,10 +32,14 @@ const getSavesDefault = async (req, res) => {
             findCriteria._id = { $in: likedIds }
         }
 
+        const totalCount = await KeyBinding.countDocuments(findCriteria)
+
         // Find key bindings for the specific user.
         const savedData = await KeyBinding.find(findCriteria)
             .select("name userId keyBinding likes public updatedAt")
             .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
             .populate("userId", "username")
             .lean() // returns plain JavaScript objects so we can attach new fields
             .exec()
@@ -41,8 +51,18 @@ const getSavesDefault = async (req, res) => {
             return { ...save, likes: likesCount };
         }));
 
-
-        return res.status(200).json({status: "success", data: savedDataWithLikes})
+        // Return pagination metadata along with the data
+        return res.status(200).json({
+            status: "success", 
+            data: savedDataWithLikes,
+            pagination: {
+                page,
+                limit,
+                total: totalCount,
+                pages: Math.ceil(totalCount / limit)
+            }
+            
+        })
 
     } catch (error) {
         console.error(err);

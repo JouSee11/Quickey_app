@@ -2,6 +2,7 @@
     position: relative;
     border-radius: var(--border-rad-main);
     padding: 30px 30px;
+    padding-bottom: 10px;
     box-shadow: 10px 10px 0 var(--primary-600);
     transition: box-shadow 0.3s ease-in-out, border 0.5s ease-in-out;
     background-color: var(--blue-dark);
