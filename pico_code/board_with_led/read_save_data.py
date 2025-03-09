@@ -1,6 +1,7 @@
 import json
 import time
-from globals import keyboard, btn_keys, keyboardLayout, mouse
+from globals import keyboard, btn_keys, keyboardLayout, mouse, consumer
+from adafruit_hid.consumer_control_code import ConsumerControlCode
 from key_code_conversion import JS_TO_ADAFRUIT_HID
 
 
@@ -49,8 +50,10 @@ def handle_key_press(key_num):
             print(action_name)
             print(action_value)
             
+            no_action_nodes = ["releaseAll", "volumeUp", "volumeDown", "volumeMute"]
+            
             #check if there is some value assigned to the node (releaseAll donest have any value assigned)
-            if not action_value and action_name != "releaseAll":
+            if not action_value and action_name not in no_action_nodes:
                 print("no value assigned to the node!")
                 
             elif action_name == "pressRelease":
@@ -77,7 +80,7 @@ def handle_key_press(key_num):
                     print("empty delay node")
                 
             elif action_name == "write":
-                keyboardLayout.write(action_value + "\n")
+                keyboardLayout.write(action_value)
             
             elif action_name == "mouseMove":
                 horizontal_dir, vertical_dir, horiz_val, vert_val = action_value.split("&")
@@ -99,6 +102,14 @@ def handle_key_press(key_num):
                     mouse_click(mouse.MIDDLE_BUTTON)
                 
                 time.sleep(0.1)
+                
+            elif action_name == "volumeUp":
+                print("volume up")
+                consumer.send(ConsumerControlCode.VOLUME_INCREMENT)
+            elif action_name == "volumeDown":
+                consumer.send(ConsumerControlCode.VOLUME_DECREMENT)
+            elif action_name == "volumeMute":
+                consumer.send(ConsumerControlCode.MUTE)
             
             time.sleep(0.1)
         

@@ -69,8 +69,16 @@ async function loadMultiAction(buttonNumber) {
                     await addNodeMouseMove(keyValue);
                     break;
                 case "mouseClick":
-                    
                     await addNodeMouseClick(keyValue);
+                    break;
+                case "volumeUp":
+                    await addNodeVolumeUp();
+                    break;
+                case "volumeDown":
+                    await addNodeVolumeDown();
+                    break;
+                case "volumeMute":
+                    await addNodeVolumeMute();
                     break;
                     
             }

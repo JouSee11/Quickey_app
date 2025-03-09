@@ -116,7 +116,7 @@ while True:
         if not page_switch.value:
             page_num = (page_num + 1) % 3 
             show_led_num(page_num)
-            time.sleep(time_sleep)
+            time.sleep(time_sleep + 0.1)
             
 
         time.sleep(0.01)  # Short delay for stability

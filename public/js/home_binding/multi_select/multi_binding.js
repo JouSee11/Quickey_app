@@ -95,6 +95,15 @@ function handleOptionBtnPress(e) {
         case "btn-mouse-click":
             addNodeMouseClick();
             break
+        case "btn-volume-up":
+            addNodeVolumeUp();
+            break
+        case "btn-volume-down":
+            addNodeVolumeDown();
+            break
+        case "btn-volume-mute":
+            addNodeVolumeMute();
+            break
         default: return
     }
 
@@ -348,6 +357,19 @@ async function addNodeMouseClick(value = "") {
         }
     )
 }
+
+async function addNodeVolumeUp() {
+    await showNodeGeneral("node_volume_up", "volumeUp")
+}
+
+async function addNodeVolumeDown() {
+    await showNodeGeneral("node_volume_down", "volumeDown")
+}
+
+async function addNodeVolumeMute() {
+    await showNodeGeneral("node_volume_mute", "volumeMute")
+}
+
 
 // !!! handle capturing key press!!!
 function getItemByNumMulti(itemNum) {

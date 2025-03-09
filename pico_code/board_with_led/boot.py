@@ -7,5 +7,5 @@ storage.disable_usb_drive()
 
 # Enable HID and Serial (CDC) only
 usb_hid.enable(
-    (usb_hid.Device.KEYBOARD, usb_hid.Device.MOUSE)
+    (usb_hid.Device.KEYBOARD, usb_hid.Device.MOUSE, usb_hid.Device.CONSUMER_CONTROL)
 )
