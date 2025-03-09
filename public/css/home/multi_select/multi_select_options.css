@@ -55,3 +55,23 @@
     box-shadow: 5px 5px 0 var(--green-bright), 0 0 20px var(--green-vivid-shadow);
 }
 
+/* sections */
+.button-section{
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    border-radius: var(--border-rad-main);
+    background-color: var(--blue-dark);
+    transition: transform 0.3s ease-in-out;
+}
+
+.button-section:hover{
+    transform: scale(0.99);
+    filter: brightness(1.2);
+}
+
+.button-section p{
+    color: var(--primary-50);
+    margin-top: 15px;
+}
+
