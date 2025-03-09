@@ -66,6 +66,7 @@ body{
 #connection-icon {
     width: 20px;
     height: 20px;
+    background-color: var(--gray-main);
     border-radius: 50%;
     margin-right: 5px;
     animation: blink 1s infinite alternate;
@@ -95,6 +96,7 @@ body{
     width: 100px;
     height: 25px;
     border: none;
+    background-color: var(--red-dark);
     border-radius: var(--border-rad-smaller);
     padding: 5px 10px;
     color: var(--primary-0);
