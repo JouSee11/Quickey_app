@@ -50,7 +50,7 @@ def handle_key_press(key_num):
             print(action_name)
             print(action_value)
             
-            no_action_nodes = ["releaseAll", "volumeUp", "volumeDown", "volumeMute"]
+            no_action_nodes = ["releaseAll", "volumeUp", "volumeDown", "volumeMute", "playPause", "playNext", "playPrev"]
             
             #check if there is some value assigned to the node (releaseAll donest have any value assigned)
             if not action_value and action_name not in no_action_nodes:
@@ -110,7 +110,13 @@ def handle_key_press(key_num):
                 consumer.send(ConsumerControlCode.VOLUME_DECREMENT)
             elif action_name == "volumeMute":
                 consumer.send(ConsumerControlCode.MUTE)
-            
+            elif action_name == "playPause":
+                consumer.send(ConsumerControlCode.PLAY_PAUSE)
+            elif action_name == "playNext":
+                consumer.send(ConsumerControlCode.SCAN_NEXT_TRACK)
+            elif action_name == "playPrev":
+                consumer.send(ConsumerControlCode.SCAN_PREVIOUS_TRACK)
+                
             time.sleep(0.1)
         
     keyboard.release_all()

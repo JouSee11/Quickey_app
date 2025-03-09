@@ -80,7 +80,15 @@ async function loadMultiAction(buttonNumber) {
                 case "volumeMute":
                     await addNodeVolumeMute();
                     break;
-                    
+                case "playPause":
+                    await addNodePlayPause();
+                    break;
+                case "playNext":
+                    await addNodePlayNext();
+                    break;
+                case "playPrev":
+                    await addNodePlayPrev();
+                    break;
             }
         }
     }   

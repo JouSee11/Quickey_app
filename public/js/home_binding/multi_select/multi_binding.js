@@ -104,6 +104,15 @@ function handleOptionBtnPress(e) {
         case "btn-volume-mute":
             addNodeVolumeMute();
             break
+        case "btn-play-pause":
+            addNodePlayPause();
+            break
+        case "btn-play-next":
+            addNodePlayNext();
+            break
+        case "btn-play-prev":
+            addNodePlayPrev();
+            break
         default: return
     }
 
@@ -368,6 +377,18 @@ async function addNodeVolumeDown() {
 
 async function addNodeVolumeMute() {
     await showNodeGeneral("node_volume_mute", "volumeMute")
+}
+
+async function addNodePlayPause() {
+    await showNodeGeneral("node_play_pause", "playPause")
+}
+
+async function addNodePlayNext() {
+    await showNodeGeneral("node_play_next", "playNext")
+}
+
+async function addNodePlayPrev() {
+    await showNodeGeneral("node_play_prev", "playPrev")
 }
 
 
