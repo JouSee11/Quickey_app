@@ -11,7 +11,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "http://quickey.pro/auth/sso/github/callback",
+      callbackURL: "https://quickey.pro/auth/sso/github/callback",
       scope: ['user:email'] // ensure email is returned
     },
     async (accessToken, refreshToken, profile, cb) => {
