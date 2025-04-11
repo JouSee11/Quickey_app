@@ -1,6 +1,12 @@
 import KeyBinding from "../../models/key_binding_model.js"
 import Like from "../../models/likes_model.js"
 
+type FindCriteria = {
+    userId: any;
+    name?: RegExp;
+    _id?: { $in: any[] };
+};
+
 const getSavesDefault = async (req, res) => {
     //check if user is logged in
     if (!req.session.userId) {
@@ -20,7 +26,7 @@ const getSavesDefault = async (req, res) => {
 
     try {
         //if there is some search criteria search with the text
-        const findCriteria = searchQuery ? { userId, name: regex } : { userId };
+        const findCriteria: FindCriteria = searchQuery ? { userId, name: regex } : { userId };
 
         //if we are looking only for the liked ones
         if (likedQuery === "true") {
@@ -65,7 +71,7 @@ const getSavesDefault = async (req, res) => {
         })
 
     } catch (error) {
-        console.error(err);
+        console.error(error);
         return res.status(500).json({ status: "error", msg: "Internal server error" });
     }
 

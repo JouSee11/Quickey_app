@@ -5,6 +5,7 @@ import connectDB from "./db/connect.js"
 import session from "express-session"
 import passport from "passport"
 import MongoStore from "connect-mongo"
+import { IntegerType } from "mongodb"
 
 
 // import keysRouter from "./routes/key-bindings.js"
@@ -44,7 +45,7 @@ app.use("", router)
 // })
 
 
-const PORT = process.env.PORT || 3000
+const PORT: number = Number(process.env.PORT) || 3000
 
 const start = async () => {
     try{

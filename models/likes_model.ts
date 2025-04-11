@@ -1,6 +1,7 @@
-import mongoose from "mongoose"
+import mongoose, {Schema, Model, ObjectId, Document} from "mongoose"
+import { ILike, ILikeModel } from "../@types/like"
 
-const likeSchema = new mongoose.Schema({
+const likeSchema = new Schema<ILike>({
     itemId: { 
         type: mongoose.Schema.Types.ObjectId,
         ref: "KeyBinding",
@@ -21,7 +22,7 @@ const likeSchema = new mongoose.Schema({
 likeSchema.index({ userId: 1, itemId: 1 }, { unique: true });
 
 //handle toggling the like button
-likeSchema.statics.toggleLike = async function(userId, itemId) {
+likeSchema.statics.toggleLike = async function(userId: ObjectId, itemId: ObjectId) {
     const existingLike = await this.findOne({ userId, itemId });
     if (existingLike) {
       await this.deleteOne({ _id: existingLike._id });
@@ -33,12 +34,12 @@ likeSchema.statics.toggleLike = async function(userId, itemId) {
 };
 
 //check if specified user 
-likeSchema.statics.hasUserLiked = async function (userId, itemId) {
+likeSchema.statics.hasUserLiked = async function (userId: ObjectId, itemId: ObjectId) {
     const like = await this.findOne({ userId, itemId });
     return !!like; // Returns true if a like exists, false otherwise
 };
 
 
-const Like = mongoose.model('Like', likeSchema);
+const Like = mongoose.model<ILike, ILikeModel>('Like', likeSchema);
 
-export default Like
+export default Like;

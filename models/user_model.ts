@@ -1,7 +1,8 @@
-import mongoose from "mongoose"
+import mongoose, { Schema } from "mongoose"
 import bcrypt from "bcrypt"
+import { IUser, IUserModel } from "../@types/user"
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema<IUser>({
     username: {
       type: String,
       required: [true, 'Username is required'],
@@ -49,7 +50,7 @@ userSchema.pre('save', async function (next) {
         // const salt = await bcrypt.genSalt(10);
         this.password = await bcrypt.hash(this.password, 10);
         next();
-    } catch (error) {
+    } catch (error: any) {
         next(error);
     }
 });
@@ -61,12 +62,12 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 
 
 //find user by username
-userSchema.statics.findByUsername = function (username) {
+userSchema.statics.findByUsername = function (username: string) {
     return this.findOne({ username })
 }
 
 //find user by email
-userSchema.statics.findByEmail = function (email) {
+userSchema.statics.findByEmail = function (email: string) {
     return this.findOne({ email })
 }
 
@@ -87,6 +88,6 @@ userSchema.virtual('profile').get(function () {
     };
 });
 
-const User = mongoose.model("User", userSchema)
+const User = mongoose.model<IUser, IUserModel>("User", userSchema)
 
-export default User
+export default User;

@@ -13,10 +13,10 @@ const getProfilePage = async (req, res) => {
     }
 
     const userObject = await User.findById(req.session.userId)
-    const username = userObject.profile.username
-    const email = userObject.profile.email
+    const username = userObject?.profile.username
+    const email = userObject?.profile.email
     //calculate days
-    const registerDate = userObject.profile.createdAt
+    const registerDate = userObject?.profile.createdAt
     const memberLength = calcMemberLength(registerDate)
 
     //get number of saves

@@ -8,7 +8,7 @@ const getBindingPage = async (req, res) => {
     //show username if user is logged in
     if (req.session.userId) {
         const userObject = await User.findById(req.session.userId)
-        const username = userObject.profile.username
+        const username = userObject?.profile.username
         homePage.setUsername(username)
     }
     res.render("index", homePage.getDetails())

@@ -30,9 +30,9 @@ const handleRegister =  async (req, res, next) => {
         const pendingUser = await PendingRegistration.findOne({ email })
 
         const newUser = new User({
-            username: pendingUser.username.trim(),
-            email: pendingUser.email.trim(),
-            password: pendingUser.password
+            username: pendingUser?.username.trim(),
+            email: pendingUser?.email.trim(),
+            password: pendingUser?.password
         })
     
         await newUser.save()

@@ -3,6 +3,7 @@ import { Strategy as GitHubStrategy } from 'passport-github2';
 import dotenv from "dotenv";
 import User from '../models/user_model.js';
 import crypto from 'crypto';
+import { IUser } from '../@types/user';
 
 dotenv.config();
 
@@ -11,7 +12,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "https://quickey.pro/auth/sso/github/callback",
+      callbackURL: "http://localhost:3000/auth/sso/github/callback",
       scope: ['user:email'] // ensure email is returned
     },
     async (accessToken, refreshToken, profile, cb) => {
@@ -57,7 +58,8 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+    done(null, (user as IUser)._id);
+
 });
 
 passport.deserializeUser(async (id, done) => {

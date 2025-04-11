@@ -4,7 +4,7 @@ import { LoginPage } from "../views/view_pages.js"
 const loginFormValidation = async (req, res, next) => {
     const password = req.body.password
     const username = req.body.username ? req.body.username.trim() : "";
-    let error = null
+    let error: String | null = null
 
     if (!username || !password) {
         error = "Please fill both inputs";
