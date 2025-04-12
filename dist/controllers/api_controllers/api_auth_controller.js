@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,19 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUniqueEmail = exports.checkUniqueUsername = void 0;
-const user_model_js_1 = __importDefault(require("../../models/user_model.js"));
+import User from "../../models/user_model.js";
 const checkUniqueUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.body.username;
     //user didnt provide username
     if (!username) {
         return res.status(400).json({ status: "error", msg: "username not provided" });
     }
-    const user = yield user_model_js_1.default.findByUsername(username);
+    const user = yield User.findByUsername(username);
     //if username if already taken
     if (user) {
         return res.status(200).json({ status: "success", unique: "false" });
@@ -29,14 +23,13 @@ const checkUniqueUsername = (req, res) => __awaiter(void 0, void 0, void 0, func
         return res.status(200).json({ status: "success", unique: "true" });
     }
 });
-exports.checkUniqueUsername = checkUniqueUsername;
 const checkUniqueEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = req.body.email;
     //user didnt provide username
     if (!email) {
         return res.status(400).json({ status: "error", msg: "email not provided" });
     }
-    const user = yield user_model_js_1.default.findByEmail(email);
+    const user = yield User.findByEmail(email);
     //if username if already taken
     if (user) {
         return res.status(200).json({ status: "success", unique: "false" });
@@ -45,4 +38,4 @@ const checkUniqueEmail = (req, res) => __awaiter(void 0, void 0, void 0, functio
         return res.status(200).json({ status: "success", unique: "true" });
     }
 });
-exports.checkUniqueEmail = checkUniqueEmail;
+export { checkUniqueUsername, checkUniqueEmail };

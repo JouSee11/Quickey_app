@@ -3,7 +3,7 @@ import { Strategy as GitHubStrategy } from 'passport-github2';
 import dotenv from "dotenv";
 import User from '../models/user_model.js';
 import crypto from 'crypto';
-import { IUser } from '../@types/user';
+import { IUser } from '../@types/user.js';
 
 dotenv.config();
 

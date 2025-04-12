@@ -1,4 +1,3 @@
-"use strict";
 const bindingSaveValidation = (req, res, next) => {
     const { name, description, bindingValues } = req.body;
     //missing info
@@ -16,3 +15,4 @@ const bindingSaveValidation = (req, res, next) => {
     }
     next();
 };
+export {};

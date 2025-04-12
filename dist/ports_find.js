@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const serialport_1 = require("serialport");
-serialport_1.SerialPort.list().then(ports => {
+import { SerialPort } from 'serialport';
+SerialPort.list().then(ports => {
     ports.forEach(port => {
         console.log(`Port: ${port.path}`);
         console.log(`Manufacturer: ${port.manufacturer}`);

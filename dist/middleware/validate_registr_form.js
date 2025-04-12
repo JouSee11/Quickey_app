@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,20 +7,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPendingUser = exports.registerFormValidation = void 0;
 //register validation
-const validator_1 = __importDefault(require("validator"));
-const view_pages_js_1 = require("../views/view_pages.js");
-const user_model_js_1 = __importDefault(require("../models/user_model.js"));
-const pending_registration_model_js_1 = __importDefault(require("../models/pending_registration_model.js"));
-const crypto_1 = __importDefault(require("crypto"));
-const nodemailer_1 = __importDefault(require("nodemailer"));
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
+import validator from "validator";
+import { RegisterPage } from "../views/view_pages.js";
+import User from "../models/user_model.js";
+import PendingRegistration from "../models/pending_registration_model.js";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
+import fs from "fs";
+import path from "path";
 const registerFormValidation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let { username, email, password, passwordConfirm } = req.body;
     let errors = [];
@@ -52,17 +46,16 @@ const registerFormValidation = (req, res, next) => __awaiter(void 0, void 0, voi
     }
     if (errors.length > 0) {
         // Render the form again with error messages and prefilled values
-        const registerPage = new view_pages_js_1.RegisterPage();
+        const registerPage = new RegisterPage();
         registerPage.setErrors(errors);
         registerPage.setFormData({ username: username, email: email });
         return res.render("index", registerPage.getDetails());
     }
     next(); //if there are no errors write the user to the db
 });
-exports.registerFormValidation = registerFormValidation;
 //username validation
 const usernameUnique = (username) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_js_1.default.findByUsername(username);
+    const user = yield User.findByUsername(username);
     return !user;
 });
 const usernameValid = (username) => {
@@ -75,11 +68,11 @@ const usernameValid = (username) => {
 };
 //email validation
 const emailUnique = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_js_1.default.findByEmail(email);
+    const user = yield User.findByEmail(email);
     return !user;
 });
 const emailValid = (email) => {
-    return validator_1.default.isEmail(email);
+    return validator.isEmail(email);
 };
 const passwordMatch = (password, passwordConfirm) => {
     return password === passwordConfirm;
@@ -97,8 +90,8 @@ const passwordValid = (password) => {
 };
 const generateEmailHtml = (username, verificationToken) => {
     // Read the original template.
-    const templatePath = path_1.default.join(process.cwd(), "views", "verification_email.html");
-    const emailTemplate = fs_1.default.readFileSync(templatePath, "utf8");
+    const templatePath = path.join(process.cwd(), "views", "verification_email.html");
+    const emailTemplate = fs.readFileSync(templatePath, "utf8");
     // Replace dynamic values and the image cid with the data URI.
     return emailTemplate
         .replace(/{{username}}/g, username)
@@ -107,12 +100,12 @@ const generateEmailHtml = (username, verificationToken) => {
 //send to token to email
 const createPendingUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { username, email, password } = req.body;
-    const verificationToken = crypto_1.default.randomBytes(3).toString("hex");
+    const verificationToken = crypto.randomBytes(3).toString("hex");
     try {
         // Remove previous pending registrations with the same email.
-        yield pending_registration_model_js_1.default.deleteMany({ email });
+        yield PendingRegistration.deleteMany({ email });
         //create new pending
-        yield pending_registration_model_js_1.default.create({
+        yield PendingRegistration.create({
             username,
             email,
             password,
@@ -125,7 +118,7 @@ const createPendingUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     // Optionally, send the verification email here using your email service...
     // Set up nodemailer transporter.
-    let transporter = nodemailer_1.default.createTransport({
+    let transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
         secure: true,
@@ -142,7 +135,7 @@ const createPendingUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
         attachments: [
             {
                 filename: 'main-logo.svg',
-                path: path_1.default.join(process.cwd(), 'public', 'images', 'icons', 'main-logo.svg'), // absolute path derived with path.join
+                path: path.join(process.cwd(), 'public', 'images', 'icons', 'main-logo.svg'), // absolute path derived with path.join
                 cid: 'logoImage'
             }
         ]
@@ -160,4 +153,4 @@ const createPendingUser = (req, res) => __awaiter(void 0, void 0, void 0, functi
     req.session.registerEmail = email;
     return res.redirect("/auth/register/verify");
 });
-exports.createPendingUser = createPendingUser;
+export { registerFormValidation, createPendingUser };

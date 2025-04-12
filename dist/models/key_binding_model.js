@@ -1,12 +1,7 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const keyBindingSchema = new mongoose_1.default.Schema({
+import mongoose from "mongoose";
+const keyBindingSchema = new mongoose.Schema({
     userId: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: [true, "Must assign the binding to some user"]
     },
@@ -49,5 +44,5 @@ const keyBindingSchema = new mongoose_1.default.Schema({
 });
 // Create a compound index on userId and name to ensure uniqueness per user
 keyBindingSchema.index({ userId: 1, name: 1 }, { unique: true });
-const KeyBinding = mongoose_1.default.model("keyBinding", keyBindingSchema);
-exports.default = KeyBinding;
+const KeyBinding = mongoose.model("keyBinding", keyBindingSchema);
+export default KeyBinding;

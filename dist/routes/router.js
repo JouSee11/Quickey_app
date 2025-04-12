@@ -1,35 +1,30 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const auth_router_js_1 = __importDefault(require("./page_routers/auth_router.js"));
-const discover_router_js_1 = __importDefault(require("./page_routers/discover_router.js"));
-const home_binding_controller_js_1 = require("../controllers/home_binding_controller.js");
-const profile_router_js_1 = __importDefault(require("./page_routers/profile_router.js"));
-const api_auth_router_js_1 = __importDefault(require("./api_routers/api_auth_router.js"));
-const api_session_router_js_1 = __importDefault(require("./api_routers/api_session_router.js"));
-const api_key_binding_router_js_1 = __importDefault(require("./api_routers/api_key_binding_router.js"));
-const api_profile_router_js_1 = __importDefault(require("./api_routers/api_profile_router.js"));
-const not_found_controller_js_1 = __importDefault(require("../controllers/not_found_controller.js"));
-const router = express_1.default.Router();
+import express from "express";
+import authRouter from "./page_routers/auth_router.js";
+import dicoverRouter from "./page_routers/discover_router.js";
+import { getBindingPage } from "../controllers/home_binding_controller.js";
+import profileRouter from "./page_routers/profile_router.js";
+import apiAuthRouter from "./api_routers/api_auth_router.js";
+import apiSessionRouter from "./api_routers/api_session_router.js";
+import apiBindingRouter from "./api_routers/api_key_binding_router.js";
+import apiProfileRouter from "./api_routers/api_profile_router.js";
+import showNotFoundPage from "../controllers/not_found_controller.js";
+const router = express.Router();
 router.route("/")
-    .get(home_binding_controller_js_1.getBindingPage);
+    .get(getBindingPage);
 //routes for login
-router.use("/auth", auth_router_js_1.default);
+router.use("/auth", authRouter);
 //profile router
-router.use("/profile", profile_router_js_1.default);
+router.use("/profile", profileRouter);
 //routes for discover
-router.use("/discover", discover_router_js_1.default);
+router.use("/discover", dicoverRouter);
 //routes for api
-router.use("/api/auth", api_auth_router_js_1.default);
+router.use("/api/auth", apiAuthRouter);
 //routes for session
-router.use("/api/session", api_session_router_js_1.default);
+router.use("/api/session", apiSessionRouter);
 //routes for key bindings
-router.use("/api/key-binding", api_key_binding_router_js_1.default);
+router.use("/api/key-binding", apiBindingRouter);
 //routes for profile api
-router.use("/api/profile", api_profile_router_js_1.default);
+router.use("/api/profile", apiProfileRouter);
 // 404 error for all unused routes
-router.use(not_found_controller_js_1.default);
-exports.default = router;
+router.use(showNotFoundPage);
+export default router;

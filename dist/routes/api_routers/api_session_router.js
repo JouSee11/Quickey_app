@@ -1,13 +1,8 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const api_session_controller_js_1 = require("../../controllers/api_controllers/api_session_controller.js");
-const router = express_1.default.Router();
+import express from "express";
+import { sessionSaveBinding, sessionGetBinding } from "../../controllers/api_controllers/api_session_controller.js";
+const router = express.Router();
 router.route("/save-binding")
-    .post(api_session_controller_js_1.sessionSaveBinding);
+    .post(sessionSaveBinding);
 router.route("/get-binding")
-    .get(api_session_controller_js_1.sessionGetBinding);
-exports.default = router;
+    .get(sessionGetBinding);
+export default router;

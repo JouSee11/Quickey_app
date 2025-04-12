@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.sessionGetBinding = exports.sessionSaveBinding = void 0;
 //save data
 const sessionSaveBinding = (req, res) => {
     const keyData = req.body;
@@ -25,14 +22,12 @@ const sessionSaveBinding = (req, res) => {
     });
     //return res.status(200).json({status: "success", msg: "data recieved"})
 };
-exports.sessionSaveBinding = sessionSaveBinding;
 //send data
 const sessionGetBinding = (req, res) => {
     // Ensure req.session.binding is initialized
     initSessionBinding(req);
     res.json(req.session.binding);
 };
-exports.sessionGetBinding = sessionGetBinding;
 const initSessionBinding = (req) => {
     if (!req.session.binding) {
         req.session.binding = {
@@ -48,3 +43,4 @@ const initSessionBinding = (req) => {
         };
     }
 };
+export { sessionSaveBinding, sessionGetBinding };
