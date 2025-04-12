@@ -1,5 +1,6 @@
 import isEmail from "validator/lib/isEmail.js";
 import { ViewParams} from "./view_class.js";
+import { UnorderedBulkOperation } from "mongodb";
 
 // const homeBindingPage = new ViewParams(
 //     "Key binding",
@@ -16,6 +17,8 @@ import { ViewParams} from "./view_class.js";
 // )
 
 class HomeBindingPage extends ViewParams {
+    username = null;
+
     constructor() {
         super(
             "Key binding",
@@ -45,7 +48,7 @@ class HomeBindingPage extends ViewParams {
             true,
             true
         )
-        this.username = null
+        // this.username = null
     }
 
     setUsername(data) {
@@ -62,6 +65,9 @@ class HomeBindingPage extends ViewParams {
 
 
 class LoginPage extends ViewParams {
+    errors = null;
+    formData = null;
+
     constructor() {
         super(
             "Login page",
@@ -73,8 +79,8 @@ class LoginPage extends ViewParams {
             true,
             true
         )
-        this.errors = null
-        this.formData = null
+        // this.errors = null
+        // this.formData = null
     }
 
     setErrors(error) {
@@ -93,6 +99,9 @@ class LoginPage extends ViewParams {
 }
 
 class RegisterPage extends ViewParams {
+    errors = [];
+    formData = {username: "", email: ""};
+
     constructor() {
         super(
             "Register now!",
@@ -105,8 +114,8 @@ class RegisterPage extends ViewParams {
             true,
             true
         )
-        this.errors = []
-        this.formData = {username: "", email: ""}
+        // this.errors = []
+        // this.formData = {username: "", email: ""}
     }
 
     setErrors(error) {
@@ -125,6 +134,9 @@ class RegisterPage extends ViewParams {
 }
 
 class EmailVerifyPage extends ViewParams {
+    email = "";
+    error = "";
+
     constructor() {
         super(
             "Verify email",
@@ -137,8 +149,8 @@ class EmailVerifyPage extends ViewParams {
             true,
             true
         )
-        this.email = ""
-        this.error = ""
+        // this.email = ""
+        // this.error = ""
     }
 
     setEmail(email) {
@@ -187,6 +199,12 @@ const discoverHomePage = new ViewParams(
 
 
 class ProfilePage extends ViewParams {
+    username: string | undefined = undefined;
+    email: string | undefined = undefined;
+    memberLength: number | undefined = undefined;
+    savesNum: number | undefined = undefined;
+
+
     constructor() {
         super(
             "Profile",
@@ -213,7 +231,7 @@ class ProfilePage extends ViewParams {
         )
     }
 
-    setUserStats(username, email, memberLength, savesNum) {
+    setUserStats(username: string, email: string, memberLength: number, savesNum: number) {
         this.username = username
         this.email = email
         this.memberLength = memberLength

@@ -6,6 +6,15 @@ import session from "express-session"
 import passport from "passport"
 import MongoStore from "connect-mongo"
 import { IntegerType } from "mongodb"
+import { fileURLToPath } from "url";
+import path from "path";
+
+
+// Resolve __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Set the views directory
 
 
 // import keysRouter from "./routes/key-bindings.js"
@@ -15,12 +24,14 @@ dotenv.config()
 //middleware
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+
 app.set("view engine", "ejs")
-app.use(express.static("./public", {maxAge: 1_200_000})) // cache data
+app.set("views", path.join(__dirname, "../view_templates")); // Adjust the path if your views folder is elsewhere
+app.use(express.static(path.join(__dirname, "../public"), {maxAge: 1_200_000})) // cache data
 // app.use(express.static("./public"))
 
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET as string,
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({mongoUrl: process.env.MONGO_URI}),

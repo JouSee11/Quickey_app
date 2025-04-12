@@ -11,7 +11,7 @@ import path from "path"
 
 const registerFormValidation = async (req, res, next) => {
     let { username, email, password, passwordConfirm } = req.body
-    let errors = []
+    let errors: Array<{inputField: string, msg: string}> = []
     //trim the spaces for username and email
     username = username.trim() 
     email = email.trim()

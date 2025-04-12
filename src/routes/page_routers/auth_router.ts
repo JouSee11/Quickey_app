@@ -10,7 +10,7 @@ import ssoRouter from "./sso_router.js"
 
 const router = express.Router()
 
-router.use(express.static("./public"))
+router.use(express.static("../public"))
 
 router.route("/login")
 .get(getLoginPage)

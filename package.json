@@ -1,11 +1,12 @@
 {
-  "name": "first_test_app",
+  "name": "quick_key",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "dist/app.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon app.js",
-    "build": "tsc -p tsconfig.json"
+    "start": "node dist/app.js",
+    "build": "tsc -p tsconfig.json", 
+    "dev": "nodemon --watch src --exec \"node --loader ts-node/esm\" src/app.ts"
   },
   "author": "",
   "license": "ISC",

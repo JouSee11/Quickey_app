@@ -1,5 +1,12 @@
 class ViewParams {
-    constructor(title, stylesheets, scripts, content, headerBool, footerBool) {
+    title: string
+    stylesheets: string[]
+    scripts: string[]
+    content: string 
+    headerBool: boolean
+    footerBool: boolean
+
+    constructor(title: string, stylesheets: string[], scripts: string[], content: string, headerBool: boolean, footerBool: boolean) {
         this.title = title
         this.stylesheets = stylesheets
         this.scripts = scripts

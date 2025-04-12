@@ -5,7 +5,7 @@ import { getSavedItemPage } from "../../controllers/profile_controller.js"
 
 const router = express.Router()
 
-router.use(express.static("./public"))
+router.use(express.static("../public"))
 
 router.route("/")
 .get(getProfilePage)

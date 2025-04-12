@@ -1,6 +1,7 @@
 import { ProfilePage, ItemEditProfilePage } from "../views/view_pages.js"
 import User from "../models/user_model.js"
 import KeyBinding from "../models/key_binding_model.js"
+import { CURSOR_FLAGS } from "mongodb"
 
 
 
@@ -13,11 +14,11 @@ const getProfilePage = async (req, res) => {
     }
 
     const userObject = await User.findById(req.session.userId)
-    const username = userObject?.profile.username
-    const email = userObject?.profile.email
+    const username = userObject?.profile.username as string
+    const email = userObject?.profile.email as string
     //calculate days
     const registerDate = userObject?.profile.createdAt
-    const memberLength = calcMemberLength(registerDate)
+    const memberLength = calcMemberLength(registerDate) as number
 
     //get number of saves
     const savedBindingCount = await KeyBinding.countDocuments({userId: req.session.userId})
