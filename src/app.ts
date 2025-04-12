@@ -27,7 +27,8 @@ app.use(express.json())
 
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "../view_templates")); // Adjust the path if your views folder is elsewhere
-app.use(express.static(path.join(__dirname, "../public"), {maxAge: 1_200_000})) // cache data
+app.use(express.static(path.join(__dirname, "../public"))) // cache data
+// app.use(express.static(path.join(__dirname, "../public"), {maxAge: 1_200_000})) // cache data
 // app.use(express.static("./public"))
 
 app.use(session({

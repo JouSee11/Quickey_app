@@ -265,13 +265,13 @@ class ItemEditProfilePage extends ViewParams {
                 "scrollbar.css"
             ],
             [
-                "js/item_edit_profile/load_item_binding.js",
-                "js/item_edit_profile/delete_item.js",
-                "js/item_edit_profile/use_item.js",
-                "js/item_edit_profile/edit_item_name_desc.js",
-                "js/item_edit_profile/public_priv_switch.js",
-                "js/item_edit_profile/item_toggle_like.js",
-                "js/item_edit_profile/page_selection.js",
+                "/js/item_edit_profile/load_item_binding.js",
+                "/js/item_edit_profile/delete_item.js",
+                "/js/item_edit_profile/use_item.js",
+                "/js/item_edit_profile/edit_item_name_desc.js",
+                "/js/item_edit_profile/public_priv_switch.js",
+                "/js/item_edit_profile/item_toggle_like.js",
+                "/js/item_edit_profile/page_selection.js"
             ],
             "profile_item_edit",
             true,
@@ -293,6 +293,19 @@ class NotFoundPage extends ViewParams {
     }
 }
 
+class AboutPage extends ViewParams {
+    constructor() {
+        super(
+            "About us",
+            ["about/about_main.css"],
+            [],
+            "about_page",
+            false,
+            true
+        )
+    }
+}
+
 
 
 export {
@@ -304,5 +317,6 @@ export {
     ProfilePage,
     EmailVerifyPage,
     ItemEditProfilePage,
-    NotFoundPage
+    NotFoundPage,
+    AboutPage
 }
