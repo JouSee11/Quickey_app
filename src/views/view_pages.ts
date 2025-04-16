@@ -73,7 +73,7 @@ class LoginPage extends ViewParams {
             "Login page",
             ["auth/login.css", "auth/form_auth.css"],
             [
-                "js/login.js",
+                "/js/auth/login.js",
             ],
             "login",
             true,
@@ -107,7 +107,7 @@ class RegisterPage extends ViewParams {
             "Register now!",
             ["auth/register.css", "auth/form_auth.css"],
             [
-                "js/register.js",
+                "/js/auth/register.js",
                 "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
             ],
             "register",
@@ -142,7 +142,7 @@ class EmailVerifyPage extends ViewParams {
             "Verify email",
             ["auth/form_auth.css", "auth/email_verify.css"],
             [
-                "/js/verify_email.js",
+                "/js/auth/verify_email.js",
                 "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
             ],
             "verify_email",
