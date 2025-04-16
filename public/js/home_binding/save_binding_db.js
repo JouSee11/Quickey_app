@@ -78,11 +78,6 @@ async function saveToDb(nameInput, descriptionInput, saveDialog) {
             })
         })
         
-        // if (!response.ok) {
-        //     //show error msg
-        //     return alert("Response not ok")
-        // }
-
         const responseData = await response.json()
         if (responseData.status === "error") {
             showErrorMsg(responseData.msg, saveDialog)

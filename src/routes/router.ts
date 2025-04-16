@@ -38,7 +38,6 @@ router.use("/api/profile", apiProfileRouter)
 
 router.use("/about", showAboutPage)
 
-
 // 404 error for all unused routes
 router.use(showNotFoundPage)
 

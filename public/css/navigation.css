@@ -1,7 +1,10 @@
 #main-nav{
-    position: fixed;
+    position: absolute;
     top: 40px;
-    right: 100px;
+    /* right: 100px; */
+
+    left: 50%;
+    transform: translate(-50%, 0);
 
     width: 90%;
     display: flex;
@@ -41,3 +44,14 @@
 #navigation a:hover{
     color: var(--primary-0)
 }
+
+@media (max-width: 800px){
+    #navigation-logo{
+        display: none;
+    }
+
+    #navigation{
+        width: 100%;
+    }
+}
+    

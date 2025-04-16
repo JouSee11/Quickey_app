@@ -2,20 +2,6 @@ import isEmail from "validator/lib/isEmail.js";
 import { ViewParams} from "./view_class.js";
 import { UnorderedBulkOperation } from "mongodb";
 
-// const homeBindingPage = new ViewParams(
-//     "Key binding",
-//     ["home_binding.css"],
-//     [
-//         "bind_keys.js",
-//         "import_current_data.js",
-//         "send_data_to_serial.js",
-//         "ui_changes.js",
-//     ],
-//     "home_binding",
-//     true,
-//     false
-// )
-
 class HomeBindingPage extends ViewParams {
     username = null;
 
@@ -30,6 +16,7 @@ class HomeBindingPage extends ViewParams {
                 "home/multi_select/multi_select_common.css",
                 "home/multi_select/multi_select_options.css",
                 "home/multi_select/multi_select_action_display.css",
+                "not_supported/not_supported_main.css",
             ],
             [
                 "js/home_binding/bind_keys.js",
@@ -43,6 +30,7 @@ class HomeBindingPage extends ViewParams {
                 "js/home_binding/multi_select/multi_binding_ui.js",
                 "js/home_binding/multi_select/multi_binding_save_load.js",
                 "js/home_binding/page_selection_binding.js",
+                "js/small_screen.js"
             ],
             "home_binding",
             true,
@@ -71,9 +59,14 @@ class LoginPage extends ViewParams {
     constructor() {
         super(
             "Login page",
-            ["auth/login.css", "auth/form_auth.css"],
+            [
+                "auth/login.css", 
+                "auth/form_auth.css",
+                "not_supported/not_supported_main.css",
+            ],
             [
                 "/js/auth/login.js",
+                "/js/small_screen.js"
             ],
             "login",
             true,
@@ -105,9 +98,14 @@ class RegisterPage extends ViewParams {
     constructor() {
         super(
             "Register now!",
-            ["auth/register.css", "auth/form_auth.css"],
+            [
+                "auth/register.css",
+                 "auth/form_auth.css",
+                 "not_supported/not_supported_main.css",
+                ],
             [
                 "/js/auth/register.js",
+                "js/small_screen.js",
                 "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
             ],
             "register",
@@ -140,9 +138,10 @@ class EmailVerifyPage extends ViewParams {
     constructor() {
         super(
             "Verify email",
-            ["auth/form_auth.css", "auth/email_verify.css"],
+            ["auth/form_auth.css", "auth/email_verify.css", "not_supported/not_supported_main.css",],
             [
                 "/js/auth/verify_email.js",
+                "js/small_screen.js",
                 "https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
             ],
             "verify_email",
@@ -216,7 +215,8 @@ class ProfilePage extends ViewParams {
                 "profile/profile-common.css",
                 "profile/save_template.css",
                 "saves_pagination.css",
-                "scrollbar.css"
+                "scrollbar.css",
+                "not_supported/not_supported_main.css",
 
             ],
             [
@@ -224,6 +224,8 @@ class ProfilePage extends ViewParams {
                 "js/profile/search_items.js",
                 "js/profile/profile_filter_liked.js",
                 "js/profile/saves_pagination.js",
+
+                "js/small_screen.js"
             ],
             "profile",
             true,
@@ -262,7 +264,8 @@ class ItemEditProfilePage extends ViewParams {
                 "profile_item/profile_item_toggle.css",
                 "profile_item/profile_item_like_button.css",
                 "profile_item/page_selection.css",
-                "scrollbar.css"
+                "scrollbar.css",
+                "not_supported/not_supported_main.css",
             ],
             [
                 "/js/item_edit_profile/load_item_binding.js",
@@ -271,7 +274,9 @@ class ItemEditProfilePage extends ViewParams {
                 "/js/item_edit_profile/edit_item_name_desc.js",
                 "/js/item_edit_profile/public_priv_switch.js",
                 "/js/item_edit_profile/item_toggle_like.js",
-                "/js/item_edit_profile/page_selection.js"
+                "/js/item_edit_profile/page_selection.js",
+
+                "js/small_screen.js"
             ],
             "profile_item_edit",
             true,
@@ -304,6 +309,19 @@ class AboutPage extends ViewParams {
             true
         )
     }
+
+}
+class NotSupportedPage extends ViewParams {
+    constructor() {
+        super(
+            "Not supported",
+            ["about/about_main.css"],
+            [],
+            "not_supported",
+            false,
+            false
+        )
+    }
 }
 
 
@@ -318,5 +336,6 @@ export {
     EmailVerifyPage,
     ItemEditProfilePage,
     NotFoundPage,
-    AboutPage
+    AboutPage,
+    NotSupportedPage
 }

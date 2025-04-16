@@ -42,3 +42,16 @@ footer p{
 footer #icons-links a i {
     padding: 10px;
 }
+
+@media (max-width: 1000px) {
+    .icon-text{
+        font-size: 0em;
+    }
+
+    footer p{
+        font-size: 0;
+    }
+
+
+    
+}
