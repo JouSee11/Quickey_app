@@ -90,6 +90,43 @@
 .binded .node-content-key{
     color: var(--green-bright);
 }
+
+
+/* button controls for the node */
+.node-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* space between buttons */
+    margin-right: 20px;
+}
+
+.node-controls button {
+    width: 30px;
+    height: 20px;
+    background-color: var(--gray-dark);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.node-controls button i {
+    margin: 0;
+    font-size: var(--normal-text);
+}
+
+.node-controls button:hover {
+    background-color: var(--primary-600);
+}
+
+
+
 /* single items on the actions sequence  */
 
 /* inputs for the nodes */
