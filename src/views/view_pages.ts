@@ -16,6 +16,7 @@ class HomeBindingPage extends ViewParams {
                 "home/multi_select/multi_select_common.css",
                 "home/multi_select/multi_select_options.css",
                 "home/multi_select/multi_select_action_display.css",
+                "home/multi_select/multi_select_switch_animation.css",
                 "not_supported/not_supported_main.css",
             ],
             [

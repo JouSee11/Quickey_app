@@ -156,8 +156,7 @@ async function showNodeGeneral(nodeFileName, actionName, value = "") {
         //event listener for the up arrow
         const upArrow = node.querySelector(".node-button-up")
         upArrow.addEventListener("click", (e) => {
-            //TODO: implement the up arrow functionality
-            console.log("up arrow clicked");
+            moveNodeUp(node)
             
             e.stopPropagation()
         })
@@ -165,8 +164,7 @@ async function showNodeGeneral(nodeFileName, actionName, value = "") {
         //event listener for the down arrow
         const downArrow = node.querySelector(".node-button-down")
         downArrow.addEventListener("click", (e) => {
-            //TODO: implement the down arrow functionality
-            console.log("down arrow clicked");
+            moveNodeDown(node)
             
             e.stopPropagation()
         })
