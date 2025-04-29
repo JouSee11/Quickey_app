@@ -152,6 +152,24 @@ async function showNodeGeneral(nodeFileName, actionName, value = "") {
             handleNodeRemove(node),
             e.stopPropagation()
         });
+
+        //event listener for the up arrow
+        const upArrow = node.querySelector(".node-button-up")
+        upArrow.addEventListener("click", (e) => {
+            //TODO: implement the up arrow functionality
+            console.log("up arrow clicked");
+            
+            e.stopPropagation()
+        })
+
+        //event listener for the down arrow
+        const downArrow = node.querySelector(".node-button-down")
+        downArrow.addEventListener("click", (e) => {
+            //TODO: implement the down arrow functionality
+            console.log("down arrow clicked");
+            
+            e.stopPropagation()
+        })
         
         // Add to container
         actionContainer.appendChild(node);
