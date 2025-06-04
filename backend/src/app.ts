@@ -57,7 +57,7 @@ app.use("", router)
 // })
 
 
-const PORT: number = Number(process.env.PORT) || 3000
+const PORT: number = Number(process.env.PORT) || 5000
 
 const start = async () => {
     try{
