@@ -9,6 +9,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
+
 //events - define clicks etc...
 const handleClick = () => {}
 
@@ -27,7 +28,7 @@ const handleRightClick = () => {
         @dblclick="handleRightClick"
     >
         <Icon icon="material-symbols:settings-ethernet" class="icon"/>
-        {{props.text}}
+        {{props.text}} 
     </button>
 </template>
 
