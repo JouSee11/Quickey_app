@@ -12,7 +12,7 @@ export const useButtons = (totalPages: number, buttonsPerPage: number) => {
 
         for (let i = 0; i <= totalPages * buttonsPerPage; i++) {
             allButtons.value.push({
-                id: i;
+                id: i,
                 text: "Press to bind",
                 state: "notBinded" as ButtonState
             })
@@ -46,6 +46,7 @@ export const useButtons = (totalPages: number, buttonsPerPage: number) => {
         currentPage,
         currentPageButtons,
         
+        initButtons,
         changePage,
         bindButton,
         resetButton

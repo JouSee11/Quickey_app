@@ -26,7 +26,7 @@ const handleRightClick = () => {
         @contextmenu="handleRightClick"
         @dblclick="handleRightClick"
     >
-        <Icon icon="material-symbols:ads-click" class="icon"/>
+        <Icon icon="material-symbols:settings-ethernet" class="icon"/>
         {{props.text}}
     </button>
 </template>
