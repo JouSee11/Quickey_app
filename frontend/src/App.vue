@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 import {ref} from "vue"
 
 
@@ -15,6 +16,8 @@ const isLoggedIn = ref(false)
 
 
   <RouterView />
+
+  <Footer />
 </template>
 
 <style scoped>

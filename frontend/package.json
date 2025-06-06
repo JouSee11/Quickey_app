@@ -13,6 +13,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@iconify/vue": "^5.0.0",
+    "@primeuix/themes": "^1.1.1",
+    "@primevue/auto-import-resolver": "^4.3.5",
+    "primevue": "^4.3.5",
+    "unplugin-vue-components": "^28.7.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },

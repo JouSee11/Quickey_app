@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import type { ButtonState } from '@/types/buttonBindHome';
 import { Icon } from '@iconify/vue'
 
 interface Props {
     buttonId: Number,
     text: String,
-    state: "notBindes" | "binded"
+    state: ButtonState
 }
 
 const props = defineProps<Props>()
@@ -27,7 +28,7 @@ const handleRightClick = () => {
         @contextmenu="handleRightClick"
         @dblclick="handleRightClick"
     >
-        <Icon icon="material-symbols:settings-ethernet" class="icon"/>
+        <Icon icon="tabler:keyboard-hide" class="icon" />
         {{props.text}} 
     </button>
 </template>

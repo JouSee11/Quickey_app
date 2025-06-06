@@ -49,6 +49,14 @@
     --border-rad-smaller: 8px;
     --border-rad-bigger: 15px;
 
+
+    /* theme overwrites */
+    --p-primary-color: var(--primary-1000);
+    --p-surface-ground: var(--primary-1000);
+    --p-secondary-color: var(--green-bright);
+    --text-color: var(--primary-0);
+
+    --p-secondary-color: #fffb003d;
 }
 
 :root{

@@ -4,8 +4,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import PrimeVue from "primevue/config"
-import Aura from "@primeuix/themes/aura"
 import Ripple from 'primevue/ripple'
+import CustomTheme from '@/presets/customTheme'
 
 const app = createApp(App)
 
@@ -14,9 +14,17 @@ app.use(router)
 //setup the ui libary
 app.use(PrimeVue, {
     theme: {
-        preset: Aura
+        preset: CustomTheme
     },
-    ripple: true
+    ripple: true,
+    options: {
+        cssLayer:{
+            name: 'primevue',
+            order: 'app-style, primevue'
+        },
+        prefix: 'p'
+    }
+    
     
 })
 

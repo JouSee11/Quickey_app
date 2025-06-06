@@ -28,7 +28,7 @@ export const useButtons = (totalPages: number, buttonsPerPage: number) => {
 
     //page navigation
     const changePage = (pageNumber: number) => {
-        currentPage.value = pageNumber % totalPages
+        currentPage.value = pageNumber
     }
 
     const bindButton = () => {
