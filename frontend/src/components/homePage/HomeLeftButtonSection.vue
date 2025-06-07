@@ -8,7 +8,17 @@ const items = ref([
         items: [
             {
                 label: 'Reset',
-                icon: 'pi pi-home'
+                icon: 'pi pi-refresh'
+            },
+            {
+                label: 'Import from device',
+                icon: 'pi pi-file-import',
+                disabled: true
+            },
+            {
+                label: 'Save preset',
+                icon: 'pi pi-save',
+                disabled: true
             }
         ]
     }
@@ -19,11 +29,20 @@ const items = ref([
 <template>
     <div id="left-section">
         <div class="card flex justify-center">
-            <Menu :model="items" />
+            <Menu :model="items" id="binding-controlls-menu"/>
+
 
         </div>
 
     </div>
 </template>
 
-<style></style>
+<style scoped>
+
+:deep(#binding-controlls-menu .p-menuitem-link){
+    color: green !important;
+    background-color: black !important;
+    
+}
+
+</style>

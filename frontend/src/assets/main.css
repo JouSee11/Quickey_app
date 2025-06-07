@@ -71,3 +71,7 @@
     cursor: not-allowed;
     border-color: var(--gray-main) !important;
 }
+
+.pi{
+    font-family: 'primeicons' !important;
+}

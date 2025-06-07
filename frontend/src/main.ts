@@ -6,6 +6,7 @@ import router from './router'
 import PrimeVue from "primevue/config"
 import Ripple from 'primevue/ripple'
 import CustomTheme from '@/presets/customTheme'
+import Aura from '@primeuix/themes/aura'
 import 'primeicons/primeicons.css';
 
 

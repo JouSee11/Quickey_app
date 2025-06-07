@@ -32,7 +32,6 @@ const handleRightClick = () => {
         {{props.text}} 
     </button>
 
-    <i class="pi pi-plus" style="font-size: 2rem; color: red;"></i>
 
 </template>
 
