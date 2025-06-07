@@ -28,9 +28,9 @@ const CustomTheme = definePreset(Aura, {
             dark: {
                 primary: {
                     color: '{primary.50}',
-                    contrastColor: '{primary.1000}',
-                    hoverColor: '{primary.600}',
-                    activeColor: '{primary.400}'
+                    contrastColor: '{primary.50}',
+                    hoverColor: '{primary.50}',
+                    activeColor: '{primary.50}'
                 },
                 secondary: {
                     color: '{primary.50}',

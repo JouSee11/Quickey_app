@@ -50,11 +50,14 @@ const handleResetButton = () => {
                 id="connection-icon"
                 :class="connected ? 'connected' : 'not-connected'"
             />
-            <p id="connection-msg">unknown</p>
+            <p id="connection-msg">
+                {{ connected ? "connected" : "disconnected" }}
+            </p>
             <Button 
                 type="submit" 
                 id="connect-button"
                 rounded
+                variant="outlined"
                 :class="connected ? 'connected' : 'not-connected' "
             >
                 {{connected ? 'Disconnect' : 'Connect'}}
@@ -89,8 +92,14 @@ const handleResetButton = () => {
         </div>
 
         <!-- save button -->
-        <Button type="submit" id="submit-button" severity="secondary" variant="outlined" >
-            <Icon icon="material-symbols:check-circle-rounded" class='icon'/>
+        <Button 
+            type="submit" 
+            id="submit-button" 
+            severity="secondary" 
+            variant="outlined"
+            :disabled="!connected"
+            >
+            <Icon icon="material-symbols:upload" class='icon'/>
             Save to device
         </Button>   
 
@@ -98,14 +107,6 @@ const handleResetButton = () => {
 </template>
 
 <style scoped>
-
-#center-section{
-    grid-column: 2;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-}
 
 
 #buttons-container{
@@ -123,8 +124,11 @@ const handleResetButton = () => {
 
 #submit-button{
     margin-top: 20px;
+    color: var(--green-bright);
 }
-
+#submit-button .icon{
+    color: inherit;
+}
 
 #connection-cont{
     display: flex;
@@ -168,24 +172,24 @@ const handleResetButton = () => {
 #connect-button{
     width: 120px;
     height: 25px;
-    border: none;
-    background-color: var(--green-dark);
-    padding: 5px 10px;
-    color: var(--primary-0);
-    font-size: var(--smaller-text);
     line-height: 10px;
+    padding: 5px 10px;
+    font-size: var(--smaller-text);
+    /* border: none;
+    background-color: var(--green-dark);
+    color: var(--primary-0); */
 }
 
-#connect-button:hover{
-    filter: brightness(1.5);
-    cursor: pointer;
-}
 #connect-button.connected{
-    background-color: var(--green-dark);
+    color: var(--green-dark);
+    /* background-color: var(--green-dark); */
 }
 #connect-button.not-connected{
-    background-color: var(--red-dark);
+    color: var(--red-dark);
+    /* background-color: var(--red-dark); */
 }
+
+
 
 /*
 

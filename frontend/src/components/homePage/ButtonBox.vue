@@ -28,9 +28,12 @@ const handleRightClick = () => {
         @contextmenu="handleRightClick"
         @dblclick="handleRightClick"
     >
-        <Icon icon="tabler:keyboard-hide" class="icon" />
+        <Icon icon="mdi:keyboard-caps" class="icon" />
         {{props.text}} 
     </button>
+
+    <i class="pi pi-plus" style="font-size: 2rem; color: red;"></i>
+
 </template>
 
 

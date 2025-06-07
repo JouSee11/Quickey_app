@@ -11,7 +11,7 @@ const isLoggedIn = ref(false)
 </script>
 
 <template>
-  <Navbar :is-logged-in="isLoggedIn"/>
+  <Navbar :is-logged-in="isLoggedIn" :username="'jousee453'"/>
 
 
 

@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BindingOptionsDrawer: typeof import('./src/components/homePage/BindingOptionsDrawer.vue')['default']
     Button: typeof import('primevue/button')['default']
     ButtonBindingsMain: typeof import('./src/components/homePage/ButtonBindingsMain.vue')['default']
     ButtonBox: typeof import('./src/components/homePage/ButtonBox.vue')['default']
@@ -15,11 +16,13 @@ declare module 'vue' {
     Footer: typeof import('./src/components/Footer.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HomeCenterSection: typeof import('./src/components/homePage/HomeCenterSection.vue')['default']
+    HomeLeftButtonSection: typeof import('./src/components/homePage/HomeLeftButtonSection.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
     IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    Menu: typeof import('primevue/menu')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     RoundPageButton: typeof import('./src/components/homePage/RoundPageButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

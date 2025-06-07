@@ -1,27 +1,29 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue'
 </script>
 
 <template>
     <footer>
         <div id="icons-links">
             <a href="mailto:jotalac@seznam.cz?subject=[Quick key - question]">
-                <Icon icon="mdi:envelope" width="24" height="24"  style="color: #5b4545" class="icon" />
+                <Icon icon="mdi:envelope" class="icon-footer"/>
                 <spn class="icon-text">Contact</spn>
             </a>
             <a href="suc" target="_blank">
-                <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                <!-- <i class="fa-solid fa-circle-dollar-to-slot"></i> -->
+                <Icon icon="mingcute:pig-money-fill" class="icon-footer"/>
                 <spn class="icon-text">Support</spn>
             </a>
             <a href="https://instagram.com/jta_cz/" target="_blank">
-                <i class="fa-brands fa-instagram"></i>>
+                <Icon icon="mdi:instagram" class="icon-footer"/>
                 <spn class="icon-text">Instagram</spn>
             </a>
             <a href="https://github.com/JouSee11/QUICK_KEY_controller/" target="_blank">
-                <i class="fa-brands fa-github"></i>
+                <Icon icon="line-md:github" class="icon-footer"/>
                 <spn class="icon-text">GitHub</spn>
             </a>
             <a href="https://www.linkedin.com/in/josef-talac-827241260/" target="_blank">
-                <i class="fa-brands fa-linkedin-in"></i>
+                <Icon icon="mdi:linkedin" class="icon-footer"/>
                 <spn class="icon-text">LinkedIn</spn>
             </a>
         </div>
@@ -72,8 +74,14 @@ footer p{
     color: var(--blue-dark);
 }
 
-footer #icons-links a i {
+footer #icons-links a .icon {
     padding: 10px;
+}
+
+.icon-footer {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
 }
 
 @media (max-width: 1000px) {
@@ -83,9 +91,6 @@ footer #icons-links a i {
 
     footer p{
         font-size: 0;
-    }
-
-
-    
+    }    
 }
 </style>

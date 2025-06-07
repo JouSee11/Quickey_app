@@ -45,13 +45,8 @@
     margin: 5px;
 }
 
-.icon path{
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    display: block;
-}
 
+/* changing the appereance of all primevue buttons */
 .p-button,
 .p-inputtext {
     font-family: "Roboto Mono", monospace !important;
@@ -60,4 +55,19 @@
 }
 
 .p-button:hover{
+    background-color: var(--primary-50) !important;
+    color: var(--primary-1000) !important;
+}
+
+.p-button.p-button-outlined{
+    border-width: 1px !important;
+    border-color: currentColor !important;
+}
+
+
+.p-button[disabled]:hover {
+    background-color: var(--gray-dark) !important;
+    color: var(--gray-main) !important;
+    cursor: not-allowed;
+    border-color: var(--gray-main) !important;
 }

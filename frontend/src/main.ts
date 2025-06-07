@@ -6,6 +6,9 @@ import router from './router'
 import PrimeVue from "primevue/config"
 import Ripple from 'primevue/ripple'
 import CustomTheme from '@/presets/customTheme'
+import 'primeicons/primeicons.css';
+
+
 
 const app = createApp(App)
 

@@ -2,10 +2,12 @@
 import { RouterLink } from "vue-router"
 import mainLogo from "@/assets/images/icons/main-logo.svg"
 import { ref, onMounted } from "vue"
+import { Icon } from '@iconify/vue'
 
 //get if the user is logged in from the parrent
 const props = defineProps<{
     isLoggedIn: boolean
+    username?: string
 }>()
 
 </script>
@@ -15,14 +17,26 @@ const props = defineProps<{
         <nav id="main-nav">
             <RouterLink to="/"><img :src="mainLogo" alt="logo" id="navigation-logo"></RouterLink>
 
-            <div id="navigation">
+            <div id="navigation-links">
                 
                 <RouterLink to="/">Home</RouterLink>
-                <RouterLink v-if="isLoggedIn" to="/profile">Profile</RouterLink>
-                <RouterLink v-else to="/login">Login</RouterLink>
                 <RouterLink to="/discover">Discover</RouterLink>
-                
+                <RouterLink to="/about">About</RouterLink>
             </div>
+            
+            <Button
+                variant="outlined"
+                id="login-button-nav"
+            >
+                <RouterLink v-if="isLoggedIn" to="/profile">
+                    <Icon icon="iconamoon:profile-fill" class="icon-nav" />
+                    {{ username }}
+                </RouterLink>
+                <RouterLink v-else to="/login">
+                    <Icon icon="material-symbols:login-rounded" class="icon-nav"/>
+                    Login
+                </RouterLink>
+            </Button>
         </nav>
     </header>
 </template>
@@ -30,49 +44,62 @@ const props = defineProps<{
 <style scoped>
 #main-nav{
     position: absolute;
-    top: 40px;
-    /* right: 100px; */
-
-    left: 50%;
-    transform: translate(-50%, 0);
-
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#main-nav img{
-    width: 70px;
+    width: 100%;
     height: 70px;
-    cursor: pointer;
-}
-
-#navigation{
+    top: 0;
+    left: 0;
+    padding: 40px 40px 0 40px;
     display: flex;
-    width: 400px;
-    height: var(--navbar-height);
-    /* left: 40%; */
-    justify-content: space-around;
+    justify-content: left;
     align-items: center;
-    background-color: var(--gray-dark);
-    border-radius: var(--border-rad-bigger);
-}
-#navigation:hover{
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.11);
-    filter: brightness(1.3);
+    /* background-color: var(--blue-dark); */
 }
 
-#navigation a {
+#main-nav:hover #navigation-logo{
+    filter: grayscale(0) drop-shadow(0 0 20px rgba(17, 48, 121, 0.363));
+}
+
+
+#navigation-logo{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    filter: grayscale(1);
+    transition: all 0.2s ease-in-out;
+}
+
+#navigation-links{
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+}
+
+#navigation-links a {
     text-decoration: none;
     font-size: var(--normal-text);
     text-transform: uppercase;
     color: var(--gray-main);
+    margin-right: 30px;
     transition: all 0.1s ease-in-out;
 }
 
-#navigation a:hover{
-    color: var(--primary-0)
+#navigation-links a:hover{
+    color: var(--primary-0);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.418);
+}
+
+#login-button-nav{
+    color: var(--gray-main);
+    margin-left: auto;
+}
+
+#login-button-nav a{
+    text-decoration: none;
+    color: var(--gray-main);
+}
+#login-button-nav:hover a{
+    text-decoration: none;
+    color: var(--primary-1000);
 }
 
 @media (max-width: 800px){
@@ -80,7 +107,7 @@ const props = defineProps<{
         display: none;
     }
 
-    #navigation{
+    #navigation-links{
         width: 100%;
     }
 }
