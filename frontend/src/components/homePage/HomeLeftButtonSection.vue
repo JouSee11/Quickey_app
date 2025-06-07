@@ -39,10 +39,12 @@ const items = ref([
 
 <style scoped>
 
-:deep(#binding-controlls-menu .p-menuitem-link){
-    color: green !important;
-    background-color: black !important;
-    
+:deep(#binding-controlls-menu .pi){
+    color: var(--primary-50);    
+}
+
+:deep(#binding-controlls-menu li) {
+    /* color: var(--gray-main); */
 }
 
 </style>
