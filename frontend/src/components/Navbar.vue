@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router"
 import mainLogo from "@/assets/images/icons/main-logo.svg"
 import { ref, onMounted } from "vue"
 import { Icon } from '@iconify/vue'
+import {RouterLink, useRoute} from 'vue-router'
 
 //get if the user is logged in from the parrent
 const props = defineProps<{
     isLoggedIn: boolean
     username?: string
 }>()
+
+//check on which page are we
+
+const route = useRoute();
+const isActiveLink = (routePath: String) => {
+    return route.path === routePath;
+}
 
 </script>
 
@@ -19,9 +26,18 @@ const props = defineProps<{
 
             <div id="navigation-links">
                 
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/discover">Discover</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
+                <RouterLink 
+                to="/"
+                :class="[isActiveLink('/') ? 'activeLink' : 'inactiveLink']"
+                >Home</RouterLink>
+                <RouterLink
+                to="/discover"
+                :class="[isActiveLink('/discover') ? 'activeLink' : 'inactiveLink']"
+                >Discover</RouterLink>
+                <RouterLink 
+                to="/about"
+                :class="[isActiveLink('/about') ? 'activeLink' : 'inactiveLink']"
+                >About</RouterLink>
             </div>
             
             <Button
@@ -84,7 +100,7 @@ const props = defineProps<{
 }
 
 #navigation-links a:hover{
-    color: var(--primary-0);
+    color: var(--primary-0) !important;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.418);
 }
 
@@ -100,6 +116,10 @@ const props = defineProps<{
 #login-button-nav:hover a{
     text-decoration: none;
     color: var(--primary-1000);
+}
+
+.activeLink{
+    color: var(--primary-50) !important;
 }
 
 @media (max-width: 800px){
