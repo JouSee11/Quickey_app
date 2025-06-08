@@ -1,0 +1,19 @@
+/* custom scrollbar */
+/* WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px; /* Scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Track background */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-600); /* Scrollbar color */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-50); /* Scrollbar color on hover */
+}

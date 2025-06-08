@@ -20,8 +20,8 @@ const handleRightClick = () => {
 </script>
 
 <template>
-    <button 
-        class="button-bind" 
+    <Button 
+        :class="['button-bind', 'box-shadow-normal']" 
         :id="`key-${props.buttonId}`"
         :data-key-num="props.buttonId"
         @click="handleClick" 
@@ -53,19 +53,10 @@ const handleRightClick = () => {
     color: var(--primary-0);
     outline: none;
     cursor: pointer;
-    box-shadow: 5px 5px 0 var(--primary-600);
-    transition: background-color 0.3s ease,
-     color 0.3s ease, 
-     box-shadow 0.5s ease, 
-     filter 0.5s ease, 
-     scale 0.5s ease, 
-     transform 0.5s ease;
-
-    /* default it will be shrinek */
 }
-.button-bind:hover{
-    box-shadow: 8px 8px 0 var(--primary-400);
-    filter: brightness(1.1);
+.button-bind:hover .icon{
+    color: var(--primary-1000);
+    /* filter: brightness(1.1); */
 }
 .button-bind.binded{
     background-color: var(--green-bright);
