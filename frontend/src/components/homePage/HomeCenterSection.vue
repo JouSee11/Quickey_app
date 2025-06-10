@@ -21,7 +21,9 @@ const {
     initButtons,
     changePage,
     bindButtonValue,
-    listeningButton
+    listeningButton,
+    totalPages,
+    showKnob
 } = useButtons()
 
 // init buttons when componets are visible
@@ -82,18 +84,38 @@ const handleMultiBindButton = (buttonId: number) => {
                 @multi-bind-button="handleMultiBindButton"
                 @reset-button="handleResetButton"
             />
+
+            <!-- show knob if on the right page -->
+            <Button 
+                v-if="showKnob && currentPage === totalPages + 1"
+                :outlined="true"
+            >
+                This is the knob nigga
+            </Button>
+            
         </div>
-        
+
+                    
         <!-- page numbers display -->
         <div id="pages-switch-cont">
             <RoundPageButton
-                v-for="page in 3"
+                v-for="page in totalPages"
                 :key="page"
                 :number-display="page"
                 :enabled="true"
                 :class="{ active: currentPage === page }"
                 @click="changePage(page)"
 
+            />
+            <!-- <Icon icon="mdi:knob" class="icon-knob" />  -->
+            <RoundPageButton
+                v-if="showKnob"
+                :key="'knob'"
+                :number-display="'K'"
+                :enabled="true"
+                :icon="'pi pi-circle-fill'"
+                :class="{ active: currentPage === (totalPages+1)}"
+                @click="changePage(totalPages+1)"
             />
         
         </div>
@@ -117,7 +139,8 @@ const handleMultiBindButton = (buttonId: number) => {
 
 
 #buttons-container{
-   display: grid;
+    display: grid;
+    min-height: 510px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 }
@@ -196,24 +219,9 @@ const handleMultiBindButton = (buttonId: number) => {
     /* background-color: var(--red-dark); */
 }
 
-
-
-/*
-
-/* #status-message{
-    position: absolute;
-    bottom: 50px;
-    color: var(--primary-0);
-    font-size: var(--bigger-text);
-    margin-bottom: 15px;
-}
-
-#status-message.successfull{
-    color: var(--green-bright);
-}
-#status-message.error{
-    color: var(--red-vivid)
+/* knob icon */
+/* .icon-knob{
+    40px,
 } */
-
 
 </style>

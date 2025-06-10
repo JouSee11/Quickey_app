@@ -1,8 +1,9 @@
 <script setup lang="ts">
 
 interface Props {
-    numberDisplay: number,
+    numberDisplay: number | string,
     enabled: boolean
+    icon?: string
 }
 
 const props = defineProps<Props>()

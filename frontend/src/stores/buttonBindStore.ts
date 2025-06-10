@@ -5,6 +5,7 @@ import type { ButtonState, ButtonBindHome } from "@/types/buttonBindHome";
 export const useButtonBindStore = defineStore("buttonBind", () => {
     //states
     const allButtons = ref<ButtonBindHome[]>([])
+    const showKnob = ref<number>(1)
     const currentPage = ref<number>(1)
     const totalPages = ref<number>(3)
     const buttonsPerPage = ref<number>(9)
@@ -69,6 +70,7 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
         currentPage,
         totalPages,
         buttonsPerPage,
+        showKnob,
 
         resetAllButtons,
         setCurrentPage,

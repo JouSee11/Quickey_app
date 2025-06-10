@@ -94,7 +94,9 @@ export const useButtons = () => {
     return {
         allButtons: computed(() => store.allButtons),
         currentPage: computed(() => store.currentPage),
+        totalPages: computed(() => store.totalPages),
         currentPageButtons,
+        showKnob: computed(() => store.showKnob),
         
         initButtons,
         changePage,
