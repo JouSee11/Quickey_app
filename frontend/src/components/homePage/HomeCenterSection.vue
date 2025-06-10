@@ -10,9 +10,7 @@ import {ref} from 'vue'
 import { list } from "@primeuix/themes/aura/autocomplete"
 import { button } from "@primeuix/themes/aura/inputnumber"
 import HomeKnob from "@/components/homePage/HomeKnob.vue"
-
-
-const connected = ref<boolean>(false);
+import { useDeviceStore } from "@/stores/deviceStore"
 
 //use the composable functoins
 const {
@@ -30,6 +28,16 @@ const {
     
 } = useButtons()
 
+const {
+    isConnected,
+    connectionStatus,
+    connect,
+    statusText,
+    disconnect
+
+
+} = useDeviceStore()
+
 // init buttons when componets are visible
 onMounted(() => {
     initButtons(),
@@ -43,7 +51,15 @@ const handleBindButton = (buttonId: number) => {
 }
 
 const handleResetButton = (buttonId: number) => {
-    console.log("TODO");
+    //TODO: single button reset
+}
+
+const toggleConnect = () => {
+    if (!isConnected) {
+        connect()
+    } else {
+        disconnect()
+    }
 }
 
 const handleMultiBindButton = (buttonId: number) => {
@@ -61,19 +77,20 @@ const handleMultiBindButton = (buttonId: number) => {
         <div id="connection-cont">
             <div 
                 id="connection-icon"
-                :class="connected ? 'connected' : 'not-connected'"
+                :class="isConnected ? 'connected' : 'not-connected'"
             />
             <p id="connection-msg">
-                {{ connected ? "connected" : "disconnected" }}
+                {{ isConnected ? "connected" : "disconnected" }}
             </p>
             <Button 
                 type="submit" 
                 id="connect-button"
                 rounded
                 variant="outlined"
-                :class="connected ? 'connected' : 'not-connected' "
+                :class="isConnected ? 'connected' : 'not-connected' "
+                @click="toggleConnect"
             >
-                {{connected ? 'Disconnect' : 'Connect'}}
+                {{isConnected ? 'Disconnect' : 'Connect'}}
             </Button>
         </div>
         
@@ -130,7 +147,7 @@ const handleMultiBindButton = (buttonId: number) => {
             type="submit" 
             id="submit-button" 
             severity="secondary" 
-            :disabled="!connected"
+            :disabled="!isConnected"
             >
             <Icon icon="material-symbols:upload" class='icon'/>
             Save to device

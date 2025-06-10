@@ -11,6 +11,8 @@
   "compilerOptions": {
     "strict": true,
     // "noImplicitAny": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "lib": ["dom"],
+    "types": ["./node_modules/@types"]
   }
 }
