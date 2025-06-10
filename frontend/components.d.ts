@@ -17,6 +17,7 @@ declare module 'vue' {
     Footer: typeof import('./src/components/Footer.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HomeCenterSection: typeof import('./src/components/homePage/HomeCenterSection.vue')['default']
+    HomeKnob: typeof import('./src/components/homePage/HomeKnob.vue')['default']
     HomeLeftButtonSection: typeof import('./src/components/homePage/HomeLeftButtonSection.vue')['default']
     HomeRightLogArea: typeof import('./src/components/homePage/HomeRightLogArea.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']

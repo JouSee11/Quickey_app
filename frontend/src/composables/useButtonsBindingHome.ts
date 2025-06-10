@@ -1,5 +1,5 @@
 import { ref, computed, onMounted } from 'vue'
-import type { ButtonState, ButtonBindHome } from '@/types/buttonBindHome'
+import type { ButtonState, ButtonBindHome, KnobBindHome } from '@/types/buttonBindHome'
 import { useButtonBindStore } from '@/stores/buttonBindStore'
 import { button } from '@primeuix/themes/aura/inputnumber'
 import { useKeyCapture } from '@/composables/useKeyCapture'
@@ -29,6 +29,15 @@ export const useButtons = () => {
         }
         store.setButtons(buttons)
     }
+
+    const initKnob = () => {
+        if (store.showKnob) {
+            const knob: KnobBindHome = {state: "notBinded", value: []}
+            store.setKnob(knob)
+        }
+    }
+
+
 
 
     //page navigation
@@ -95,13 +104,16 @@ export const useButtons = () => {
         allButtons: computed(() => store.allButtons),
         currentPage: computed(() => store.currentPage),
         totalPages: computed(() => store.totalPages),
-        currentPageButtons,
         showKnob: computed(() => store.showKnob),
+        knobElement: computed(() => store.knobElement),
+        currentPageButtons,
+
         
         initButtons,
         changePage,
         bindButtonValue,
-        listeningButton
+        listeningButton,
+        initKnob
         // resetButton
     }
 }

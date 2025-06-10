@@ -1,14 +1,16 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import type { ButtonState, ButtonBindHome } from "@/types/buttonBindHome";
+import type { ButtonState, ButtonBindHome, KnobBindHome } from "@/types/buttonBindHome";
 
 export const useButtonBindStore = defineStore("buttonBind", () => {
     //states
     const allButtons = ref<ButtonBindHome[]>([])
-    const showKnob = ref<number>(1)
     const currentPage = ref<number>(1)
     const totalPages = ref<number>(3)
     const buttonsPerPage = ref<number>(9)
+    
+    const showKnob = ref<number>(1)
+    const knobElement = ref<KnobBindHome>()
 
     //function to determine the button text based on the state of the button
     const getButtonText = (state: ButtonState, customText?: string): string => {
@@ -32,6 +34,8 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
             button.text = getButtonText('notBinded')
             button.value = []
         })
+
+        knobElement.value = {state: "notBinded", value: []}
     }
 
     const setCurrentPage = (page: number) => {
@@ -53,6 +57,10 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
         allButtons.value = buttons
     }
 
+    const setKnob = (knob: KnobBindHome) => {
+        knobElement.value = knob 
+    }
+
     //update button when it is being binded
     const updateButton = (buttonId: number, updates: Partial<ButtonBindHome>) => {
         const button = allButtons.value.find(b => b.id === buttonId)
@@ -71,12 +79,14 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
         totalPages,
         buttonsPerPage,
         showKnob,
+        knobElement,
 
         resetAllButtons,
         setCurrentPage,
         setButtons,
         updateButton,
         getButtonText,
-        incrementPage
+        incrementPage,
+        setKnob
     }
 })

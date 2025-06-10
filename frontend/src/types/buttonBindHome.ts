@@ -6,3 +6,8 @@ export interface ButtonBindHome {
     state: ButtonState,
     value: string[]
 }
+
+export interface KnobBindHome {
+    state: "binded" | "notBinded"
+    value: string[]
+}

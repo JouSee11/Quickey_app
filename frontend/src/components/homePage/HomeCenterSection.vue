@@ -9,6 +9,7 @@ import { Icon } from '@iconify/vue'
 import {ref} from 'vue'
 import { list } from "@primeuix/themes/aura/autocomplete"
 import { button } from "@primeuix/themes/aura/inputnumber"
+import HomeKnob from "@/components/homePage/HomeKnob.vue"
 
 
 const connected = ref<boolean>(false);
@@ -19,16 +20,20 @@ const {
     currentPage,
     currentPageButtons,
     initButtons,
+    initKnob,
     changePage,
     bindButtonValue,
     listeningButton,
     totalPages,
-    showKnob
+    showKnob,
+    knobElement
+    
 } = useButtons()
 
 // init buttons when componets are visible
 onMounted(() => {
-    initButtons()
+    initButtons(),
+    initKnob()
 })
 
 
@@ -85,28 +90,28 @@ const handleMultiBindButton = (buttonId: number) => {
                 @reset-button="handleResetButton"
             />
 
-            <!-- show knob if on the right page -->
-            <Button 
-                v-if="showKnob && currentPage === totalPages + 1"
-                :outlined="true"
-            >
-                This is the knob nigga
-            </Button>
+            <HomeKnob 
+                v-if="showKnob && knobElement && currentPage === totalPages + 1"
+                :state="knobElement.state"
+            />
+
             
         </div>
 
                     
         <!-- page numbers display -->
         <div id="pages-switch-cont">
-            <RoundPageButton
-                v-for="page in totalPages"
-                :key="page"
-                :number-display="page"
-                :enabled="true"
-                :class="{ active: currentPage === page }"
-                @click="changePage(page)"
-
-            />
+            <div class="main-page-buttons">
+                <RoundPageButton
+                    v-for="page in totalPages"
+                    :key="page"
+                    :number-display="page"
+                    :enabled="true"
+                    :class="{ active: currentPage === page }"
+                    @click="changePage(page)"
+    
+                />
+            </div>
             <!-- <Icon icon="mdi:knob" class="icon-knob" />  -->
             <RoundPageButton
                 v-if="showKnob"
@@ -114,7 +119,7 @@ const handleMultiBindButton = (buttonId: number) => {
                 :number-display="'K'"
                 :enabled="true"
                 :icon="'pi pi-circle-fill'"
-                :class="{ active: currentPage === (totalPages+1)}"
+                :class="[{ active: currentPage === (totalPages+1)}, 'knob-page-btn']"
                 @click="changePage(totalPages+1)"
             />
         
@@ -125,7 +130,6 @@ const handleMultiBindButton = (buttonId: number) => {
             type="submit" 
             id="submit-button" 
             severity="secondary" 
-            variant="outlined"
             :disabled="!connected"
             >
             <Icon icon="material-symbols:upload" class='icon'/>
@@ -150,6 +154,20 @@ const handleMultiBindButton = (buttonId: number) => {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
+    justify-content: center; /* Center the page buttons */
+    align-items: center;
+    width: 400px;
+    position: relative; /* Allow absolute positioning for knob */
+}
+
+.main-page-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.knob-page-btn{
+    position: absolute !important;
+    right: 0;
 }
 
 #submit-button{
@@ -219,9 +237,5 @@ const handleMultiBindButton = (buttonId: number) => {
     /* background-color: var(--red-dark); */
 }
 
-/* knob icon */
-/* .icon-knob{
-    40px,
-} */
 
 </style>
