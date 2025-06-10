@@ -89,6 +89,10 @@
     border-color: var(--gray-main) !important;
 }
 
+.p-button-warn{
+    color: var(--red-vivid) !important;
+}
+
 .pi{
     font-family: 'primeicons' !important;
 }

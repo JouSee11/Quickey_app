@@ -2,33 +2,57 @@
 import type { ButtonState } from '@/types/buttonBindHome';
 import { Icon } from '@iconify/vue'
 
+
 interface Props {
-    buttonId: Number,
-    text: String,
+    buttonId: number,
+    text: string,
     state: ButtonState
 }
 
 const props = defineProps<Props>()
 
+const emit = defineEmits<{
+    bindButton: [buttonId: number]
+    multiBindButton: [button: number]
+    resetButton: [buttonId: number]
+}>()
 
-//events - define clicks etc...
-const handleClick = () => {}
+const bindButtonClick = (e: Event) => {
+    e.stopPropagation()
 
-const handleRightClick = () => {
-
+    emit('bindButton', props.buttonId)
 }
+
+
+const openContextMenu = () => {
+    //based on what user selects in the context menu, resetButton or multiBindButton will be emited
+    console.log("TODO");
+    
+}
+
 </script>
 
 <template>
     <Button 
-        :class="['button-bind', 'box-shadow-normal']" 
+        :class="[
+            'button-bind',
+            'box-shadow-normal',
+            {
+            listening: props.state === 'listening',
+            binded: props.state === 'binded'
+            }
+        ]"
         :id="`key-${props.buttonId}`"
         :data-key-num="props.buttonId"
-        @click="handleClick" 
-        @contextmenu="handleRightClick"
-        @dblclick="handleRightClick"
+
+        @click="bindButtonClick" 
+        @contextmenu="openContextMenu"
+        @dblclick="openContextMenu"
     >
-        <Icon icon="mdi:keyboard-caps" class="icon" />
+        <Icon v-if="props.state === 'notBinded'" icon="mdi:keyboard-caps" class="icon" />
+        <Icon v-if="props.state === 'multiBinding'" icon="material-symbols:layers-rounded" class="icon"/>
+        <Icon v-if="props.state === 'listening'" icon="tabler:click" class="icon"/>
+        
         {{props.text}} 
     </button>
 
@@ -51,8 +75,9 @@ const handleRightClick = () => {
     font-weight: 700;
     background-color: var(--blue-dark);
     color: var(--primary-0);
-    outline: none;
+    outline: none !important;
     cursor: pointer;
+    padding: 10px;
 }
 .button-bind:hover .icon{
     color: var(--primary-1000);
@@ -63,7 +88,7 @@ const handleRightClick = () => {
     box-shadow: 5px 5px 0 var(--green-dark) ,0 0 20px rgba(13, 198, 124, 0.221);
     color: var(--primary-0);
 }
-.button-bind.active{
+.button-bind.listening{
     background-color: rgba(80, 163, 205, 0.644);
     box-shadow: 0 0 30px rgba(44, 153, 207, 0.322);
 }
@@ -78,8 +103,12 @@ const handleRightClick = () => {
     filter: blur(3px) brightness(1.4);
 }
 
+
+
 .button-bind .icon {
     width: 50px;
     height: 40px;
 }
+
+
 </style>

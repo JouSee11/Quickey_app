@@ -1,7 +1,8 @@
-export type ButtonState = "binded" | "notBinded"
+export type ButtonState = "binded" | "notBinded" | "listening" | "multiBinding"
 
 export interface ButtonBindHome {
     id: number,
     text: string,
-    state: ButtonState
+    state: ButtonState,
+    value: string[]
 }

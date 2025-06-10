@@ -1,19 +1,26 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import PrimeVue from "primevue/config"
 import Ripple from 'primevue/ripple'
 import CustomTheme from '@/presets/customTheme'
-import Aura from '@primeuix/themes/aura'
+// import Aura from '@primeuix/themes/aura'
 import 'primeicons/primeicons.css';
+import ConfirmationService from 'primevue/confirmationservice'
+import ToastService from 'primevue/toastservice'  // ADD THIS LINE
 
 
 
 const app = createApp(App)
+const pinia = createPinia()
 
 app.use(router)
+app.use(pinia)
+app.use(ConfirmationService)
+app.use(ToastService)
 
 //setup the ui libary
 app.use(PrimeVue, {

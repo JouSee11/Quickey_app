@@ -1,54 +1,105 @@
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import type { ButtonState, ButtonBindHome } from '@/types/buttonBindHome'
+import { useButtonBindStore } from '@/stores/buttonBindStore'
+import { button } from '@primeuix/themes/aura/inputnumber'
+import { useKeyCapture } from '@/composables/useKeyCapture'
 
-export const useButtons = (totalPages: number, buttonsPerPage: number) => {
-    //state
-    const allButtons = ref<ButtonBindHome[]>([])
-    const currentPage = ref<number>(1)
+export const useButtons = () => {
+    const store = useButtonBindStore()
+    const { startCapturing, stopCapturing, capturing, capturingButton } = useKeyCapture()
 
-    //initialize buttons
+    // Computed values (derived state)
+    const currentPageButtons = computed(() => {
+        const startIndex = (store.currentPage - 1) * store.buttonsPerPage
+        const endIndex = startIndex + store.buttonsPerPage
+        return store.allButtons.slice(startIndex, endIndex)
+    })
+
+    //initialize buttons on startup
     const initButtons = () => {
-        allButtons.value = []
-
-        for (let i = 0; i <= totalPages * buttonsPerPage; i++) {
-            allButtons.value.push({
+        const buttons: ButtonBindHome[] = []
+        // Fix: Start from 1, not 0
+        for (let i = 1; i <= store.totalPages * store.buttonsPerPage; i++) {
+            buttons.push({
                 id: i,
-                text: "Press to bind",
-                state: "notBinded" as ButtonState
+                text: store.getButtonText('notBinded'),
+                state: "notBinded" as ButtonState,
+                value: []
             })
+        }
+        store.setButtons(buttons)
+    }
+
+
+    //page navigation
+    const changePage = (pageNumber: number) => {        
+        store.setCurrentPage(pageNumber)
+    }
+
+    
+    const bindButtonValue = (buttonId: number, text: string, value: string[]) => {
+    store.updateButton(buttonId, {
+        state: 'binded',
+        text: text,
+        value: value
+        })
+    }
+
+    const listeningButton = (buttonId: number) => {
+        //diable listening on all other buttons
+        stopListeningAll()
+        store.updateButton(buttonId, {
+            state: 'listening',
+        })
+
+        startCapturing(buttonId)
+    }
+
+    const stopListeningAll = () => {
+        //stop key capturing
+        stopCapturing()
+
+        store.allButtons.forEach(btn => {
+            if (btn.state === 'listening') {
+                store.updateButton(btn.id, {state: 'notBinded'})
+            }
+        })
+    }
+
+    //reset one button
+    const resetButton = (buttonId: number) => {
+
+
+        store.updateButton(buttonId, {
+            state: 'notBinded',
+            value: []
+        })
+    }
+
+    const changePageTabClick = (e: KeyboardEvent) => {
+        console.log(e.code);
+
+        
+        if (e.code === "Tab") {
+            e.stopPropagation()
+            
+            store.incrementPage()
         }
     }
 
-    //get buttons for current page (computed is used to more havier operations that we dont want to do in the template)
-    const currentPageButtons = computed(() => {
-        const startIndex = (currentPage.value - 1) * buttonsPerPage
-        const endIndex = startIndex + buttonsPerPage
-        return allButtons.value.slice(startIndex, endIndex)
+    onMounted(() => {
+        document.addEventListener('keydown', changePageTabClick)
     })
 
-    //page navigation
-    const changePage = (pageNumber: number) => {
-        currentPage.value = pageNumber
-    }
-
-    const bindButton = () => {
-        console.log("TODO");
-        
-    }
-
-    const resetButton = () => {
-        console.log("TODO");
-        
-    }
-
     return {
-        allButtons,
-        currentPage,
+        allButtons: computed(() => store.allButtons),
+        currentPage: computed(() => store.currentPage),
         currentPageButtons,
         
         initButtons,
         changePage,
-        bindButton,
-        resetButton
+        bindButtonValue,
+        listeningButton
+        // resetButton
     }
 }

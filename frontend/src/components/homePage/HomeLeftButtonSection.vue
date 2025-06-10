@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import {ref} from "vue"
+import { useButtonBindStore } from '@/stores/buttonBindStore'
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from "primevue/usetoast";
+
+
 
 interface Props {
     loggedIn: Boolean,
@@ -8,6 +13,36 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const buttonStore = useButtonBindStore()
+const confirm = useConfirm()
+const toast = useToast()
+
+//show the dialog to reset binding
+const resetButtons = () => {
+    confirm.require({
+        message: "Do you want to delete all current bindings?",
+        header: "Reset all button binding",
+        icon: "pi pi-times",
+        rejectProps: {
+            label: "Cancel",
+            outlined: true,
+        },
+        acceptProps: {
+            label: "Yes",
+            outlined: true,
+            severity: 'warn'
+        },
+        accept: () => {
+            buttonStore.resetAllButtons()
+            toast.add({ severity: 'success', summary: 'Reseted', detail: 'All binding reseted', life: 2000 });
+        },
+        reject: () => {
+            console.log("Reset canceled")
+            // toast.add({ severity: 'info', summary: 'Canceled', detail: 'Reset canceled', life: 1000 });
+        }
+    })
+}
+
 //items in the menu
 const items = ref([
     {
@@ -15,7 +50,8 @@ const items = ref([
         items: [
             {
                 label: 'Reset',
-                icon: 'pi pi-refresh'
+                icon: 'pi pi-refresh',
+                command: resetButtons
             },
             {
                 label: 'Import from device',
@@ -36,9 +72,9 @@ const items = ref([
 <template>
     <div id="left-section">
         <div class="card flex justify-center">
+            <Toast />
+            <ConfirmDialog/>
             <Menu :model="items" id="binding-controlls-menu" class="box-shadow-normal"/>
-
-
         </div>
 
     </div>
@@ -49,13 +85,6 @@ const items = ref([
 :deep(#binding-controlls-menu .pi){
     color: var(--primary-50);    
 }
-
-/* :deep(#binding-controlls-menu) {
-    box-shadow: 5px 5px 0 var(--primary-800);
-}
-:deep(#binding-controlls-menu:hover) {
-    box-shadow: 10px 10px 0 var(--primary-800);
-} */
 
 
 

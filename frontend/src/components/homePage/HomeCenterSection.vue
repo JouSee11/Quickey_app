@@ -7,6 +7,8 @@ import type { ButtonState } from "@/types/buttonBindHome"
 import { Button } from "primevue"
 import { Icon } from '@iconify/vue'
 import {ref} from 'vue'
+import { list } from "@primeuix/themes/aura/autocomplete"
+import { button } from "@primeuix/themes/aura/inputnumber"
 
 
 const connected = ref<boolean>(false);
@@ -18,9 +20,9 @@ const {
     currentPageButtons,
     initButtons,
     changePage,
-    bindButton,
-    resetButton
-} = useButtons(3, 9)
+    bindButtonValue,
+    listeningButton
+} = useButtons()
 
 // init buttons when componets are visible
 onMounted(() => {
@@ -28,15 +30,19 @@ onMounted(() => {
 })
 
 
-const handleBindButton = () => {
-    console.log("TODO");
-    
+const handleBindButton = (buttonId: number) => {
+    //start listening on the button
+    listeningButton(buttonId)
 }
 
-const handleResetButton = () => {
+const handleResetButton = (buttonId: number) => {
     console.log("TODO");
 }
 
+const handleMultiBindButton = (buttonId: number) => {
+    //open the dialog for multi binding
+    console.log("TODO")
+}
 
 </script>
 
@@ -73,6 +79,7 @@ const handleResetButton = () => {
                 :text="button.text"
                 :state="button.state"
                 @bind-button="handleBindButton"
+                @multi-bind-button="handleMultiBindButton"
                 @reset-button="handleResetButton"
             />
         </div>
