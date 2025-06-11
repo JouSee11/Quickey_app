@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import type { ButtonState } from '@/types/buttonBindHome';
 import { Icon } from '@iconify/vue'
+import { ref } from 'vue';
+
 
 
 interface Props {
     buttonId: number,
     text: string,
-    state: ButtonState
+    state: ButtonState,
+    activeContextMenu: number
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
     bindButton: [buttonId: number]
-    multiBindButton: [button: number]
-    resetButton: [buttonId: number]
+    contextMenu: [buttonId: number, event: MouseEvent]
 }>()
 
 const bindButtonClick = (e: Event) => {
@@ -24,10 +26,9 @@ const bindButtonClick = (e: Event) => {
 }
 
 
-const openContextMenu = () => {
-    //based on what user selects in the context menu, resetButton or multiBindButton will be emited
-    console.log("TODO");
-    
+const openContextMenu = (event: MouseEvent) => {
+    event.preventDefault()
+    emit('contextMenu', props.buttonId, event)
 }
 
 </script>
@@ -38,8 +39,8 @@ const openContextMenu = () => {
             'button-bind',
             'box-shadow-normal',
             {
-            listening: props.state === 'listening',
-            binded: props.state === 'binded'
+            listening: props.state === 'listening' || props.activeContextMenu === props.buttonId,
+            binded: props.state === 'binded',
             }
         ]"
         :id="`key-${props.buttonId}`"
@@ -56,6 +57,7 @@ const openContextMenu = () => {
         {{props.text}} 
     </button>
 
+   
 
 </template>
 
@@ -103,11 +105,13 @@ const openContextMenu = () => {
     filter: blur(3px) brightness(1.4);
 }
 
-
-
 .button-bind .icon {
     width: 50px;
     height: 40px;
+}
+
+.context-active{
+    background-color: rgba(80, 163, 205, 0.644);
 }
 
 

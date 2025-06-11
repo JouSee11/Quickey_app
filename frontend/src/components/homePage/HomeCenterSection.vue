@@ -26,7 +26,8 @@ const {
     listeningButton,
     totalPages,
     showKnob,
-    knobElement
+    knobElement,
+    resetButton
     
 } = useButtons()
 
@@ -54,7 +55,7 @@ const handleBindButton = (buttonId: number) => {
 }
 
 const handleResetButton = (buttonId: number) => {
-    //TODO: single button reset
+    resetButton(buttonId)
 }
 
 const toggleConnect = async () => {
@@ -88,6 +89,35 @@ const saveDataToDevice = async () => {
     await sendToDevice(dataToSend)
     
 }
+
+//context menu actions
+const contextMenu = ref()
+const activeButtonContext = ref()
+const menuItems = ref([
+    {
+        label: 'Multi-key',
+        icon: 'pi pi-pencil',
+        command: () => {
+            console.log('Multi-key');
+            
+        }
+    },
+    { 
+        label: 'Delete',
+        icon: 'pi pi-times',
+        command: () => {
+            handleResetButton(activeButtonContext.value)
+            
+        }
+    }
+])
+
+const handleContextMenu = (buttonId: number, event: MouseEvent) => {
+    activeButtonContext.value = buttonId
+    contextMenu.value.show(event)
+}
+
+
 
 </script>
 
@@ -140,9 +170,9 @@ const saveDataToDevice = async () => {
                 :button-id="button.id"
                 :text="button.text"
                 :state="button.state"
+                :active-context-menu="activeButtonContext"
                 @bind-button="handleBindButton"
-                @multi-bind-button="handleMultiBindButton"
-                @reset-button="handleResetButton"
+                @context-menu="handleContextMenu"
             />
 
             <HomeKnob 
@@ -150,7 +180,7 @@ const saveDataToDevice = async () => {
                 :state="knobElement.state"
             />
 
-            
+             <ContextMenu ref="contextMenu" :model="menuItems" @hide="activeButtonContext = null"/>
         </div>
 
                     
@@ -271,6 +301,10 @@ const saveDataToDevice = async () => {
     font-size: var(--small-text);
 }
 
+.context-menu-active{
+    background-color: blue;
+}
+
 /* Blinking Animation */
 @keyframes blink {
     0% { opacity: 1; }   /* Fully visible */
@@ -301,6 +335,9 @@ const saveDataToDevice = async () => {
 #connect-button.error{
     color: var(--gray-main);
 }
+
+/* Make context menu items look more like your buttons */
+
 
 
 

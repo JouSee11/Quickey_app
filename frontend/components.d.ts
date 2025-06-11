@@ -14,6 +14,7 @@ declare module 'vue' {
     ButtonBox: typeof import('./src/components/homePage/ButtonBox.vue')['default']
     ButtonsDisplayMain: typeof import('./src/components/ButtonsDisplayMain.vue')['default']
     ConfirmDialog: typeof import('primevue/confirmdialog')['default']
+    ContextMenu: typeof import('primevue/contextmenu')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HomeCenterSection: typeof import('./src/components/homePage/HomeCenterSection.vue')['default']

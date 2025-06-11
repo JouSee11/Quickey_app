@@ -47,10 +47,10 @@ export const useButtons = () => {
 
     
     const bindButtonValue = (buttonId: number, text: string, value: string[]) => {
-    store.updateButton(buttonId, {
-        state: 'binded',
-        text: text,
-        value: value
+        store.updateButton(buttonId, {
+            state: 'binded',
+            text: text,
+            value: value
         })
     }
 
@@ -113,7 +113,8 @@ export const useButtons = () => {
         changePage,
         bindButtonValue,
         listeningButton,
-        initKnob
+        initKnob,
+        resetButton
         // resetButton
     }
 }

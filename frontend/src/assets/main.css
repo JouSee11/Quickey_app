@@ -96,3 +96,10 @@
 .pi{
     font-family: 'primeicons' !important;
 }
+
+/* context menu */
+a.p-contextmenu-item-link:hover {
+    background-color: var(--primary-50) !important;
+    color: var(--primary-1000);
+    border-radius: var(--border-rad-smaller);
+}

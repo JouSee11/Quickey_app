@@ -123,7 +123,7 @@ export const useDeviceStore = defineStore('device', () => {
         } catch (error: any) {
             //show message when user unplugs the device while being connected
             if (error.name === "NetworkError") {
-                toast.add({severity: 'warn', summary: 'Disconnected', detail: 'Device was probably disconnected', life: 2000})
+                toast.add({severity: 'warn', summary: 'Disconnected', detail: 'Device was disconnected', life: 2000})
                 disconnect();
             } else { //if some other error occurs
                 setError(`Reading error ${error.message}`)
