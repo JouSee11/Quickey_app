@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import {ref} from "vue"
+import { useDeviceStore } from "@/stores/deviceStore"
+import { storeToRefs } from "pinia"
+import {Icon} from '@iconify/vue'
+
+const deviceStore = useDeviceStore()
+const {logs} = storeToRefs(deviceStore)
 
 const showLogs = ref<boolean>(false)
 
@@ -7,15 +13,20 @@ const toggleLogArea = () => {
     showLogs.value = !showLogs.value
 }
 
-//logs elements
-const logs = ref<string[]>([
-    "---LOG--- ---FOR DEBUG---"
-])
-
-for (let index = 0; index < 200; index++) {
-    logs.value.push("testing logs, line-" + index.toString())
-    
+const eraseLogs = () => {
+    logs.value = ["--LOG-- --FOR DEBUG--"]
 }
+
+
+//logs elements
+// const logs = ref<string[]>([
+//     "---LOG--- ---FOR DEBUG---"
+// ])
+
+// for (let index = 0; index < 200; index++) {
+//     logs.value.push("testing logs, line-" + index.toString())
+    
+// }
 </script>
 
 <template>
@@ -30,14 +41,28 @@ for (let index = 0; index < 200; index++) {
             </div>            
         </Transition>
 
-        <Button
-        id="show-logs-button"
-        variant="outlined"
-        :icon="showLogs ? 'pi pi-eye-slash' : 'pi pi-eye'"
-        :label="showLogs ? 'Hide logs' : 'Show logs'"
-        @click="toggleLogArea"
-        />
-        
+        <div class="buttons-log-cont">
+            <Button
+                id="show-logs-button"
+                variant="outlined"
+                :icon="showLogs ? 'pi pi-eye-slash' : 'pi pi-eye'"
+                :label="showLogs ? 'Hide logs' : 'Show logs'"
+                @click="toggleLogArea"
+            />
+    
+            <Button
+                v-if="showLogs"
+                outlined
+                icon="pi pi-eraser"
+                class="clear-logs-button"
+                @click="eraseLogs"
+            >
+                <!-- <Icon icon="icon-park-outline:clear-format" class="icon-log-clear"/> -->
+    
+            </Button>
+            
+
+        </div>
     
 
     </div>
@@ -53,6 +78,7 @@ for (let index = 0; index < 200; index++) {
     width: 400px;
     height: 400px;
     max-width: 90%;
+    position: relative;
     border-radius: var(--border-rad-smaller);
     background-color: var(--p-menu-background);
     margin-top: 10px;
@@ -89,6 +115,23 @@ for (let index = 0; index < 200; index++) {
   max-height: 1000px; 
   opacity: 1;
 }
+
+.icon-log-clear{
+    position: absolute;
+    
+    top: 10px;
+    right: 10px;
+
+    width: 30px;
+    height: 30px;
+    color: var(--primary-50);
+}
+
+.clear-logs-button{
+    margin-left: 20px;
+    color: var(--red-dark);
+}
+
 
 
 </style>

@@ -1,6 +1,7 @@
 import {defineStore } from 'pinia'
 import {ref, computed, readonly} from 'vue'
 import { useToast } from 'primevue/usetoast'
+import { useButtonBindStore } from './buttonBindStore'
 
 
 export const useDeviceStore = defineStore('device', () => {
@@ -14,6 +15,7 @@ export const useDeviceStore = defineStore('device', () => {
         port?: any
     } | null>(null)
     const lastError = ref<string>('')
+    const logs = ref<string[]>(["--LOG-- --FOR DEBUG--"])
 
     //serial communication variables
     const devicePort = ref<any>(null)
@@ -55,6 +57,7 @@ export const useDeviceStore = defineStore('device', () => {
         lastError.value = message
         connectionStatus.value = 'error'
         console.error(`[Device Store] ${message}`)
+        logs.value.push(`[Device Store] ${message}`)
     }
 
     const resetState = () : void => {
@@ -105,7 +108,8 @@ export const useDeviceStore = defineStore('device', () => {
 
                 if (serialBuffer.value.includes('\n')) {
                     // TODO: add it to the log area
-                    console.log(`[Device debug]: ${serialBuffer.value}`);
+                    // console.log(`[Device debug]: ${serialBuffer.value}`);
+                    logs.value.push(`[Device debug]: ${serialBuffer.value}`);
                     
                     //if we recpgnise the import from the device (printing from the device starts with _import_)
                     if (serialBuffer.value.startsWith('_import_')) {
@@ -129,10 +133,31 @@ export const useDeviceStore = defineStore('device', () => {
 
 
     //TODO: actually make it work
-    const handleImportData = (data: string): JSON | null => {
+    const handleImportData = (data: string): JSON | null => {        
         try {
             const jsonData = JSON.parse(data.substring(8))
-            console.log("Imported data:", jsonData);
+            logs.value.push("Imported data:", jsonData);
+            
+            //get button store and handle the incomming data
+            const buttonStore = useButtonBindStore()
+            Object.entries(jsonData as Record<string, string[]>).forEach(([buttonId, keyCodes]: [string, string[]]) => {
+                const buttonIndex = buttonStore.allButtons.findIndex(btn => btn.id === parseInt(buttonId))
+            
+                if (buttonIndex !== -1) {
+                    // Update the button's value
+                    buttonStore.allButtons[buttonIndex].value = keyCodes
+                
+                    // Update button state and text
+                    if (keyCodes.length > 0) {
+                        buttonStore.allButtons[buttonIndex].state = 'binded'
+                        buttonStore.allButtons[buttonIndex].text = keyCodes.join(' + ')
+                    } else {
+                        buttonStore.allButtons[buttonIndex].state = 'notBinded'
+                        buttonStore.allButtons[buttonIndex].text = buttonStore.getButtonText('notBinded')
+                    }
+                }
+            })
+
             return jsonData
         } catch (error) {
             setError('Failed to parse import data')
@@ -171,6 +196,7 @@ export const useDeviceStore = defineStore('device', () => {
             startReadingSerial()
 
             console.log("Device connected successfully");
+            logs.value.push("Device connected successfully")
             toast.add({severity: 'success', summary: 'Connected', detail: 'Device connected successfully', life: 2000})
             return true            
         } catch (error: any) {
@@ -178,7 +204,7 @@ export const useDeviceStore = defineStore('device', () => {
 
             //user doesnt select a device -> we dont want to display error
             if (error.name === 'NotFoundError') {
-                console.log("No port selected");
+                logs.value.push("No port selected");
                 isConnected.value = false
                 connectionStatus.value = 'disconnected'
                 lastError.value = ''
@@ -196,7 +222,7 @@ export const useDeviceStore = defineStore('device', () => {
         try {
             await cleanupResources()
             resetState()
-            console.log("Device disconnected successfully");
+            logs.value.push("Device disconnected successfully");
         } catch (error: any) {
             setError(`Failed to disconnect: ${error.message}`)
         }
@@ -209,12 +235,23 @@ export const useDeviceStore = defineStore('device', () => {
         }
 
         try {
-            const jsonString = JSON.stringify(data)
-            const encoder = new TextEncoder()
-            await writer.value.write(encoder.encode(jsonString + '\n'))
+            let dataToSend: string;
 
-            console.log(`Data send: ${jsonString}`);
-            toast.add({severity: 'success', summary: 'Success', detail: 'Data was saved successfully', life: 2000})
+            if(typeof data === 'string') {
+                dataToSend = data
+            } else {
+                dataToSend = JSON.stringify(data)
+            }
+            // const data = JSON.stringify(data)
+            const encoder = new TextEncoder()
+            await writer.value.write(encoder.encode(dataToSend + '\n'))
+
+            logs.value.push(`Data send: ${dataToSend}`);
+
+            //dont show this toast when importing
+            if (data !== 'import data') {
+                toast.add({severity: 'success', summary: 'Success', detail: 'Data was saved successfully', life: 2000})
+            }
             return true
         } catch (error: any) {
             setError(`Failed to send data: ${error.message}`)
@@ -232,7 +269,7 @@ export const useDeviceStore = defineStore('device', () => {
 
         try {
             // Send import command to device
-            await sendToDevice({ command: 'import' })
+            await sendToDevice('import data')
         
             // Return promise that resolves when import data is received
             return new Promise((resolve, reject) => {
@@ -273,6 +310,7 @@ export const useDeviceStore = defineStore('device', () => {
         connectionStatus,
         deviceInfo,
         lastError,
+        logs,
         
     
         // Getters

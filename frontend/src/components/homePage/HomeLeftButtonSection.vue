@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import {ref} from "vue"
+import {ref, computed} from "vue"
 import { useButtonBindStore } from '@/stores/buttonBindStore'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from "primevue/usetoast";
+import { useDeviceStore } from "@/stores/deviceStore";
+import { storeToRefs } from "pinia";
+import type { ButtonBindHome } from "@/types/buttonBindHome";
 
+const deviceStore = useDeviceStore()
+const {isConnected} = storeToRefs(deviceStore)
+const { importFromDevice } = deviceStore
 
-
-interface Props {
-    loggedIn: Boolean,
-    deviceConnected: Boolean
-}
-
-const props = defineProps<Props>()
 
 const buttonStore = useButtonBindStore()
 const confirm = useConfirm()
@@ -43,8 +42,34 @@ const resetButtons = () => {
     })
 }
 
+const importData = async () => {
+    //import data from the device    
+    // const importedData = await importFromDevice()
+    await importFromDevice()
+    //format imported data
+    // const formatedData: ButtonBindHome[] = []
+
+    // importedData.array.forEach((buttonId: string) => {
+    //     const id = Number(buttonId)
+    //     const keyValues = importedData[buttonId]
+    //     const state = keyValues ? 'binded' : 'notBinded';
+    //     const buttonText = buttonStore.getButtonText(state)
+
+    //     formatedData.push({
+    //         id: id,
+    //         text: buttonText,
+    //         state: state,
+    //         value: keyValues
+    //     })
+    // })
+
+    // buttonStore.setButtons(formatedData)
+
+
+}
+
 //items in the menu
-const items = ref([
+const items = computed(() => [
     {
         label: 'Controls',
         items: [
@@ -56,12 +81,13 @@ const items = ref([
             {
                 label: 'Import from device',
                 icon: 'pi pi-file-import',
-                disabled: !props.deviceConnected
+                disabled: !isConnected.value,
+                command: importData
             },
             {
                 label: 'Save preset',
                 icon: 'pi pi-save',
-                disabled: !props.loggedIn
+                disabled: true
             }
         ]
     }
