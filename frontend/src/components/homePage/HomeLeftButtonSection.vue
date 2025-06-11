@@ -43,28 +43,26 @@ const resetButtons = () => {
 }
 
 const importData = async () => {
-    //import data from the device    
-    // const importedData = await importFromDevice()
-    await importFromDevice()
-    //format imported data
-    // const formatedData: ButtonBindHome[] = []
-
-    // importedData.array.forEach((buttonId: string) => {
-    //     const id = Number(buttonId)
-    //     const keyValues = importedData[buttonId]
-    //     const state = keyValues ? 'binded' : 'notBinded';
-    //     const buttonText = buttonStore.getButtonText(state)
-
-    //     formatedData.push({
-    //         id: id,
-    //         text: buttonText,
-    //         state: state,
-    //         value: keyValues
-    //     })
-    // })
-
-    // buttonStore.setButtons(formatedData)
-
+    confirm.require({
+        message: "Import current data and overwrite the current bindings?",
+        header: "Import data from device",
+        icon: "pi pi-file-import",
+        rejectProps: {
+            label: 'Cancel',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Import',
+            outlined: true,
+            severity: 'success'
+        },
+        accept: async () => {
+            await importFromDevice()
+        },
+        reject: () => {
+            console.log("Import canceled")
+        }
+    })
 
 }
 

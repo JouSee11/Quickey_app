@@ -158,6 +158,15 @@ export const useDeviceStore = defineStore('device', () => {
                 }
             })
 
+            logs.value.push("Button bindings updated successfully")
+
+            toast.add({
+                severity: 'success', 
+                summary: 'Import Success', 
+                detail: 'Button bindings imported from device', 
+                life: 2000
+            })
+
             return jsonData
         } catch (error) {
             setError('Failed to parse import data')
