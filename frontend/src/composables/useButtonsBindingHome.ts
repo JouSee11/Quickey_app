@@ -86,7 +86,7 @@ export const useButtons = () => {
     }
 
     const changePageTabClick = (e: KeyboardEvent) => {
-        console.log(e.code);
+        // console.log(e.code);
 
         
         if (e.code === "Tab") {

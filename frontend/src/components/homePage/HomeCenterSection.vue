@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ButtonBox from "@/components/homePage/ButtonBox.vue"
 import RoundPageButton from "@/components/homePage/RoundPageButton.vue"
-import {onMounted} from "vue"
+import {onMounted, toRaw} from "vue"
 import {useButtons} from "@/composables/useButtonsBindingHome"
 import type { ButtonState } from "@/types/buttonBindHome"
 import { Button } from "primevue"
@@ -11,6 +11,8 @@ import { list } from "@primeuix/themes/aura/autocomplete"
 import { button } from "@primeuix/themes/aura/inputnumber"
 import HomeKnob from "@/components/homePage/HomeKnob.vue"
 import { useDeviceStore } from "@/stores/deviceStore"
+import { storeToRefs } from "pinia"
+import type { ButtonBindHome } from "@/types/buttonBindHome"
 
 //use the composable functoins
 const {
@@ -28,15 +30,16 @@ const {
     
 } = useButtons()
 
+const deviceStore = useDeviceStore()
 const {
     isConnected,
     connectionStatus,
+} = storeToRefs(deviceStore)
+const {
     connect,
-    statusText,
-    disconnect
-
-
-} = useDeviceStore()
+    disconnect,
+    sendToDevice
+} = deviceStore
 
 // init buttons when componets are visible
 onMounted(() => {
@@ -54,17 +57,36 @@ const handleResetButton = (buttonId: number) => {
     //TODO: single button reset
 }
 
-const toggleConnect = () => {
-    if (!isConnected) {
-        connect()
+const toggleConnect = async () => {
+    console.log(isConnected.value);
+    
+    
+    if (!isConnected.value) {
+        await connect()
     } else {
-        disconnect()
+        await disconnect()
     }
+
 }
 
 const handleMultiBindButton = (buttonId: number) => {
     //open the dialog for multi binding
     console.log("TODO")
+}
+
+const saveDataToDevice = async () => {
+    if (!isConnected.value) return //dont send if the device is not connected
+
+    //convert data form the buttons to specified structure
+    const dataToSend: Record<string, string[]> = {}
+
+    allButtons.value.forEach((btn: ButtonBindHome) => {
+        // Convert reactive array to plain array using toRaw or spread operator
+        dataToSend[String(btn.id)] = toRaw(btn.value)
+    })
+
+    await sendToDevice(dataToSend)
+    
 }
 
 </script>
@@ -77,17 +99,33 @@ const handleMultiBindButton = (buttonId: number) => {
         <div id="connection-cont">
             <div 
                 id="connection-icon"
-                :class="isConnected ? 'connected' : 'not-connected'"
+                :class="{
+                    'connected': connectionStatus === 'connected',
+                    'disconnected': connectionStatus === 'disconnected',
+                    'connecting': connectionStatus === 'connecting',
+                    'error': connectionStatus === 'error'
+                }"
             />
             <p id="connection-msg">
-                {{ isConnected ? "connected" : "disconnected" }}
+                {{
+                    connectionStatus === 'connected' ? 'Connected'
+                    : connectionStatus === 'disconnected' ? 'Disconnected'
+                    : connectionStatus === 'connecting' ? 'Connecting...'
+                    : connectionStatus === 'error' ? 'Error'
+                    : ''
+                }}
             </p>
             <Button 
                 type="submit" 
                 id="connect-button"
                 rounded
                 variant="outlined"
-                :class="isConnected ? 'connected' : 'not-connected' "
+                :class="{
+                    'connected': connectionStatus === 'connected',
+                    'disconnected': connectionStatus === 'disconnected',
+                    'connecting': connectionStatus === 'connecting',
+                    'error': connectionStatus === 'error'
+                }"
                 @click="toggleConnect"
             >
                 {{isConnected ? 'Disconnect' : 'Connect'}}
@@ -148,6 +186,7 @@ const handleMultiBindButton = (buttonId: number) => {
             id="submit-button" 
             severity="secondary" 
             :disabled="!isConnected"
+            @click="saveDataToDevice"
             >
             <Icon icon="material-symbols:upload" class='icon'/>
             Save to device
@@ -215,9 +254,13 @@ const handleMultiBindButton = (buttonId: number) => {
     background-color: var(--green-vivid);
     box-shadow: 0 0 15px rgba(16, 223, 16, 0.153);
 }
-#connection-icon.not-connected{
+#connection-icon.disconnected{
     background-color: var(--red-vivid);
     box-shadow: 0 0 15px rgba(224, 79, 7, 0.742);
+}
+#connection-icon.connecting{
+    background-color: var(--primary-50);
+    box-shadow: 0 0 15px rgba(12, 118, 218, 0.742);
 }
 
 
@@ -240,6 +283,7 @@ const handleMultiBindButton = (buttonId: number) => {
     line-height: 10px;
     padding: 5px 10px;
     font-size: var(--smaller-text);
+    outline: none;
     /* border: none;
     background-color: var(--green-dark);
     color: var(--primary-0); */
@@ -247,12 +291,17 @@ const handleMultiBindButton = (buttonId: number) => {
 
 #connect-button.connected{
     color: var(--green-dark);
-    /* background-color: var(--green-dark); */
 }
-#connect-button.not-connected{
+#connect-button.disconnected{
     color: var(--red-dark);
-    /* background-color: var(--red-dark); */
 }
+#connect-button.connecting{
+    color: var(--primary-50);
+}
+#connect-button.error{
+    color: var(--gray-main);
+}
+
 
 
 </style>

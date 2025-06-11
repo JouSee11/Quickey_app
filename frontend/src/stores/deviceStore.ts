@@ -1,5 +1,7 @@
 import {defineStore } from 'pinia'
 import {ref, computed, readonly} from 'vue'
+import { useToast } from 'primevue/usetoast'
+
 
 export const useDeviceStore = defineStore('device', () => {
     // ========================================
@@ -18,6 +20,8 @@ export const useDeviceStore = defineStore('device', () => {
     const writer = ref<any>(null)
     const reader = ref<any>(null)
     const serialBuffer = ref<string>('')
+
+    const toast = useToast()
 
     // ========================================
     // GETTERS
@@ -88,7 +92,7 @@ export const useDeviceStore = defineStore('device', () => {
         if (!reader.value) return
 
         try {
-            while (isConnected.value && reader.value) {
+            while (isConnected.value && reader.value) {                
                 const {value, done} = await reader.value.read()
 
                 if (done) {
@@ -105,7 +109,7 @@ export const useDeviceStore = defineStore('device', () => {
                     
                     //if we recpgnise the import from the device (printing from the device starts with _import_)
                     if (serialBuffer.value.startsWith('_import_')) {
-                        // handleImportData(serialBuffer.value)
+                        handleImportData(serialBuffer.value)
                     }
 
                     //reset the serial buffer value after the whole message
@@ -113,9 +117,16 @@ export const useDeviceStore = defineStore('device', () => {
                 }
             }
         } catch (error: any) {
-            setError(`Reading error ${error.message}`)
+            //show message when user unplugs the device while being connected
+            if (error.name === "NetworkError") {
+                toast.add({severity: 'warn', summary: 'Disconnected', detail: 'Device was probably disconnected', life: 2000})
+                disconnect();
+            } else { //if some other error occurs
+                setError(`Reading error ${error.message}`)
+            }
         }
     }
+
 
     //TODO: actually make it work
     const handleImportData = (data: string): JSON | null => {
@@ -160,9 +171,22 @@ export const useDeviceStore = defineStore('device', () => {
             startReadingSerial()
 
             console.log("Device connected successfully");
+            toast.add({severity: 'success', summary: 'Connected', detail: 'Device connected successfully', life: 2000})
             return true            
         } catch (error: any) {
+            console.error(error.name);
+
+            //user doesnt select a device -> we dont want to display error
+            if (error.name === 'NotFoundError') {
+                console.log("No port selected");
+                isConnected.value = false
+                connectionStatus.value = 'disconnected'
+                lastError.value = ''
+                return true
+            }
+            
             setError(error.message || 'Failed to connnect to device')
+            toast.add({severity: 'error', summary: 'Connection error', detail: 'Error: device might be connected to another endpoint.', life: 3000})
             isConnected.value = false
             return false
         }
@@ -190,9 +214,12 @@ export const useDeviceStore = defineStore('device', () => {
             await writer.value.write(encoder.encode(jsonString + '\n'))
 
             console.log(`Data send: ${jsonString}`);
+            toast.add({severity: 'success', summary: 'Success', detail: 'Data was saved successfully', life: 2000})
             return true
         } catch (error: any) {
             setError(`Failed to send data: ${error.message}`)
+            toast.add({severity: 'error', summary: 'Error', detail: 'Error saving data to devie!', life: 2000})
+
             throw error
         }
     }
@@ -238,10 +265,14 @@ export const useDeviceStore = defineStore('device', () => {
     // ========================================
     return {
         // State (readonly)
-        isConnected: readonly(isConnected),
-        connectionStatus: readonly(connectionStatus),
-        deviceInfo: readonly(deviceInfo),
-        lastError: readonly(lastError),
+        // isConnected: readonly(isConnected),
+        // connectionStatus: readonly(connectionStatus),
+        // deviceInfo: readonly(deviceInfo),
+        // lastError: readonly(lastError),
+        isConnected: computed(() => isConnected.value),
+        connectionStatus,
+        deviceInfo,
+        lastError,
         
     
         // Getters

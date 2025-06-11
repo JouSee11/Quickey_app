@@ -99,9 +99,12 @@ window.addEventListener('beforeunload', async () => {
 // Send data to Pico with a newline
 async function sendToPico(data) {
     try {
+        
         const dataToSend = data + "\r\n"; // Ensure newline
         await writer.write(new TextEncoder().encode(dataToSend));
+        console.log(dataToSend + " :THIS IS DATA TO SEND");
         
+
         //show sucess msg only when we send data not import
         if (data !== "import data") showSuccessMsg("Data send successfully")
         addLogs(`Data sent and flushed successfully: ${dataToSend}`)

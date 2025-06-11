@@ -34,7 +34,7 @@ const resetButtons = () => {
         },
         accept: () => {
             buttonStore.resetAllButtons()
-            toast.add({ severity: 'success', summary: 'Reseted', detail: 'All binding reseted', life: 2000 });
+            toast.add({ severity: 'info', summary: 'Reseted', detail: 'All binding reseted', life: 2000 });
         },
         reject: () => {
             console.log("Reset canceled")
