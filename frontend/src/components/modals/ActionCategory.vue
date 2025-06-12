@@ -40,11 +40,11 @@ const cloneAction = (action: ActionDefinition) => {
         <p>{{ props.title }}</p>
 
         <VueDraggable
-            :list="props.actions"
+            :model-value="props.actions"
             :group="{name: 'actions', pull: 'clone', put: false}"
             :clone="cloneAction"
             :sort="false"
-            class="acton-buttons-group"
+            class="action-buttons-group"
             itemKey="actionType"
         >
         <template #item="{ element }">

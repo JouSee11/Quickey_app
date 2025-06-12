@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
+
 interface Props{
     label: string,
     icon: string,
@@ -17,12 +19,19 @@ const handleClick = () => {
 </script>
 
 <template>
-    <Button
+    <!-- <Button
         class="action-option-multi"
         :label="props.label"
         :icon="props.icon"
         @click="handleClick"
-    />
+    /> -->
+    <div 
+        class="button-options"
+        @click="handleClick"    
+    >
+        <Icon :icon="props.icon"></Icon>
+        {{ props.label }}
+    </div>
 
 </template>
 

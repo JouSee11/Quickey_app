@@ -1,16 +1,49 @@
 <script setup lang="ts">
+import { useActionCategories } from '@/composables/useActionCategories';
 import { useMultiBindingDialogStore } from '@/stores/multiBindingDialogStore';
+import type { multiBindingAction } from '@/types/buttonBindHome';
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue'
+import ActionsDisplay from '@/components/modals/ActionsDisplay.vue';
+import ActionsSelection from '@/components/modals/ActionsSelection.vue';
 
 const emit = defineEmits<{
     save: [buttonId: number, actions: any[]]
 }>()
 
 const multiBindingDialogStore = useMultiBindingDialogStore()
+const { categories } = useActionCategories()
 
-const {isVisible, activeButtonId, dialogTitle, hasActions} = storeToRefs(multiBindingDialogStore)
-const {closeDialog} = multiBindingDialogStore
+const {isVisible, activeButtonId, dialogTitle, hasActions, actionsBinded} = storeToRefs(multiBindingDialogStore)
+const {closeDialog, addAction, removeAction} = multiBindingDialogStore
+
+const handleActionClick = (actionType: string) => {
+    // Find the action definition
+    const action = categories.value
+        .flatMap(cat => cat.actions)
+        .find(act => act.actionType === actionType)
+    
+    if (!action) return
+
+    // Create action data - fix the typo
+    const actionData: multiBindingAction = {
+        id: `${action.actionType}-${Date.now()}`,
+        name: action.label,
+        value: action.requiresInput ? 'Not configured' : action.label,
+        position: 0  // Fixed typo from "postion" to "position"
+    }
+
+    addAction(actionData)
+}
+
+const handleActionsUpdated = (newActions: multiBindingAction[]) => {
+    multiBindingDialogStore.actionsBinded = newActions
+}
+
+const handleSave = () => {
+    emit('save', activeButtonId.value!, actionsBinded.value)
+    closeDialog()
+}
 
 </script>
 
@@ -24,11 +57,41 @@ const {closeDialog} = multiBindingDialogStore
         :style="{ width: '70%', height: '80%' }"
         :header="dialogTitle"
     >
-        
-        <div class="actions-display-cont">
+        <!-- Main content container -->
+        <div class="dialog-container">
+            <!-- Left side - Actions display (Drop zone) -->
+            <ActionsDisplay
+                :actions="actionsBinded"
+                @remove-action="removeAction"
+                @actions-updated="handleActionsUpdated"
+            />
+
+            <!-- Right side - Actions selection (Drag source) -->
+            <ActionsSelection
+                @action-click="handleActionClick"
+            />
         </div>
 
-        <div class="actions-select-cont">
+        <!-- Footer buttons -->
+        <template #footer>
+            <Button 
+                :class="['control-button-dialog', 'dialog-save-button']" 
+                outlined
+                icon="pi pi-file-check"
+                label="Save"
+                @click="handleSave"
+            />
+            <Button 
+                :class="['control-button-dialog', 'dialog-cancel-button']" 
+                outlined
+                label="Cancel"
+                icon="pi pi-times-circle"
+                @click="closeDialog"
+            />
+        </template>
+
+
+        <!-- <div class="actions-select-cont">
 
         </div>
 
@@ -47,7 +110,7 @@ const {closeDialog} = multiBindingDialogStore
                 icon="pi pi-times-circle"
                 @click="closeDialog"
             />
-        </div>
+        </div> -->
         
 
     </Dialog>
@@ -56,28 +119,6 @@ const {closeDialog} = multiBindingDialogStore
 
 
 <style scoped>
-
-
-.actions-display-cont{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    position: relative;
-
-    /* Change these properties */
-    overflow-y: auto;  /* Change to auto for better behavior */
-    overflow-x: hidden;  /* Prevent horizontal scroll */
-
-    /* width: 60%; */
-    flex-grow: 1;
-    margin: 0;
-    margin-right: 15px;
-    height: 90%;
-    background-color: var(--blue-dark);
-    border-radius: var(--border-rad-smaller);
-
-    padding: 10px 10px;
-}
 
 .actions-select-cont{
     display: flex;

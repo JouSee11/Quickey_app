@@ -10,6 +10,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     ActionButton: typeof import('./src/components/modals/ActionButton.vue')['default']
     ActionCategory: typeof import('./src/components/modals/ActionCategory.vue')['default']
+    ActionsDisplay: typeof import('./src/components/modals/ActionsDisplay.vue')['default']
+    ActionsSelection: typeof import('./src/components/modals/ActionsSelection.vue')['default']
     BindingOptionsDrawer: typeof import('./src/components/homePage/BindingOptionsDrawer.vue')['default']
     Button: typeof import('primevue/button')['default']
     ButtonBindingsMain: typeof import('./src/components/homePage/ButtonBindingsMain.vue')['default']

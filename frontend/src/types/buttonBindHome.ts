@@ -13,8 +13,8 @@ export interface KnobBindHome {
 }
 
 export interface multiBindingAction {
-    id: number,
+    id: string,
     name: string,
     value: string,
-    postion: number
+    position: number
 }
