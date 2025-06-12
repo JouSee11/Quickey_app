@@ -13,6 +13,8 @@ import HomeKnob from "@/components/homePage/HomeKnob.vue"
 import { useDeviceStore } from "@/stores/deviceStore"
 import { storeToRefs } from "pinia"
 import type { ButtonBindHome } from "@/types/buttonBindHome"
+import MultiBindingDialog from "@/components/modals/MultiBindingDialog.vue"
+import { useMutliBindingDialog } from "@/composables/useMultiBindingDialog"
 
 //use the composable functoins
 const {
@@ -42,6 +44,8 @@ const {
     sendToDevice
 } = deviceStore
 
+const {openDialog} = useMutliBindingDialog()
+
 // init buttons when componets are visible
 onMounted(() => {
     initButtons(),
@@ -70,10 +74,15 @@ const toggleConnect = async () => {
 
 }
 
-const handleMultiBindButton = (buttonId: number) => {
-    //open the dialog for multi binding
-    console.log("TODO")
-}
+// const handleMultiBindButton = (buttonId: number) => {
+//     buttonForMultibinding.value = buttonId
+//     showMultiBindingDialog.value = true
+// }
+
+// const closeMultibindingDialog = () => {
+//     buttonForMultibinding.value = null
+//     showMultiBindingDialog.value = t
+// }
 
 const saveDataToDevice = async () => {
     if (!isConnected.value) return //dont send if the device is not connected
@@ -93,12 +102,15 @@ const saveDataToDevice = async () => {
 //context menu actions
 const contextMenu = ref()
 const activeButtonContext = ref()
+const showMultiBindingDialog = ref<boolean>(false)
+const buttonForMultibinding = ref<any>(null)
+
 const menuItems = ref([
     {
         label: 'Multi-key',
         icon: 'pi pi-pencil',
         command: () => {
-            console.log('Multi-key');
+            openDialog(activeButtonContext.value)
             
         }
     },
@@ -125,6 +137,7 @@ const handleContextMenu = (buttonId: number, event: MouseEvent) => {
     <div id="center-section">
 
         <!-- <p id="status-message"></p> -->
+         <MultiBindingDialog :visible="showMultiBindingDialog" :button-id="buttonForMultibinding" />
 
         <div id="connection-cont">
             <div 

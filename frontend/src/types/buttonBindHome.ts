@@ -11,3 +11,10 @@ export interface KnobBindHome {
     state: "binded" | "notBinded"
     value: string[]
 }
+
+export interface multiBindingAction {
+    id: number,
+    name: string,
+    value: string,
+    postion: number
+}
