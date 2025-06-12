@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import ActionCategory from '@/components/modals/ActionCategory.vue'
 import { useActionCategories } from '@/composables/useActionCategories'
+import ActionButton from '@/components/modals/ActionButton.vue';
 
 const emit = defineEmits<{
     actionClick: [actionType: string]
@@ -17,12 +18,16 @@ const handleActionClick = (actionType: string) => {
 <template>
     <div class="actions-select-cont">
         <ActionCategory
-            v-for="category in categories"
+            v-for="(category, index) in categories"
             :key="category.category"
             :title="category.title"
             :actions="category.actions"
+            :default-expanded="index === 0" 
             @action-click="handleActionClick"
         />
+
+        
+
     </div>
 </template>
 
@@ -35,6 +40,8 @@ const handleActionClick = (actionType: string) => {
     width: 35%;
     max-width: 350px;
     height: 90%;
+    flex: 0 0 300px;
+    min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
     background-color: var(--primary-800);
@@ -42,5 +49,7 @@ const handleActionClick = (actionType: string) => {
     margin-left: 15px;
     border-radius: var(--border-rad-smaller);
     padding: 10px 10px;
+
 }
+
 </style>

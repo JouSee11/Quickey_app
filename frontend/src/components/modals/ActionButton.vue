@@ -4,7 +4,8 @@ import { Icon } from '@iconify/vue';
 interface Props{
     label: string,
     icon: string,
-    actionType: string
+    actionCode: string
+    requiresInput?: boolean
 }
 
 const props = defineProps<Props>()
@@ -14,23 +15,27 @@ const emit = defineEmits<{
 }>()
 
 const handleClick = () => {
-    emit('actionClick', props.actionType)
+    emit('actionClick', props.actionCode)
 }
 </script>
 
 <template>
-    <!-- <Button
-        class="action-option-multi"
-        :label="props.label"
-        :icon="props.icon"
-        @click="handleClick"
-    /> -->
-    <div 
-        class="button-options"
-        @click="handleClick"    
-    >
-        <Icon :icon="props.icon"></Icon>
-        {{ props.label }}
+    <div class="action-button" @click="handleClick">
+        <div class="action-info">
+            <Icon :icon="props.icon" class="action-icon" />
+            <div class="action-text">
+                <span class="action-label">{{ props.label }}</span>
+                <span v-if="props.requiresInput" class="requires-input">
+                    <Icon icon="pi pi-cog" />
+                    Requires input
+                </span>
+            </div>
+        </div>
+        
+        <!-- ✅ Visual indicator for drag capability -->
+        <div class="drag-indicator">
+            <Icon icon="pi pi-bars" />
+        </div>
     </div>
 
 </template>
@@ -67,4 +72,73 @@ const handleClick = () => {
     background-color: var(--green-dark);
     box-shadow: 5px 5px 0 var(--green-bright), 0 0 20px var(--green-vivid-shadow);
 } */
+ .action-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: var(--primary-600);
+    border-radius: var(--border-rad-smaller);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    user-select: none;
+}
+
+.action-button:hover {
+    background-color: var(--primary-500);
+    border-color: var(--green-bright);
+    transform: translateX(2px);
+}
+
+.action-button:active {
+    transform: translateX(1px) translateY(1px);
+    box-shadow: 2px 2px 0 var(--primary-700);
+}
+
+.action-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.action-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--green-bright);
+    flex-shrink: 0;
+}
+
+.action-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.action-label {
+    color: var(--primary-0);
+    font-weight: 500;
+    font-size: var(--normal-text);
+}
+
+.requires-input {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--primary-300);
+    font-size: var(--small-text);
+    font-style: italic;
+}
+
+.drag-indicator {
+    color: var(--primary-400);
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.action-button:hover .drag-indicator {
+    opacity: 1;
+    color: var(--primary-200);
+}
 </style>

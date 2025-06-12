@@ -3,7 +3,7 @@ import { ref } from 'vue'
 export interface ActionDefinition {
     label: string
     icon: string
-    actionType: string
+    actionCode: string
     requiresInput?: boolean
     inputType?: 'key' | 'text' | 'number' | 'mouse' | 'delay'
 }
@@ -23,28 +23,28 @@ export const useActionCategories = () => {
                 {
                     label: 'Key Press & Release',
                     icon: 'pi pi-play',
-                    actionType: 'press-release',
+                    actionCode: 'press-release',
                     requiresInput: true,
                     inputType: 'key'
                 },
                 {
                     label: 'Key Hold',
                     icon: 'pi pi-pause',
-                    actionType: 'hold',
+                    actionCode: 'hold',
                     requiresInput: true,
                     inputType: 'key'
                 },
                 {
                     label: 'Key Release',
                     icon: 'pi pi-stop',
-                    actionType: 'release',
+                    actionCode: 'release',
                     requiresInput: true,
                     inputType: 'key'
                 },
                 {
                     label: 'Key Release All',
                     icon: 'pi pi-step-backward',
-                    actionType: 'release-all',
+                    actionCode: 'release-all',
                     requiresInput: false
                 }
             ]
@@ -56,14 +56,14 @@ export const useActionCategories = () => {
                 {
                     label: 'Mouse move',
                     icon: 'pi pi-arrows-alt',
-                    actionType: 'mouse-move',
+                    actionCode: 'mouse-move',
                     requiresInput: true,
                     inputType: 'mouse'
                 },
                 {
                     label: 'Mouse click',
                     icon: 'pi pi-external-link',
-                    actionType: 'mouse-click',
+                    actionCode: 'mouse-click',
                     requiresInput: true,
                     inputType: 'mouse'
                 }
@@ -76,37 +76,37 @@ export const useActionCategories = () => {
                 {
                     label: 'Volume-up',
                     icon: 'pi pi-volume-up',
-                    actionType: 'volume-up',
+                    actionCode: 'volume-up',
                     requiresInput: false
                 },
                 {
                     label: 'Volume-down',
                     icon: 'pi pi-volume-down',
-                    actionType: 'volume-down',
+                    actionCode: 'volume-down',
                     requiresInput: false
                 },
                 {
                     label: 'Volume mute',
                     icon: 'pi pi-volume-off',
-                    actionType: 'volume-mute',
+                    actionCode: 'volume-mute',
                     requiresInput: false
                 },
                 {
                     label: 'Play/pause',
                     icon: 'pi pi-play',
-                    actionType: 'play-pause',
+                    actionCode: 'play-pause',
                     requiresInput: false
                 },
                 {
                     label: 'Play next',
                     icon: 'pi pi-step-forward',
-                    actionType: 'play-next',
+                    actionCode: 'play-next',
                     requiresInput: false
                 },
                 {
                     label: 'Play previous',
                     icon: 'pi pi-step-backward',
-                    actionType: 'play-prev',
+                    actionCode: 'play-prev',
                     requiresInput: false
                 }
             ]
@@ -118,14 +118,14 @@ export const useActionCategories = () => {
                 {
                     label: 'Delay',
                     icon: 'pi pi-clock',
-                    actionType: 'delay',
+                    actionCode: 'delay',
                     requiresInput: true,
                     inputType: 'delay'
                 },
                 {
                     label: 'Write',
                     icon: 'pi pi-pencil',
-                    actionType: 'write',
+                    actionCode: 'write',
                     requiresInput: true,
                     inputType: 'text'
                 }

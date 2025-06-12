@@ -21,13 +21,13 @@ const handleActionClick = (actionType: string) => {
     // Find the action definition
     const action = categories.value
         .flatMap(cat => cat.actions)
-        .find(act => act.actionType === actionType)
+        .find(act => act.actionCode === actionType)
     
     if (!action) return
 
     // Create action data - fix the typo
     const actionData: multiBindingAction = {
-        id: `${action.actionType}-${Date.now()}`,
+        id: `${action.actionCode}-${Date.now()}`,
         name: action.label,
         value: action.requiresInput ? 'Not configured' : action.label,
         position: 0  // Fixed typo from "postion" to "position"
@@ -58,7 +58,7 @@ const handleSave = () => {
         :header="dialogTitle"
     >
         <!-- Main content container -->
-        <div class="dialog-container">
+        <div class="multi-dialog-container">
             <!-- Left side - Actions display (Drop zone) -->
             <ActionsDisplay
                 :actions="actionsBinded"
@@ -68,28 +68,28 @@ const handleSave = () => {
 
             <!-- Right side - Actions selection (Drag source) -->
             <ActionsSelection
+                class="actions-select-cont"
                 @action-click="handleActionClick"
             />
+
+            <!-- controls buttons -->
+            <div class="control-buttons-dialog">
+                <Button 
+                    :class="['control-button-dialog', 'dialog-save-button']" 
+                    outlined
+                    icon="pi pi-file-check"
+                    label="Save"
+
+                />
+                <Button 
+                    :class="['control-button-dialog', 'dialog-cancel-button']" 
+                    outlined
+                    label="Cancel"
+                    icon="pi pi-times-circle"
+                    @click="closeDialog"
+                />
+            </div>
         </div>
-
-        <!-- Footer buttons -->
-        <template #footer>
-            <Button 
-                :class="['control-button-dialog', 'dialog-save-button']" 
-                outlined
-                icon="pi pi-file-check"
-                label="Save"
-                @click="handleSave"
-            />
-            <Button 
-                :class="['control-button-dialog', 'dialog-cancel-button']" 
-                outlined
-                label="Cancel"
-                icon="pi pi-times-circle"
-                @click="closeDialog"
-            />
-        </template>
-
 
         <!-- <div class="actions-select-cont">
 
@@ -120,34 +120,18 @@ const handleSave = () => {
 
 <style scoped>
 
-.actions-select-cont{
+.multi-dialog-container{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-
     position: relative;
-
-
-    width: 35%;
-    max-width: 350px;
-    height: 90%;
-    
-    /* Change these properties */
-    overflow-y: auto;  /* Change to auto for better behavior */
-    overflow-x: hidden;  /* Prevent horizontal scroll */
-
-    background-color: var(--primary-800);
-    margin: 0;
-    margin-left: 15px;
-    border-radius: var(--border-rad-smaller);
-
-    padding: 10px 10px;
+    width: 100%;
+    height: 100%;
 }
+
 
 .control-buttons-dialog{
     position: absolute;
     right: 0;
-    bottom: 30px;
+    bottom: 0;
 }
 
 .control-button-dialog{
@@ -157,6 +141,8 @@ const handleSave = () => {
 .dialog-save-button{
     color: var(--green-dark);
 }
+
+
 
 
 </style>
