@@ -8,6 +8,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ActionButton: typeof import('./src/components/modals/ActionButton.vue')['default']
+    ActionCategory: typeof import('./src/components/modals/ActionCategory.vue')['default']
     BindingOptionsDrawer: typeof import('./src/components/homePage/BindingOptionsDrawer.vue')['default']
     Button: typeof import('primevue/button')['default']
     ButtonBindingsMain: typeof import('./src/components/homePage/ButtonBindingsMain.vue')['default']

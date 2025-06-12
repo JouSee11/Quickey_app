@@ -103,3 +103,14 @@ a.p-contextmenu-item-link:hover {
     color: var(--primary-1000);
     border-radius: var(--border-rad-smaller);
 }
+
+/* dialog */
+.p-dialog-title{
+    font-size: var(--bigger-text) !important;
+}
+
+div.p-dialog-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}

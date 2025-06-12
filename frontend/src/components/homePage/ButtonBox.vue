@@ -9,7 +9,7 @@ interface Props {
     buttonId: number,
     text: string,
     state: ButtonState,
-    activeContextMenu: number
+    activeContextMenu: number | null
 }
 
 const props = defineProps<Props>()
@@ -46,9 +46,9 @@ const openContextMenu = (event: MouseEvent) => {
         :id="`key-${props.buttonId}`"
         :data-key-num="props.buttonId"
 
+        @dblclick="openContextMenu"
         @click="bindButtonClick" 
         @contextmenu="openContextMenu"
-        @dblclick="openContextMenu"
     >
         <Icon v-if="props.state === 'notBinded'" icon="mdi:keyboard-caps" class="icon" />
         <Icon v-if="props.state === 'multiBinding'" icon="material-symbols:layers-rounded" class="icon"/>
