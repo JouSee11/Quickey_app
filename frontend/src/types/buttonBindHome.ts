@@ -12,9 +12,26 @@ export interface KnobBindHome {
     value: string[]
 }
 
-export interface multiBindingAction {
+export interface MultiBindingAction {
     id: string,
-    name: string,
-    value: string,
-    position: number
+    actionCode: string
+    label: string
+    icon: string
+    value: string
+    requiresInput?: boolean
+    inputType?: 'key' | 'text' | 'number' | 'mouse' | 'delay'
+}
+
+export interface ActionDefinition {
+    label: string
+    icon: string
+    actionCode: string
+    requiresInput?: boolean
+    inputType?: 'key' | 'text' | 'number' | 'mouse' | 'delay'
+}
+
+export interface ActionCategory {
+    title: string
+    category: string
+    actions: ActionDefinition[]
 }

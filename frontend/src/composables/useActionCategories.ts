@@ -1,18 +1,8 @@
 import { ref } from 'vue'
+import type { ActionDefinition, ActionCategory } from '@/types/buttonBindHome'
 
-export interface ActionDefinition {
-    label: string
-    icon: string
-    actionCode: string
-    requiresInput?: boolean
-    inputType?: 'key' | 'text' | 'number' | 'mouse' | 'delay'
-}
 
-export interface ActionCategory {
-    title: string
-    category: string
-    actions: ActionDefinition[]
-}
+
 
 export const useActionCategories = () => {
     const categories = ref<ActionCategory[]>([

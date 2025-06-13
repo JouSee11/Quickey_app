@@ -3,16 +3,8 @@ import ActionButton from '@/components/modals/ActionButton.vue';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 import { VueDraggable } from 'vue-draggable-plus'
-// import { VueDraggable } from 'vue-draggable-plus';
+import type { ActionDefinition, MultiBindingAction } from '@/types/buttonBindHome';
 
-//values that are passed to the single action button 
-interface ActionDefinition{
-    label: string,
-    icon: string,
-    actionCode: string,
-    requiresInput?: boolean,
-    inputType?: 'key' | 'text' | 'number' | 'mouse' | 'delay'
-}
 
 interface Props {
     title: string,
@@ -30,7 +22,19 @@ const toggleExpanded = () => {
     isExpanded.value = !isExpanded.value
 }
 
-
+const clone = (originalAction: ActionDefinition): MultiBindingAction => {
+    return {
+        id: `${originalAction.actionCode}-${Date.now()}`, // Generate a unique ID for the new instance
+        actionCode: originalAction.actionCode,
+        label: originalAction.label, // Use 'label' for display name
+        icon: originalAction.icon,   // Include the icon
+        value: originalAction.requiresInput ? 'Not configured' : originalAction.actionCode, // Set a default value
+        requiresInput: originalAction.requiresInput,
+        inputType: originalAction.inputType,
+        // Ensure this structure matches your (ideally updated) MultiBindingAction type
+    }
+}
+ 
 
 // // Clone function for drag & drop
 // const cloneAction = (action: ActionDefinition) => {
@@ -63,15 +67,7 @@ const toggleExpanded = () => {
                     :group="{ name: 'actions', pull: 'clone', put: false}"
                     :sort="false"
                     class="item-draggable-from"
-                    :clone="(actionDef: ActionDefinition) => ({ // actionDef is of type ActionDefinition
-                        id: `${actionDef.actionCode}-${Date.now()}`, // Unique ID for the new instance
-                        actionCode: actionDef.actionCode,            // Preserve the original actionCode
-                        label: actionDef.label,
-                        value: actionDef.requiresInput ? 'Not configured' : actionDef.label, // Default value
-                        icon: actionDef.icon,
-                        requiresInput: actionDef.requiresInput,      // Carry over requiresInput
-                        inputType: actionDef.inputType               // Carry over inputType
-                    })"
+                    :clone="clone"
                 >
                     <ActionButton 
                         v-for="action in actions"
@@ -80,7 +76,8 @@ const toggleExpanded = () => {
                         :icon="action.icon"
                         :action-code="action.actionCode"
                         :requires-input="action.requiresInput"
-                        />
+                        
+                    />
                 </VueDraggable>
             </div>
         </Transition>

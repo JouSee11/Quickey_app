@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { multiBindingAction } from '@/types/buttonBindHome'
+import type { MultiBindingAction } from '@/types/buttonBindHome'
 
 export const useMultiBindingDialogStore = defineStore('dialog', () => {
     // State
     const isVisible = ref(false)
     const activeButtonId = ref<number | null>(null)
-    const actionsBinded = ref<multiBindingAction[]>([])
+    const actionsBinded = ref<MultiBindingAction[]>([])
 
     // Getters
     const dialogTitle = computed(() => 
@@ -30,7 +30,7 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
         actionsBinded.value = []
     }
 
-    const addAction = (action: multiBindingAction) => {
+    const addAction = (action: MultiBindingAction) => {
         actionsBinded.value.push(action)
     }
 

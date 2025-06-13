@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useActionCategories } from '@/composables/useActionCategories';
 import { useMultiBindingDialogStore } from '@/stores/multiBindingDialogStore';
-import type { multiBindingAction } from '@/types/buttonBindHome';
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue'
 import ActionsDisplay from '@/components/modals/ActionsDisplay.vue';

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { VueDraggable } from 'vue-draggable-plus';
-import type { multiBindingAction } from '@/types/buttonBindHome';
+import type { MultiBindingAction } from '@/types/buttonBindHome';
 import { Icon } from '@iconify/vue';
 import { ref, watch } from 'vue';
 import { useMultiBindingDialogStore } from '@/stores/multiBindingDialogStore';
@@ -11,18 +11,18 @@ const { actionsBinded } = storeToRefs(multiBindingDialogStore)
 
 //pass the actions to display
 // interface Props{
-//     actions: multiBindingAction[]
+//     actions: MultiBindingAction[]
 // }
 
 // const props = defineProps<Props>()
 
 // const emit = defineEmits<{
 //     removeAction: [index: number]
-//     actionsUpdated: [actions: multiBindingAction[]]
+//     actionsUpdated: [actions: MultiBindingAction[]]
 // }>()
 
-const handleActionsChange = (newActions: multiBindingAction[]) => {
-    console.log("actions change" + newActions);    
+const handleActionsChange = (newActions: MultiBindingAction[]) => {
+    console.log(newActions);    
 }
 
 const handleRemoveAction = (index: number) => {
@@ -35,9 +35,9 @@ const handleRemoveAction = (index: number) => {
 
 <template>
     <div class="actions-display-cont">
-        <!-- if there are no stats binded currentl -->
-        <div v-if="actionsBinded.length === 0" class="action-drop-zone-empty">
-            <Icon icon="material-symbols:no-sim-outline-rounded" width="24" height="24" />
+         <!-- if there are no stats binded currentl -->
+        <div v-if="actionsBinded.length === 0" class="action-drop-zone-empty-text">
+            <Icon icon="material-symbols:no-sim-outline-rounded" width="40" height="40" />
             <p>Start draging actions to build an action sequence</p>
         </div>
 
@@ -46,38 +46,39 @@ const handleRemoveAction = (index: number) => {
             :group="{name: 'actions', pull: false, put: true}"
             class="action-sequence"
             :animation="200"
+            item-key="id"
             @update:model-value="handleActionsChange"
         >
-            <template #item="{ element, index }">
-                <div class="action-node" :key="element.id">
-                    <!-- Drag handle -->
-                    <div class="drag-handle">
-                        <i class="pi pi-bars"></i>
-                    </div>
-                    
-                    <!-- Action icon -->
-                    <i :class="element.icon" class="action-icon"></i>
-                    
-                    <!-- Action content -->
-                    <div class="node-content">
-                        <p class="node-name">{{ element.label }}</p>
-                        <p class="node-content-key">{{ element.value }}</p>
-                    </div>
-                    
-                    <!-- Remove button -->
-                    <div class="delete-btn" @click="handleRemoveAction(index)">
-                        <i class="pi pi-trash"></i>
-                    </div>
+   
+
+            <!-- main template for displaying the actions -->
+            <div
+                v-for="(element, index) in actionsBinded"
+                class="action-node"
+                :key="element.id"
+            >
+                <!-- Drag handle -->
+                <div class="drag-handle">
+                    <i class="pi pi-bars"></i>
                 </div>
-            </template>
+                
+                <!-- Action icon -->
+                <i :class="element.icon" class="action-icon"></i>
+                
+                <!-- Action content -->
+                <div class="node-content">
+                    <p class="node-name">{{ element.label }}</p>
+                    <p class="node-content-key">{{ element.value }}</p>
+                </div>
+                
+                <!-- Remove button -->
+                <div class="delete-btn" @click="handleRemoveAction(index)">
+                    <i class="pi pi-trash"></i>
+                </div>
+            </div>
 
         </VueDraggable>
     </div>
-
-    <Button 
-        label="log"
-        @click="console.log(actionsBinded)"
-    />
 </template>
 
 <style scoped>
@@ -122,6 +123,17 @@ const handleRemoveAction = (index: number) => {
     gap: 10px;
     min-height: 100px;
     width: 100%;
+    height: 100%;
+}
+
+.action-drop-zone-empty-text{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--gray-main);
+    font-size: var(--bigger-text);
 }
 
 /* Action nodes in sequence */
@@ -215,6 +227,6 @@ const handleRemoveAction = (index: number) => {
 .drag-action {
     transform: rotate(3deg);
     opacity: 0.8;
-}
+} 
 
 </style>
