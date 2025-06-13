@@ -51,8 +51,8 @@ const clone = (originalAction: ActionDefinition): MultiBindingAction => {
         <!-- clickable header for expanding -->
         <div class="category-header" @click="toggleExpanded">
             <div class="category-title">
-                <Icon v-if="isExpanded" icon="mingcute:up-line" width="24" height="24"  style="color: #5b4545" />
-                <Icon v-else icon="mingcute:down-line" width="24" height="24"  style="color: #5b4545" />
+                <Icon v-if="isExpanded" icon="mingcute:up-line" class="category-header-icon" />
+                <Icon v-else icon="mingcute:down-line" class="category-header-icon"/>
                 <h3>{{ props.title }}</h3>
             </div>
             <span class="action-count">{{ props.actions.length }}</span>
@@ -64,6 +64,7 @@ const clone = (originalAction: ActionDefinition): MultiBindingAction => {
                 <VueDraggable
                     v-model="props.actions"
                     :animation="150"
+                    ghost-class="ghost"
                     :group="{ name: 'actions', pull: 'clone', put: false}"
                     :sort="false"
                     class="item-draggable-from"
@@ -88,37 +89,6 @@ const clone = (originalAction: ActionDefinition): MultiBindingAction => {
 
 <style scoped>
 
-/* .button-section {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 0 10px;
-    border-radius: var(--border-rad-main);
-    background-color: var(--blue-dark);
-    transition: transform 0.3s ease-in-out;
-}
-
-.button-section:hover {
-    transform: scale(0.99);
-    filter: brightness(1.2);
-}
-
-.button-section p {
-    color: var(--primary-50);
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-.action-buttons-group {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding-bottom: 15px;
-} */
-
-
-
-
 .button-section {
     width: 100%;
     margin-bottom: 8px;
@@ -138,8 +108,24 @@ const clone = (originalAction: ActionDefinition): MultiBindingAction => {
     user-select: none;
 }
 
+.category-header-icon{
+    width: 25px;
+    height: 25px;
+    color: var(--primary-50);
+}
+
 .category-header:hover {
-    background-color: var(--primary-700);
+    background-color: var(--primary-0);
+}
+
+.category-header:hover h3,
+.category-header:hover .category-header-icon{
+    color: var(--primary-1000) ;
+}
+
+.category-header:hover .action-count{
+    background-color: var(--primary-50);
+    color: var(--primary-1000);
 }
 
 .category-title {
@@ -157,14 +143,14 @@ const clone = (originalAction: ActionDefinition): MultiBindingAction => {
 
 .category-title h3 {
     margin: 0;
-    color: var(--primary-50);
+    color: var(--primary-0);
     font-size: var(--normal-text);
     font-weight: 600;
 }
 
 .action-count {
-    background-color: var(--primary-600);
-    color: var(--primary-50);
+    background-color: var(--primary-800);
+    color: var(--gray-main);
     padding: 4px 8px;
     border-radius: 12px;
     font-size: var(--small-text);

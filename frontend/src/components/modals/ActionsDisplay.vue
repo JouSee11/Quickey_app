@@ -47,8 +47,18 @@ const handleRemoveAction = (index: number) => {
             v-model="actionsBinded"
             :group="{name: 'actions', pull: false, put: true}"
             class="action-sequence"
-            :animation="200"
+            :scroll="true"
+
             @update:model-value="handleActionsChange"
+            
+            :animation="300"
+            :delay="0"
+            :delay-on-touch-start="50"
+            ghost-class="ghost-action"
+            chosen-class="chosen-action"
+            drag-class="drag-action"
+            move-class="draggable-move"
+            handle=".drag-handle"
         >
 
             <!-- <DefaultActionNode
@@ -57,14 +67,15 @@ const handleRemoveAction = (index: number) => {
                 :action-element="element"
                 @remove="handleRemoveAction"
             /> -->
-                <component 
-                    v-for="(element, index) in actionsBinded"
-                    :is="getActionComponent(element.actionCode)"
-                    :action-element="element"
-                    :index="index"
-                    :key="element.id"
-                    @remove="handleRemoveAction"
-                />
+  
+            <component 
+                v-for="(element, index) in actionsBinded"
+                :is="getActionComponent(element.actionCode)"
+                :action-element="element"
+                :index="index"
+                :key="element.id"
+                @remove="handleRemoveAction"
+            />
 
 
             <!-- main template for displaying the actions -->
@@ -150,5 +161,34 @@ const handleRemoveAction = (index: number) => {
 
 
 
+/* ===== for animation =====  */
+
+.ghost-action {
+    opacity: 0.3 !important;
+    background-color: var(--green-dark) !important;
+    border: 2px dashed var(--green-bright) !important;
+    /* transform: scale(1.) !important; */
+}
+
+.chosen-action {
+    transform: scale(1.01) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
+    z-index: 1000 !important;
+}
+
+.drag-action {
+    /* transform: rotate(5deg) scale(1.02) !important; */
+    opacity: 0.9 !important;
+    z-index: 1000 !important;
+}
+
+/* ✅ Smooth reordering animation */
+.action-node:not(.chosen-action):not(.drag-action) {
+    transition: transform 0.3s ease !important;
+}
+
+.action-sequence .action-move {
+  transition: transform 0.3s ease;
+}
 
 </style>

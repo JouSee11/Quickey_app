@@ -55,7 +55,7 @@ const handleRemoveAction = () => {
     margin-bottom: 0;
     padding: 10px 20px;
     transition: all 0.2s ease;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
 }
 
 .action-node:hover {
@@ -76,7 +76,7 @@ const handleRemoveAction = () => {
 .action-icon {
     font-size: var(--bigger-text);
     margin-right: 20px;
-    color: var(--green-bright);
+    color: var(--primary-0);
 }
 
 .node-content {
@@ -93,7 +93,7 @@ const handleRemoveAction = () => {
 }
 
 .node-content-key {
-    color: var(--green-bright);
+    color: var(--primary-0);
     margin: 0;
     font-family: monospace;
 }

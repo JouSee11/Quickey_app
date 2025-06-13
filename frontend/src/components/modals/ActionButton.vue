@@ -15,33 +15,35 @@ const props = defineProps<Props>()
 <template>
     <div class="action-button">
         <div class="action-info">
-            <Icon :icon="props.icon" class="action-icon" />
+            <i :class="props.icon" class="action-icon" />
             <div class="action-text">
                 <span class="action-label">{{ props.label }}</span>
-                <span v-if="props.requiresInput" class="requires-input">
-                    <Icon icon="pi pi-cog" />
+
+                <!-- used to show in the control if it requires inptut -->
+                <!-- <span v-if="props.requiresInput" class="requires-input">
+                    <i class="pi pi-cog" />
                     Requires input
-                </span>
+                </span> -->
             </div>
         </div>
         
         <!-- ✅ Visual indicator for drag capability -->
-        <div class="drag-indicator">
+        <!-- <div class="drag-indicator">
             <Icon icon="pi pi-bars" />
-        </div>
+        </div> -->
     </div>
 
 </template>
 
 <style scoped>
-.action-option-multi {
+/* .action-option-multi {
     flex-shrink: 0;
     width: 100%;
     height: 50px;
     border: none;
     color: var(--primary-0);
     cursor: pointer;
-    background-color: var(--primary-600);
+    background-color: var(--blue-dark);
     font-size: var(--normal-text);
     border-radius: var(--border-rad-smaller);
     z-index: 1;
@@ -50,37 +52,24 @@ const props = defineProps<Props>()
     padding: 0 20px;
     user-select: none;
     transition: box-shadow 0.5s ease-in-out;
-}
-
-/* .button-options i {
-    font-size: var(--bigger-text);
-    margin-right: 10px;
 } */
 
-/* .button-options:hover {
-    filter: brightness(1.2);
-} */
-
-/* .button-options:active {
-    background-color: var(--green-dark);
-    box-shadow: 5px 5px 0 var(--green-bright), 0 0 20px var(--green-vivid-shadow);
-} */
  .action-button {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
-    background-color: var(--primary-600);
+    background-color: var(--blue-dark);
     border-radius: var(--border-rad-smaller);
+    border: 1px solid transparent;
     cursor: pointer;
     transition: all 0.2s ease;
-    border: 1px solid transparent;
     user-select: none;
     margin-bottom: 10px; 
 }
 
 .action-button:hover {
-    background-color: var(--primary-500);
+    background-color: transparent;
     border-color: var(--green-bright);
     transform: translateX(2px);
 }
@@ -88,6 +77,10 @@ const props = defineProps<Props>()
 .action-button:active {
     transform: translateX(1px) translateY(1px);
     box-shadow: 2px 2px 0 var(--primary-700);
+}
+
+.action-button:hover .action-icon{
+    color: var(--green-bright);
 }
 
 .action-info {
@@ -100,7 +93,7 @@ const props = defineProps<Props>()
 .action-icon {
     width: 20px;
     height: 20px;
-    color: var(--green-bright);
+    color: var(--primary-50);
     flex-shrink: 0;
 }
 
@@ -111,12 +104,12 @@ const props = defineProps<Props>()
 }
 
 .action-label {
-    color: var(--primary-0);
+    color: var(--primary-50);
     font-weight: 500;
     font-size: var(--normal-text);
 }
 
-.requires-input {
+/* .requires-input {
     display: flex;
     align-items: center;
     gap: 4px;
@@ -126,7 +119,7 @@ const props = defineProps<Props>()
 }
 
 .drag-indicator {
-    color: var(--primary-400);
+    color: var(--primary-800);
     opacity: 0.6;
     transition: opacity 0.2s ease;
 }
@@ -134,5 +127,5 @@ const props = defineProps<Props>()
 .action-button:hover .drag-indicator {
     opacity: 1;
     color: var(--primary-200);
-}
+} */
 </style>
