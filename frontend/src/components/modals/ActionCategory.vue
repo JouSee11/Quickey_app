@@ -2,6 +2,7 @@
 import ActionButton from '@/components/modals/ActionButton.vue';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
+import { VueDraggable } from 'vue-draggable-plus'
 // import { VueDraggable } from 'vue-draggable-plus';
 
 //values that are passed to the single action button 
@@ -21,9 +22,6 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {defaultExpanded: false})
 
-const emit = defineEmits<{
-    actionClick: [actionType: string]
-}>()
 
 // collapsable state of the category
 const isExpanded = ref(props.defaultExpanded)
@@ -32,9 +30,7 @@ const toggleExpanded = () => {
     isExpanded.value = !isExpanded.value
 }
 
-const handleActionClick = (actionType: string) => {
-    emit('actionClick', actionType)
-}
+
 
 // // Clone function for drag & drop
 // const cloneAction = (action: ActionDefinition) => {
@@ -61,7 +57,22 @@ const handleActionClick = (actionType: string) => {
         <!-- category action buttons -->
         <Transition name="expand">
             <div v-if="isExpanded" class="category-content">
-                <div class="action-buttons-list">
+                <VueDraggable
+                    v-model="props.actions"
+                    :animation="150"
+                    :group="{ name: 'actions', pull: 'clone', put: false}"
+                    :sort="false"
+                    class="item-draggable-from"
+                    :clone="(actionDef: ActionDefinition) => ({ // actionDef is of type ActionDefinition
+                        id: `${actionDef.actionCode}-${Date.now()}`, // Unique ID for the new instance
+                        actionCode: actionDef.actionCode,            // Preserve the original actionCode
+                        label: actionDef.label,
+                        value: actionDef.requiresInput ? 'Not configured' : actionDef.label, // Default value
+                        icon: actionDef.icon,
+                        requiresInput: actionDef.requiresInput,      // Carry over requiresInput
+                        inputType: actionDef.inputType               // Carry over inputType
+                    })"
+                >
                     <ActionButton 
                         v-for="action in actions"
                         :key="action.actionCode"
@@ -69,32 +80,11 @@ const handleActionClick = (actionType: string) => {
                         :icon="action.icon"
                         :action-code="action.actionCode"
                         :requires-input="action.requiresInput"
-                        @action-click="handleActionClick"
-                    />
-                </div>
+                        />
+                </VueDraggable>
             </div>
         </Transition>
 
-
-        <!-- <VueDraggable
-            :model-value="props.actions"
-            :group="{name: 'actions', pull: 'clone', put: false}"
-            :clone="cloneAction"
-            :sort="false"
-            class="action-buttons-group"
-            itemKey="actionType"
-        >
-        <template #item="{ element }">
-            <ActionButton 
-                :label="element.label"
-                :icon="element.icon"
-                :action-type="element.actionType"
-                @action-click="handleActionClick"
-            />
-
-        </template>
-
-        </VueDraggable> -->
     </div>
 
 </template>
@@ -189,14 +179,14 @@ const handleActionClick = (actionType: string) => {
 .category-content {
     border-top: 1px solid var(--primary-600);
     background-color: var(--primary-800);
-}
-
-.action-buttons-list {
     padding: 8px;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
+
+
+
 
 /* ✅ Smooth expand/collapse transitions */
 .expand-enter-active,

@@ -17,28 +17,6 @@ const { categories } = useActionCategories()
 const {isVisible, activeButtonId, dialogTitle, hasActions, actionsBinded} = storeToRefs(multiBindingDialogStore)
 const {closeDialog, addAction, removeAction} = multiBindingDialogStore
 
-const handleActionClick = (actionType: string) => {
-    // Find the action definition
-    const action = categories.value
-        .flatMap(cat => cat.actions)
-        .find(act => act.actionCode === actionType)
-    
-    if (!action) return
-
-    // Create action data - fix the typo
-    const actionData: multiBindingAction = {
-        id: `${action.actionCode}-${Date.now()}`,
-        name: action.label,
-        value: action.requiresInput ? 'Not configured' : action.label,
-        position: 0  // Fixed typo from "postion" to "position"
-    }
-
-    addAction(actionData)
-}
-
-const handleActionsUpdated = (newActions: multiBindingAction[]) => {
-    multiBindingDialogStore.actionsBinded = newActions
-}
 
 const handleSave = () => {
     emit('save', activeButtonId.value!, actionsBinded.value)
@@ -61,15 +39,11 @@ const handleSave = () => {
         <div class="multi-dialog-container">
             <!-- Left side - Actions display (Drop zone) -->
             <ActionsDisplay
-                :actions="actionsBinded"
-                @remove-action="removeAction"
-                @actions-updated="handleActionsUpdated"
             />
 
             <!-- Right side - Actions selection (Drag source) -->
             <ActionsSelection
                 class="actions-select-cont"
-                @action-click="handleActionClick"
             />
 
             <!-- controls buttons -->

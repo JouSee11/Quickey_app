@@ -2,50 +2,54 @@
 import { VueDraggable } from 'vue-draggable-plus';
 import type { multiBindingAction } from '@/types/buttonBindHome';
 import { Icon } from '@iconify/vue';
+import { ref, watch } from 'vue';
+import { useMultiBindingDialogStore } from '@/stores/multiBindingDialogStore';
+import { storeToRefs } from 'pinia';
+
+const multiBindingDialogStore = useMultiBindingDialogStore()
+const { actionsBinded } = storeToRefs(multiBindingDialogStore)
 
 //pass the actions to display
-interface Props{
-    actions: multiBindingAction[]
-}
+// interface Props{
+//     actions: multiBindingAction[]
+// }
 
-const props = defineProps<Props>()
+// const props = defineProps<Props>()
 
-const emit = defineEmits<{
-    removeAction: [index: number]
-    actionsUpdated: [actions: multiBindingAction[]]
-}>()
+// const emit = defineEmits<{
+//     removeAction: [index: number]
+//     actionsUpdated: [actions: multiBindingAction[]]
+// }>()
 
-const handleActionsChange = () => {
-    emit('actionsUpdated', props.actions)
+const handleActionsChange = (newActions: multiBindingAction[]) => {
+    console.log("actions change" + newActions);    
 }
 
 const handleRemoveAction = (index: number) => {
-    emit('removeAction', index)
+    // emit('removeAction', index)
+    multiBindingDialogStore.removeAction(index)
 }
+
 
 </script>
 
 <template>
     <div class="actions-display-cont">
         <!-- if there are no stats binded currentl -->
-        <div v-if="props.actions.length === 0" class="action-drop-zone-empty">
+        <div v-if="actionsBinded.length === 0" class="action-drop-zone-empty">
             <Icon icon="material-symbols:no-sim-outline-rounded" width="24" height="24" />
             <p>Start draging actions to build an action sequence</p>
         </div>
 
         <VueDraggable
-            :model-value="props.actions"
-            group="actions"
-            @update:model-value="handleActionsChange"
+            v-model="actionsBinded"
+            :group="{name: 'actions', pull: false, put: true}"
             class="action-sequence"
             :animation="200"
-            ghost-class="ghost-action"
-            chosen-class="chosen-action"
-            drag-class="drag-action"
-            itemKey="id"
+            @update:model-value="handleActionsChange"
         >
             <template #item="{ element, index }">
-                <div class="action-node">
+                <div class="action-node" :key="element.id">
                     <!-- Drag handle -->
                     <div class="drag-handle">
                         <i class="pi pi-bars"></i>
@@ -67,9 +71,13 @@ const handleRemoveAction = (index: number) => {
                 </div>
             </template>
 
-
         </VueDraggable>
     </div>
+
+    <Button 
+        label="log"
+        @click="console.log(actionsBinded)"
+    />
 </template>
 
 <style scoped>

@@ -4,15 +4,9 @@ import ActionCategory from '@/components/modals/ActionCategory.vue'
 import { useActionCategories } from '@/composables/useActionCategories'
 import ActionButton from '@/components/modals/ActionButton.vue';
 
-const emit = defineEmits<{
-    actionClick: [actionType: string]
-}>()
-
 const { categories } = useActionCategories()
 
-const handleActionClick = (actionType: string) => {
-    emit('actionClick', actionType)
-}
+
 </script>
 
 <template>
@@ -23,7 +17,6 @@ const handleActionClick = (actionType: string) => {
             :title="category.title"
             :actions="category.actions"
             :default-expanded="index === 0" 
-            @action-click="handleActionClick"
         />
 
         
@@ -33,7 +26,7 @@ const handleActionClick = (actionType: string) => {
 
 <style scoped>
 .actions-select-cont {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     align-items: center;
     position: relative;
@@ -51,5 +44,7 @@ const handleActionClick = (actionType: string) => {
     padding: 10px 10px;
 
 }
+
+
 
 </style>

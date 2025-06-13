@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import mainLogo from "@/assets/images/icons/main-logo.svg"
+import logoBeta from "@/assets/images/icons/logo-beta.svg"
 import { ref, onMounted } from "vue"
 import { Icon } from '@iconify/vue'
 import {RouterLink, useRoute} from 'vue-router'
@@ -22,7 +22,7 @@ const isActiveLink = (routePath: String) => {
 <template>
     <header>
         <nav id="main-nav">
-            <RouterLink to="/"><img :src="mainLogo" alt="logo" id="navigation-logo"></RouterLink>
+            <RouterLink to="/"><img :src="logoBeta" alt="logo" id="navigation-logo"></RouterLink>
 
             <div id="navigation-links">
                 

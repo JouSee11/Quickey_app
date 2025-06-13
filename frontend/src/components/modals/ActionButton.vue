@@ -10,17 +10,10 @@ interface Props{
 
 const props = defineProps<Props>()
 
-const emit = defineEmits<{
-    actionClick: [actionType: string]
-}>()
-
-const handleClick = () => {
-    emit('actionClick', props.actionCode)
-}
 </script>
 
 <template>
-    <div class="action-button" @click="handleClick">
+    <div class="action-button">
         <div class="action-info">
             <Icon :icon="props.icon" class="action-icon" />
             <div class="action-text">
@@ -83,6 +76,7 @@ const handleClick = () => {
     transition: all 0.2s ease;
     border: 1px solid transparent;
     user-select: none;
+    margin-bottom: 10px; 
 }
 
 .action-button:hover {

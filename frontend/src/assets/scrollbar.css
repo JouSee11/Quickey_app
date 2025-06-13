@@ -1,7 +1,7 @@
 /* custom scrollbar */
 /* WebKit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 10px; /* Scrollbar width */
+  width: 7px; /* Scrollbar width */
 }
 
 ::-webkit-scrollbar-track {
