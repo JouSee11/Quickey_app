@@ -35,3 +35,13 @@ export interface ActionCategory {
     category: string
     actions: ActionDefinition[]
 }
+
+// custom multi binding action blocks
+export interface ActionNodeProps{
+    actionElement: MultiBindingAction,
+    index: number
+}
+
+export interface ActionNodeEmits{
+    remove: [index: number]
+}

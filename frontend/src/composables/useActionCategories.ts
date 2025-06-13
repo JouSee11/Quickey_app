@@ -1,9 +1,6 @@
 import { ref } from 'vue'
 import type { ActionDefinition, ActionCategory } from '@/types/buttonBindHome'
 
-
-
-
 export const useActionCategories = () => {
     const categories = ref<ActionCategory[]>([
         {

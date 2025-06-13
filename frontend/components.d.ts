@@ -19,6 +19,8 @@ declare module 'vue' {
     ButtonsDisplayMain: typeof import('./src/components/ButtonsDisplayMain.vue')['default']
     ConfirmDialog: typeof import('primevue/confirmdialog')['default']
     ContextMenu: typeof import('primevue/contextmenu')['default']
+    DefaultAction: typeof import('./src/components/modals/actionNodes/DefaultAction.vue')['default']
+    DefaultActionNode: typeof import('./src/components/modals/actionNodes/DefaultActionNode.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
@@ -44,5 +46,6 @@ declare module 'vue' {
     ToggleSwitch: typeof import('primevue/toggleswitch')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
     WrenchIcon: typeof import('./src/components/icons/WrenchIcon.vue')['default']
+    WriteActionNode: typeof import('./src/components/modals/actionNodes/WriteActionNode.vue')['default']
   }
 }

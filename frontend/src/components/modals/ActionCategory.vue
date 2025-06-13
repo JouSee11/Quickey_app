@@ -28,7 +28,7 @@ const clone = (originalAction: ActionDefinition): MultiBindingAction => {
         actionCode: originalAction.actionCode,
         label: originalAction.label, // Use 'label' for display name
         icon: originalAction.icon,   // Include the icon
-        value: originalAction.requiresInput ? 'Not configured' : originalAction.actionCode, // Set a default value
+        value: originalAction.requiresInput ? 'not' : originalAction.actionCode, // Set a default value
         requiresInput: originalAction.requiresInput,
         inputType: originalAction.inputType,
         // Ensure this structure matches your (ideally updated) MultiBindingAction type
