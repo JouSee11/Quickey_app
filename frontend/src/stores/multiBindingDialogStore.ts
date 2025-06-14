@@ -24,6 +24,11 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
         return capturingKeyPress && capturingActionId.value === actionId
     })
 
+    const isActionBinded = (actionId: string) => {
+        const actionIndex = actionsBinded.value.findIndex(action => action.id === actionId)
+        return actionsBinded.value[actionIndex].value != ''
+    }
+
     // Actions
     const openDialog = (buttonId: number) => {
         console.log("Opening dialog for button:", buttonId)
@@ -85,6 +90,7 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
         actionsBinded,
         // Getters
         dialogTitle,
+        isActionBinded,
         hasActions,
         // Actions
         openDialog,

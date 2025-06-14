@@ -12,6 +12,7 @@ export const useActionKeyCapture = () => {
 
         const capturedCode = event.code
         store.handleKeyCapture(capturedCode)
+
         // store.capturingCurrentKey = capturedCode
     }
 

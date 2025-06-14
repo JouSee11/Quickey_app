@@ -2,7 +2,8 @@
 import { useActionKeyCapture } from '@/composables/useMultiKeyActionCapture';
 import { useMultiBindingDialogStore } from '@/stores/multiBindingDialogStore';
 import type { ActionNodeProps, ActionNodeEmits } from '@/types/buttonBindHome';
-import { computed } from 'vue';
+import { Icon } from '@iconify/vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<ActionNodeProps>()
 const emit = defineEmits<ActionNodeEmits>()
@@ -11,10 +12,22 @@ const { startActionCapture, isCapturing, capturingActionId} = useActionKeyCaptur
 const store = useMultiBindingDialogStore()
 
 const isThisActionCapturing = computed(() => {
-    isCapturing.value && capturingActionId.value === props.actionElement.id
+    return isCapturing.value && capturingActionId.value === props.actionElement.id
 })
 
-const handleRemoveAction = () => {
+const displayText = computed(() => {
+    if (isThisActionCapturing.value) {
+        return 'Press any key...'
+    }
+    if (props.actionElement.value === '' ) {
+        return 'Click to bind key'
+    }
+    return props.actionElement.value
+})
+
+const handleRemoveAction = (event: MouseEvent) => {
+    event.stopPropagation()
+
     emit('remove', props.index)
 }
 
@@ -30,6 +43,7 @@ const handleStartCapture = () => {
     <div
         class="action-node"
         :key="props.actionElement.id"
+        @click="handleStartCapture"
     >
         <!-- Drag handle -->
         <div class="drag-handle">
@@ -39,15 +53,25 @@ const handleStartCapture = () => {
         <p class="node-index">{{ props.index + 1}}:</p>
         
         <!-- Action icon -->
-        <i :class="props.actionElement.icon" class="action-icon"></i>
+        <Icon :icon="props.actionElement.icon" class="action-icon"/>
         
         <!-- Action content -->
-        <div class="node-content" @click="handleStartCapture">
+        <div class="node-content">
             <p class="node-key">{{ props.actionElement.label }}</p>
             
-            <p v-if="isCapturing">Capturing key press</p>
+            <!-- <p v-if="isCapturing">Capturing key press</p>
             <p v-if="props.actionElement.value === ''">Press to bind</p>
-            <p v-else>{{ props.actionElement.value }}</p>
+            <p v-else>{{ props.actionElement.value }}</p> -->
+            <p
+                :class="[{
+                    'capturing-content': isThisActionCapturing,
+                    'empty-value': props.actionElement.value === '' && !isThisActionCapturing,
+                    'content-binded': props.actionElement.value !== '' && !isThisActionCapturing,
+                    // 'content-binded-press': props.actionElement.value !== '' && !isThisActionCapturing && props.actionElement.actionCode === 'press-release',
+                }, 'node-content-label']"
+            >
+                {{ displayText }}
+            </p>
 
         </div>
         
@@ -57,5 +81,24 @@ const handleStartCapture = () => {
 </template>
 
 <style scoped>
+.action-node{
+    cursor: pointer;
+}
+
+.capturing-content{
+    color: var(--green-dark);
+}
+
+.empty-value{
+    color: var(--gray-main);
+}
+
+.content-binded{
+    color: var(--primary-50);
+}
+/* 
+.content-binded-press{
+    color: var(--primary-100);
+} */
 
 </style>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ActionNodeProps, ActionNodeEmits } from '@/types/buttonBindHome';
+import { Icon } from '@iconify/vue';
 
 const props = defineProps<ActionNodeProps>()
 const emit = defineEmits<ActionNodeEmits>()
@@ -25,7 +26,7 @@ const handleRemoveAction = () => {
         <p class="node-index">{{ props.index + 1}}:</p>
         
         <!-- Action icon -->
-        <i :class="props.actionElement.icon" class="action-icon"></i>
+        <Icon :icon="props.actionElement.icon" class="action-icon"/>
         
         <!-- Action content -->
         <div class="node-content">

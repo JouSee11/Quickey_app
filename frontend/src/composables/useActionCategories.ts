@@ -9,28 +9,28 @@ export const useActionCategories = () => {
             actions: [
                 {
                     label: 'Key Press & Release',
-                    icon: 'pi pi-play',
+                    icon: 'pepicons-pop:down-up',
                     actionCode: 'press-release',
                     requiresInput: true,
                     inputType: 'key'
                 },
                 {
                     label: 'Key Hold',
-                    icon: 'pi pi-pause',
+                    icon: 'fa6-solid:down-long',
                     actionCode: 'hold',
                     requiresInput: true,
                     inputType: 'key'
                 },
                 {
                     label: 'Key Release',
-                    icon: 'pi pi-stop',
+                    icon: 'fa6-solid:up-long',
                     actionCode: 'release',
                     requiresInput: true,
                     inputType: 'key'
                 },
                 {
                     label: 'Key Release All',
-                    icon: 'pi pi-step-backward',
+                    icon: 'line-md:chevron-small-triple-up',
                     actionCode: 'release-all',
                     requiresInput: false
                 }
@@ -42,14 +42,14 @@ export const useActionCategories = () => {
             actions: [
                 {
                     label: 'Mouse move',
-                    icon: 'pi pi-arrows-alt',
+                    icon: 'mdi:mouse-move-vertical',
                     actionCode: 'mouse-move',
                     requiresInput: true,
                     inputType: 'mouse'
                 },
                 {
                     label: 'Mouse click',
-                    icon: 'pi pi-external-link',
+                    icon: 'mdi:mouse-left-click',
                     actionCode: 'mouse-click',
                     requiresInput: true,
                     inputType: 'mouse'
@@ -62,37 +62,37 @@ export const useActionCategories = () => {
             actions: [
                 {
                     label: 'Volume-up',
-                    icon: 'pi pi-volume-up',
+                    icon: 'material-symbols:volume-up-rounded',
                     actionCode: 'volume-up',
                     requiresInput: false
                 },
                 {
                     label: 'Volume-down',
-                    icon: 'pi pi-volume-down',
+                    icon: 'material-symbols:volume-down-rounded',
                     actionCode: 'volume-down',
                     requiresInput: false
                 },
                 {
                     label: 'Volume mute',
-                    icon: 'pi pi-volume-off',
+                    icon: 'mingcute:volume-mute-fill',
                     actionCode: 'volume-mute',
                     requiresInput: false
                 },
                 {
-                    label: 'Play/pause',
-                    icon: 'pi pi-play',
+                    label: 'Play/pause toggle',
+                    icon: 'f7:playpause-fill',
                     actionCode: 'play-pause',
                     requiresInput: false
                 },
                 {
                     label: 'Play next',
-                    icon: 'pi pi-step-forward',
+                    icon: 'mage:next-fill',
                     actionCode: 'play-next',
                     requiresInput: false
                 },
                 {
                     label: 'Play previous',
-                    icon: 'pi pi-step-backward',
+                    icon: 'mage:previous-fill',
                     actionCode: 'play-prev',
                     requiresInput: false
                 }
@@ -104,14 +104,14 @@ export const useActionCategories = () => {
             actions: [
                 {
                     label: 'Delay',
-                    icon: 'pi pi-clock',
+                    icon: 'mingcute:time-fill',
                     actionCode: 'delay',
                     requiresInput: true,
                     inputType: 'delay'
                 },
                 {
                     label: 'Write',
-                    icon: 'pi pi-pencil',
+                    icon: 'material-symbols:keyboard-rounded',
                     actionCode: 'write',
                     requiresInput: true,
                     inputType: 'text'

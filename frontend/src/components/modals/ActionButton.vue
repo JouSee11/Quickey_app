@@ -15,7 +15,7 @@ const props = defineProps<Props>()
 <template>
     <div class="action-button">
         <div class="action-info">
-            <i :class="props.icon" class="action-icon" />
+            <Icon :icon="props.icon" class="action-icon" />
             <div class="action-text">
                 <span class="action-label">{{ props.label }}</span>
 

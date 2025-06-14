@@ -11,11 +11,15 @@ import type { DefineComponent } from 'vue';
 import DefaultActionNode from '@/components/modals/actionNodes/DefaultActionNode.vue';
 import WriteActionNode from '@/components/modals/actionNodes/WriteActionNode.vue';
 import KeyPressNode from '@/components/modals/actionNodes/KeyPressNode.vue';
+import MouseMoveNode from '@/components/modals/actionNodes/MouseMoveNode.vue';
 
 //map special action actionCode to special components (dont need to specify those that dont reqire any input)
 const mapActionComponents: Record<string, any> = {
     write: WriteActionNode,
-    'press-release':  KeyPressNode
+    'press-release':  KeyPressNode,
+    'hold': KeyPressNode,
+    'release': KeyPressNode,
+    'mouse-move': MouseMoveNode
 }  
 const getActionComponent = (actionCode: string) => {
     return mapActionComponents[actionCode] || DefaultActionNode

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ActionNodeProps, ActionNodeEmits } from '@/types/buttonBindHome';
+import { Icon } from '@iconify/vue';
 
 const props = defineProps<ActionNodeProps>()
 const emit = defineEmits<ActionNodeEmits>()
@@ -18,13 +19,13 @@ const handleRemoveAction = () => {
     >
         <!-- Drag handle -->
         <div class="drag-handle">
-            <i class="pi pi-bars"></i>
+            <i class="pi pi-bars icon-drag"></i>
         </div>
         <!-- index show -->
         <p class="node-index">{{ props.index + 1}}:</p>
         
         <!-- Action icon -->
-        <i :class="props.actionElement.icon" class="action-icon"></i>
+        <Icon :icon="props.actionElement.icon" class="action-icon"/>
         
         <!-- Action content -->
         <div class="node-content">
@@ -66,10 +67,16 @@ const handleRemoveAction = () => {
 }
 
 .drag-handle {
-    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    /* margin-right: 10px; */
+    width: 30px;
+    height: 100%;
     color: var(--gray-main);
     cursor: grab;
+    text-align: center;
 }
+
 
 .drag-handle:active {
     cursor: grabbing;
