@@ -26,8 +26,8 @@ const handleRemoveAction = () => {
         
         <!-- Action content -->
         <div class="node-content">
-            <p class="node-name">{{ props.actionElement.label }}</p>
-            <p class="node-content-key">{{ props.actionElement.value }}</p>
+            <p class="node-name">{{ props.actionElement.value }}</p>
+            <p class="node-content-key">{{ props.actionElement.label }}</p>
             <p class="node-content-key">{{ props.index }}</p>
         </div>
         
@@ -54,7 +54,6 @@ const handleRemoveAction = () => {
     user-select: none;
     margin-bottom: 0;
     padding: 10px 20px;
-    transition: all 0.2s ease;
     border: 1px solid transparent;
 }
 
@@ -117,18 +116,19 @@ const handleRemoveAction = () => {
 
 /* Drag states */
 .ghost-action {
-    opacity: 0.5;
+    opacity: 0.3 !important;
     background-color: var(--green-dark) !important;
     border: 2px dashed var(--green-bright) !important;
 }
 
 .chosen-action {
-    transform: rotate(3deg);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: scale(1.01) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
+    z-index: 1000 !important;
 }
 
 .drag-action {
-    transform: rotate(3deg);
-    opacity: 0.8;
+    opacity: 0.9 !important;
+    z-index: 1000 !important;
 } 
 </style>

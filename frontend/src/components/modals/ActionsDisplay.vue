@@ -58,8 +58,9 @@ const handleRemoveAction = (index: number) => {
             chosen-class="chosen-action"
             drag-class="drag-action"
             move-class="draggable-move"
-            handle=".drag-handle"
         >
+            <!-- handle=".drag-handle" -->
+
 
             <!-- <DefaultActionNode
                 v-for="(element, index) in actionsBinded"
@@ -159,36 +160,5 @@ const handleRemoveAction = (index: number) => {
     font-size: var(--bigger-text);
 }
 
-
-
-/* ===== for animation =====  */
-
-.ghost-action {
-    opacity: 0.3 !important;
-    background-color: var(--green-dark) !important;
-    border: 2px dashed var(--green-bright) !important;
-    /* transform: scale(1.) !important; */
-}
-
-.chosen-action {
-    transform: scale(1.01) !important;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
-    z-index: 1000 !important;
-}
-
-.drag-action {
-    /* transform: rotate(5deg) scale(1.02) !important; */
-    opacity: 0.9 !important;
-    z-index: 1000 !important;
-}
-
-/* ✅ Smooth reordering animation */
-.action-node:not(.chosen-action):not(.drag-action) {
-    transition: transform 0.3s ease !important;
-}
-
-.action-sequence .action-move {
-  transition: transform 0.3s ease;
-}
 
 </style>

@@ -186,7 +186,7 @@ const clone = (originalAction: ActionDefinition): MultiBindingAction => {
 
 .expand-enter-to,
 .expand-leave-from {
-    max-height: 800px; /* Adjust based on your content */
+    max-height: 800px;
     opacity: 1;
 }
 </style>
