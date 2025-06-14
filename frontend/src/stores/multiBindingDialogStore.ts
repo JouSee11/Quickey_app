@@ -8,12 +8,21 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
     const activeButtonId = ref<number | null>(null)
     const actionsBinded = ref<MultiBindingAction[]>([])
 
+    //states for listening for buttons
+    const capturingKeyPress = ref(false)
+    // const capturingCurrentKey = ref<string>()
+    const capturingActionId = ref<string | null>(null)
+
     // Getters
     const dialogTitle = computed(() => 
         activeButtonId.value ? `Multi-key binding - Key ${activeButtonId.value}` : 'Multi-key binding'
     )
     
     const hasActions = computed(() => actionsBinded.value.length > 0)
+
+    const isCapturingAction = computed(() => (actionId: string) =>{
+        return capturingKeyPress && capturingActionId.value === actionId
+    })
 
     // Actions
     const openDialog = (buttonId: number) => {
@@ -38,6 +47,37 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
         actionsBinded.value.splice(index, 1)
     }
 
+    //actions for key capturing
+    const updateAction = (index: number, updates: Partial<MultiBindingAction>) => {
+        if (actionsBinded.value[index]) { //check if the action exists
+            Object.assign(actionsBinded.value[index], updates)
+        }
+    }
+
+    const startCapturing = (actionId: string) => {
+        capturingKeyPress.value = true
+        // capturingCurrentKey.value = ''
+        capturingActionId.value = actionId
+
+        console.log("Started capturing on id: " + actionId);
+    }
+
+    const stopCapturing = () => {
+        capturingKeyPress.value = false
+        capturingActionId.value = null
+        // capturingCurrentKey.value = ''
+    } 
+
+    const handleKeyCapture = (keyCode: string) => {
+        if (capturingActionId.value){
+            const actionIndex = actionsBinded.value.findIndex(action => action.id === capturingActionId.value)
+            if (actionIndex !== -1) {
+                updateAction(actionIndex, {value: keyCode})
+            }
+        }
+        stopCapturing()
+    }
+
     return {
         // State
         isVisible,
@@ -50,6 +90,17 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
         openDialog,
         closeDialog,
         addAction,
-        removeAction
+        removeAction,
+
+
+        //capturing
+        capturingKeyPress,
+        // capturingCurrentKey,
+        capturingActionId,
+        isCapturingAction,
+        updateAction,
+        startCapturing,
+        stopCapturing,
+        handleKeyCapture
     }
 })

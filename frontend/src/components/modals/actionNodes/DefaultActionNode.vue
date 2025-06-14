@@ -20,21 +20,20 @@ const handleRemoveAction = () => {
         <div class="drag-handle">
             <i class="pi pi-bars"></i>
         </div>
+        <!-- index show -->
+        <p class="node-index">{{ props.index + 1}}:</p>
         
         <!-- Action icon -->
         <i :class="props.actionElement.icon" class="action-icon"></i>
         
         <!-- Action content -->
         <div class="node-content">
-            <p class="node-name">{{ props.actionElement.value }}</p>
-            <p class="node-content-key">{{ props.actionElement.label }}</p>
-            <p class="node-content-key">{{ props.index }}</p>
+            <p class="node-key">{{ props.actionElement.value }}</p>
+            <p class="node-content-label">{{ props.actionElement.label }}</p>
         </div>
         
         <!-- Remove button -->
-        <div class="delete-btn" @click="handleRemoveAction">
-            <i class="pi pi-trash"></i>
-        </div>
+        <Button class="delete-btn" @click="handleRemoveAction" icon="pi pi-times" outlined size="small"/>
     </div>
 </template>
 
@@ -50,7 +49,6 @@ const handleRemoveAction = () => {
     background-color: var(--primary-1000);
     color: var(--primary-0);
     border-radius: var(--border-rad-smaller);
-    cursor: move;
     user-select: none;
     margin-bottom: 0;
     padding: 10px 20px;
@@ -60,10 +58,15 @@ const handleRemoveAction = () => {
 .action-node:hover {
     filter: brightness(1.1);
     border-color: var(--green-bright);
+    transition: border 0.1s ease-in-out;
+}
+
+.action-node:hover .action-icon{
+    color: var(--green-bright);
 }
 
 .drag-handle {
-    margin-right: 15px;
+    margin-right: 10px;
     color: var(--gray-main);
     cursor: grab;
 }
@@ -72,10 +75,16 @@ const handleRemoveAction = () => {
     cursor: grabbing;
 }
 
+.node-index{
+    color: var(--gray-main);
+    margin-right: 10px;
+}
+
 .action-icon {
     font-size: var(--bigger-text);
-    margin-right: 20px;
+    margin-right: 15px;
     color: var(--primary-0);
+    transition: color 0.1s ease-in-out;
 }
 
 .node-content {
@@ -84,27 +93,27 @@ const handleRemoveAction = () => {
     flex: 1;
 }
 
-.node-name {
+.node-key {
     font-size: var(--small-text);
     margin: 0;
     margin-bottom: 5px;
     color: var(--gray-main);
 }
 
-.node-content-key {
+.node-content-label {
     color: var(--primary-0);
-    margin: 0;
-    font-family: monospace;
+    font-size: var(--normal-text);
+    margin-bottom: 10px;
 }
 
 .delete-btn {
     position: absolute;
-    right: 10px;
+    right: 0;
     top: 50%;
-    transform: translateY(-50%);
-    padding: 8px;
-    background-color: var(--red-dark);
+    transform: translateY(-70%);
+    padding: 5px;
     border-radius: var(--border-rad-smaller);
+    color: var(--red-dark) !important;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
@@ -112,9 +121,12 @@ const handleRemoveAction = () => {
 .delete-btn:hover {
     filter: brightness(1.2);
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.342);
+    color: var(--primary-1000);
 }
 
-/* Drag states */
+
+
+/* === DRAGABLE ANIMATIONS ==== */
 .ghost-action {
     opacity: 0.3 !important;
     background-color: var(--green-dark) !important;

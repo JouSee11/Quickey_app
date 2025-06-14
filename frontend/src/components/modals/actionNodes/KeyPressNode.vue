@@ -1,11 +1,26 @@
 <script setup lang="ts">
+import { useActionKeyCapture } from '@/composables/useMultiKeyActionCapture';
+import { useMultiBindingDialogStore } from '@/stores/multiBindingDialogStore';
 import type { ActionNodeProps, ActionNodeEmits } from '@/types/buttonBindHome';
+import { computed } from 'vue';
 
 const props = defineProps<ActionNodeProps>()
 const emit = defineEmits<ActionNodeEmits>()
 
+const { startActionCapture, isCapturing, capturingActionId} = useActionKeyCapture()
+const store = useMultiBindingDialogStore()
+
+const isThisActionCapturing = computed(() => {
+    isCapturing.value && capturingActionId.value === props.actionElement.id
+})
+
 const handleRemoveAction = () => {
     emit('remove', props.index)
+}
+
+const handleStartCapture = () => {
+    startActionCapture(props.actionElement.id)
+    console.log(props.actionElement.value)
 }
 
 </script>
@@ -15,7 +30,6 @@ const handleRemoveAction = () => {
     <div
         class="action-node"
         :key="props.actionElement.id"
-        @click="() => console.log(props.actionElement.value)"
     >
         <!-- Drag handle -->
         <div class="drag-handle">
@@ -28,9 +42,13 @@ const handleRemoveAction = () => {
         <i :class="props.actionElement.icon" class="action-icon"></i>
         
         <!-- Action content -->
-        <div class="node-content">
+        <div class="node-content" @click="handleStartCapture">
             <p class="node-key">{{ props.actionElement.label }}</p>
-            <InputText v-model="props.actionElement.value" class="node-content-input" type="text" placeholder="Write some text"/>
+            
+            <p v-if="isCapturing">Capturing key press</p>
+            <p v-if="props.actionElement.value === ''">Press to bind</p>
+            <p v-else>{{ props.actionElement.value }}</p>
+
         </div>
         
         <!-- Remove button -->
@@ -39,10 +57,5 @@ const handleRemoveAction = () => {
 </template>
 
 <style scoped>
-.node-content-input{
-    width: 70%;
-    height: 30px;
-    margin-bottom: 5px;
-}
 
 </style>

@@ -10,10 +10,12 @@ import type { DefineComponent } from 'vue';
 //import all possible action node components
 import DefaultActionNode from '@/components/modals/actionNodes/DefaultActionNode.vue';
 import WriteActionNode from '@/components/modals/actionNodes/WriteActionNode.vue';
+import KeyPressNode from '@/components/modals/actionNodes/KeyPressNode.vue';
 
 //map special action actionCode to special components (dont need to specify those that dont reqire any input)
 const mapActionComponents: Record<string, any> = {
-    write: WriteActionNode
+    write: WriteActionNode,
+    'press-release':  KeyPressNode
 }  
 const getActionComponent = (actionCode: string) => {
     return mapActionComponents[actionCode] || DefaultActionNode
@@ -58,8 +60,8 @@ const handleRemoveAction = (index: number) => {
             chosen-class="chosen-action"
             drag-class="drag-action"
             move-class="draggable-move"
+            handle=".drag-handle"
         >
-            <!-- handle=".drag-handle" -->
 
 
             <!-- <DefaultActionNode
