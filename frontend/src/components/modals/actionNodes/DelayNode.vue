@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ActionNodeProps, ActionNodeEmits } from '@/types/buttonBindHome';
 import { Icon } from '@iconify/vue';
-import {ref, watch} from 'vue'
+import {ref, watch, onMounted} from 'vue'
 
 const delayTime = ref(200) 
 
@@ -20,6 +20,11 @@ const updateValue = () => {
 
 watch(delayTime, updateValue)
 
+onMounted(() => {
+    if(props.actionElement.value !== '') {
+        delayTime.value = parseInt(props.actionElement.value)
+    }
+})
 
 
 </script>
