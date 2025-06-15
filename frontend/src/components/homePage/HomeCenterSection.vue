@@ -185,7 +185,7 @@ const knobDialogStore = useKnobDialogStore()
             <HomeKnob 
                 v-if="showKnob && knobElement && currentPage === totalPages + 1"
                 :state="knobElement.state"
-                @click="knobDialogStore.openDialog"
+                @open-dialog="knobDialogStore.openDialog"
             />
 
              <ContextMenu ref="contextMenu" :model="menuItems" @hide="activeButtonContext = null"/>

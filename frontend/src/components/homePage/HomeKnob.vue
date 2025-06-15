@@ -5,10 +5,15 @@ interface Props {
     state: string
 }
 
+const emit = defineEmits<{
+    bindKnob: []
+    openDialog: [event: MouseEvent]
+}>()
+
 const props = defineProps<Props>()
 
-const handleKnobBindingDialog = () => {
-    
+const handleKnobBindingDialog = (event: MouseEvent) => {
+    emit('openDialog', event)
 }
 
 </script>
