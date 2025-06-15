@@ -29,7 +29,8 @@ const {
     totalPages,
     showKnob,
     knobElement,
-    resetButton
+    resetButton,
+    getButtonValue
     
 } = useButtons()
 
@@ -118,6 +119,18 @@ const handleContextMenu = (buttonId: number, event: MouseEvent) => {
     activeButtonContext.value = buttonId
     contextMenu.value.show(event)
 }
+
+// const saveMultiBinding = (activeButtonId: number, actionValues: any[]) => { 
+//     console.log(activeButtonId + "BUTTON ID")
+    
+//     console.log("ACTIONS BINDED:");
+    
+//     console.log(actionValues)
+
+
+
+
+// }
 
 
 

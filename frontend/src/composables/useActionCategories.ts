@@ -10,28 +10,28 @@ export const useActionCategories = () => {
                 {
                     label: 'Key Press & Release',
                     icon: 'pepicons-pop:down-up',
-                    actionCode: 'press-release',
+                    actionCode: 'pressRelease',
                     requiresInput: true,
-                    inputType: 'key'
+                    // inputType: 'key'
                 },
                 {
                     label: 'Key Hold',
                     icon: 'fa6-solid:down-long',
                     actionCode: 'hold',
                     requiresInput: true,
-                    inputType: 'key'
+                    // inputType: 'key'
                 },
                 {
                     label: 'Key Release',
                     icon: 'fa6-solid:up-long',
                     actionCode: 'release',
                     requiresInput: true,
-                    inputType: 'key'
+                    // inputType: 'key'
                 },
                 {
                     label: 'Key Release All',
                     icon: 'line-md:chevron-small-triple-up',
-                    actionCode: 'release-all',
+                    actionCode: 'releaseAll',
                     requiresInput: false
                 }
             ]
@@ -43,16 +43,16 @@ export const useActionCategories = () => {
                 {
                     label: 'Mouse move',
                     icon: 'mdi:mouse-move-vertical',
-                    actionCode: 'mouse-move',
+                    actionCode: 'mouseMove',
                     requiresInput: true,
-                    inputType: 'mouse'
+                    // inputType: 'mouse'
                 },
                 {
                     label: 'Mouse click',
                     icon: 'mdi:mouse-left-click',
-                    actionCode: 'mouse-click',
+                    actionCode: 'mouseClick',
                     requiresInput: true,
-                    inputType: 'mouse'
+                    // inputType: 'mouse'
                 }
             ]
         },
@@ -63,37 +63,37 @@ export const useActionCategories = () => {
                 {
                     label: 'Volume-up',
                     icon: 'material-symbols:volume-up-rounded',
-                    actionCode: 'volume-up',
+                    actionCode: 'volumeUp',
                     requiresInput: false
                 },
                 {
                     label: 'Volume-down',
                     icon: 'material-symbols:volume-down-rounded',
-                    actionCode: 'volume-down',
+                    actionCode: 'volumeDown',
                     requiresInput: false
                 },
                 {
                     label: 'Volume mute',
                     icon: 'mingcute:volume-mute-fill',
-                    actionCode: 'volume-mute',
+                    actionCode: 'volumeMute',
                     requiresInput: false
                 },
                 {
                     label: 'Play/pause toggle',
                     icon: 'f7:playpause-fill',
-                    actionCode: 'play-pause',
+                    actionCode: 'playPause',
                     requiresInput: false
                 },
                 {
                     label: 'Play next',
                     icon: 'mage:next-fill',
-                    actionCode: 'play-next',
+                    actionCode: 'playNext',
                     requiresInput: false
                 },
                 {
                     label: 'Play previous',
                     icon: 'mage:previous-fill',
-                    actionCode: 'play-prev',
+                    actionCode: 'playPrev',
                     requiresInput: false
                 }
             ]
@@ -107,14 +107,14 @@ export const useActionCategories = () => {
                     icon: 'mingcute:time-fill',
                     actionCode: 'delay',
                     requiresInput: true,
-                    inputType: 'delay'
+                    // inputType: 'delay'
                 },
                 {
                     label: 'Write',
                     icon: 'material-symbols:keyboard-rounded',
                     actionCode: 'write',
                     requiresInput: true,
-                    inputType: 'text'
+                    // inputType: 'text'
                 }
             ]
         }

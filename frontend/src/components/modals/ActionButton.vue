@@ -71,7 +71,7 @@ const props = defineProps<Props>()
 .action-button:hover {
     background-color: transparent;
     border-color: var(--green-bright);
-    transform: translateX(2px);
+    transform: translateX(1px);
 }
 
 .action-button:active {

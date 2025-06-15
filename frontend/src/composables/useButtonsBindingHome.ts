@@ -37,7 +37,9 @@ export const useButtons = () => {
         }
     }
 
-
+    const getButtonValue = (buttonId: number) => {
+        return store.allButtons.find(button => button.id === buttonId)
+    }
 
 
     //page navigation
@@ -114,7 +116,8 @@ export const useButtons = () => {
         bindButtonValue,
         listeningButton,
         initKnob,
-        resetButton
+        resetButton,
+        getButtonValue
         // resetButton
     }
 }

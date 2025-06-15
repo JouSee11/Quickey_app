@@ -145,15 +145,28 @@ export const useDeviceStore = defineStore('device', () => {
             
                 if (buttonIndex !== -1) {
                     // Update the button's value
-                    buttonStore.allButtons[buttonIndex].value = keyCodes
+                    // buttonStore.allButtons[buttonIndex].value = keyCodes
+                    
+                    buttonStore.updateButton(parseInt(buttonId), {value: keyCodes})                        
+
+
                 
                     // Update button state and text
-                    if (keyCodes.length > 0) {
-                        buttonStore.allButtons[buttonIndex].state = 'binded'
-                        buttonStore.allButtons[buttonIndex].text = keyCodes.join(' + ')
+                    if (keyCodes[0] === 'multi') {
+                        // buttonStore.allButtons[buttonIndex].state = 'multiBinding'
+                        buttonStore.updateButton(parseInt(buttonId), {state: 'multiBinding'})                        
+                        // buttonStore.allButtons[buttonIndex].text= 'multi'
+                    }
+                    else if (keyCodes.length > 0) {
+                        buttonStore.updateButton(parseInt(buttonId), {state: 'binded', text: keyCodes.join(' + ')})                        
+
+                        // buttonStore.allButtons[buttonIndex].state = 'binded'
+                        // buttonStore.allButtons[buttonIndex].text = keyCodes.join(' + ')                        
                     } else {
-                        buttonStore.allButtons[buttonIndex].state = 'notBinded'
-                        buttonStore.allButtons[buttonIndex].text = buttonStore.getButtonText('notBinded')
+                        buttonStore.updateButton(parseInt(buttonId), {state: 'notBinded'})                        
+
+                        // buttonStore.allButtons[buttonIndex].state = 'notBinded'
+                        // buttonStore.allButtons[buttonIndex].text = buttonStore.getButtonText('notBinded')
                     }
                 }
             })

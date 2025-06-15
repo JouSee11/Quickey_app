@@ -33,8 +33,14 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
     const openDialog = (buttonId: number) => {
         console.log("Opening dialog for button:", buttonId)
         activeButtonId.value = buttonId
-        actionsBinded.value = [] // reset actions on open
         isVisible.value = true
+
+        //when there is already something binded show import it to the dialog
+        // if (currentButtonValues.length === 0) {
+        //     actionsBinded.value = [] // reset actions on open
+        // } else {
+        //     // initActionsMulit()
+        // }
     }
 
     const closeDialog = () => {

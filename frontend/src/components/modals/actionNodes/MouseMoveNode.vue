@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ActionNodeProps, ActionNodeEmits } from '@/types/buttonBindHome';
 import { Icon } from '@iconify/vue';
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 
 const props = defineProps<ActionNodeProps>()
 const emit = defineEmits<ActionNodeEmits>()
@@ -24,6 +24,16 @@ watch([xPixels, yPixels, xDirection, yDirection], updateValue)
 const handleRemoveAction = () => {
     emit('remove', props.index)
 }
+
+onMounted(() => {
+    if (props.actionElement.value !== '') {
+        const valuesParts = props.actionElement.value.split('&')
+        xDirection.value = valuesParts[0]
+        yDirection.value = valuesParts[1]
+        xPixels.value = parseInt(valuesParts[2])
+        yPixels.value = parseInt(valuesParts[3])
+    }
+})
 
 
 

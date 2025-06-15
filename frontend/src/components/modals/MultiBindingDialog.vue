@@ -5,20 +5,58 @@ import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue'
 import ActionsDisplay from '@/components/modals/ActionsDisplay.vue';
 import ActionsSelection from '@/components/modals/ActionsSelection.vue';
+import { useButtonBindStore } from '@/stores/buttonBindStore';
+import { useMulitBindingImport } from '@/composables/useMultiBindingImport';
 
-const emit = defineEmits<{
-    save: [buttonId: number, actions: any[]]
-}>()
+// const emit = defineEmits<{
+//     save: [buttonId: number, actions: any[]]
+// }>()
 
 const multiBindingDialogStore = useMultiBindingDialogStore()
 const { categories } = useActionCategories()
+const {importExistingValues} = useMulitBindingImport()
 
 const {isVisible, activeButtonId, dialogTitle, hasActions, actionsBinded} = storeToRefs(multiBindingDialogStore)
 const {closeDialog, addAction, removeAction} = multiBindingDialogStore
 
+const buttonBindStore = useButtonBindStore()
+
+//watch when dialogs opens and import existing values 
+watch([isVisible, activeButtonId], ([visible, buttonId]) => {
+    if (visible && buttonId) {
+        const button = buttonBindStore.allButtons.find(btn => btn.id === buttonId)
+        if (button && button.value) importExistingValues(button.value)
+        else multiBindingDialogStore.actionsBinded = [] //reset the binding if it is empty
+    }
+})
+
 
 const handleSave = () => {
-    emit('save', activeButtonId.value!, actionsBinded.value)
+    const multiBindingValues: string[] = actionsBinded.value.map((actionData, index) => {
+        if (!actionData.requiresInput) return `${index}_${actionData.value}_`
+        
+        return `${index}_${actionData.actionCode}_${actionData.value.trim()}`
+
+    })
+
+    // add the multi at the start, so the controlled knows how to treat the values
+    multiBindingValues.unshift('multi'); 
+
+    
+    if (multiBindingValues.length > 1) {
+        buttonBindStore.updateButton(activeButtonId.value!, {
+            value: multiBindingValues,
+            state: "multiBinding"
+        })
+    } else {
+        
+        buttonBindStore.updateButton(activeButtonId.value!, {
+            value: [],
+            state: 'notBinded'
+        })
+    }
+
+    // emit('save', activeButtonId.value!, multiBindingValues)
     closeDialog()
 }
 
@@ -52,6 +90,7 @@ const handleSave = () => {
                     outlined
                     icon="pi pi-file-check"
                     label="Save"
+                    @click="handleSave"
 
                 />
                 <Button 

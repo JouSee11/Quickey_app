@@ -12,14 +12,18 @@ import DefaultActionNode from '@/components/modals/actionNodes/DefaultActionNode
 import WriteActionNode from '@/components/modals/actionNodes/WriteActionNode.vue';
 import KeyPressNode from '@/components/modals/actionNodes/KeyPressNode.vue';
 import MouseMoveNode from '@/components/modals/actionNodes/MouseMoveNode.vue';
+import MouseClickNode from '@/components/modals/actionNodes/MouseClickNode.vue';
+import DelayNode from '@/components/modals/actionNodes/DelayNode.vue';
 
 //map special action actionCode to special components (dont need to specify those that dont reqire any input)
 const mapActionComponents: Record<string, any> = {
-    write: WriteActionNode,
-    'press-release':  KeyPressNode,
+    'write': WriteActionNode,
+    'pressRelease':  KeyPressNode,
     'hold': KeyPressNode,
     'release': KeyPressNode,
-    'mouse-move': MouseMoveNode
+    'mouseMove': MouseMoveNode,
+    'mouseClick': MouseClickNode,
+    'delay': DelayNode
 }  
 const getActionComponent = (actionCode: string) => {
     return mapActionComponents[actionCode] || DefaultActionNode
@@ -126,6 +130,7 @@ const handleRemoveAction = (index: number) => {
     background-color: var(--blue-dark);
     border-radius: var(--border-rad-smaller);
     padding: 10px 10px;
+    
 }
 
 .drop-zone-empty {
