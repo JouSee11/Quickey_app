@@ -40,6 +40,7 @@ declare module 'vue' {
     InputNumber: typeof import('primevue/inputnumber')['default']
     InputText: typeof import('primevue/inputtext')['default']
     KeyPressNode: typeof import('./src/components/modals/actionNodes/KeyPressNode.vue')['default']
+    KnobBindingDialog: typeof import('./src/components/modals/KnobBindingDialog.vue')['default']
     Menu: typeof import('primevue/menu')['default']
     MouseClickNode: typeof import('./src/components/modals/actionNodes/MouseClickNode.vue')['default']
     MouseMoveNode: typeof import('./src/components/modals/actionNodes/MouseMoveNode.vue')['default']

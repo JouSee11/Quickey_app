@@ -9,7 +9,7 @@ export interface ButtonBindHome {
 
 export interface KnobBindHome {
     state: "binded" | "notBinded"
-    value: string[]
+    values: string[]
 }
 
 export interface MultiBindingAction {

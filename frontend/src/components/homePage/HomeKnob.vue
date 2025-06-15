@@ -7,6 +7,9 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const handleKnobBindingDialog = () => {
+    
+}
 
 </script>
 
@@ -15,6 +18,7 @@ const props = defineProps<Props>()
     <!-- knob display -->
     <Button 
         :class="['knob', 'box-shadow-normal', { 'binded': props.state === 'binded'}]"
+        @click="handleKnobBindingDialog"
     >
         <!-- <Icon icon="mdi:knob" class="icon-knob"/> -->
     <Icon v-if="props.state === 'binded'" icon="solar:volume-knob-bold" class="icon-knob" />

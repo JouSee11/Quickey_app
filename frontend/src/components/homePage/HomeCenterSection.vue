@@ -15,6 +15,8 @@ import { storeToRefs } from "pinia"
 import type { ButtonBindHome } from "@/types/buttonBindHome"
 import MultiBindingDialog from "@/components/modals/MultiBindingDialog.vue"
 import { useMultiBindingDialogStore } from "@/stores/multiBindingDialogStore"
+import KnobBindingDialog from "@/components/modals/KnobBindingDialog.vue"
+import { useKnobDialogStore } from "@/stores/knobDialogStore"
 
 //use the composable functoins
 const {
@@ -89,7 +91,6 @@ const saveDataToDevice = async () => {
     })
 
     await sendToDevice(dataToSend)
-    
 }
 
 //context menu actions
@@ -120,18 +121,8 @@ const handleContextMenu = (buttonId: number, event: MouseEvent) => {
     contextMenu.value.show(event)
 }
 
-// const saveMultiBinding = (activeButtonId: number, actionValues: any[]) => { 
-//     console.log(activeButtonId + "BUTTON ID")
-    
-//     console.log("ACTIONS BINDED:");
-    
-//     console.log(actionValues)
-
-
-
-
-// }
-
+// === KNOB ===
+const knobDialogStore = useKnobDialogStore()
 
 
 </script>
@@ -140,6 +131,7 @@ const handleContextMenu = (buttonId: number, event: MouseEvent) => {
     <div id="center-section">
 
          <MultiBindingDialog/>
+         <KnobBindingDialog />
 
         <div id="connection-cont">
             <div 
@@ -193,6 +185,7 @@ const handleContextMenu = (buttonId: number, event: MouseEvent) => {
             <HomeKnob 
                 v-if="showKnob && knobElement && currentPage === totalPages + 1"
                 :state="knobElement.state"
+                @click="knobDialogStore.openDialog"
             />
 
              <ContextMenu ref="contextMenu" :model="menuItems" @hide="activeButtonContext = null"/>
