@@ -35,7 +35,7 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
             button.value = []
         })
 
-        knobElement.value = {state: "notBinded", values: []}
+        knobElement.value = {state: "notBinded", values: {left: '', right: '', button: ''}}
     }
 
     const setCurrentPage = (page: number) => {

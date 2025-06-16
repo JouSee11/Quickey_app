@@ -1,0 +1,156 @@
+<script setup lang="ts">
+import { useKnobDialogStore } from '@/stores/knobDialogStore';
+import { storeToRefs } from 'pinia';
+import { Icon } from '@iconify/vue';
+import KnobActionSelect from '@/components/modals/knobBinding/KnobActionSelect.vue';
+import { useKnobActionCategories } from '@/composables/useKnobActionCategories';
+import { useButtonBindStore } from '@/stores/buttonBindStore';
+import type { KnobBindHome } from '@/types/buttonBindHome';
+import {ref, watch} from 'vue'
+
+const dialogStore = useKnobDialogStore()
+const {isVisible} = storeToRefs(dialogStore)
+const {rotateCategories, buttonCategories} = useKnobActionCategories()
+
+const buttonBindStore = useButtonBindStore()
+// const {knobElement} = storeToRefs(useButtonBindStore())
+
+//import the state when opening the dialog
+watch(isVisible, (visible) => {
+    if (visible) {
+        const currentKnob = buttonBindStore.knobElement
+        if(currentKnob) {
+            knobElementDialog.value = {
+                state: currentKnob.state,
+                values: { ...currentKnob.values} 
+            }
+        } else {
+            knobElementDialog.value = {
+                state: 'notBinded',
+                values: {left: '', right: '', button: ''}
+            }
+        }
+    }
+})
+
+const saveBinding = () => {
+    buttonBindStore.setKnob({ ...knobElementDialog.value }) //create deep copy
+    dialogStore.closeDialog()
+}
+
+const knobElementDialog = ref<KnobBindHome>({state: 'notBinded', values: {left: '', right: '', button: ''}})
+
+const handleActionSelected = (type: 'left' | 'right' | 'button', value: string) => {
+    console.log("Type: " +type);
+    console.log("Value: " + value);
+    
+    knobElementDialog.value.values[type] = value
+    knobElementDialog.value.state = 'binded'
+}
+
+const closeDialog = () => {
+    knobElementDialog.value = {
+        state: 'notBinded',
+        values: { left: '', right: '', button: '' }
+    }
+    dialogStore.closeDialog()
+}
+
+</script>
+
+<template>
+    <Dialog
+        v-model:visible="isVisible"
+        modal
+        header="Knob binding"
+        :style="{width: '70%', height: '300px'}"
+        @hide="dialogStore.closeDialog"
+    >
+        <div class='knob-dialog-content'>
+            <div class="dialog-content-section">
+                <p class="section-header"><Icon icon="material-symbols:rotate-left" class="section-icon"/>Rotate left</p>
+                <KnobActionSelect :action-categories="rotateCategories" type="left" @action-selected="handleActionSelected" :default-value="knobElementDialog.values.left"/>
+            </div>
+
+            <div class="dialog-content-section">
+                <p class="section-header"><Icon icon="material-symbols:rotate-right" class="section-icon"/>Rotate right</p>
+                <KnobActionSelect :action-categories="rotateCategories" type="right" @action-selected="handleActionSelected" :default-value="knobElementDialog.values.right"/>
+            </div>
+
+            <div class="dialog-content-section">
+                <p class="section-header"><Icon icon="tdesign:gesture-click-filled" class="section-icon"/> Knob button</p>
+                <KnobActionSelect :action-categories="buttonCategories" type="button" @action-selected="handleActionSelected" :default-value="knobElementDialog.values.button"/>
+            </div>
+
+            <div class="control-buttons-dialog">
+                <Button 
+                    :class="['control-button-dialog', 'dialog-save-button']" 
+                    outlined
+                    icon="pi pi-file-check"
+                    label="Save"
+                    size="small"
+                    @click="saveBinding"
+                />
+                <Button 
+                    :class="['control-button-dialog', 'dialog-cancel-button']" 
+                    outlined
+                    label="Cancel"
+                    icon="pi pi-times-circle"
+                    size="small"
+                    @click="closeDialog"
+                />
+            </div>
+        </div>
+    </Dialog>
+
+</template>
+
+<style scoped>
+
+
+.knob-dialog-content{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 30px;
+}
+
+.dialog-content-section{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 25%;
+}
+
+.section-icon{
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.section-header{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.knob-select{
+    width: 100%;
+}
+
+.control-buttons-dialog{
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+}
+
+.control-button-dialog{
+    margin-right: 20px;
+}
+
+.dialog-save-button{
+    color: var(--green-dark);
+}
+
+</style>

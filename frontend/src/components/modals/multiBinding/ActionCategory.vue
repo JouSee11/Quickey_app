@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ActionButton from '@/components/modals/ActionButton.vue';
+import ActionButton from '@/components/modals/multiBinding/ActionButton.vue';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 import { VueDraggable } from 'vue-draggable-plus'
@@ -30,7 +30,6 @@ const clone = (originalAction: ActionDefinition): MultiBindingAction => {
         icon: originalAction.icon,   // Include the icon
         value: originalAction.requiresInput ? '' : originalAction.actionCode, // Set a default value
         requiresInput: originalAction.requiresInput,
-        inputType: originalAction.inputType,
         // Ensure this structure matches your (ideally updated) MultiBindingAction type
     }
 }

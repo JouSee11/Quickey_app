@@ -13,9 +13,9 @@ import HomeKnob from "@/components/homePage/HomeKnob.vue"
 import { useDeviceStore } from "@/stores/deviceStore"
 import { storeToRefs } from "pinia"
 import type { ButtonBindHome } from "@/types/buttonBindHome"
-import MultiBindingDialog from "@/components/modals/MultiBindingDialog.vue"
+import MultiBindingDialog from "@/components/modals/multiBinding/MultiBindingDialog.vue"
 import { useMultiBindingDialogStore } from "@/stores/multiBindingDialogStore"
-import KnobBindingDialog from "@/components/modals/KnobBindingDialog.vue"
+import KnobBindingDialog from "@/components/modals/knobBinding/KnobBindingDialog.vue"
 import { useKnobDialogStore } from "@/stores/knobDialogStore"
 
 //use the composable functoins

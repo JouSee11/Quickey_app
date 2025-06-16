@@ -9,7 +9,11 @@ export interface ButtonBindHome {
 
 export interface KnobBindHome {
     state: "binded" | "notBinded"
-    values: string[]
+    values: {
+        left: string,
+        right: string,
+        button: string
+    }
 }
 
 export interface MultiBindingAction {
@@ -51,3 +55,14 @@ export interface ActionNodeEmits{
     remove: [index: number]
 }
 
+
+//knob binding acitons
+export interface KnobActionCategory {
+    label: string,
+    iconSection: string,
+    items: {
+        label: string,
+        value: string,
+        icon: string
+    }[]
+}

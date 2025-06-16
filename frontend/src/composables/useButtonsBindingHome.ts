@@ -32,7 +32,7 @@ export const useButtons = () => {
 
     const initKnob = () => {
         if (store.showKnob) {
-            const knob: KnobBindHome = {state: "notBinded", values: []}
+            const knob: KnobBindHome = {state: "notBinded", values: {left: '', right: '', button: ''}}
             store.setKnob(knob)
         }
     }

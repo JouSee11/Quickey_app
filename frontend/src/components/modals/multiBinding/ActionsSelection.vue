@@ -1,8 +1,8 @@
 <!-- filepath: c:\CODE_PROJEKTY\QUICK_KEY_controller\frontend\src\components\modals\ActionsSelection.vue -->
 <script setup lang="ts">
-import ActionCategory from '@/components/modals/ActionCategory.vue'
+import ActionCategory from '@/components/modals/multiBinding/ActionCategory.vue'
 import { useActionCategories } from '@/composables/useActionCategories'
-import ActionButton from '@/components/modals/ActionButton.vue';
+import ActionButton from '@/components/modals/multiBinding/ActionButton.vue';
 
 const { categories } = useActionCategories()
 

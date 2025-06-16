@@ -3,8 +3,8 @@ import { useActionCategories } from '@/composables/useActionCategories';
 import { useMultiBindingDialogStore } from '@/stores/multiBindingDialogStore';
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue'
-import ActionsDisplay from '@/components/modals/ActionsDisplay.vue';
-import ActionsSelection from '@/components/modals/ActionsSelection.vue';
+import ActionsDisplay from '@/components/modals/multiBinding/ActionsDisplay.vue';
+import ActionsSelection from '@/components/modals/multiBinding/ActionsSelection.vue';
 import { useButtonBindStore } from '@/stores/buttonBindStore';
 import { useMulitBindingImport } from '@/composables/useMultiBindingImport';
 

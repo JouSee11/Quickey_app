@@ -8,12 +8,12 @@ import { storeToRefs } from 'pinia';
 import type { DefineComponent } from 'vue';
 
 //import all possible action node components
-import DefaultActionNode from '@/components/modals/actionNodes/DefaultActionNode.vue';
-import WriteActionNode from '@/components/modals/actionNodes/WriteActionNode.vue';
-import KeyPressNode from '@/components/modals/actionNodes/KeyPressNode.vue';
-import MouseMoveNode from '@/components/modals/actionNodes/MouseMoveNode.vue';
-import MouseClickNode from '@/components/modals/actionNodes/MouseClickNode.vue';
-import DelayNode from '@/components/modals/actionNodes/DelayNode.vue';
+import DefaultActionNode from '@/components/modals/multiBinding/actionNodes/DefaultActionNode.vue';
+import WriteActionNode from '@/components/modals/multiBinding/actionNodes/WriteActionNode.vue';
+import KeyPressNode from '@/components/modals/multiBinding/actionNodes/KeyPressNode.vue';
+import MouseMoveNode from '@/components/modals/multiBinding/actionNodes/MouseMoveNode.vue';
+import MouseClickNode from '@/components/modals/multiBinding/actionNodes/MouseClickNode.vue';
+import DelayNode from '@/components/modals/multiBinding/actionNodes/DelayNode.vue';
 
 //map special action actionCode to special components (dont need to specify those that dont reqire any input)
 const mapActionComponents: Record<string, any> = {
