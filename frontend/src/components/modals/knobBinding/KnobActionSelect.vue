@@ -13,6 +13,7 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<{
     actionSelected: [type: 'left' | 'right' | 'button', value: string]
+    actionDelete: [type: 'left' | 'right' | 'button']
 }>()
 
 const selectedAcion = ref()
@@ -22,6 +23,11 @@ watch(selectedAcion, (newValue) => {
         emit('actionSelected', props.type, newValue.value)
     }
 })
+
+const deleteAction = () => {
+    selectedAcion.value = ''
+    emit('actionDelete', props.type)
+}
 
 //default value
 const allOptions = computed(() => {
@@ -57,33 +63,43 @@ onMounted(() => {
 </script>
 
 <template>
-    <Select 
-        v-model="selectedAcion" 
-        :options="props.actionCategories" 
-        option-label="label"
-        option-group-label="label"
-        option-group-children="items"
-        placeholder="Select action"
-        class="knob-select"
-        filter
-    >
-        <template #optiongroup="actionCategory">
-            <div class="action-header">
-                <Icon :icon="actionCategory.option.iconSection" class="category-icon"/>
-                <p>{{ actionCategory.option.label }}</p>
-            </div>
-        </template>
+    <div class="select-cont">
+        <Select 
+            v-model="selectedAcion" 
+            :options="props.actionCategories" 
+            option-label="label"
+            option-group-label="label"
+            option-group-children="items"
+            placeholder="Select action"
+            class="knob-select"
+            filter
+        >
+            <template #optiongroup="actionCategory">
+                <div class="action-header">
+                    <Icon :icon="actionCategory.option.iconSection" class="category-icon"/>
+                    <p>{{ actionCategory.option.label }}</p>
+                </div>
+            </template>
 
-        <template #option="actionItem">
-            <Icon :icon="actionItem.option.icon" class="item-icon"></Icon>
-            <p>{{ actionItem.option.label }}</p>
-        </template>
+            <template #option="actionItem">
+                <Icon :icon="actionItem.option.icon" class="item-icon"></Icon>
+                <p>{{ actionItem.option.label }}</p>
+            </template>
 
-    </Select>
-
+        </Select>
+        <Button outlined  class="select-delete-button" size="small" @click="deleteAction">
+            <Icon icon="material-symbols:close" class="select-delete-icon"/>
+        </Button>
+    </div>
 </template>
 
 <style scoped>
+.select-cont{
+    display: flex;
+    align-items: center;
+}
+
+
 .knob-select{
     width: 100%;
 }
@@ -102,4 +118,18 @@ onMounted(() => {
     width: 20px;
     height: 20px;
 }
+
+.select-delete-button{
+    color: var(--red-dark);
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    padding: 0;
+}
+
+.select-delete-icon{
+    width: 20px;
+    height: 20px;
+}
+
 </style>

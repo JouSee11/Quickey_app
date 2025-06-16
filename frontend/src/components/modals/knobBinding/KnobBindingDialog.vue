@@ -48,6 +48,14 @@ const handleActionSelected = (type: 'left' | 'right' | 'button', value: string) 
     knobElementDialog.value.state = 'binded'
 }
 
+const handleActionDelete = (type: 'left' | 'right' | 'button') => {
+    knobElementDialog.value.values[type] = ''
+
+    if (knobElementDialog.value.values.button === '' && knobElementDialog.value.values.left === '' && knobElementDialog.value.values.right === '' ) {
+        knobElementDialog.value.state = 'notBinded'
+    }
+}
+
 const closeDialog = () => {
     knobElementDialog.value = {
         state: 'notBinded',
@@ -69,17 +77,17 @@ const closeDialog = () => {
         <div class='knob-dialog-content'>
             <div class="dialog-content-section">
                 <p class="section-header"><Icon icon="material-symbols:rotate-left" class="section-icon"/>Rotate left</p>
-                <KnobActionSelect :action-categories="rotateCategories" type="left" @action-selected="handleActionSelected" :default-value="knobElementDialog.values.left"/>
+                <KnobActionSelect :action-categories="rotateCategories" type="left" @action-selected="handleActionSelected" @action-delete="handleActionDelete" :default-value="knobElementDialog.values.left"/>
             </div>
 
             <div class="dialog-content-section">
                 <p class="section-header"><Icon icon="material-symbols:rotate-right" class="section-icon"/>Rotate right</p>
-                <KnobActionSelect :action-categories="rotateCategories" type="right" @action-selected="handleActionSelected" :default-value="knobElementDialog.values.right"/>
+                <KnobActionSelect :action-categories="rotateCategories" type="right" @action-selected="handleActionSelected" @action-delete="handleActionDelete" :default-value="knobElementDialog.values.right"/>
             </div>
 
             <div class="dialog-content-section">
                 <p class="section-header"><Icon icon="tdesign:gesture-click-filled" class="section-icon"/> Knob button</p>
-                <KnobActionSelect :action-categories="buttonCategories" type="button" @action-selected="handleActionSelected" :default-value="knobElementDialog.values.button"/>
+                <KnobActionSelect :action-categories="buttonCategories" type="button" @action-selected="handleActionSelected" @action-delete="handleActionDelete" :default-value="knobElementDialog.values.button"/>
             </div>
 
             <div class="control-buttons-dialog">
@@ -111,7 +119,7 @@ const closeDialog = () => {
 .knob-dialog-content{
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 10px 30px;
 }
 
