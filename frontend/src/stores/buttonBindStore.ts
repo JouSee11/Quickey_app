@@ -10,7 +10,7 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
     const buttonsPerPage = ref<number>(9)
     
     const showKnob = ref<number>(1)
-    const knobElement = ref<KnobBindHome>()
+    const knobElement = ref<KnobBindHome>({state: 'notBinded', values: {left: '', right: '', button: ''}})
 
     //function to determine the button text based on the state of the button
     const getButtonText = (state: ButtonState, customText?: string): string => {

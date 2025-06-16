@@ -30,7 +30,7 @@ export const useButtons = () => {
         store.setButtons(buttons)
     }
 
-    const initKnob = () => {
+    const resetKnob = () => {
         if (store.showKnob) {
             const knob: KnobBindHome = {state: "notBinded", values: {left: '', right: '', button: ''}}
             store.setKnob(knob)
@@ -115,7 +115,7 @@ export const useButtons = () => {
         changePage,
         bindButtonValue,
         listeningButton,
-        initKnob,
+        resetKnob,
         resetButton,
         getButtonValue
         // resetButton

@@ -73,6 +73,7 @@ const closeDialog = () => {
         header="Knob binding"
         :style="{width: '70%', height: '300px'}"
         @hide="dialogStore.closeDialog"
+        
     >
         <div class='knob-dialog-content'>
             <div class="dialog-content-section">
@@ -96,7 +97,6 @@ const closeDialog = () => {
                     outlined
                     icon="pi pi-file-check"
                     label="Save"
-                    size="small"
                     @click="saveBinding"
                 />
                 <Button 
@@ -104,7 +104,6 @@ const closeDialog = () => {
                     outlined
                     label="Cancel"
                     icon="pi pi-times-circle"
-                    size="small"
                     @click="closeDialog"
                 />
             </div>

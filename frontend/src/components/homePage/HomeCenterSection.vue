@@ -24,7 +24,7 @@ const {
     currentPage,
     currentPageButtons,
     initButtons,
-    initKnob,
+    resetKnob,
     changePage,
     bindButtonValue,
     listeningButton,
@@ -51,8 +51,8 @@ const multiBindingDialogStore = useMultiBindingDialogStore()
 
 // init buttons when componets are visible
 onMounted(() => {
-    initButtons(),
-    initKnob()
+    initButtons()
+    // initKnob()
 })
 
 
@@ -85,10 +85,14 @@ const saveDataToDevice = async () => {
     //convert data form the buttons to specified structure
     const dataToSend: Record<string, string[]> = {}
 
+    //add buttons
     allButtons.value.forEach((btn: ButtonBindHome) => {
         // Convert reactive array to plain array using toRaw or spread operator
         dataToSend[String(btn.id)] = toRaw(btn.value)
     })
+
+    //add knob data
+    dataToSend['knob'] = [knobElement.value.values.left, knobElement.value.values.right, knobElement.value.values.button] 
 
     await sendToDevice(dataToSend)
 }
