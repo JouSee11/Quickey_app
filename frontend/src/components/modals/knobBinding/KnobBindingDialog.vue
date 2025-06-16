@@ -160,4 +160,15 @@ const closeDialog = () => {
     color: var(--green-dark);
 }
 
+@media (max-width: 1100px) {
+    .knob-dialog-content{
+        flex-direction: column;
+    }
+
+    .dialog-content-section{
+        width: 90%;
+        margin-bottom: 40px;
+    }
+}
+
 </style>

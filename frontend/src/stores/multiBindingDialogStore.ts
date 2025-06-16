@@ -54,8 +54,11 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
         actionsBinded.value.push(action)
     }
 
-    const removeAction = (index: number) => {
-        actionsBinded.value.splice(index, 1)
+    const removeAction = (actionId: string) => {
+        const index = actionsBinded.value.findIndex(action => action.id =  actionId)
+        if (index !== -1) {
+            actionsBinded.value.splice(index, 1)
+        }
     }
 
     //actions for key capturing

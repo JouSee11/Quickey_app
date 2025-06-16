@@ -6,7 +6,7 @@ const props = defineProps<ActionNodeProps>()
 const emit = defineEmits<ActionNodeEmits>()
 
 const handleRemoveAction = () => {
-    emit('remove', props.index)
+    emit('remove', props.actionElement.id)
 }
 
 </script>

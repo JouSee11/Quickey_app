@@ -2,6 +2,7 @@ import {defineStore } from 'pinia'
 import {ref, computed, readonly} from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { useButtonBindStore } from './buttonBindStore'
+import type { KnobBindHome } from '@/types/buttonBindHome'
 
 
 export const useDeviceStore = defineStore('device', () => {
@@ -132,7 +133,6 @@ export const useDeviceStore = defineStore('device', () => {
     }
 
 
-    //TODO: actually make it work
     const handleImportData = (data: string): JSON | null => {        
         try {
             const jsonData = JSON.parse(data.substring(8))
@@ -149,8 +149,6 @@ export const useDeviceStore = defineStore('device', () => {
                     
                     buttonStore.updateButton(parseInt(buttonId), {value: keyCodes})                        
 
-
-                
                     // Update button state and text
                     if (keyCodes[0] === 'multi') {
                         // buttonStore.allButtons[buttonIndex].state = 'multiBinding'
@@ -170,6 +168,17 @@ export const useDeviceStore = defineStore('device', () => {
                     }
                 }
             })
+
+            //import the knob data
+            const knobDataImported = jsonData['knob'] as string[]
+            if (knobDataImported.every(data => data === '')) {
+                console.log("knob data empty");
+            }
+            else {
+                const knobTemp: KnobBindHome = {state: 'binded', values: {left: knobDataImported[0], right: knobDataImported[1], button: knobDataImported[2]}}
+                buttonStore.setKnob(knobTemp)
+            }
+
 
             logs.value.push("Button bindings updated successfully")
 

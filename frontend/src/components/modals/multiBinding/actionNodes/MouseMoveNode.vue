@@ -22,7 +22,7 @@ const updateValue = () => {
 watch([xPixels, yPixels, xDirection, yDirection], updateValue)
 
 const handleRemoveAction = () => {
-    emit('remove', props.index)
+    emit('remove', props.actionElement.id)
 }
 
 onMounted(() => {

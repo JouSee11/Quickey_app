@@ -52,7 +52,7 @@ export interface ActionNodeProps{
 }
 
 export interface ActionNodeEmits{
-    remove: [index: number]
+    remove: [actionId: string]
 }
 
 

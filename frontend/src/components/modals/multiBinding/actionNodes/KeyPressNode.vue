@@ -28,7 +28,7 @@ const displayText = computed(() => {
 const handleRemoveAction = (event: MouseEvent) => {
     event.stopPropagation()
 
-    emit('remove', props.index)
+    emit('remove', props.actionElement.id)
 }
 
 const handleStartCapture = () => {

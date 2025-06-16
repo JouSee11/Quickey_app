@@ -36,9 +36,9 @@ const handleActionsChange = (newActions: MultiBindingAction[]) => {
     console.log(newActions);    
 }
 
-const handleRemoveAction = (index: number) => {
+const handleRemoveAction = (actionId: string) => {
     // emit('removeAction', index)
-    multiBindingDialogStore.removeAction(index)
+    multiBindingDialogStore.removeAction(actionId)
 }
 
 
@@ -54,12 +54,14 @@ const handleRemoveAction = (index: number) => {
         </div>
 
         <VueDraggable
+            :key="actionsBinded.length"
             v-model="actionsBinded"
             :group="{name: 'actions', pull: false, put: true}"
             class="action-sequence"
             :scroll="true"
 
             @update:model-value="handleActionsChange"
+            item-key="id"
             
             :animation="300"
             :delay="0"
@@ -87,29 +89,6 @@ const handleRemoveAction = (index: number) => {
                 :key="element.id"
                 @remove="handleRemoveAction"
             />
-
-
-            <!-- main template for displaying the actions -->
-            <!-- <div
-                v-for="(element, index) in actionsBinded"
-                class="action-node"
-                :key="element.id"
-            >
-                <div class="drag-handle">
-                    <i class="pi pi-bars"></i>
-                </div>
-                
-                <i :class="element.icon" class="action-icon"></i>
-                
-                <div class="node-content">
-                    <p class="node-name">{{ element.label }}</p>
-                    <p class="node-content-key">{{ element.value }}</p>
-                </div>
-                
-                <div class="delete-btn" @click="handleRemoveAction(index)">
-                    <i class="pi pi-trash"></i>
-                </div>
-            </div> -->
 
         </VueDraggable>
     </div>
