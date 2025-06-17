@@ -46,7 +46,8 @@ const handleSave = () => {
     if (multiBindingValues.length > 1) {
         buttonBindStore.updateButton(activeButtonId.value!, {
             value: multiBindingValues,
-            state: "multiBinding"
+            state: "multiBinding",
+            text: `multi(${multiBindingValues.length})`
         })
     } else {
         

@@ -53,7 +53,9 @@ const multiBindingDialogStore = useMultiBindingDialogStore()
 
 // init buttons when componets are visible
 onMounted(() => {
-    initButtons()
+    if (allButtons.value.length === 0) {
+        initButtons()
+    }
     // initKnob()
 })
 
@@ -180,26 +182,28 @@ const knobDialogStore = useKnobDialogStore()
         </div>
         
         <!-- main buttons display -->
-        <div id="buttons-container" :data-page="currentPage">
-            <ButtonBox 
-                v-for="button in currentPageButtons"
-                :key="button.id"
-                :button-id="button.id"
-                :text="button.text"
-                :state="button.state"
-                :active-context-menu="activeButtonContext"
-                @bind-button="handleBindButton"
-                @context-menu="handleContextMenu"
-            />
+         <Transition name="page-slide" mode="out-in">
+            <div id="buttons-container" :data-page="currentPage" :key="currentPage">
+                <ButtonBox 
+                    v-for="button in currentPageButtons"
+                    :key="button.id"
+                    :button-id="button.id"
+                    :text="button.text"
+                    :state="button.state"
+                    :active-context-menu="activeButtonContext"
+                    @bind-button="handleBindButton"
+                    @context-menu="handleContextMenu"
+                />
 
-            <HomeKnob 
-                v-if="showKnob && knobElement && currentPage === totalPages + 1"
-                :state="knobElement.state"
-                @open-dialog="knobDialogStore.openDialog"
-            />
+                <HomeKnob 
+                    v-if="showKnob && knobElement && currentPage === totalPages + 1"
+                    :state="knobElement.state"
+                    @open-dialog="knobDialogStore.openDialog"
+                />
 
-             <ContextMenu ref="contextMenu" :model="menuItems" @hide="activeButtonContext = null"/>
-        </div>
+                <ContextMenu ref="contextMenu" :model="menuItems" @hide="activeButtonContext = null"/>
+            </div>
+        </Transition>
 
                     
         <!-- page numbers display -->
@@ -369,7 +373,37 @@ const knobDialogStore = useKnobDialogStore()
     color: var(--gray-main);
 }
 
-/* Make context menu items look more like your buttons */
+
+
+/* ============ transition animation between pages ========= */
+.page-slide-enter-active,
+.page-slide-leave-active {
+    transition: all 0.2s ease-in-out;
+}
+
+.page-slide-enter-from {
+    /* opacity: 0; */
+    filter: brightness(1.3);
+    /* transform: translateX(50px); */
+    /* transform: scale(0.95); */
+    
+}
+
+.page-slide-leave-to {
+    /* opacity: 0; */
+    /* transform: translateX(-50px); */
+    filter: brightness(1.5);
+    /* transform: scale(0.95); */
+}
+
+.page-slide-enter-to,
+.page-slide-leave-from {
+    opacity: 1;
+    filter: brightness(1.0);
+    /* transform: translateX(0); */
+    transform: scale(1.0);
+}
+
 
 
 

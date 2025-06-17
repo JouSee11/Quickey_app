@@ -37,7 +37,7 @@ const handleKnobBindingDialog = (event: MouseEvent) => {
     position: absolute !important;
     left: 50% !important;
     bottom: 50% !important;
-    transform: translate(-50%, 40%);
+    transform: translate(-50%, 35%);
     border-radius: 50%;
     width: 300px;
     height: 300px;

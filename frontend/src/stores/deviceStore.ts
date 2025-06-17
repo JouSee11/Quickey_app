@@ -156,7 +156,7 @@ export const useDeviceStore = defineStore('device', () => {
                     // Update button state and text
                     if (keyCodes[0] === 'multi') {
                         // buttonStore.allButtons[buttonIndex].state = 'multiBinding'
-                        buttonStore.updateButton(parseInt(buttonId), {state: 'multiBinding'})                        
+                        buttonStore.updateButton(parseInt(buttonId), {state: 'multiBinding', text: `multi(${keyCodes.length - 1})`})                        
                         // buttonStore.allButtons[buttonIndex].text= 'multi'
                     }
                     else if (keyCodes.length > 0) {
@@ -243,6 +243,8 @@ export const useDeviceStore = defineStore('device', () => {
             console.log("Device connected successfully");
             logs.value.push("Device connected successfully")
             toast.add({severity: 'success', summary: 'Connected', detail: 'Device connected successfully', life: 2000})
+            // Wait for a short time to ensure device is ready
+            await new Promise(resolve => setTimeout(resolve, 500));
             return true            
         } catch (error: any) {
             console.error(error.name);
@@ -294,7 +296,7 @@ export const useDeviceStore = defineStore('device', () => {
             logs.value.push(`Data send: ${dataToSend}`);
 
             //dont show this toast when importing
-            if (data !== 'import data' || data !== 'firmware data') {
+            if (data !== 'import data' && data !== 'firmware data') {
                 toast.add({severity: 'success', summary: 'Success', detail: 'Data was saved successfully', life: 2000})
             }
             return true
