@@ -55,7 +55,8 @@ export const useMultiBindingDialogStore = defineStore('dialog', () => {
     }
 
     const removeAction = (actionId: string) => {
-        const index = actionsBinded.value.findIndex(action => action.id =  actionId)
+        const index = actionsBinded.value.findIndex(action => action.id === actionId)
+        
         if (index !== -1) {
             actionsBinded.value.splice(index, 1)
         }

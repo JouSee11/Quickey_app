@@ -13,8 +13,8 @@ export const useDeviceStore = defineStore('device', () => {
     const connectionStatus = ref<'disconnected' | 'connecting' | 'connected' | 'error'>('disconnected')
     const deviceInfo = ref<{
         name: string,
-        port?: any
-    } | null>(null)
+        firmware: string
+    }>({name: '', firmware: ''})
     const lastError = ref<string>('')
     const logs = ref<string[]>(["--LOG-- --FOR DEBUG--"])
 
@@ -64,7 +64,7 @@ export const useDeviceStore = defineStore('device', () => {
     const resetState = () : void => {
         isConnected.value = false
         connectionStatus.value = 'disconnected'
-        deviceInfo.value = null
+        deviceInfo.value = {firmware: '', name: ''}
         lastError.value = ''
         serialBuffer.value = ''
     }
@@ -110,11 +110,15 @@ export const useDeviceStore = defineStore('device', () => {
                 if (serialBuffer.value.includes('\n')) {
                     // TODO: add it to the log area
                     // console.log(`[Device debug]: ${serialBuffer.value}`);
-                    logs.value.push(`[Device debug]: ${serialBuffer.value}`);
+                    logs.value.push(`[Device debug]: ${serialBuffer.value}`);                    
                     
                     //if we recpgnise the import from the device (printing from the device starts with _import_)
                     if (serialBuffer.value.startsWith('_import_')) {
                         handleImportData(serialBuffer.value)
+                    }
+                    if (serialBuffer.value.startsWith('_firmware_')){
+                        
+                        saveFirmwareData(serialBuffer.value)
                     }
 
                     //reset the serial buffer value after the whole message
@@ -196,6 +200,20 @@ export const useDeviceStore = defineStore('device', () => {
         }
     }
 
+    const saveFirmwareData = (data: string): void => {
+        try {
+            const dataInfo = data.split('_')
+            
+            deviceInfo.value.name = dataInfo[2]
+            deviceInfo.value.firmware = dataInfo[3]
+
+
+        } catch (error: any) {
+            console.log("Failed to process firmware data:" + error.message);
+            
+        }
+    }
+
     // ========================================
     // PUBLIC ACTIONS
     // ========================================
@@ -218,10 +236,6 @@ export const useDeviceStore = defineStore('device', () => {
             connectionStatus.value = 'connected'
             lastError.value = ''
 
-            deviceInfo.value = {
-                name: 'Quick Key Controller v1',
-                port: devicePort.value
-            }
 
             //start reading from the connected serial
             startReadingSerial()
@@ -280,7 +294,7 @@ export const useDeviceStore = defineStore('device', () => {
             logs.value.push(`Data send: ${dataToSend}`);
 
             //dont show this toast when importing
-            if (data !== 'import data') {
+            if (data !== 'import data' || data !== 'firmware data') {
                 toast.add({severity: 'success', summary: 'Success', detail: 'Data was saved successfully', life: 2000})
             }
             return true
@@ -321,6 +335,15 @@ export const useDeviceStore = defineStore('device', () => {
         }
     }
 
+    const getFirmwareInfo = async () => {
+        if (!canCommunicateWithDevice.value) throw new Error("cannot get firmware data - device not connected")
+        try {            
+            await sendToDevice('firmware data')           
+        } catch (error: any) {
+            setError(`Firmware data get failed ${error.message}`)
+        }
+    }
+
     // Handle page unload
     const handlePageUnload = (): void => {
         if (isConnected.value) {
@@ -354,6 +377,7 @@ export const useDeviceStore = defineStore('device', () => {
         sendToDevice,
         importFromDevice,
         handlePageUnload,
+        getFirmwareInfo
     
         // For debugging (optional)
         // debug: {

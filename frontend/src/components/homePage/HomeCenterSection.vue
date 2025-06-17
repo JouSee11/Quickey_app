@@ -40,11 +40,13 @@ const deviceStore = useDeviceStore()
 const {
     isConnected,
     connectionStatus,
+    deviceInfo
 } = storeToRefs(deviceStore)
 const {
     connect,
     disconnect,
-    sendToDevice
+    sendToDevice,
+    getFirmwareInfo
 } = deviceStore
 
 const multiBindingDialogStore = useMultiBindingDialogStore()
@@ -72,6 +74,7 @@ const toggleConnect = async () => {
     
     if (!isConnected.value) {
         await connect()
+        await getFirmwareInfo()
     } else {
         await disconnect()
     }
@@ -138,39 +141,42 @@ const knobDialogStore = useKnobDialogStore()
          <KnobBindingDialog />
 
         <div id="connection-cont">
-            <div 
-                id="connection-icon"
-                :class="{
-                    'connected': connectionStatus === 'connected',
-                    'disconnected': connectionStatus === 'disconnected',
-                    'connecting': connectionStatus === 'connecting',
-                    'error': connectionStatus === 'error'
-                }"
-            />
-            <p id="connection-msg">
-                {{
-                    connectionStatus === 'connected' ? 'Connected'
-                    : connectionStatus === 'disconnected' ? 'Disconnected'
-                    : connectionStatus === 'connecting' ? 'Connecting...'
-                    : connectionStatus === 'error' ? 'Error'
-                    : ''
-                }}
-            </p>
-            <Button 
-                type="submit" 
-                id="connect-button"
-                rounded
-                variant="outlined"
-                :class="{
-                    'connected': connectionStatus === 'connected',
-                    'disconnected': connectionStatus === 'disconnected',
-                    'connecting': connectionStatus === 'connecting',
-                    'error': connectionStatus === 'error'
-                }"
-                @click="toggleConnect"
-            >
-                {{isConnected ? 'Disconnect' : 'Connect'}}
-            </Button>
+            <p class="device-info">{{ deviceInfo.name }} - {{ deviceInfo.firmware }}</p>
+            <div class="connection-cont-info">
+                <div 
+                    id="connection-icon"
+                    :class="{
+                        'connected': connectionStatus === 'connected',
+                        'disconnected': connectionStatus === 'disconnected',
+                        'connecting': connectionStatus === 'connecting',
+                        'error': connectionStatus === 'error'
+                    }"
+                />
+                <p id="connection-msg">
+                    {{
+                        connectionStatus === 'connected' ? 'Connected'
+                        : connectionStatus === 'disconnected' ? 'Disconnected'
+                        : connectionStatus === 'connecting' ? 'Connecting...'
+                        : connectionStatus === 'error' ? 'Error'
+                        : ''
+                    }}
+                </p>
+                <Button 
+                    type="submit" 
+                    id="connect-button"
+                    rounded
+                    variant="outlined"
+                    :class="{
+                        'connected': connectionStatus === 'connected',
+                        'disconnected': connectionStatus === 'disconnected',
+                        'connecting': connectionStatus === 'connecting',
+                        'error': connectionStatus === 'error'
+                    }"
+                    @click="toggleConnect"
+                >
+                    {{isConnected ? 'Disconnect' : 'Connect'}}
+                </Button>
+            </div>
         </div>
         
         <!-- main buttons display -->
@@ -278,11 +284,26 @@ const knobDialogStore = useKnobDialogStore()
 
 #connection-cont{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
 }
+
+.connection-cont-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.device-info{
+    font-size: var(--small-text);
+    color: var(--gray-main);
+    margin-bottom: 5px;
+    transition: 0.2s color ease-in-out;
+}
+
 
 #connection-icon {
     width: 20px;

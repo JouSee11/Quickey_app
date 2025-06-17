@@ -88,12 +88,7 @@ def handle_key_press(key_num):
                 vert_sign = -1 if vertical_dir.lower() == "up" else 1
                 mouse.move(int(horiz_val) * horiz_sign, int(vert_val) * vert_sign)
             
-            elif action_name == "mouseClick":
-                def mouse_click(mouse_action):
-                    mouse.press(mouse_action)
-                    time.sleep(0.1)
-                    mouse.release(mouse_action)
-                    
+            elif action_name == "mouseClick":                    
                 if action_value == "left":
                     mouse_click(mouse.LEFT_BUTTON)
                 elif action_value == "right":
@@ -121,6 +116,11 @@ def handle_key_press(key_num):
         
     keyboard.release_all()
     
+def mouse_click(mouse_action):
+    mouse.press(mouse_action)
+    time.sleep(0.1)
+    mouse.release(mouse_action)
+    
 def encoder_execute_action(action):
     encoder_actions = btn_keys["knob"]
 
@@ -144,6 +144,8 @@ def encoder_rotate_action(action_code):
         mouse.move(wheel=1)
     elif action_code == "scrollDown":
         mouse.move(wheel=-1)
+    elif action_code == "mouseMiddle":
+        mouse_click(mouse.MIDDLE_BUTTON)
     elif action_code == "volumeMute":
         consumer.send(ConsumerControlCode.MUTE)
     elif action_code == "playPause":
@@ -152,7 +154,7 @@ def encoder_rotate_action(action_code):
         consumer.send(ConsumerControlCode.STOP)
     else:
         adafruit_key_code = JS_TO_ADAFRUIT_HID.get(action_code, None)
-        keyboard.press(adafruit_key_code)
+        keyboard.send(adafruit_key_code)
         
 
 def export_data_to_browser():

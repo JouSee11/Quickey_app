@@ -35,7 +35,7 @@ encoder_states = {
 }
 buttons_state = {i: True for i in range(1, 10)} # store states for the buttons
 
-print_data("Pico is running. Press buttons or send data over serial.")
+print_data("Macropad is running. Press buttons or send data over serial.")
 
 def calc_cur_btn_num(btn_num):
     return btn_num + page_num * 9
