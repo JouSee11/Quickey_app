@@ -44,6 +44,7 @@ declare module 'vue' {
     KnobBindingDialog: typeof import('./src/components/modals/knobBinding/KnobBindingDialog.vue')['default']
     KnobRotateSelect: typeof import('./src/components/modals/knobBinding/KnobRotateSelect.vue')['default']
     Menu: typeof import('primevue/menu')['default']
+    Menubar: typeof import('primevue/menubar')['default']
     MouseClickNode: typeof import('./src/components/modals/multiBinding/actionNodes/MouseClickNode.vue')['default']
     MouseMoveNode: typeof import('./src/components/modals/multiBinding/actionNodes/MouseMoveNode.vue')['default']
     MultiBindingDialog: typeof import('./src/components/modals/multiBinding/MultiBindingDialog.vue')['default']
@@ -60,5 +61,8 @@ declare module 'vue' {
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
     WrenchIcon: typeof import('./src/components/icons/WrenchIcon.vue')['default']
     WriteActionNode: typeof import('./src/components/modals/multiBinding/actionNodes/WriteActionNode.vue')['default']
+  }
+  export interface GlobalDirectives {
+    Ripple: typeof import('primevue/ripple')['default']
   }
 }

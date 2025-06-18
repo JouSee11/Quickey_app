@@ -17,6 +17,26 @@ const isActiveLink = (routePath: String) => {
     return route.path === routePath;
 }
 
+const otherItems = ref([
+    {
+        label: 'Home',
+        route: '/'
+    },
+    {
+        label: 'Discover',
+        route: '/discover'
+    },
+    {
+        label: 'Other',
+        icon: 'pi pi-angle-down',
+        items: [
+            {label: 'About', route: '/about'},
+            {label: 'firmware', route: '/firmware'},
+            {label: 'FAQ', route: '/faq'},
+        ]
+    },
+])
+
 </script>
 
 <template>
@@ -26,18 +46,46 @@ const isActiveLink = (routePath: String) => {
 
             <div id="navigation-links">
                 
-                <RouterLink 
+                <!-- <RouterLink 
                 to="/"
                 :class="[isActiveLink('/') ? 'activeLink' : 'inactiveLink']"
                 >Home</RouterLink>
                 <RouterLink
                 to="/discover"
                 :class="[isActiveLink('/discover') ? 'activeLink' : 'inactiveLink']"
-                >Discover</RouterLink>
-                <RouterLink 
+                >Discover</RouterLink> -->
+                
+                <!-- <Menubar :model="otherItems">
+                    <template #item="{ item, hasSubmenu }">
+                        <RouterLink :to="item.to">
+                            {{ item.label }}
+                            <span :class="item.icon"></span>
+                        </RouterLink>
+                    </template>
+
+                </Menubar> -->
+
+                 <Menubar :model="otherItems">
+                    <template #item="{ item, hasSubmenu }">
+                        <RouterLink  
+                            v-slot="{ href, navigate }"
+                            :to="item.route"
+                            custom
+                            :class="[isActiveLink(item.route) ? 'activeLink' : 'inactiveLink']"
+                        >
+                            <a :href="href" @click="navigate">
+                                <span class="dropdown-icon">{{ item.label }}</span>
+                                <span :class="item.icon" />
+                            </a>
+                        </RouterLink>
+                    </template>
+                </Menubar>
+
+
+                <!-- <RouterLink 
                 to="/about"
                 :class="[isActiveLink('/about') ? 'activeLink' : 'inactiveLink']"
-                >About</RouterLink>
+                >About</RouterLink> -->
             </div>
             
             <Button
@@ -121,6 +169,17 @@ const isActiveLink = (routePath: String) => {
 .activeLink{
     color: var(--primary-50) !important;
 }
+
+:deep(.p-menubar-submenu) {
+    padding: 10px;
+    margin-top: 10px;
+}
+
+:deep(.p-menubar-submenu .p-menubar-item-content){
+    margin-bottom: 5px;
+}
+
+
 
 @media (max-width: 800px){
     #navigation-logo{
