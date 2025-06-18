@@ -24,6 +24,10 @@ page_num = 0
 #board elements
 led_list = None
 
+#firmware info
+FIRMWARE_VERSON = ''
+DEVICE_NAME = ''
+
 # Initialize LEDS
 # Initialize LEDS
 # led0 = digitalio.DigitalInOut(board.GP11)

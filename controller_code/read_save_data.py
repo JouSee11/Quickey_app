@@ -3,10 +3,9 @@ import time
 from globals import keyboard, btn_keys, keyboardLayout, mouse, consumer
 from adafruit_hid.consumer_control_code import ConsumerControlCode
 from key_code_conversion import JS_TO_ADAFRUIT_HID
+from utils import print_data
 
 
-def print_data(data):
-    print(data + "\n")
 
 def read_data():
     try:

@@ -12,5 +12,5 @@ usb_hid.enable(
 )
 
 #set the device name - for the usb interface
-supervisor.set_usb_identification("Quickey", "V1-9K", 1, 1)
+#supervisor.set_usb_identification("Quickey", "V1-9K", 1, 1)
 usb_hid.set_interface_name("Quickey", "sdf", 0x1234, 0x5678)

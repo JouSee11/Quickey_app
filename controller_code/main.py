@@ -12,6 +12,7 @@ import globals
 from encoder_functions import *
 from light_control import *
 from read_save_data import *
+from read_firmware_info import read_firmware
 
 time_sleep = 0.005
 
@@ -20,6 +21,9 @@ globals.led_list = init_leds()
 #show the start animation and switch to current page
 start_light()
 show_led_num(page_num)
+
+#set firmware data
+globals.DEVICE_NAME, globals.FIRMWARE_VERSON = read_firmware()
 
 # Initialize buttons
 page_switch = init_page_switch()
@@ -56,9 +60,11 @@ def check_for_incomming_data():
     if supervisor.runtime.serial_bytes_available:
         data = sys.stdin.readline().strip()
         if data: # if any data are
-            print("[DEVICE DEBUG] here in the if:" + data)
             if (data == "import data"):
                 export_data_to_browser()
+            elif (data == "firmware data"):
+                print("[FROM DEVICE] sending firmware data")
+                print_data(f"_firmware_{globals.DEVICE_NAME}_{globals.FIRMWARE_VERSON}")
             else:
                 save_data(data)  # Save to filesystem
                 supervisor.reload() # reload the device when we save the data to it
@@ -80,6 +86,7 @@ def check_page_switch():
     global page_num
     #change the page number
     if not page_switch.value:
+        print_data("page switched")
         page_num = (page_num + 1) % 3 
         show_led_num(page_num)
         time.sleep(time_sleep + 0.3)

@@ -75,7 +75,7 @@ const toggleConnect = async () => {
     
     
     if (!isConnected.value) {
-        await connect()
+        await connect()        
         await getFirmwareInfo()
     } else {
         await disconnect()
