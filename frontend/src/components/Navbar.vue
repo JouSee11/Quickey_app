@@ -160,6 +160,11 @@ const otherItems = ref([
 #navigation-links a:hover{
     color: var(--primary-0) !important;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.418);
+
+}
+
+:deep(.p-menubar-item-content:hover){
+    background-color: transparent !important;
 }
 
 #login-button-nav{

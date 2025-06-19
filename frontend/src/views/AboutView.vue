@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import logo from '@/assets/images/icons/main-logo.svg'
+import soonImagePoster from '@/assets/images/landing_page/soon-poster.png'
+import productImage1 from '@/assets/images/landing_page/product_1.jpg'
+
 </script>
 
 <template>
@@ -7,13 +10,41 @@ import logo from '@/assets/images/icons/main-logo.svg'
 
     <Image :src="logo" class="logo-top" width="80"/>
     <h1 class="main-header">Quickey macropad</h1>
-    <div class="item-big"></div>
+
+    <p class="catch-phrase">Designed to simplify your workflow and keep your focus where it matters most.</p>
+    
+    <div class="main-button-cont">
+      <Button 
+        label="I am interested"
+        icon="pi pi-info-circle"
+        outlined
+        rounded
+        class="notify-button"
+      />
+    </div>
+
+    <div class="first-image-cont">
+      <div class="first-text-cont">
+        <p class="first-paragraph">Customizable macropad, binding multiple acitons at one click. Automatization for your everyday actions</p>
+      </div>
+      <Image class="image-first" :src="soonImagePoster" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"/>
+    </div>
+
+    <div class="first-image-cont">
+      <div class="first-text-cont">
+        <p class="first-paragraph">Customizable macropad, binding multiple acitons at one click. Automatization for your everyday actions</p>
+      </div>
+      <Image class="image-first" :src="productImage1" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"/>
+    </div>
+
+    <!-- <div class="item-big"></div> -->
     <div
       class="item-smaller"
       v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"
     >
       <p>YOYOYOYO</p>
     </div>
+    
 
     <ScrollTop/>
   </div>
@@ -27,7 +58,7 @@ import logo from '@/assets/images/icons/main-logo.svg'
   justify-content: start;
   width: 100vw;
   height: 100vh;
-  margin-top: 100px;
+  margin-top: 80px;
 }
 
 .item-big{
@@ -58,6 +89,55 @@ import logo from '@/assets/images/icons/main-logo.svg'
   width: 500px;
   text-align: center;
   line-height: 1em;
+}
+
+.catch-phrase{
+  color: var(--gray-bright);
+  font-size: var(--bigger-text);
+  width: 500px;
+  text-align: center;
+  margin-top: 40px;
+
+}
+
+.main-button-cont{
+  margin-top: 20px;
+}
+
+.notify-button{
+  color: var(--green-bright);
+  margin-right: 20px;
+}
+
+.app-button{
+  color: var(--gray-bright);
+}
+
+.first-image-cont{
+  display: flex;
+  width: 90vw;
+  margin-top: 70px;
+}
+
+.first-text-cont{
+  width: 50%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+
+.first-paragraph{
+  width: 70%;
+  font-size: var(--bigger-text);
+}
+
+:deep(.image-first img){
+  border-radius: var(--border-rad-main) !important;
+  border: 1px solid var(--gray-main);
+  width: 500px;
+  margin-left: auto;
 }
 
 
