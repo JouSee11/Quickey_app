@@ -10,7 +10,8 @@ import CustomTheme from '@/presets/customTheme'
 // import Aura from '@primeuix/themes/aura'
 import 'primeicons/primeicons.css';
 import ConfirmationService from 'primevue/confirmationservice'
-import ToastService from 'primevue/toastservice'  // ADD THIS LINE
+import ToastService from 'primevue/toastservice'
+import { AnimateOnScroll } from 'primevue'
 
 
 
@@ -21,6 +22,7 @@ app.use(router)
 app.use(pinia)
 app.use(ConfirmationService)
 app.use(ToastService)
+app.directive('animateonscroll', AnimateOnScroll)
 
 //setup the ui libary
 app.use(PrimeVue, {

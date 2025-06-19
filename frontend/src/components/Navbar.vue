@@ -27,12 +27,16 @@ const otherItems = ref([
         route: '/discover'
     },
     {
+        label: 'About',
+        route: '/about'
+    },
+    {
         label: 'Other',
         icon: 'pi pi-angle-down',
         items: [
-            {label: 'About', route: '/about'},
             {label: 'firmware', route: '/firmware'},
             {label: 'FAQ', route: '/faq'},
+            {label: 'shop', route: '/shop'},
         ]
     },
 ])
@@ -91,6 +95,7 @@ const otherItems = ref([
             <Button
                 variant="outlined"
                 id="login-button-nav"
+                v-tooltip="'Availible soon'"
             >
                 <RouterLink v-if="isLoggedIn" to="/profile">
                     <Icon icon="iconamoon:profile-fill" class="icon-nav" />
@@ -107,16 +112,17 @@ const otherItems = ref([
 
 <style scoped>
 #main-nav{
-    position: absolute;
-    width: 100%;
-    height: 70px;
+    position: fixed;
+    width: 100vw;
+    height: 65px;
     top: 0;
     left: 0;
-    padding: 40px 40px 0 40px;
+    padding: 0px 40px 0 40px;
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
     /* background-color: var(--blue-dark); */
+    backdrop-filter: blur(5px) brightness(0.9);
 }
 
 #main-nav:hover #navigation-logo{
@@ -125,8 +131,12 @@ const otherItems = ref([
 
 
 #navigation-logo{
-    width: 60px;
-    height: 60px;
+    position: absolute;
+    left: 70px;
+    top: 8px;
+
+    width: 50px;
+    height: 50px;
     cursor: pointer;
     filter: grayscale(1);
     transition: all 0.2s ease-in-out;
@@ -153,8 +163,11 @@ const otherItems = ref([
 }
 
 #login-button-nav{
+    position: absolute !important;
     color: var(--gray-main);
-    margin-left: auto;
+    right: 70px;
+
+    /* margin-left: auto; */
 }
 
 #login-button-nav a{
@@ -168,6 +181,11 @@ const otherItems = ref([
 
 .activeLink{
     color: var(--primary-50) !important;
+}
+
+:deep(.p-menubar.p-component) {
+    background: inherit;
+    border: none;
 }
 
 :deep(.p-menubar-submenu) {

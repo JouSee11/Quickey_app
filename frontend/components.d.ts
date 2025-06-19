@@ -37,6 +37,7 @@ declare module 'vue' {
     IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    Image: typeof import('primevue/image')['default']
     InputNumber: typeof import('primevue/inputnumber')['default']
     InputText: typeof import('primevue/inputtext')['default']
     KeyPressNode: typeof import('./src/components/modals/multiBinding/actionNodes/KeyPressNode.vue')['default']
@@ -52,6 +53,7 @@ declare module 'vue' {
     RoundPageButton: typeof import('./src/components/homePage/RoundPageButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScrollTop: typeof import('primevue/scrolltop')['default']
     Select: typeof import('primevue/select')['default']
     Terminal: typeof import('primevue/terminal')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
@@ -63,6 +65,8 @@ declare module 'vue' {
     WriteActionNode: typeof import('./src/components/modals/multiBinding/actionNodes/WriteActionNode.vue')['default']
   }
   export interface GlobalDirectives {
+    AnimateOnScroll: typeof import('primevue/animateonscroll')['default']
     Ripple: typeof import('primevue/ripple')['default']
+    Tooltip: typeof import('primevue/tooltip')['default']
   }
 }
