@@ -1,7 +1,41 @@
 <script setup lang="ts">
+//images
 import logo from '@/assets/images/icons/main-logo.svg'
 import soonImagePoster from '@/assets/images/landing_page/soon-poster.png'
 import productImage1 from '@/assets/images/landing_page/product_1.jpg'
+import productImage2 from '@/assets/images/landing_page/product_2.jpg'
+import productImage3 from '@/assets/images/landing_page/product_3.jpg'
+import productImage4 from '@/assets/images/landing_page/product_4.jpg'
+import productImage5 from '@/assets/images/landing_page/product_5.jpg'
+import productImage6 from '@/assets/images/landing_page/product_6.jpg'
+import productImage7 from '@/assets/images/landing_page/product_7.jpg'
+//components
+import BlockInfo from '@/components/about/BlockInfo.vue'
+
+const imagesCarousel = [
+  soonImagePoster, 
+  productImage1,
+  productImage2,
+  productImage3,
+  productImage4,
+  productImage5,
+  productImage6,
+  productImage7,
+]
+
+const featuresBlocks = [
+  {
+    "icon": "material-symbols:layers-rounded",
+    "header": "Multi-key",
+    "text": "Bind multiple actions on one button click, automatize your actions"
+  },
+  {
+    "icon": "streamline-plump:web",
+    "header": "Application",
+    "text": "Web aplication for binding simple and multi actions."
+  },
+
+]
 
 </script>
 
@@ -23,27 +57,61 @@ import productImage1 from '@/assets/images/landing_page/product_1.jpg'
       />
     </div>
 
-    <div class="first-image-cont">
-      <div class="first-text-cont">
-        <p class="first-paragraph">Customizable macropad, binding multiple acitons at one click. Automatization for your everyday actions</p>
+    <!-- first content block -->
+    <div class="block-content-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
+      <div class="block-text-cont">
+        <p class="block-paragraph">
+          <span class="text-highlighted">Keys that makes you work efficiently.</span>
+          Every Quickey is fully programmable to do what you need — whether it’s a single command or a complex macro. One small device, many small time-savers.
+        </p>
       </div>
-      <Image class="image-first" :src="soonImagePoster" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"/>
+      <Image class="image-block" :src="soonImagePoster" />
     </div>
 
-    <div class="first-image-cont">
-      <div class="first-text-cont">
-        <p class="first-paragraph">Customizable macropad, binding multiple acitons at one click. Automatization for your everyday actions</p>
+
+    <!-- second content block -->
+    <div class="block-content-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
+      <Image class="image-block" :src="productImage1" />
+      <div class="block-text-cont">
+        <p class="block-paragraph">
+          <span class="text-highlighted">A knob with range</span>
+          Scroll through timelines, switch tabs, or control volume with smooth, precise input. Push the knob to trigger a radial menu, or assign it to do something completely custom.
+        </p>
       </div>
-      <Image class="image-first" :src="productImage1" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"/>
     </div>
 
-    <!-- <div class="item-big"></div> -->
-    <div
-      class="item-smaller"
+    <!-- self made quote -->
+    <div class="quote-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
+      <span class="text-bigger">Not corporate. Just crafted.</span>
+      <p class="text-quote">
+        I didn’t set out to build a product — just something that made my own setup better. Crafted by only me.
+      </p>
+    </div>
+    
+    <!-- image carusel -->
+    <Carousel 
+      :value="imagesCarousel" 
+      circular 
+      :autoplay-interval="2500"
+      :num-visible="3"
+      :num-scroll="1"
+      class="image-carousel"
       v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"
     >
-      <p>YOYOYOYO</p>
+      <template #item="{data}">
+        <div class="carousel-item">
+          <Image :src="data" class="carousel-image"/>
+        </div>
+      </template>
+    </Carousel>
+
+    <div class="block-features-cont">
+      <!-- <div v-for="item in featuresBlocks"> -->
+        <BlockInfo v-for="item in featuresBlocks" :key="item.header" :icon="item.icon" :header="item.header" :text="item.text"/>
+
+      <!-- </div> -->
     </div>
+
     
 
     <ScrollTop/>
@@ -57,8 +125,9 @@ import productImage1 from '@/assets/images/landing_page/product_1.jpg'
   flex-direction: column;
   justify-content: start;
   width: 100vw;
-  height: 100vh;
   margin-top: 80px;
+  margin-bottom: 100px;
+  
 }
 
 .item-big{
@@ -113,31 +182,93 @@ import productImage1 from '@/assets/images/landing_page/product_1.jpg'
   color: var(--gray-bright);
 }
 
-.first-image-cont{
-  display: flex;
-  width: 90vw;
-  margin-top: 70px;
+.text-highlighted{
+  color: var(--primary-0);
+  display: block;
+  font-weight: bold;
 }
 
-.first-text-cont{
+.block-content-cont{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1500px;
+  margin-top: 70px;
+  padding: 0 40px;
+}
+
+.block-text-cont{
   width: 50%;
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   padding-top: 50px;
 }
 
 
-.first-paragraph{
-  width: 70%;
+.block-paragraph{
+  width: 300px;
   font-size: var(--bigger-text);
+  color: var(--gray-bright);
 }
 
-:deep(.image-first img){
+:deep(.image-block img){
   border-radius: var(--border-rad-main) !important;
   border: 1px solid var(--gray-main);
-  width: 500px;
+  max-width: 600px;
+  aspect-ratio: 1;
   margin-left: auto;
+}
+
+.quote-cont{
+  width: 100%;
+  max-width: 1500px;
+  margin-top: 70px;
+  padding: 0 40px;
+}
+
+.text-bigger{
+  font-size: var(--big-title-text);
+  color: var(--primary-0);
+  text-align: left;
+  font-weight: bold;
+}
+
+.text-quote{
+  /* font-size: var(--bigger-text); */
+  width: 70%;
+}
+
+/* carousel styles */
+.image-carousel{
+  width: 100%;
+  max-width: 1500px;
+  margin-top: 30px;
+}
+
+:deep(.carousel-image img) {
+  width: 100%;
+  max-width: 400px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: var(--border-rad-main);
+  border: 1px solid var(--gray-main);
+  transition: transform 0.3s ease;
+}
+
+/* .carousel-item{
+  width: 25%;
+} */
+
+.block-features-cont{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1500px;
+  padding: 0 40px;
+  margin-top: 50px;
 }
 
 
