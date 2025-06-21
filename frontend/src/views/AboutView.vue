@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {ref } from 'vue'
+
 //images
 import logo from '@/assets/images/icons/main-logo.svg'
 import soonImagePoster from '@/assets/images/landing_page/soon-poster.png'
@@ -11,7 +13,9 @@ import productImage6 from '@/assets/images/landing_page/product_6.jpg'
 import productImage7 from '@/assets/images/landing_page/product_7.jpg'
 //components
 import BlockInfo from '@/components/about/BlockInfo.vue'
-import ScrollText from '@/components/about/scrollText.vue'
+import ScrollText from '@/components/about/ScrollText.vue'
+import { Dialog, Toast } from 'primevue'
+import SendEmailDialog from '@/components/about/sendEmailDialog.vue'
 
 const imagesCarousel = [
   soonImagePoster, 
@@ -58,9 +62,14 @@ const featuresBlocks = [
 
 ]
 
+
+
 </script>
 
 <template>
+  <Toast />
+  <Dialog />
+
   <div class="about">
 
     <Image :src="logo" class="logo-top" width="80"/>
@@ -76,6 +85,7 @@ const featuresBlocks = [
         rounded
         class="notify-button"
       />
+      <SendEmailDialog />
     </div>
 
     <!-- first content block -->
