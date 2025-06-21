@@ -11,6 +11,7 @@ import productImage6 from '@/assets/images/landing_page/product_6.jpg'
 import productImage7 from '@/assets/images/landing_page/product_7.jpg'
 //components
 import BlockInfo from '@/components/about/BlockInfo.vue'
+import ScrollText from '@/components/about/scrollText.vue'
 
 const imagesCarousel = [
   soonImagePoster, 
@@ -25,6 +26,16 @@ const imagesCarousel = [
 
 const featuresBlocks = [
   {
+    "icon": "material-symbols:keyboard",
+    "header": "27 programmable keys",
+    "text": "Macropad has 27 progammable keys across 3 pages of 9 keys (9 x 3)."
+  },
+  {
+    "icon": "solar:volume-knob-bold",
+    "header": "Knob",
+    "text": "Use the knob to adjust volume, scroll through timelines, control media, and many more."
+  },
+  {
     "icon": "material-symbols:layers-rounded",
     "header": "Multi-key",
     "text": "Bind multiple actions on one button click, automatize your actions"
@@ -32,7 +43,17 @@ const featuresBlocks = [
   {
     "icon": "streamline-plump:web",
     "header": "Application",
-    "text": "Web aplication for binding simple and multi actions."
+    "text": "Web aplication for simple binding and multi action creation."
+  },
+  {
+    "icon": "material-symbols:save",
+    "header": "Save presets",
+    "text": "Save presets of your bindings in the application for fast access. Share it with to the community."
+  },
+  {
+    "icon": "solar:pallete-2-bold",
+    "header": "Customizable",
+    "text": "3D print your enclosure with custom colors. Add your own keycaps and knob"
   },
 
 ]
@@ -79,6 +100,8 @@ const featuresBlocks = [
         </p>
       </div>
     </div>
+
+    <ScrollText text="Quickey - 27 keys - Knob - Multi-key - Web application - Save presets - Community presets - Customizable - "/>
 
     <!-- self made quote -->
     <div class="quote-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">

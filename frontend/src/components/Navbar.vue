@@ -123,6 +123,7 @@ const otherItems = ref([
     align-items: center;
     /* background-color: var(--blue-dark); */
     backdrop-filter: blur(5px) brightness(0.9);
+    z-index: 10;
 }
 
 #main-nav:hover #navigation-logo{

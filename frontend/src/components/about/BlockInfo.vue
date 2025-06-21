@@ -14,10 +14,10 @@ const props = defineProps<Props>()
 <template>
     <div class="block" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
         <div class="header-block">
-            <Icon icon="material-symbols:layers-rounded" class="block-icon"/>
-            <p class="header-text">Multi-key</p>
+            <Icon :icon="props.icon" class="block-icon"/>
+            <p class="header-text">{{ props.header }}</p>
         </div>
-        <p class="block-text">Bind multiple actions on one button click, automatize your actions</p>
+        <p class="block-text">{{ props.text }}</p>
     </div>
 </template>
 
@@ -49,8 +49,8 @@ const props = defineProps<Props>()
 }
 
 .block-icon{
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     color: var(--primary-50);
 }
 
