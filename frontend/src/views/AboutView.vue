@@ -62,7 +62,11 @@ const featuresBlocks = [
 
 ]
 
+const dialogVisible = ref(false)
 
+const openEmailDialog = () => {
+  dialogVisible.value = true
+}
 
 </script>
 
@@ -84,8 +88,9 @@ const featuresBlocks = [
         outlined
         rounded
         class="notify-button"
+        @click="openEmailDialog"
       />
-      <SendEmailDialog />
+      <SendEmailDialog v-model:visible="dialogVisible"/>
     </div>
 
     <!-- first content block -->
