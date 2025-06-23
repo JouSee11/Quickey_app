@@ -8,6 +8,7 @@ import { aboutApi } from '@/api/about_api';
 import { FormField } from '@primevue/forms';
 
 const visible = defineModel<boolean>('visible', {default: false})
+const isSubmitting = ref(false)
 
 //email input
 const resolver = zodResolver(
@@ -34,15 +35,31 @@ z.object({
 
 const toast = useToast()
 
-const onSubmit = ({ valid }: {valid: boolean}) => {
-    if (valid) {
-        toast.add({ severity: 'success', summary: 'Email recieved!', detail: 'You will recieve news to your email', life: 2000})
-        visible.value = false
+const onSubmit = async ({ valid, values }: {valid: boolean, values: any}) => {
+    if (!valid) return 
+
+    isSubmitting.value = true
+
+    try {
+        const response = await aboutApi.sendEmailAbout(values.email, values.findMethod)
+
+        if (response.status === "success") {
+            toast.add({ severity: 'success', summary: 'Email recieved!', detail: response.msg, life: 2000})
+            visible.value = false
+        }
+        else {
+            toast.add({ severity: 'error', summary: 'Error', detail: response.msg, life: 2000}) 
+        }
+    } catch (error) {
+        console.log(error);
+        toast.add({ severity: 'error', summary: 'Error', detail: "Error saving email", life: 2000}) 
+    } finally {
+        isSubmitting.value = false
     }
+
 }
 
 //select
-const selectedValue = ref()
 const selectValues = [
     "Friend",
     "Instagram",
@@ -58,7 +75,7 @@ const selectValues = [
     <Dialog 
         v-model:visible="visible" 
         modal 
-        header="Let latest news!"
+        header="Get latest news!"
         class="email-dialog"
     >
            
@@ -67,6 +84,8 @@ const selectValues = [
             <span>
                 Enter your email, and get updates about development and product availibility.
             </span>
+
+            <div class="separator"></div>
             <Form v-slot="$form" :resolver="resolver" class="dialog-form" @submit="onSubmit">
 
                 <FormField class="input-cont" initialValue="">
@@ -81,7 +100,6 @@ const selectValues = [
                 <FormField class="select-cont" initialValue="">
                     <label for="find-method-select">How did you find Quickey?</label>
                     <Select
-                        v-model="selectedValue"
                         :options="selectValues"
                         placeholder="Select one option"
                         class="select-method"
@@ -150,5 +168,10 @@ const selectValues = [
 
 .select-method::placeholder{
     color: var(--gray-bright);
+}
+
+.separator{
+    margin-top: 20px;
+    border-top: 1px solid var(--gray-bright);
 }
 </style>

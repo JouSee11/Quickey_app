@@ -1,4 +1,10 @@
+import type { AxiosResponse } from "axios";
 import {api} from "./api"
+
+interface EmailAboutResponse{
+    status: string,
+    msg: string
+}
 
 export const aboutApi = {
     async checkEmailExists(email: string): Promise<Boolean>{
@@ -11,5 +17,17 @@ export const aboutApi = {
             console.log("Error checking email availibility:" + error);
             return false
         }
-    } 
+    },
+    
+    async sendEmailAbout(email: string, findMethod: string): Promise<EmailAboutResponse> {
+        try {
+            const response = await api.post('/about/save-email', {email, findMethod})
+            console.log(response.data);
+
+            return response.data
+            
+        } catch (error) {
+            return {status: "error", msg: "Something went wrong"}
+        }
+    }
 }

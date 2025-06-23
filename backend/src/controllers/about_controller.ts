@@ -8,19 +8,19 @@ const saveEmailAbout = async (req: Request, res: Response): Promise<void> => {
 
     //check if the email is valid
     if (!email) {
-        res.status(400).json({status: "error", msg: "email not provided"}) 
+        res.status(400).json({status: "error", msg: "Email not provided"}) 
         return    
     }
     if (!findMethod) {
-        res.status(400).json({status: "error", msg: "find method is not provided"}) 
+        res.status(400).json({status: "error", msg: "Find method is not provided"}) 
         return    
     }
     if (!validator.isEmail(email)) {
-        res.status(400).json({status: "error", msg: "email is not valid"})
+        res.status(400).json({status: "error", msg: "Email is not valid"})
         return 
     }
     if (await AboutEmail.emailExists(email)) {
-        res.status(400).json({status: "error", msg: "email is already saved"})
+        res.status(400).json({status: "error", msg: "Email is already saved"})
         return 
     }
 
@@ -32,10 +32,10 @@ const saveEmailAbout = async (req: Request, res: Response): Promise<void> => {
 
         await newAboutEmail.save()
 
-        res.status(200).json({status: "success", msg: "email saved successfully"})
+        res.status(200).json({status: "success", msg: "Email saved successfully"})
         
     } catch (error) {
-        res.status(500).json({status: "error", msg: "error saving email"})
+        res.status(500).json({status: "error", msg: "Error saving email"})
     }
 
     return 
