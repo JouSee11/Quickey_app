@@ -42,5 +42,22 @@ const saveEmailAbout = async (req: Request, res: Response): Promise<void> => {
     
 }
 
+const checkEmailExists = async (req: Request, res: Response) => {
+    const email = req.body?.email
+    
+    if (!email) {
+        res.status(200).json({exists: false, msg: "email not provided"}) 
+        return    
+    }
+    
+    if (await AboutEmail.emailExists(email)) {
+        res.status(200).json({exists: true, msg: "email already saved"})
+        return 
+    }
 
-export {saveEmailAbout}
+    res.status(200).json({exists: false, msg: "email is not saved"})
+    return 
+}
+
+
+export {saveEmailAbout, checkEmailExists}

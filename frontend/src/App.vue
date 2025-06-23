@@ -6,12 +6,12 @@ import {ref} from "vue"
 
 
 // TODO: check if the user is logged in, using JWT????
-const isLoggedIn = ref(false)
+// const isLoggedIn = ref(true)
 
 </script>
 
 <template>
-  <Navbar :is-logged-in="isLoggedIn" :username="'jousee453'"/>
+  <Navbar :is-logged-in="false"/>
 
 
 
