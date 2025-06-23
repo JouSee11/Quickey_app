@@ -15,7 +15,7 @@ import productImage7 from '@/assets/images/landing_page/product_7.jpg'
 import BlockInfo from '@/components/about/BlockInfo.vue'
 import ScrollText from '@/components/about/ScrollText.vue'
 import { Dialog, Toast } from 'primevue'
-import SendEmailDialog from '@/components/about/sendEmailDialog.vue'
+import SendEmailDialog from '@/components/about/SendEmailDialog.vue'
 
 const imagesCarousel = [
   soonImagePoster, 

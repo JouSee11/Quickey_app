@@ -18,7 +18,7 @@ const toast = useToast()
 
 const onSubmit = ({ valid }: {valid: boolean}) => {
     if (valid) {
-        toast.add({ severity: 'success', summary: 'Email recieved!', detail: 'You will recieve news to your email'})
+        toast.add({ severity: 'success', summary: 'Email recieved!', detail: 'You will recieve news to your email', life: 2000})
         visible.value = false
     }
 }
@@ -39,7 +39,16 @@ const onSubmit = ({ valid }: {valid: boolean}) => {
                 Enter your email, and get updates about development and product availibility.
             </span>
             <Form v-slot="$form" :resolver="resolver" class="dialog-form" @submit="onSubmit">
-                <InputText name="email" type="email" placeholder="Email" fluid class="email-input"/>
+
+                <div class="input-cont">
+                    <InputText name="email" type="email" placeholder="Email" fluid class="email-input"/>
+                    
+                    <i v-if="!$form.email?.invalid && $form.email?.value"  class="pi pi-check input-icon" style="color: var(--green-bright);"/>
+                    <i v-else class="pi pi-times input-icon" style="color: var(--red-dark);"/>
+
+                </div>
+
+                
                 <Message  v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{  $form.email.error.message }}</Message>
                 <Button type="submit" label="Submit" outlined class="submit-button" icon="pi pi-verified" rounded/>
             </Form>
@@ -77,5 +86,10 @@ const onSubmit = ({ valid }: {valid: boolean}) => {
     color: var(--green-bright);
     margin-top: 20px;
     max-width: 120px;
+}
+
+.input-icon{
+    margin-left: 10px;
+    font-size: var(--bigger-text);
 }
 </style>
