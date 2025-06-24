@@ -4,11 +4,11 @@
 }
 # Server frontend and backend API under quickey.pro
 
-quickey.pro {
+localhost {
     encode gzip
 
     #proxy /api to backend service
-    handle_path /api/* {
+    handle /api/* {
         reverse_proxy backend:3000
     }
 
