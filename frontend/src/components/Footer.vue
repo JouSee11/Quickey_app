@@ -5,7 +5,7 @@ import { Icon } from '@iconify/vue'
 <template>
     <footer>
         <div id="icons-links">
-            <a href="mailto:jotalac@seznam.cz?subject=[Quick key - question]">
+            <a href="mailto:jtalac@quickey.pro?subject=[Quick key - question]">
                 <Icon icon="mdi:envelope" class="icon-footer"/>
                 <spn class="icon-text">Contact</spn>
             </a>
@@ -14,14 +14,14 @@ import { Icon } from '@iconify/vue'
                 <Icon icon="mingcute:pig-money-fill" class="icon-footer"/>
                 <spn class="icon-text">Support</spn>
             </a>
-            <a href="https://instagram.com/jta_cz/" target="_blank">
+            <a href="https://instagram.com/quickey.pro/" target="_blank">
                 <Icon icon="mdi:instagram" class="icon-footer"/>
                 <spn class="icon-text">Instagram</spn>
             </a>
-            <a href="https://github.com/JouSee11/QUICK_KEY_controller/" target="_blank">
+            <!-- <a href="https://github.com/JouSee11/QUICK_KEY_controller/" target="_blank">
                 <Icon icon="line-md:github" class="icon-footer"/>
                 <spn class="icon-text">GitHub</spn>
-            </a>
+            </a> -->
             <a href="https://www.linkedin.com/in/josef-talac-827241260/" target="_blank">
                 <Icon icon="mdi:linkedin" class="icon-footer"/>
                 <spn class="icon-text">LinkedIn</spn>

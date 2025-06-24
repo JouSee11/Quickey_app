@@ -48,7 +48,10 @@ export const useDeviceStore = defineStore('device', () => {
     // ========================================
     const checkWebSerialSupport = (): boolean => {
         if (!('serial' in navigator)) {
-            setError('Web serial API is not supported by your browser')
+            if (lastError.value !== "Web serial API is not supported by your browser") {
+                toast.add({severity: 'error', summary: 'WebSerialAPI error', detail: 'Your browser does not support serial connection. Please use chromium based browsers to connect to your device.'})
+                setError('Web serial API is not supported by your browser')
+            }
             return false
         }
         return true
@@ -218,7 +221,9 @@ export const useDeviceStore = defineStore('device', () => {
     // PUBLIC ACTIONS
     // ========================================
     const connect = async(): Promise<boolean> => {
-        if (!checkWebSerialSupport()) return false
+        if (!checkWebSerialSupport()) {
+            return false
+        }
 
         connectionStatus.value = 'connecting'
 

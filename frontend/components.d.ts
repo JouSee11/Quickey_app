@@ -27,6 +27,7 @@ declare module 'vue' {
     DefaultAction: typeof import('./src/components/modals/actionNodes/DefaultAction.vue')['default']
     DefaultActionNode: typeof import('./src/components/modals/multiBinding/actionNodes/DefaultActionNode.vue')['default']
     DelayNode: typeof import('./src/components/modals/multiBinding/actionNodes/DelayNode.vue')['default']
+    DevInfoDialogHome: typeof import('./src/components/modals/devInfoDialogHome.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
     FloatLabel: typeof import('primevue/floatlabel')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']

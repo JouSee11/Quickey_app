@@ -2,11 +2,32 @@
 import ButtonBindingsMain from "@/components/homePage/HomeCenterSection.vue"
 import LeftButtonSection from "@/components/homePage/HomeLeftButtonSection.vue"
 import RightLogSection from "@/components/homePage/HomeRightLogArea.vue"
+import devInfoDialogHome from "@/components/modals/devInfoDialogHome.vue"
+
+import { onMounted, ref, watch } from "vue"
+
+const devWarningShow = ref(false)
+
+onMounted(() => {
+  if (localStorage.getItem('devDialogShow') !== 'true') {
+    devWarningShow.value = true
+  }
+})
+
+watch(devWarningShow, (isDialogVisible) => {
+  //if the dialog closes, set it that it was show
+  if (!isDialogVisible) {
+    localStorage.setItem('devDialogShow', 'true')
+  }
+})
 
 </script>
 
 <template>
   <main>
+    <!-- development info dialog -->
+    <devInfoDialogHome v-model:visible="devWarningShow"/>
+
     <div id="content-container">
       <!-- left section with control buttons -->
       <LeftButtonSection :logged-in="true" :device-connected="true"/>
