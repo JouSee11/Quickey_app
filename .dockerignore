@@ -1,0 +1,8 @@
+.git
+.vscode
+docker-compose.yml
+
+# Node modules
+**/node_modules
+**/dist
+**/npm-debug.log

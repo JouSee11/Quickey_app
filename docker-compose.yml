@@ -1,0 +1,49 @@
+version: "3.8"
+services: 
+  backend:
+    build:
+      context: ./backend
+    image: quickey-backend:latest
+    env_file:
+      - ./backend/.env.production
+    networks:
+      - web
+    restart: unless-stopped
+    # command: node dist/index.js
+ 
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quickey-caddy-proxy:latest
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp" #for http/3
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - web
+    restart: unless-stopped
+
+  networks:
+    web:
+      driver: bridge
+  
+  volumes:
+    caddy_data:
+    caddy_config:
+
+
+
+    #  frontend:
+    # build:
+    #   context: ./frontend
+    #   target: builder
+    # image: quickey-frontend:latest
+    # networks:
+    #   - web

@@ -1,0 +1,25 @@
+{
+    #contact email for Let's encrypt
+    email jtalac@quickey.pro
+}
+# Server frontend and backend API under quickey.pro
+
+quickey.pro {
+    encode gzip
+
+    #proxy /api to backend service
+    handle_path /api/* {
+        reverse_proxy backend:3000
+    }
+
+    #handle all other requests to frontend
+    handle {
+        #set root directory to where the frontend files are
+        root * /usr/share/caddy
+
+        #try if the file exists if not let the vue-router handle the paths 
+        try_files {path} /index.html
+        #serve static files from root directory
+        file_server
+    }
+}
