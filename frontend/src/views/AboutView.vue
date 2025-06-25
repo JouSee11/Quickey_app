@@ -59,7 +59,6 @@ const featuresBlocks = [
     "header": "Customizable",
     "text": "3D print your enclosure with custom colors. Add your own keycaps and knob"
   },
-
 ]
 
 const dialogVisible = ref(false)
@@ -135,6 +134,8 @@ const openEmailDialog = () => {
       :num-scroll="1"
       class="image-carousel"
       v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"
+
+      responsive-options="carouselResponsiveOption"
     >
       <template #item="{data}">
         <div class="carousel-item">
@@ -309,8 +310,6 @@ const openEmailDialog = () => {
   margin-top: 50px;
 }
 
-
-
 /* =================== ANIMATIONS =========================== */
 .animate-fadein {
   animation: customFadeIn 0.5s ease-in-out;
@@ -349,5 +348,11 @@ const openEmailDialog = () => {
     display: flex;
     align-items: center;
   }
+}
+
+
+/* ============================= responsibility ============================ */
+@media (max-width: 1300px) {
+
 }
 </style>
