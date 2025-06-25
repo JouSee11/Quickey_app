@@ -27,7 +27,7 @@ COPY --from=builder /app/dist ./dist
 #set enviroment
 ENV NODE_ENV=production
 #load production variables
-COPY .env.production .env
+COPY .env .env
 
 # Add a non-root user for security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup

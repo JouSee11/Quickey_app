@@ -5,7 +5,7 @@ services:
       context: ./backend
     image: quickey-backend:latest
     env_file:
-      - ./backend/.env.production
+      - ./backend/.env
     networks:
       - web
     restart: unless-stopped
