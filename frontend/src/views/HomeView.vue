@@ -3,8 +3,14 @@ import ButtonBindingsMain from "@/components/homePage/HomeCenterSection.vue"
 import LeftButtonSection from "@/components/homePage/HomeLeftButtonSection.vue"
 import RightLogSection from "@/components/homePage/HomeRightLogArea.vue"
 import devInfoDialogHome from "@/components/modals/devInfoDialogHome.vue"
-
+import { Icon } from "@iconify/vue"
 import { onMounted, ref, watch } from "vue"
+import { getOS } from "@/utils"
+import { useScreenSize } from "@/composables/useScreenSize"
+
+//chek if the device is supported
+const os = getOS()
+const { isSupported } = useScreenSize()
 
 const devWarningShow = ref(false)
 
@@ -24,9 +30,13 @@ watch(devWarningShow, (isDialogVisible) => {
 </script>
 
 <template>
-  <main>
+  <UnsupportedScreen v-if="os === 'ios' || os === 'android' || !isSupported" />
+  <main v-else>
     <!-- development info dialog -->
     <devInfoDialogHome v-model:visible="devWarningShow"/>
+
+    <!-- info icon -->
+    <Icon icon="material-symbols:info-outline" class="info-button" @click="devWarningShow = true"/>
 
     <div id="content-container">
       <!-- left section with control buttons -->
@@ -69,5 +79,24 @@ watch(devWarningShow, (isDialogVisible) => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+
+
+/* info icon */
+.info-button{
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+    color: var(--gray-dark);
+    cursor: pointer;
+    transition: 0.2s color;
+}
+
+.info-button:hover{
+    color: var(--gray-bright);
 }
 </style>

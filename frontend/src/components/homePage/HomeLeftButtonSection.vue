@@ -5,7 +5,7 @@ import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from "primevue/usetoast";
 import { useDeviceStore } from "@/stores/deviceStore";
 import { storeToRefs } from "pinia";
-import type { ButtonBindHome } from "@/types/buttonBindHome";
+import { Icon } from "@iconify/vue";
 
 const deviceStore = useDeviceStore()
 const {isConnected} = storeToRefs(deviceStore)
@@ -95,11 +95,12 @@ const items = computed(() => [
 
 <template>
     <div id="left-section">
-        <div class="card flex justify-center">
+        <div>
             <Toast />
             <ConfirmDialog/>
             <Menu :model="items" id="binding-controlls-menu" class="box-shadow-normal"/>
         </div>
+
 
     </div>
 </template>
@@ -109,7 +110,5 @@ const items = computed(() => [
 :deep(#binding-controlls-menu .pi){
     color: var(--primary-50);    
 }
-
-
 
 </style>
