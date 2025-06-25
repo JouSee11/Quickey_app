@@ -34,7 +34,7 @@ const PORT: number = Number(process.env.PORT) || 3000
 
 const start = async () => {
     try {
-        console.log(await connectDB(process.env.MONGO_URI as string))
+        await connectDB(process.env.MONGO_URI as string)
 
 
         const server = app.listen(PORT, () => {
