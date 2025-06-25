@@ -61,4 +61,11 @@ const repeatedText = props.text
     transform: translate3d(-50%, 0, 0);
   }
 }
+
+/* responsibility */
+@media (max-width: 600px) {
+  .scroll-container span{
+    font-size: 2em;
+  }
+}
 </style>

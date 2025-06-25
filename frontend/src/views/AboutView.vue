@@ -74,6 +74,19 @@ const goToApp = () => {
   router.push('/')
 }
 
+const carouselResponsiveOption = ref([
+    {
+        breakpoint: '1350px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '900px',
+        numVisible: 1,
+        numScroll: 1
+    },
+]);
+
 </script>
 
 <template>
@@ -156,7 +169,7 @@ const goToApp = () => {
       class="image-carousel"
       v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"
 
-      responsive-options="carouselResponsiveOption"
+      :responsive-options="carouselResponsiveOption"
     >
       <template #item="{data}">
         <div class="carousel-item">
@@ -316,6 +329,11 @@ const goToApp = () => {
   margin-top: 30px;
 }
 
+.carousel-item{
+  display: flex;
+  justify-content: center;
+}
+
 :deep(.carousel-image img) {
   width: 100%;
   max-width: 400px;
@@ -383,7 +401,73 @@ const goToApp = () => {
 
 
 /* ============================= responsibility ============================ */
-@media (max-width: 1300px) {
+@media (max-width: 1200px) {
+  :deep(.image-block img) {
+    width: 500px
+  }
+}
+
+@media (max-width: 900px) {
+  .block-content-cont{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  :deep(.image-block img) {
+    width: 90%;
+    margin: 0;
+    margin-top: 20px;
+  }
+
+  .image-block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .block-text-cont{
+    width: 90%;
+  }
+
+  .block-paragraph{
+    width: 70%;
+  }
 
 }
+
+
+@media (max-width: 800px) {
+  /* dont display go to app when on this screen size you cannot go to the app */
+  .app-button-cont{
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .text-bigger{
+    font-size: var(--bigger-text);
+  }
+
+  .text-quote{
+    width: 90%;
+    font-size: var(--normal-text);
+  }
+
+  .block-paragraph{
+    font-size: var(--normal-text);
+  }
+}
+
+@media (max-width: 500px) {
+  .main-header{
+    font-size: var(--big-title-text);
+  }
+
+  .catch-phrase{
+    font-size: var(--normal-text);
+    width: 90%;
+  }
+}
+
 </style>
