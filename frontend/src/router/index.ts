@@ -43,7 +43,6 @@ const router = createRouter({
       name: 'shop',
       component: AvailableSoonView,
     },
-
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
