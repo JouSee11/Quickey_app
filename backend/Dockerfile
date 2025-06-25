@@ -27,11 +27,11 @@ COPY --from=builder /app/dist ./dist
 #set enviroment
 ENV NODE_ENV=production
 #load production variables
-COPY .env .env
+# COPY .env ./
 
 # Add a non-root user for security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
 
-EXPOSE 3000
+EXPOSE 5000
 CMD ["node", "dist/index.js"]
