@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {ref } from 'vue'
+import {useRouter} from 'vue-router'
 
 //images
 import logo from '@/assets/images/icons/main-logo.svg'
@@ -16,6 +17,7 @@ import BlockInfo from '@/components/about/BlockInfo.vue'
 import ScrollText from '@/components/about/ScrollText.vue'
 import { Dialog, Toast } from 'primevue'
 import SendEmailDialog from '@/components/about/SendEmailDialog.vue'
+
 
 const imagesCarousel = [
   soonImagePoster, 
@@ -68,6 +70,11 @@ const openEmailDialog = () => {
   dialogVisible.value = true
 }
 
+const router = useRouter()
+const goToApp = () => {
+  router.push('/')
+}
+
 </script>
 
 <template>
@@ -117,6 +124,20 @@ const openEmailDialog = () => {
     </div>
 
     <ScrollText text="Quickey - 27 keys - Knob - Multi-key - Web application - Save presets - Community presets - Customizable - "/>
+
+    <div class="app-button-cont">
+      <Button 
+        label="Go to app"
+        icon="pi pi-sign-in"
+        outlined
+        rounded
+        class="app-button"
+        @click="goToApp"
+      /> 
+
+      <span> - try the application beta version </span>
+
+    </div>
 
     <!-- self made quote -->
     <div class="quote-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
@@ -216,8 +237,18 @@ const openEmailDialog = () => {
   margin-right: 20px;
 }
 
+.app-button-cont{
+  margin-left: 40px;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 1500px;
+}
+
 .app-button{
-  color: var(--gray-bright);
+  align-self: left;
+  justify-self: left;
+  color: var(--blue-vivid);
+  margin-right: auto;
 }
 
 .text-highlighted{
@@ -261,7 +292,7 @@ const openEmailDialog = () => {
 .quote-cont{
   width: 100%;
   max-width: 1500px;
-  margin-top: 70px;
+  margin-top: 40px;
   padding: 0 40px;
 }
 
