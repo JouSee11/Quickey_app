@@ -59,4 +59,24 @@ const props = defineProps<Props>()
     margin-top: 20px;
     margin-left: 10px;
 }
+
+@media (max-width: 900px) {
+    .block{
+        width: 300px;
+        height: 150px;
+    }
+
+    .header-text{
+        font-size: var(--normal-text);
+    }
+
+    .block-icon{
+    width: 40px;
+    height: 40px;
+    }
+
+    .block-text{
+        font-size: var(--smaller-text);
+    }
+}
 </style>

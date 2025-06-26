@@ -12,6 +12,15 @@ import productImage4 from '@/assets/images/landing_page/product_4.jpg'
 import productImage5 from '@/assets/images/landing_page/product_5.jpg'
 import productImage6 from '@/assets/images/landing_page/product_6.jpg'
 import productImage7 from '@/assets/images/landing_page/product_7.jpg'
+
+import discordImage from '@/assets/images/landing_page/discord.png'
+import ideaImage from '@/assets/images/landing_page/idea.png'
+import ilustratorImage from '@/assets/images/landing_page/ilustrator.png'
+import photoshopImage from '@/assets/images/landing_page/photoshop.png'
+import premiereImage from '@/assets/images/landing_page/premiere.png'
+import spotifyImage from '@/assets/images/landing_page/spotify.png'
+import resolveImage from '@/assets/images/landing_page/resolve.png'
+import vscodeImage from '@/assets/images/landing_page/vscode.png'
 //components
 import BlockInfo from '@/components/about/BlockInfo.vue'
 import ScrollText from '@/components/about/ScrollText.vue'
@@ -28,6 +37,17 @@ const imagesCarousel = [
   productImage5,
   productImage6,
   productImage7,
+]
+
+const appCarousel = [
+  discordImage,
+  ideaImage,
+  ilustratorImage,
+  photoshopImage,
+  premiereImage,
+  spotifyImage,
+  resolveImage,
+  vscodeImage
 ]
 
 const featuresBlocks = [
@@ -59,7 +79,7 @@ const featuresBlocks = [
   {
     "icon": "solar:pallete-2-bold",
     "header": "Customizable",
-    "text": "3D print your enclosure with custom colors. Add your own keycaps and knob"
+    "text": "3D print your enclosure with custom colors. Add your own keycaps, switches and knob"
   },
 ]
 
@@ -87,6 +107,33 @@ const carouselResponsiveOption = ref([
     },
 ]);
 
+const tableProducts = [
+  {
+    feature: "Connector",
+    specification: "USB-C"
+  },
+  {
+    feature: "Compatibility",
+    specification: "Mac, Windows (primary), Linux, Android"
+  },
+  {
+    feature: "Keyboard",
+    specification: "27 keys (9*3), 1 knob (rotary encoder)"
+  },
+  {
+    feature: "Body",
+    specification: "3D printed (PETG)",
+  },
+  {
+    feature: "Controller",
+    specification: "RP2040 zero, with on device storage",
+  },
+  {
+    feature: "Key binding",
+    specification: "Custom web application",
+  },
+]
+
 </script>
 
 <template>
@@ -113,7 +160,7 @@ const carouselResponsiveOption = ref([
     </div>
 
     <!-- first content block -->
-    <div class="block-content-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
+    <div class="block-content-cont" >
       <div class="block-text-cont">
         <p class="block-paragraph">
           <span class="text-highlighted">Keys that makes you work efficiently.</span>
@@ -125,7 +172,7 @@ const carouselResponsiveOption = ref([
 
 
     <!-- second content block -->
-    <div class="block-content-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
+    <div class="block-content-cont second-block-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
       <Image class="image-block" :src="productImage1" />
       <div class="block-text-cont">
         <p class="block-paragraph">
@@ -181,9 +228,19 @@ const carouselResponsiveOption = ref([
     <div class="block-features-cont">
       <!-- <div v-for="item in featuresBlocks"> -->
         <BlockInfo v-for="item in featuresBlocks" :key="item.header" :icon="item.icon" :header="item.header" :text="item.text"/>
-
-      <!-- </div> -->
     </div>
+
+    <!-- supported app carousel -->
+    <p class="apps-text" >Works seamlessly with... and others</p>
+    <div class="apps-display-cont">
+      <Image v-for="image in appCarousel" :src="image" class="img-app"       v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"/>
+    </div>
+
+    <DataTable :value="tableProducts">
+      <Column field="feature" header="Feature" class="feature-column" />
+      <Column field="specification" header="Specification" class="specification-column"/>
+    </DataTable>
+    
 
     
 
@@ -344,6 +401,15 @@ const carouselResponsiveOption = ref([
   transition: transform 0.3s ease;
 }
 
+/* :deep(.carousel-image-app img){
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--border-rad-main);
+  border: none;
+  transition: transform 0.3s ease;
+} */
+
 /* .carousel-item{
   width: 25%;
 } */
@@ -358,6 +424,31 @@ const carouselResponsiveOption = ref([
   padding: 0 40px;
   margin-top: 50px;
 }
+
+.apps-text{
+  font-weight: bold;
+  font-size: var(--big-title-text);
+  margin-top: 20px;
+  text-align: center;
+}
+
+.apps-display-cont{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1500px;
+  padding: 0 40px;
+  margin-top: 40px;
+}
+
+:deep(.img-app img){
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  filter: saturate(0) brightness(1.6);
+}
+
 
 /* =================== ANIMATIONS =========================== */
 .animate-fadein {
@@ -413,6 +504,16 @@ const carouselResponsiveOption = ref([
     align-items: center;
   }
 
+  /* make the image visible firtst */
+  .second-block-cont .image-block {
+    order: 2;
+  }
+  .second-block-cont .block-text-cont {
+    order: 1;
+  }
+
+
+
   :deep(.image-block img) {
     width: 90%;
     margin: 0;
@@ -432,6 +533,15 @@ const carouselResponsiveOption = ref([
 
   .block-paragraph{
     width: 70%;
+  }
+
+  :deep(.img-app img) {
+    width: 50px;
+    height: 50px;
+  }
+
+  .apps-text{
+    font-size: var(--bigger-text);
   }
 
 }
