@@ -203,6 +203,16 @@ const otherItems = ref([
     margin-bottom: 5px;
 }
 
+@media (max-width: 950px) {
+    :deep(.p-menubar-root-list) {
+        width: 200px !important;
+    }
+    :deep(.p-menubar-item-content) {
+        margin-bottom: 5px;
+        margin-left: 10px;
+    }
+}
+
 
 
 @media (max-width: 800px){
@@ -212,6 +222,23 @@ const otherItems = ref([
 
     #navigation-links{
         width: 100%;
+    }
+
+}
+
+@media (max-width: 500px) {
+    #navigation-links{
+        margin-left: 0;
+    }
+
+    #main-nav{
+        padding: 0 10px;
+    }
+
+    #login-button-nav{
+        right: 20px;
+        width: 100px;
+        height: 35px;
     }
 }
 </style>

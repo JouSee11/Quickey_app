@@ -591,6 +591,7 @@ onMounted(async () => {
 
   .apps-text{
     font-size: var(--bigger-text);
+    padding: 0 20px;
   }
 
 }
