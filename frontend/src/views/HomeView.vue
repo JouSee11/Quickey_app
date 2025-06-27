@@ -30,6 +30,9 @@ watch(devWarningShow, (isDialogVisible) => {
 </script>
 
 <template>
+  <!-- optimize for browser to tell it that the about page is the main one -->
+  <link rel="canonical" href="https://quickey.pro/about" />
+
   <UnsupportedScreen v-if="os === 'ios' || os === 'android' || !isSupported" />
   <main v-else>
     <!-- development info dialog -->
