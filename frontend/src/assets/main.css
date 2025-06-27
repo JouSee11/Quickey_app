@@ -115,3 +115,8 @@ div.p-dialog-content{
     height: 100%;
     display: flex;
 }
+
+/* data table */
+.p-datatable{
+    background-color: transparent;
+}

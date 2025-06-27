@@ -35,7 +35,7 @@ const otherItems = ref([
         icon: 'pi pi-angle-down',
         items: [
             {label: 'firmware', route: '/firmware'},
-            {label: 'FAQ', route: '/faq'},
+            {label: 'FAQ', route: '/about#faq'},
             {label: 'shop', route: '/shop'},
         ]
     },

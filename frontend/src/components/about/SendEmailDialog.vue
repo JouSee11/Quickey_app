@@ -80,7 +80,6 @@ const selectValues = [
     >
            
         <div class="dialog-content">
-            <i class="pi pi-envelope"></i>
             <span>
                 Enter your email, and get updates about development and product availibility.
             </span>
@@ -88,8 +87,10 @@ const selectValues = [
             <div class="separator"></div>
             <Form v-slot="$form" :resolver="resolver" class="dialog-form" @submit="onSubmit">
 
-                <FormField class="input-cont" initialValue="">
-                    <InputText name="email" type="email" placeholder="Email" fluid class="email-input"/>
+                <FormField initialValue="">
+                    <label class="email-label" for="email-select">Email</label>
+                    <InputText name="email" type="email" placeholder="Email" id="email-select" fluid class="email-input"/>
+
                     
                     <i v-if="!$form.email?.invalid && $form.email?.value"  class="pi pi-check input-icon" style="color: var(--green-bright);"/>
                     <i v-else class="pi pi-times input-icon" style="color: var(--red-dark);"/>
@@ -169,9 +170,16 @@ const selectValues = [
 .select-method::placeholder{
     color: var(--gray-bright);
 }
-
+/* 
 .separator{
     margin-top: 20px;
     border-top: 1px solid var(--gray-bright);
+    width: 90%;
+    justify-self: center;
+} */
+
+.email-label{
+    display: block;
+    margin-bottom: 10px;
 }
 </style>

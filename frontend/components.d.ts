@@ -8,6 +8,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Accordion: typeof import('primevue/accordion')['default']
+    AccordionContent: typeof import('primevue/accordioncontent')['default']
+    AccordionHeader: typeof import('primevue/accordionheader')['default']
+    AccordionPanel: typeof import('primevue/accordionpanel')['default']
     ActionButton: typeof import('./src/components/modals/multiBinding/ActionButton.vue')['default']
     ActionCategory: typeof import('./src/components/modals/multiBinding/ActionCategory.vue')['default']
     ActionDisplay: typeof import('./src/components/modals/ActionDisplay.vue')['default']
@@ -31,6 +35,7 @@ declare module 'vue' {
     DelayNode: typeof import('./src/components/modals/multiBinding/actionNodes/DelayNode.vue')['default']
     DevInfoDialogHome: typeof import('./src/components/modals/devInfoDialogHome.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
+    FaqSection: typeof import('./src/components/about/FaqSection.vue')['default']
     FloatLabel: typeof import('primevue/floatlabel')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Form: typeof import('@primevue/forms/form')['default']

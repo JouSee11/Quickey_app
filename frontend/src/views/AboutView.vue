@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {ref } from 'vue'
-import {useRouter} from 'vue-router'
+import {ref, onMounted, nextTick } from 'vue'
+import {useRouter, useRoute} from 'vue-router'
 
 //images
 import logo from '@/assets/images/icons/main-logo.svg'
@@ -26,6 +26,7 @@ import BlockInfo from '@/components/about/BlockInfo.vue'
 import ScrollText from '@/components/about/ScrollText.vue'
 import { Dialog, Toast } from 'primevue'
 import SendEmailDialog from '@/components/about/SendEmailDialog.vue'
+import FaqSection from '@/components/about/FaqSection.vue'
 
 
 const imagesCarousel = [
@@ -132,7 +133,36 @@ const tableProducts = [
     feature: "Key binding",
     specification: "Custom web application",
   },
+  {
+    feature: "Key switches",
+    specification: "Mechanical (tactile/clicky/linear)",
+  },
+  {
+    feature: "Key caps",
+    specification: "Durable ABS/PBT",
+  },
 ]
+
+//for faq route when we need to scroll to it
+const route = useRoute()
+onMounted(async () => {
+  // Wait for component to fully render
+  await nextTick()
+  
+  // Check for hash and scroll after component is mounted
+  if (route.hash) {
+    // Add a small delay to ensure all components are rendered
+    setTimeout(() => {
+      const element = document.querySelector(route.hash)
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        })
+      }
+    }, 200) // Adjust delay as needed
+  }
+})
 
 </script>
 
@@ -237,12 +267,11 @@ const tableProducts = [
     </div>
 
     <DataTable :value="tableProducts">
-      <Column field="feature" header="Feature" class="feature-column" />
-      <Column field="specification" header="Specification" class="specification-column"/>
+      <Column field="feature" header="" class="feature-column" />
+      <Column field="specification" header="" class="specification-column"/>
     </DataTable>
-    
 
-    
+    <FaqSection id="faq"/>
 
     <ScrollTop/>
   </div>
@@ -450,6 +479,25 @@ const tableProducts = [
 }
 
 
+:deep(.p-datatable-table){
+  margin-top: 30px;
+  border-radius: var(--border-rad-main);
+}
+
+:deep(.feature-column){
+  color: var(--gray-bright);
+
+}
+
+:deep(.specification-column){
+  text-align: end;
+}
+
+
+
+
+
+
 /* =================== ANIMATIONS =========================== */
 .animate-fadein {
   animation: customFadeIn 0.5s ease-in-out;
@@ -502,6 +550,7 @@ const tableProducts = [
   .block-content-cont{
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
   }
 
   /* make the image visible firtst */
@@ -528,7 +577,7 @@ const tableProducts = [
   }
 
   .block-text-cont{
-    width: 90%;
+    width: 100%;
   }
 
   .block-paragraph{
@@ -577,6 +626,10 @@ const tableProducts = [
   .catch-phrase{
     font-size: var(--normal-text);
     width: 90%;
+  }
+
+  :deep(.p-datatable-table){
+    font-size: var(--smaller-text) !important;
   }
 }
 
