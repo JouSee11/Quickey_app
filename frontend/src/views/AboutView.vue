@@ -13,14 +13,18 @@ import productImage5 from '@/assets/images/landing_page/product_5.jpg'
 import productImage6 from '@/assets/images/landing_page/product_6.jpg'
 import productImage7 from '@/assets/images/landing_page/product_7.jpg'
 
+//videos
+import knobVideo from '@/assets/videos/knob_about.mp4'
+import buttonVideo from '@/assets/videos/button_horizontal.mp4'
+
 import discordImage from '@/assets/images/landing_page/discord.png'
 import ideaImage from '@/assets/images/landing_page/idea.png'
-import ilustratorImage from '@/assets/images/landing_page/ilustrator.png'
 import photoshopImage from '@/assets/images/landing_page/photoshop.png'
 import premiereImage from '@/assets/images/landing_page/premiere.png'
 import spotifyImage from '@/assets/images/landing_page/spotify.png'
 import resolveImage from '@/assets/images/landing_page/resolve.png'
 import vscodeImage from '@/assets/images/landing_page/vscode.png'
+import blenderImage from '@/assets/images/landing_page/blender.webp'
 //components
 import BlockInfo from '@/components/about/BlockInfo.vue'
 import ScrollText from '@/components/about/ScrollText.vue'
@@ -43,12 +47,12 @@ const imagesCarousel = [
 const appCarousel = [
   discordImage,
   ideaImage,
-  ilustratorImage,
   photoshopImage,
   premiereImage,
   spotifyImage,
   resolveImage,
-  vscodeImage
+  vscodeImage,
+  blenderImage
 ]
 
 const featuresBlocks = [
@@ -265,6 +269,30 @@ onMounted(async () => {
     <div class="apps-display-cont">
       <Image v-for="image in appCarousel" :src="image" class="img-app"       v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"/>
     </div>
+
+    <!-- videos showcase -->
+     <div class="videos-cont">
+       <video
+          autoplay
+          muted
+          loop
+          class="video-display"
+          v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"
+       >
+         <source :src="knobVideo" type="video/mp4">
+       </video>
+
+       <video
+          autoplay
+          muted
+          loop
+          class="video-display"
+          v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }" 
+       >
+         <source :src="buttonVideo" type="video/mp4">
+       </video>
+
+     </div>
 
     <DataTable :value="tableProducts">
       <Column field="feature" header="" class="feature-column" />
@@ -493,6 +521,24 @@ onMounted(async () => {
   text-align: end;
 }
 
+.videos-cont{
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1500px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.video-display{
+  width: 500px;
+  border-radius: var(--border-rad-main);
+  border: 1px solid var(--gray-main);
+  margin: 10px 10px;
+}
+
 
 
 
@@ -616,6 +662,10 @@ onMounted(async () => {
 
   .block-paragraph{
     font-size: var(--normal-text);
+  }
+
+  .video-display{
+    width: 90%;
   }
 }
 

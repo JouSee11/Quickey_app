@@ -132,6 +132,11 @@ const eraseLogs = () => {
     color: var(--red-dark);
 }
 
-
+@media (max-width: 1000px) {
+    #right-section{
+        width: 0 !important;
+        display: none !important;
+    }
+}
 
 </style>

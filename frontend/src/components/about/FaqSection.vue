@@ -55,7 +55,9 @@
         <AccordionHeader>What is the purpouse of the macropad?</AccordionHeader>
         <AccordionContent>
             <p>
-            You can assign custom shortcuts using the web application, allowing you to control your software more efficiently. It's especially useful for creatives and developers who want to speed up their workflow. In addition to standard shortcuts, you can configure actions for media control—such as adjusting volume or skipping tracks—and even create longer, automated sequences, like opening ChatGPT in your browser and typing a predefined question.
+            You can assign custom shortcuts using the web application, allowing you to control your software more efficiently. <br>
+            It's especially useful for creatives and developers who want to speed up their workflow. <br>
+            In addition to standard shortcuts, you can configure actions for media control—such as adjusting volume or skipping tracks—and even create longer, automated sequences, like opening ChatGPT in your browser and typing a predefined question.
             </p>
         </AccordionContent>
     </AccordionPanel>
