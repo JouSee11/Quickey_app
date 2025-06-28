@@ -96,7 +96,7 @@ const openEmailDialog = () => {
 
 const router = useRouter()
 const goToApp = () => {
-  router.push('/')
+  router.push('/app')
 }
 
 const carouselResponsiveOption = ref([
@@ -198,7 +198,7 @@ onMounted(async () => {
       <div class="block-text-cont">
         <p class="block-paragraph">
           <span class="text-highlighted">Keys that makes you work efficiently.</span>
-          Every Quickey is fully programmable to do what you need — whether it’s a single command or a complex macro. One small device, many small time-savers.
+          Every Quickey is fully programmable to do what you need — whether it’s a single command or a complex macro. One small device, <b>27</b> actions.
         </p>
       </div>
       <Image class="image-block" :src="soonImagePoster" />
@@ -211,7 +211,7 @@ onMounted(async () => {
       <div class="block-text-cont">
         <p class="block-paragraph">
           <span class="text-highlighted">A knob with range</span>
-          Scroll through timelines, switch tabs, or control volume with smooth, precise input. Push the knob to trigger a radial menu, or assign it to do something completely custom.
+          Scroll through timelines, control volume, or change tracks. Push the knob to trigger a mute volume, or assign it to do something custom.
         </p>
       </div>
     </div>
@@ -220,50 +220,20 @@ onMounted(async () => {
 
     <div class="app-button-cont">
       <Button 
-        label="Go to app"
-        icon="pi pi-sign-in"
-        outlined
-        rounded
-        class="app-button"
-        @click="goToApp"
+      label="Go to app"
+      icon="pi pi-sign-in"
+      outlined
+      rounded
+      class="app-button"
+      @click="goToApp"
+      size="big"
       /> 
-
+      
       <span> - try the application beta version </span>
 
     </div>
 
-    <!-- self made quote -->
-    <div class="quote-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
-      <span class="text-bigger">Not corporate. Just crafted.</span>
-      <p class="text-quote">
-        I didn’t set out to build a product — just something that made my own setup better. Crafted by only me.
-      </p>
-    </div>
     
-    <!-- image carusel -->
-    <Carousel 
-      :value="imagesCarousel" 
-      circular 
-      :autoplay-interval="2500"
-      :num-visible="3"
-      :num-scroll="1"
-      class="image-carousel"
-      v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"
-
-      :responsive-options="carouselResponsiveOption"
-    >
-      <template #item="{data}">
-        <div class="carousel-item">
-          <Image :src="data" class="carousel-image"/>
-        </div>
-      </template>
-    </Carousel>
-
-    <div class="block-features-cont">
-      <!-- <div v-for="item in featuresBlocks"> -->
-        <BlockInfo v-for="item in featuresBlocks" :key="item.header" :icon="item.icon" :header="item.header" :text="item.text"/>
-    </div>
-
     <!-- supported app carousel -->
     <p class="apps-text" >Works seamlessly with... and others</p>
     <div class="apps-display-cont">
@@ -293,6 +263,39 @@ onMounted(async () => {
        </video>
 
      </div>
+
+    <div class="block-features-cont">
+      <!-- <div v-for="item in featuresBlocks"> -->
+        <BlockInfo v-for="item in featuresBlocks" :key="item.header" :icon="item.icon" :header="item.header" :text="item.text"/>
+    </div>
+
+        <!-- self made quote -->
+    <div class="quote-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
+      <span class="text-bigger">Not corporate. Just crafted.</span>
+      <p class="text-quote">
+        I didn’t set out to build a product — just something that made my own setup better. Crafted by only me.
+      </p>
+    </div>
+    
+    <!-- image carusel -->
+    <Carousel 
+      :value="imagesCarousel" 
+      circular 
+      :autoplay-interval="2500"
+      :num-visible="3"
+      :num-scroll="1"
+      class="image-carousel"
+      v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"
+
+      :responsive-options="carouselResponsiveOption"
+    >
+      <template #item="{data}">
+        <div class="carousel-item">
+          <Image :src="data" class="carousel-image"/>
+        </div>
+      </template>
+    </Carousel>
+
 
     <DataTable :value="tableProducts">
       <Column field="feature" header="" class="feature-column" />
@@ -363,9 +366,11 @@ onMounted(async () => {
 .notify-button{
   color: var(--green-bright);
   margin-right: 20px;
+  animation: slowGlowGreen 3s ease-in-out infinite alternate;
 }
 
 .app-button-cont{
+  justify-content: center;
   margin-left: 40px;
   margin-top: 30px;
   width: 100%;
@@ -373,11 +378,11 @@ onMounted(async () => {
 }
 
 .app-button{
-  align-self: left;
-  justify-self: left;
   color: var(--blue-vivid);
-  margin-right: auto;
+  /* margin-right: auto; */
 }
+
+
 
 .text-highlighted{
   color: var(--primary-0);
@@ -576,13 +581,17 @@ onMounted(async () => {
   }
 }
 
-@media (max-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+@keyframes slowGlowGreen {
+  0% {
+    box-shadow: 0 0 10px rgba(3, 145, 46, 0.336);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px rgba(2, 163, 43, 0.4),
+      0 0 30px rgba(3, 126, 13, 0.2);
   }
 }
+
 
 
 /* ============================= responsibility ============================ */
@@ -591,6 +600,15 @@ onMounted(async () => {
     width: 500px
   }
 }
+
+@media (max-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
+
 
 @media (max-width: 900px) {
   .block-content-cont{

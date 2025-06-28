@@ -345,7 +345,9 @@ export const useDeviceStore = defineStore('device', () => {
     const getFirmwareInfo = async () => {
         if (!canCommunicateWithDevice.value) throw new Error("cannot get firmware data - device not connected")
         try {            
-            await sendToDevice('firmware data')           
+            await sendToDevice('firmware data')
+            //wait so that the data gets read correctly
+            await new Promise(resolve => setTimeout(resolve, 500))    
         } catch (error: any) {
             setError(`Firmware data get failed ${error.message}`)
         }

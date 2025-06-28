@@ -19,8 +19,8 @@ const isActiveLink = (routePath: String) => {
 
 const otherItems = ref([
     {
-        label: 'Home',
-        route: '/'
+        label: 'App',
+        route: '/app'
     },
     {
         label: 'Discover',
@@ -28,7 +28,7 @@ const otherItems = ref([
     },
     {
         label: 'About',
-        route: '/about'
+        route: '/'
     },
     {
         label: 'Other',
@@ -46,28 +46,9 @@ const otherItems = ref([
 <template>
     <header>
         <nav id="main-nav">
-            <RouterLink to="/"><img :src="logoBeta" alt="logo" id="navigation-logo"></RouterLink>
+            <RouterLink to="/app"><img :src="logoBeta" alt="logo" id="navigation-logo"></RouterLink>
 
             <div id="navigation-links">
-                
-                <!-- <RouterLink 
-                to="/"
-                :class="[isActiveLink('/') ? 'activeLink' : 'inactiveLink']"
-                >Home</RouterLink>
-                <RouterLink
-                to="/discover"
-                :class="[isActiveLink('/discover') ? 'activeLink' : 'inactiveLink']"
-                >Discover</RouterLink> -->
-                
-                <!-- <Menubar :model="otherItems">
-                    <template #item="{ item, hasSubmenu }">
-                        <RouterLink :to="item.to">
-                            {{ item.label }}
-                            <span :class="item.icon"></span>
-                        </RouterLink>
-                    </template>
-
-                </Menubar> -->
 
                  <Menubar :model="otherItems">
                     <template #item="{ item, hasSubmenu }">
@@ -85,11 +66,6 @@ const otherItems = ref([
                     </template>
                 </Menubar>
 
-
-                <!-- <RouterLink 
-                to="/about"
-                :class="[isActiveLink('/about') ? 'activeLink' : 'inactiveLink']"
-                >About</RouterLink> -->
             </div>
             
             <Button
