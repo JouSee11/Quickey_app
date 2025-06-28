@@ -1,70 +1,14 @@
 <script setup lang="ts">
-import {ref, computed} from "vue"
-import { useButtonBindStore } from '@/stores/buttonBindStore'
-import { useConfirm } from 'primevue/useconfirm'
-import { useToast } from "primevue/usetoast";
+import {computed} from "vue"
 import { useDeviceStore } from "@/stores/deviceStore";
 import { storeToRefs } from "pinia";
-import { Icon } from "@iconify/vue";
+import { useDeviceActions } from "@/composables/useButtonActions";
 
 const deviceStore = useDeviceStore()
 const {isConnected} = storeToRefs(deviceStore)
-const { importFromDevice } = deviceStore
 
+const {resetButtons, importData} = useDeviceActions()
 
-const buttonStore = useButtonBindStore()
-const confirm = useConfirm()
-const toast = useToast()
-
-//show the dialog to reset binding
-const resetButtons = () => {
-    confirm.require({
-        message: "Do you want to delete all current bindings?",
-        header: "Reset all button binding",
-        icon: "pi pi-times",
-        rejectProps: {
-            label: "Cancel",
-            outlined: true,
-        },
-        acceptProps: {
-            label: "Yes",
-            outlined: true,
-            severity: 'warn'
-        },
-        accept: () => {
-            buttonStore.resetAllButtons()
-            toast.add({ severity: 'info', summary: 'Reseted', detail: 'All binding reseted', life: 2000 });
-        },
-        reject: () => {
-            console.log("Reset canceled")
-            // toast.add({ severity: 'info', summary: 'Canceled', detail: 'Reset canceled', life: 1000 });
-        }
-    })
-}
-
-const importData = async () => {
-    confirm.require({
-        message: "Import current data and overwrite the current bindings?",
-        header: "Import data from device",
-        icon: "pi pi-file-import",
-        rejectProps: {
-            label: 'Cancel',
-            outlined: true
-        },
-        acceptProps: {
-            label: 'Import',
-            outlined: true,
-            severity: 'success'
-        },
-        accept: async () => {
-            await importFromDevice()
-        },
-        reject: () => {
-            console.log("Import canceled")
-        }
-    })
-
-}
 
 //items in the menu
 const items = computed(() => [

@@ -3,12 +3,9 @@ import ButtonBox from "@/components/homePage/ButtonBox.vue"
 import RoundPageButton from "@/components/homePage/RoundPageButton.vue"
 import {onMounted, toRaw, watch} from "vue"
 import {useButtons} from "@/composables/useButtonsBindingHome"
-import type { ButtonState } from "@/types/buttonBindHome"
 import { Button } from "primevue"
 import { Icon } from '@iconify/vue'
 import {ref} from 'vue'
-import { list } from "@primeuix/themes/aura/autocomplete"
-import { button } from "@primeuix/themes/aura/inputnumber"
 import HomeKnob from "@/components/homePage/HomeKnob.vue"
 import { useDeviceStore } from "@/stores/deviceStore"
 import { storeToRefs } from "pinia"
@@ -17,7 +14,9 @@ import MultiBindingDialog from "@/components/modals/multiBinding/MultiBindingDia
 import { useMultiBindingDialogStore } from "@/stores/multiBindingDialogStore"
 import KnobBindingDialog from "@/components/modals/knobBinding/KnobBindingDialog.vue"
 import { useKnobDialogStore } from "@/stores/knobDialogStore"
+import { useDeviceActions } from "@/composables/useButtonActions"
 
+const {importData} = useDeviceActions()
 //use the composable functoins
 const {
     allButtons,
@@ -77,6 +76,8 @@ const toggleConnect = async () => {
     if (!isConnected.value) {
         await connect()        
         await getFirmwareInfo()
+        await importData()
+
     } else {
         await disconnect()
     }
@@ -214,6 +215,7 @@ const knobDialogStore = useKnobDialogStore()
                     :key="page"
                     :number-display="page"
                     :enabled="true"
+                    :data-page="page"
                     :class="{ active: currentPage === page }"
                     @click="changePage(page)"
     

@@ -1,7 +1,15 @@
 <script setup lang="ts">
+import { useTutorial } from '@/composables/useTutorialApp';
 import { Icon } from '@iconify/vue';
 
 const visible = defineModel<boolean>('visible', { default: false });
+const {startTutorial} = useTutorial()
+
+const triggerTutorial = () => {
+    visible.value = false
+    startTutorial()
+
+}
 </script>
 
 <template>
@@ -34,7 +42,7 @@ const visible = defineModel<boolean>('visible', { default: false });
                 label="Let's go"
                 icon="pi pi-check"
                 class="ok-button"
-                @click="visible = false"
+                @click="triggerTutorial"
                 autofocus
                 outlined
                 rounded
@@ -99,4 +107,5 @@ const visible = defineModel<boolean>('visible', { default: false });
     outline: none;
     border-top: 1px var(--primary-0) solid;
 }
+
 </style>

@@ -62,6 +62,22 @@
     box-shadow: 8px 8px 0 var(--primary-600);
 }
 
+/* ==== tutorial ==== */
+.driver-popover.tutorial-dark-theme{
+  background-color: var(--blue-dark) ;
+}
+
+.driver-popover.tutorial-dark-theme .driver-popover-title,
+.driver-popover.tutorial-dark-theme .driver-popover-progress-text {
+  color: var(--primary-0);
+}
+
+
+.driver-popover.tutorial-dark-theme .driver-popover-description {
+    color: var(--gray-bright);
+}
+
+
 
 /* ------------------------------------------------------------------------------------------ */
 /* changing the appereance of all primevue buttons */

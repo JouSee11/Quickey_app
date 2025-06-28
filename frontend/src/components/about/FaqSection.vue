@@ -125,6 +125,10 @@
     width: 100%
 }
 
+p{
+    color: var(--gray-bright);
+}
+
 @media (max-width: 700px) {
     .faq-cont{
         width: 100%;
