@@ -12,6 +12,8 @@ import productImage4 from '@/assets/images/landing_page/product_4.jpg'
 import productImage5 from '@/assets/images/landing_page/product_5.jpg'
 import productImage6 from '@/assets/images/landing_page/product_6.jpg'
 import productImage7 from '@/assets/images/landing_page/product_7.jpg'
+import rotateImage from '@/assets/images/landing_page/rotate.png'
+
 
 //videos
 import knobVideo from '@/assets/videos/knob_about.mp4'
@@ -42,6 +44,7 @@ const imagesCarousel = [
   productImage5,
   productImage6,
   productImage7,
+  rotateImage
 ]
 
 const appCarousel = [
@@ -194,7 +197,7 @@ onMounted(async () => {
     </div>
 
     <!-- first content block -->
-    <div class="block-content-cont" >
+    <div class="block-content-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
       <div class="block-text-cont">
         <p class="block-paragraph">
           <span class="text-highlighted">Keys that makes you work efficiently.</span>
@@ -206,8 +209,19 @@ onMounted(async () => {
 
 
     <!-- second content block -->
+    <!-- <div class="block-content-cont second-block-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
+      <Image class="image-block" :src="rotateImage" />
+      <div class="block-text-cont">
+        <p class="block-paragraph">
+          <span class="text-highlighted">A knob with range</span>
+          Scroll through timelines, control volume, or change tracks. Push the knob to trigger a mute volume, or assign it to do something custom.
+        </p>
+      </div>
+    </div> -->
     <div class="block-content-cont second-block-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
-      <Image class="image-block" :src="productImage1" />
+      <div class="rotate-image-container">
+        <Image class="image-block" :src="rotateImage" />
+      </div>
       <div class="block-text-cont">
         <p class="block-paragraph">
           <span class="text-highlighted">A knob with range</span>
@@ -546,6 +560,30 @@ onMounted(async () => {
 
 
 
+/* ============ scroll test ============== */
+@scroll-timeline rotateTimeline {
+  source: auto;
+  orientation: block;
+  scroll-offsets: start 0%, end 100%;
+}
+
+:deep(.rotate-image-container .image-block img) {
+  transform: scale(1.2); /* Start zoom */
+  animation-name: rotateOnScroll;
+  animation-duration: 1s; /* Required but ignored; timeline replaces it */
+  animation-timeline: rotateTimeline;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+@keyframes rotateOnScroll {
+  from {
+    transform: scale(1.2) rotate(0deg);
+  }
+  to {
+    transform: scale(1.2) rotate(180deg);
+  }
+}
 
 
 
