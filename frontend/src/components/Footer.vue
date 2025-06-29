@@ -26,6 +26,13 @@ import { Icon } from '@iconify/vue'
                 <Icon icon="mdi:linkedin" class="icon-footer"/>
                 <spn class="icon-text">LinkedIn</spn>
             </a>
+
+            <RouterLink to="/privacy-policy" style="margin: 0;">
+                <a href="https://www.linkedin.com/in/josef-talac-827241260/" target="_blank">
+                    <Icon icon="basil:document-outline" class="icon-footer"/>
+                    <spn class="icon-text">Privacy Policy</spn>
+                </a>
+            </RouterLink>
         </div>
         <p>Created by Josef Talač</p>
     </footer>
