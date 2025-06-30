@@ -176,7 +176,7 @@ onMounted(async () => {
 
   <div class="about">
 
-    <Image :src="logo" class="logo-top" width="80"/>
+    <Image :src="logo" class="logo-top" width="80" alt="quickey-logo"/>
     <h1 class="main-header">Quickey macropad</h1>
 
     <p class="catch-phrase">Designed to simplify your workflow and keep your focus where it matters most.</p>
@@ -201,13 +201,13 @@ onMounted(async () => {
           Every Quickey is fully programmable to do what you need — whether it’s a single command or a complex macro. One small device, <b>27</b> actions.
         </p>
       </div>
-      <Image class="image-block" :src="soonImagePoster" />
+      <Image class="image-block" :src="soonImagePoster" alt="showcase-image"/>
     </div>
 
 
     <!-- second content block -->
     <div class="block-content-cont second-block-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
-      <Image class="image-block" :src="rotateImage" />
+      <Image class="image-block" :src="rotateImage" alt="showcase-image"/>
       <div class="block-text-cont">
         <p class="block-paragraph">
           <span class="text-highlighted">A knob with range</span>
@@ -215,17 +215,7 @@ onMounted(async () => {
         </p>
       </div>
     </div>
-    <!-- <div class="block-content-cont second-block-cont" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }">
-      <div class="rotate-image-container">
-        <Image class="image-block" :src="rotateImage" />
-      </div>
-      <div class="block-text-cont">
-        <p class="block-paragraph">
-          <span class="text-highlighted">A knob with range</span>
-          Scroll through timelines, control volume, or change tracks. Push the knob to trigger a mute volume, or assign it to do something custom.
-        </p>
-      </div>
-    </div> -->
+
 
     <ScrollText text="Quickey - 27 keys - Knob - Multi-key - Web application - Save presets - Community presets - Customizable - "/>
 
@@ -248,7 +238,7 @@ onMounted(async () => {
     <!-- supported app carousel -->
     <p class="apps-text" >Works seamlessly with... and others</p>
     <div class="apps-display-cont">
-      <Image v-for="image in appCarousel" :src="image" class="img-app"       v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"/>
+      <Image v-for="image in appCarousel" :src="image" alt="supported-app-image" class="img-app" v-animateonscroll="{ enterClass: 'animate-fadein', leaveClass: 'animate-fadeout' }"/>
     </div>
 
     <!-- videos showcase -->
@@ -302,7 +292,7 @@ onMounted(async () => {
     >
       <template #item="{data}">
         <div class="carousel-item">
-          <Image :src="data" class="carousel-image"/>
+          <Image :src="data" class="carousel-image" alt="image-build"/>
         </div>
       </template>
     </Carousel>
