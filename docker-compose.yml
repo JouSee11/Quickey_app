@@ -10,9 +10,10 @@ services:
       - web
     restart: unless-stopped
     # Add proper signal handling  
-    stop_signal: SIGTERM
-    stop_grace_period: 30s
+    stop_signal: SIGINT
+    stop_grace_period: 10s
     init: true  # This helps with signal handling
+    user: "node:node" # run it as a non root user
     # command: node dist/index.js
  
   caddy:
