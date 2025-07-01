@@ -136,3 +136,13 @@ div.p-dialog-content{
 .p-datatable{
     background-color: transparent;
 }
+
+/* error tooltips login form */
+.error-tooltip-text {
+    /* background: var(--primary-900) !important; */
+    color: var(--red-vivid) !important;
+    border: 1px solid var(--red-vivid) !important;
+    font-size: 0.8em !important;
+    white-space: pre-line !important;
+
+}

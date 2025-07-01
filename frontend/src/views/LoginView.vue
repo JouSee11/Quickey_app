@@ -25,12 +25,12 @@ const onFormSubmit = () => {
             
             <div class="form-inputs">
                 <FloatLabel variant="out">
-                    <InputText id="username" v-model="usernameValue" class="form-input"></InputText>
+                    <InputText id="username" name="username" v-model="usernameValue" class="form-input"></InputText>
                     <label for="username" class="input-label">Username or email</label>
                 </FloatLabel>
 
                 <FloatLabel variant="out">
-                    <Password id="password" v-model="passValue" class="form-input" :feedback="false"></Password>
+                    <Password id="password" name="password" v-model="passValue" class="form-input" :feedback="false"></Password>
                     <label for="password" class="input-label">Password</label>
                 </FloatLabel>
             </div>
@@ -59,8 +59,8 @@ const onFormSubmit = () => {
 
 <style scoped>
 .form-cont{
-    width: 700px;
-    height: 400px;
+    width: 600px;
+    height: 450px;
     border-radius: var(--border-rad-bigger);
     background-color: var(--blue-dark);
     

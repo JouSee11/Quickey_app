@@ -39,6 +39,7 @@ declare module 'vue' {
     FloatLabel: typeof import('primevue/floatlabel')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Form: typeof import('@primevue/forms/form')['default']
+    FormField: typeof import('@primevue/forms/formfield')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HomeCenterSection: typeof import('./src/components/homePage/HomeCenterSection.vue')['default']
     HomeKnob: typeof import('./src/components/homePage/HomeKnob.vue')['default']
