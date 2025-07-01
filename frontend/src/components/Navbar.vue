@@ -71,8 +71,8 @@ const otherItems = ref([
             <Button
                 variant="outlined"
                 id="login-button-nav"
-                v-tooltip="'Availible soon'"
-            >
+                >
+                <!-- v-tooltip="'Availible soon'" -->
                 <RouterLink v-if="isLoggedIn" to="/profile">
                     <Icon icon="iconamoon:profile-fill" class="icon-nav" />
                     {{ username }}

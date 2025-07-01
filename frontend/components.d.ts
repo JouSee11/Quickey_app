@@ -64,6 +64,7 @@ declare module 'vue' {
     MultiBindingDialog: typeof import('./src/components/modals/multiBinding/MultiBindingDialog.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     OverlayBadge: typeof import('primevue/overlaybadge')['default']
+    Password: typeof import('primevue/password')['default']
     RoundPageButton: typeof import('./src/components/homePage/RoundPageButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
