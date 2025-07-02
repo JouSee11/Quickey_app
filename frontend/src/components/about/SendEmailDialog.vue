@@ -4,7 +4,7 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod'
 import Icon from '@iconify/vue';
 import { useToast } from 'primevue';
-import { aboutApi } from '@/api/about_api';
+import { aboutApi } from '@/api/about/about_api';
 import { FormField } from '@primevue/forms';
 
 const visible = defineModel<boolean>('visible', {default: false})

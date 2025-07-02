@@ -12,6 +12,7 @@
   "author": "Josef Talac",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.3",
     "@types/validator": "^13.15.2",

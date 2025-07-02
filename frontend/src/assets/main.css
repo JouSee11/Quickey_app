@@ -142,7 +142,12 @@ div.p-dialog-content{
     /* background: var(--primary-900) !important; */
     color: var(--red-vivid) !important;
     border: 1px solid var(--red-vivid) !important;
-    font-size: 0.8em !important;
+    font-size: 0.9em !important;
     white-space: pre-line !important;
-
+    width: 300px;
 }
+
+/* .error-tooltip-body{
+    width: 500px;
+    max-width: 1500px;
+} */

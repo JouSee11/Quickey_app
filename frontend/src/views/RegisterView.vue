@@ -3,27 +3,43 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 import { z } from 'zod';
+import { authFormApi } from '@/api/auth/auth_form';
 
 //variables
 const resolver = zodResolver(
     z.object({
         username: z.string()
             .min(3, "Minimum 3 characters")
-            .max(20, "Maximum 20 characters"),
+            .max(20, "Maximum 20 characters")
+            .refine(async (username) => {
+                const availible = await authFormApi.checkUsernameAvailible(username)
+                return availible
+            }, {
+                message: "Username is already taken"
+            }),
         email: z.string()
-            .email("Email is not valid"),
+            .email({message: "Email is not valid"})
+            .refine(async (email) => {  
+                const availible = await authFormApi.checkEmailAvailible(email)
+                return availible
+            }, {
+                message: "Email is already registered"
+            }),
         password: z.string()
+            .min(1, "Passwird is required")
             .min(7, "Minimum 7 characters")
             .max(256, "Maximum 256 characters")
             .regex(/[A-Z]/, "Must contain uppercase letter")
             .regex(/[a-z]/, "Must contain lowercase letter")
             .regex(/[0-9]/, "Must contain number"),
         passwordConfirm: z.string()
+            .min(1, "Please confirm your password")
     }).refine((data) => data.password === data.passwordConfirm, {
         message: "Passwords don't match",
         path: ["passwordConfirm"]
     })
 )
+
 
 const onFormSubmit = () => {
 
@@ -32,7 +48,7 @@ const onFormSubmit = () => {
 
 <template>
     <div class="form-cont box-shadow-normal">
-        <Form v-slot="$form" :resolver="resolver" @submit="onFormSubmit" class="form-element" :validate-on-blur="true" :validate-on-value-update="true">
+        <Form v-slot="$form" :resolver="resolver" @submit="onFormSubmit" class="form-element" :validate-on-blur="true" :validate-on-value-update="['password', 'passwordConfirm']">
             <div class="form-header">
                 <Icon icon="mdi:user-add" class="icon-header" />
                 <span class="header-text">Register</span>
@@ -85,7 +101,7 @@ const onFormSubmit = () => {
                     />
                 </FormField>
 
-                <FormField class="input-container">
+                <FormField class="input-container" initial-value="">
                     <FloatLabel variant="out">
                         <Password 
                             id="password"
@@ -94,6 +110,7 @@ const onFormSubmit = () => {
                             :class="{ 'input-incorect': $form.password?.invalid }"
                             toggleMask
                         />
+                    
                         <label for="password" class="input-label">Password</label>    
                     </FloatLabel>
                     <Icon 
@@ -111,10 +128,10 @@ const onFormSubmit = () => {
                     />
                 </FormField>
 
-                <FormField class="input-container">
+                <FormField class="input-container" initial-value="">
                     <FloatLabel variant="out">
                         <Password id="password-confirm" name="passwordConfirm" :class="['form-input', { 'input-incorect': $form.passwordConfirm?.invalid }]"  toggleMask :feedback="false"/>
-                        <label for="password" class="input-label">Password confirm</label>
+                        <label for="password-confirm" class="input-label">Password confirm</label>
                     </FloatLabel>
                     <Icon 
                         v-if="$form.passwordConfirm?.invalid" 
@@ -125,6 +142,7 @@ const onFormSubmit = () => {
                             escape: false,
                             showDelay: 100,
                             pt: {
+                                root: {class: 'error-tooltip-body'},
                                 text: {class: 'error-tooltip-text'}
                             }
                         }"
@@ -140,6 +158,7 @@ const onFormSubmit = () => {
                     outlined
                     rounded
                     class="log-in-button"
+                    type="submit"
                 />
             </div>
 
