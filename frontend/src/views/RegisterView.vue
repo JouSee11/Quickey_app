@@ -3,7 +3,12 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 import { z } from 'zod';
-import { authFormApi } from '@/api/auth/auth_form';
+import { authFormApi } from '@/api/auth/register_form';
+import { useRouter } from 'vue-router';
+import { useToast } from 'primevue';
+
+const router = useRouter()
+const toast = useToast()
 
 const serverError = ref({
     username: '',
@@ -67,6 +72,21 @@ const onFormSubmit = async ({valid, values}: {valid: boolean, values: any}) => {
         return
     }
 
+    //send the data to server
+    const registered = await authFormApi.sendRegisterForm(values.username, values.email, values.password, values.passwordConfirm)
+
+    if (registered) {
+        //navigate to new site
+        router.push('/registration-confirm')
+    } else {
+        toast.add({ 
+            severity: 'error', 
+            summary: 'Registration Failed', 
+            detail: 'Something went wrong. Please try again.', 
+            life: 3000 
+        });
+
+    }
     
 
 
@@ -76,6 +96,7 @@ const onFormSubmit = async ({valid, values}: {valid: boolean, values: any}) => {
 
 <template>
     <div class="form-cont box-shadow-normal">
+        <Toast />
         <Form v-slot="$form" :resolver="resolver" @submit="onFormSubmit" class="form-element" :validate-on-blur="true" :validate-on-value-update="true">
             <div class="form-header">
                 <Icon icon="mdi:user-add" class="icon-header" />

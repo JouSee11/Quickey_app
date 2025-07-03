@@ -30,4 +30,15 @@ export const authFormApi = {
             return false
         }
     },
+
+    async sendRegisterForm(username: string, email: string, password: string, passwordConfirm: string) {
+        try {
+            const response = await api.post('/auth/register', {username, email, password, passwordConfirm})
+
+            return response.data.success || false
+        } catch (error) {
+            console.log("Error loggin in!");
+            return false
+        }
+    }
 }

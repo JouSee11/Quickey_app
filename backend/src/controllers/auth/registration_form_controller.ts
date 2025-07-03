@@ -43,4 +43,8 @@ const checkUniqueEmail = async (req: CheckEmailRequest, res: Response) => {
     }
 }
 
-export {checkUniqueEmail, checkUniqueUsername}
+const createPendingUser = async (req: Request, res: Response) => {
+    //create pending user
+}
+
+export {checkUniqueEmail, checkUniqueUsername, createPendingUser}
