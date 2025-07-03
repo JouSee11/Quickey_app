@@ -5,26 +5,19 @@ import { Icon } from '@iconify/vue';
 import { z } from 'zod';
 import { authFormApi } from '@/api/auth/auth_form';
 
+const serverError = ref({
+    username: '',
+    email: ''
+})
+
 //variables
 const resolver = zodResolver(
     z.object({
         username: z.string()
             .min(3, "Minimum 3 characters")
-            .max(20, "Maximum 20 characters")
-            .refine(async (username) => {
-                const availible = await authFormApi.checkUsernameAvailible(username)
-                return availible
-            }, {
-                message: "Username is already taken"
-            }),
+            .max(20, "Maximum 20 characters"),
         email: z.string()
-            .email({message: "Email is not valid"})
-            .refine(async (email) => {  
-                const availible = await authFormApi.checkEmailAvailible(email)
-                return availible
-            }, {
-                message: "Email is already registered"
-            }),
+            .email({message: "Email is not valid"}),
         password: z.string()
             .min(1, "Passwird is required")
             .min(7, "Minimum 7 characters")
@@ -41,14 +34,49 @@ const resolver = zodResolver(
 )
 
 
-const onFormSubmit = () => {
+const checkUsernameBlur = async (username: string): Promise<Boolean> => {
+    serverError.value.username = '';
+    const usernameAvailible = await authFormApi.checkUsernameAvailible(username.trim())
+
+    if (!usernameAvailible) {
+        serverError.value.username = 'Username is already taken'
+        return false
+    }
+
+    return true
+}
+
+const checkEmailBlur = async (email: string): Promise<Boolean> => {
+    serverError.value.email = '';
+    const emailAvailible = await authFormApi.checkEmailAvailible(email.trim())
+
+    if (!emailAvailible) {
+        serverError.value.email = 'Email is already registered'
+        return false
+    }
+
+    return true
+}
+
+
+const onFormSubmit = async ({valid, values}: {valid: boolean, values: any}) => {
+    if (!valid) return
+    //check if usrename and email is not used
+    
+    if (serverError.value.email || serverError.value.username) {
+        return
+    }
+
+    
+
+
 
 }
 </script>
 
 <template>
     <div class="form-cont box-shadow-normal">
-        <Form v-slot="$form" :resolver="resolver" @submit="onFormSubmit" class="form-element" :validate-on-blur="true" :validate-on-value-update="['password', 'passwordConfirm']">
+        <Form v-slot="$form" :resolver="resolver" @submit="onFormSubmit" class="form-element" :validate-on-blur="true" :validate-on-value-update="true">
             <div class="form-header">
                 <Icon icon="mdi:user-add" class="icon-header" />
                 <span class="header-text">Register</span>
@@ -59,15 +87,20 @@ const onFormSubmit = () => {
                 <FormField class="input-container" initial-value="">
 
                     <FloatLabel variant="out">
-                        <InputText id="username" name="username" class="form-input"/>
+                        <InputText 
+                            id="username" 
+                            name="username" 
+                            :class="['form-input', { 'input-incorect': serverError.username}]"
+                            @blur="(event: Event) => checkUsernameBlur((event.target as HTMLInputElement).value)" 
+                            @input="serverError.username=''"/>
                         <label for="username" class="input-label">Username</label>
                     </FloatLabel>
                     <Icon  
-                        v-if="$form.username?.invalid" 
+                        v-if="$form.username?.invalid || serverError.username" 
                         icon="material-symbols:error-outline" 
                         class="error-indicator"
                         v-tooltip.right="{
-                            value: $form.username.errors?.map(e => '- ' + e.message).join('\n'),
+                            value: serverError.username || $form.username.errors?.map(e => '- ' + e.message).join('\n'),
                             escape: false,
                             showDelay: 100,
                             pt: {
@@ -82,16 +115,23 @@ const onFormSubmit = () => {
                 <FormField class="input-container" initial-value="">
                 
                     <FloatLabel variant="out">
-                        <InputText type="email" id="email" name="email" class="form-input"/>
+                        <InputText 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            :class="['form-input', { 'input-incorect': serverError.email}]"
+                            @blur="(event: Event) => checkEmailBlur((event.target as HTMLInputElement).value)" 
+                            @input="serverError.email = ''"
+                        />
                         <label for="email" class="input-label">Email</label>
 
                     </FloatLabel>
                     <Icon  
-                        v-if="$form.email?.invalid" 
+                        v-if="$form.email?.invalid || serverError.email"
                         icon="material-symbols:error-outline" 
                         class="error-indicator"
                         v-tooltip.right="{
-                            value: $form.email.errors?.map(e => '- ' + e.message).join('\n'),
+                            value: serverError.email || $form.email.errors?.map(e => '- ' + e.message).join('\n'),
                             escape: false,
                             showDelay: 100,
                             pt: {
@@ -109,6 +149,7 @@ const onFormSubmit = () => {
                             class="form-input"
                             :class="{ 'input-incorect': $form.password?.invalid }"
                             toggleMask
+                            
                         />
                     
                         <label for="password" class="input-label">Password</label>    
