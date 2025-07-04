@@ -27,7 +27,11 @@ app.directive('animateonscroll', AnimateOnScroll)
 //setup the ui libary
 app.use(PrimeVue, {
     theme: {
-        preset: CustomTheme
+        preset: CustomTheme,
+        options: {
+            darkModeSelector: '.darkmode'
+
+        }
     },
     ripple: true,
     options: {
