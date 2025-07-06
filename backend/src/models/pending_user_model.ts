@@ -29,6 +29,10 @@ pendingUserSchema.statics.findByEmail = function(email: string) {
     return this.findOne({email: email.trim()})
 }
 
+pendingUserSchema.statics.findByToken = function(token: string) {
+    return this.findOne({verificationToken: token})
+}
+
 
 
 export default mongoose.model("PendingUser", pendingUserSchema)

@@ -7,7 +7,7 @@ interface ValidationError {
     message: string
 }
 
-interface RegisterRequest {
+interface RegisterRequest extends Request {
     body: {
         username: string,
         email: string,
@@ -17,35 +17,43 @@ interface RegisterRequest {
 }
 
 const registerFormValidation = async (req: RegisterRequest, res: Response, next: NextFunction) => {
-    let {username , email, password, passwordConfirm} = req.body
-    let errors: ValidationError[] = []
-
-    username = username?.trim()
-    email = email?.trim()
-
-    //validate inputs
-    if (!(await usernameUnique(username) || !usernameValid(username))) {
-        errors.push({field: 'username', message: 'Username is not valid'})
-    }
+    try {        
+        let {username , email, password, passwordConfirm} = req.body
+        let errors: ValidationError[] = []
+                
+        username = username?.trim()
+        email = email?.trim()
     
-    if (!(await emailUnique(email)) || !emailValid) {
-        errors.push({field: 'email', message: 'Email is not valid'})
-    }
+        //validate inputs
+        if (!(await usernameUnique(username)) || !usernameValid(username)) {
+            errors.push({field: 'username', message: 'Username is not valid'})
+        }
+        
+        if (!(await emailUnique(email)) || !emailValid(email)) {
+            errors.push({field: 'email', message: 'Email is not valid'})
+        }
+        
+        if (!passwordValid(password)) {
+            errors.push({field: 'password', message: 'Password is not valid'})
+        }
+        
+        if (password !== passwordConfirm) {
+            errors.push({field: 'passwordConfirm', message: 'Passwords do not match'})
+        }
     
-    if (!passwordValid(password)) {
-        errors.push({field: 'password', message: 'Password is not valid'})
-    }
-    
-    if (password !== passwordConfirm) {
-        errors.push({field: 'passwordConfirm', message: 'Passwords do not match'})
-    }
-
-    //check if there were some erros in the validaiton
-    if (errors.length > 0) {
-        res.status(400).json({status: 'error', errorData: errors})
-    } else {
-        //validation passed - create pending user
-        next()
+        //check if there were some erros in the validaiton
+        if (errors.length > 0) {
+            res.status(400).json({status: 'error', errorData: errors})
+        } else {
+            //validation passed - create pending user
+            next()
+        }
+    } catch (error: any) {
+        res.status(500).json({
+            status: "error",
+            msg: "data validation failed",
+            error: error
+        })
     }
 }
 

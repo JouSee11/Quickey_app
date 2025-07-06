@@ -8,6 +8,6 @@ router.route("/form/check-email").post(checkUniqueEmail)
 
 router.post("/form/check-username", checkUniqueUsername)
 
-router.post("/auth/register", registerFormValidation, createPendingUser)
+router.post("/register", registerFormValidation, createPendingUser)
 
 export default router

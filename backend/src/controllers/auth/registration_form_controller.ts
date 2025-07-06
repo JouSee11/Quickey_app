@@ -1,3 +1,4 @@
+import PendingUser from "../../models/pending_user_model"
 import User from "../../models/user_model"
 import { Request, Response } from "express"
 
@@ -10,6 +11,14 @@ interface CheckUsernameRequest extends Request {
 interface CheckEmailRequest extends Request {
     body: {
         email: string
+    }
+}
+
+interface RegisterRequest extends Request {
+    body: {
+        username: string,
+        email: string,
+        password: string,
     }
 }
 
@@ -43,8 +52,28 @@ const checkUniqueEmail = async (req: CheckEmailRequest, res: Response) => {
     }
 }
 
-const createPendingUser = async (req: Request, res: Response) => {
-    //create pending user
+const createPendingUser = async (req: RegisterRequest, res: Response) => {
+    try {
+        //create pending user
+        let {username, email, password} = req.body
+
+        const verificationToken = crypto.randomUUID()
+
+        await PendingUser.deleteMany({ email });
+
+        await PendingUser.create({
+            username,
+            email,
+            password,
+            verificationToken
+        })
+
+        // send 
+    } catch (error: any) {
+        res.status(500).json({status: 'error', msg: 'creating pending user failed'})
+ 
+    }
+
 }
 
 export {checkUniqueEmail, checkUniqueUsername, createPendingUser}
