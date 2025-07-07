@@ -10,6 +10,8 @@ import { useToast } from 'primevue';
 const router = useRouter()
 const toast = useToast()
 
+const isSubmitting = ref(false)
+
 const serverError = ref({
     username: '',
     email: ''
@@ -64,11 +66,14 @@ const checkEmailBlur = async (email: string): Promise<Boolean> => {
 }
 
 
-const onFormSubmit = async ({valid, values}: {valid: boolean, values: any}) => {
+const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any, reset: () => void}) => {
     if (!valid) return
     //check if usrename and email is not used
+
+    isSubmitting.value = true
     
-    if (serverError.value.email || serverError.value.username) {        
+    if (serverError.value.email || serverError.value.username) {  
+        isSubmitting.value = false      
         return
     }
 
@@ -83,8 +88,17 @@ const onFormSubmit = async ({valid, values}: {valid: boolean, values: any}) => {
             severity: 'success', 
             summary: 'Registration successfull', 
             detail: 'Check your email to finish registration.', 
-            life: 5000 
+            life: 6000 
         });
+        //reset input fileds
+        reset()
+
+        serverError.value = {
+            username: '',
+            email: ''
+        };
+
+
         // router.push('/registration-ve')
     } else {
         toast.add({ 
@@ -93,12 +107,8 @@ const onFormSubmit = async ({valid, values}: {valid: boolean, values: any}) => {
             detail: 'Something went wrong. Please try again.', 
             life: 3000 
         });
-
     }
-    
-
-
-
+    isSubmitting.value = false      
 }
 </script>
 
@@ -229,6 +239,8 @@ const onFormSubmit = async ({valid, values}: {valid: boolean, values: any}) => {
                     rounded
                     class="log-in-button"
                     type="submit"
+                    :disabled="isSubmitting"
+                    :loading="isSubmitting"
                 />
             </div>
 

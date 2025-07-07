@@ -1,11 +1,12 @@
-import express, { ErrorRequestHandler } from "express"
 import dotenv from "dotenv"
+dotenv.config()
+
+import express, { ErrorRequestHandler } from "express"
 import router from "./routes/router"
 import connectDB from "./db/connectDB"
 import mongoose from "mongoose"
 
 const app = express()
-dotenv.config()
 
 //middleware
 app.use(express.json())
