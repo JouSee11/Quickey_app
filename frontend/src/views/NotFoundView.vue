@@ -35,6 +35,7 @@
 
 .text-desc{
     color: var(--primary-50);
+    text-align: center;
 }
 
 @media (max-width: 500px) {

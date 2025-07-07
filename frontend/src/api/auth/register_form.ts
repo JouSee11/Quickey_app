@@ -1,5 +1,5 @@
 import type { AxiosResponse } from "axios";
-import {api} from "../api"
+import {api} from "@/api/api"
 
 interface AuthFormResponse{
     status: string,
