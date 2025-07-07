@@ -35,7 +35,7 @@ export const authFormApi = {
         try {
             const response = await api.post('/auth/register', {username, email, password, passwordConfirm})
 
-            return response.data.success || false
+            return response.data.status == 'success'
         } catch (error) {
             console.log("Error loggin in!");
             return false

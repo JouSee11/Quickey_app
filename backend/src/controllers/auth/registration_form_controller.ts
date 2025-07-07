@@ -1,6 +1,8 @@
 import PendingUser from "../../models/pending_user_model"
 import User from "../../models/user_model"
 import { Request, Response } from "express"
+import emailService from "../../utils/emailService"
+import crypto from 'crypto'
 
 interface CheckUsernameRequest extends Request {
     body: {
@@ -68,8 +70,17 @@ const createPendingUser = async (req: RegisterRequest, res: Response) => {
             verificationToken
         })
 
-        // send 
+        // send verification email
+        const emailSent = await emailService.sendVerificationEmail(email, username, verificationToken)
+
+        if (emailSent) {
+            res.status(200).json({status: 'success', msg: 'registration created successfully'})
+        } else {
+            res.status(200).json({status: 'error', msg: 'sending verification email failed'})
+        }
+
     } catch (error: any) {
+        console.log(error);
         res.status(500).json({status: 'error', msg: 'creating pending user failed'})
  
     }

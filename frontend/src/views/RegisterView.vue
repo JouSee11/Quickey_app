@@ -68,16 +68,24 @@ const onFormSubmit = async ({valid, values}: {valid: boolean, values: any}) => {
     if (!valid) return
     //check if usrename and email is not used
     
-    if (serverError.value.email || serverError.value.username) {
+    if (serverError.value.email || serverError.value.username) {        
         return
     }
 
-    //send the data to server
+    //send the data to server    
     const registered = await authFormApi.sendRegisterForm(values.username, values.email, values.password, values.passwordConfirm)
 
+    console.log(registered + 'value');
+    
     if (registered) {
         //navigate to new site
-        router.push('/registration-confirm')
+        toast.add({ 
+            severity: 'success', 
+            summary: 'Registration successfull', 
+            detail: 'Check your email to finish registration.', 
+            life: 5000 
+        });
+        // router.push('/registration-ve')
     } else {
         toast.add({ 
             severity: 'error', 
