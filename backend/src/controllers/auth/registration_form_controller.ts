@@ -84,7 +84,20 @@ const createPendingUser = async (req: RegisterRequest, res: Response) => {
         res.status(500).json({status: 'error', msg: 'creating pending user failed'})
  
     }
-
 }
 
-export {checkUniqueEmail, checkUniqueUsername, createPendingUser}
+const saveUser = async (username: string, email: string, password: string): Promise<boolean> => {
+    try {
+        await User.create({
+            username,
+            email,
+            password
+        })
+        return true
+    } catch (error) {
+        console.log(error);
+        return false
+    }
+}
+
+export {checkUniqueEmail, checkUniqueUsername, createPendingUser, saveUser}

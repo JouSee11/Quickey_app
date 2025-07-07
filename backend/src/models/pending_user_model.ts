@@ -7,7 +7,7 @@ const pendingUserSchema = new mongoose.Schema<IPendingUser>({
     email: { type: String, required: true, trim: true},
     password: { type: String, required: true},
     verificationToken: {type: String, required: true},
-    createdAt: {type: Date, default: Date.now(), expires: 300} // delete it self in 300s (5 min)
+    createdAt: {type: Date, default: Date.now, expires: 300} // delete it self in 300s (5 min)
     
 })
 

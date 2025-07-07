@@ -40,20 +40,19 @@ const userSchema = new  Schema<IUser>({
     }
 })
 
-// hash the password on initial save or when changing password
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) {
-        return next();
-    }
+// userSchema.pre('save', async function (next) {
+//     if (!this.isModified('password')) {
+//         return next();
+//     }
     
-    try {
-        const salt = await bcrypt.genSalt(12);
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
-    } catch (error: any) {
-        next(error);
-    }
-});
+//     try {
+//         const salt = await bcrypt.genSalt(12);
+//         this.password = await bcrypt.hash(this.password, salt);
+//         next();
+//     } catch (error: any) {
+//         next(error);
+//     }
+// });
 
 // Instance method to compare candidate password with the user's hashed password
 userSchema.methods.comparePassword = async function (candidatePassword: string) {

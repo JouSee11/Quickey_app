@@ -1,7 +1,7 @@
 import express from "express";
 import { checkUniqueEmail, checkUniqueUsername, createPendingUser } from "../controllers/auth/registration_form_controller";
 import { registerFormValidation } from "../middleware/validate_register_form";
-import { verifyEmail } from "../controllers/auth/email_verify";
+import { verifyEmail } from "../controllers/auth/email_verify_controller";
 
 const router = express.Router()
 
