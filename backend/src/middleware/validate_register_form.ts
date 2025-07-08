@@ -43,7 +43,7 @@ const registerFormValidation = async (req: RegisterRequest, res: Response, next:
     
         //check if there were some erros in the validaiton
         if (errors.length > 0) {
-            res.status(400).json({status: 'error', errorData: errors})
+            res.status(400).json({status: 'error', msg: 'Invalid data', errorData: errors})
         } else {
             //validation passed - create pending user
             next()
@@ -51,7 +51,7 @@ const registerFormValidation = async (req: RegisterRequest, res: Response, next:
     } catch (error: any) {
         res.status(500).json({
             status: "error",
-            msg: "data validation failed",
+            msg: "Data validation failed",
             error: error
         })
     }

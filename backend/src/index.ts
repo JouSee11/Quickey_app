@@ -5,12 +5,16 @@ import express, { ErrorRequestHandler } from "express"
 import router from "./routes/router"
 import connectDB from "./db/connectDB"
 import mongoose from "mongoose"
+import helmet from "helmet"
+import { generalLimiter } from "./middleware/rate_limiter"
 
 const app = express()
 
 //middleware
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(helmet()) //preventing some attacks
+app.use(generalLimiter) //rate limiter for api
 
 // error handling for invalid json syntax
 const invalidJsonHandler: ErrorRequestHandler = (err, req, res, next) => {

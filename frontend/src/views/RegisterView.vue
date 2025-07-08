@@ -80,9 +80,8 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
     //send the data to server    
     const registered = await authFormApi.sendRegisterForm(values.username, values.email, values.password, values.passwordConfirm)
 
-    console.log(registered + 'value');
     
-    if (registered) {
+    if (registered.status === 'success') {
         //navigate to new site
         toast.add({ 
             severity: 'success', 
@@ -104,7 +103,7 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
         toast.add({ 
             severity: 'error', 
             summary: 'Registration Failed', 
-            detail: 'Something went wrong. Please try again.', 
+            detail: registered.msg, 
             life: 3000 
         });
     }

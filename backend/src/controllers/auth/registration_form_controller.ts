@@ -74,14 +74,14 @@ const createPendingUser = async (req: RegisterRequest, res: Response) => {
         const emailSent = await emailService.sendVerificationEmail(email, username, verificationToken)
 
         if (emailSent) {
-            res.status(200).json({status: 'success', msg: 'registration created successfully'})
+            res.status(200).json({status: 'success', msg: 'Registration created successfully'})
         } else {
-            res.status(200).json({status: 'error', msg: 'sending verification email failed'})
+            res.status(200).json({status: 'error', msg: 'Sending verification email failed'})
         }
 
     } catch (error: any) {
         console.log(error);
-        res.status(500).json({status: 'error', msg: 'creating pending user failed'})
+        res.status(500).json({status: 'error', msg: 'Creating pending user failed'})
  
     }
 }
