@@ -20,7 +20,7 @@ const serverError = ref({
 //variables
 const resolver = zodResolver(
     z.object({
-        username: z.string()
+        username: z.string().trim()
             .min(3, "Minimum 3 characters")
             .max(20, "Maximum 20 characters"),
         email: z.string()

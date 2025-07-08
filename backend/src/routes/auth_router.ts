@@ -6,12 +6,15 @@ import { registrationLimiter } from "../middleware/rate_limiter";
 
 const router = express.Router()
 
-router.route("/form/check-email").post(checkUniqueEmail)
+router.route("/form/check-email").get(checkUniqueEmail)
 
-router.post("/form/check-username", checkUniqueUsername)
+router.get("/form/check-username", checkUniqueUsername)
 
 router.post("/register", registrationLimiter, registerFormValidation, createPendingUser)
 
 router.post("/register-verify", verifyEmail)
+
+//sso routes
+
 
 export default router

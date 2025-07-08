@@ -9,7 +9,7 @@ interface EmailAboutResponse{
 export const aboutApi = {
     async checkEmailExists(email: string): Promise<Boolean>{
         try {
-            const response = await api.post('/about/check-email', {email})
+            const response = await api.get(`/about/check-email?email=${email}`)
             console.log(response.data);
             
             return response.data.exists || false

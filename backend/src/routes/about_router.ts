@@ -7,6 +7,6 @@ router.route("/save-email")
 .post(saveEmailAbout)
 
 router.route("/check-email")
-.post(checkEmailExists)
+.get(checkEmailExists)
 
 export default router

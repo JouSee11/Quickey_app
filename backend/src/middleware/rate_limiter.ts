@@ -3,7 +3,7 @@ import {Request, Response} from 'express'
 
 export const registrationLimiter = rateLimit({
     windowMs: 10 * 60 * 1000,
-    max: 7,
+    max: 5,
     message: {
         status: 'error',
         msg: 'Too many registration attempts, try again later.',
@@ -16,7 +16,7 @@ export const registrationLimiter = rateLimit({
     }
 })
 
-//limit the general app usage for 1 per second
+//limit the general app usage to 100 requests per minute
 export const generalLimiter = rateLimit({
     windowMs: 60 * 1000,
     max: 100,

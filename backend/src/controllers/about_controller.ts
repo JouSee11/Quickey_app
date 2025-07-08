@@ -43,7 +43,7 @@ const saveEmailAbout = async (req: Request, res: Response): Promise<void> => {
 }
 
 const checkEmailExists = async (req: Request, res: Response) => {
-    const email = req.body?.email
+    const email = req.query.email as string
     
     if (!email) {
         res.status(200).json({exists: false, msg: "email not provided"}) 

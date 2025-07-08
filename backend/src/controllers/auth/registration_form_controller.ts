@@ -5,13 +5,13 @@ import emailService from "../../utils/emailService"
 import crypto from 'crypto'
 
 interface CheckUsernameRequest extends Request {
-    body: {
+    query: {
         username: string
     }
 }
 
 interface CheckEmailRequest extends Request {
-    body: {
+    query: {
         email: string
     }
 }
@@ -26,7 +26,8 @@ interface RegisterRequest extends Request {
 
 const checkUniqueUsername = async (req: CheckUsernameRequest, res: Response) => {
     try {
-        const username = req.body.username
+        const username = req.query.username
+        
         const existingUser = await User.findByUsername(username)
 
         if (existingUser) {
@@ -41,7 +42,7 @@ const checkUniqueUsername = async (req: CheckUsernameRequest, res: Response) => 
 
 const checkUniqueEmail = async (req: CheckEmailRequest, res: Response) => {
     try {
-        const email = req.body.email
+        const email = req.query.email
         const existingUser = await User.findByEmail(email)
 
         if (existingUser) {
