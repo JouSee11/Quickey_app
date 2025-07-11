@@ -244,8 +244,8 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
             </div>
 
             <div class="sso-buttons">
-                <a><Icon icon="ri:google-fill" class="sso-icon" /></a>
-                <a><Icon icon="mdi:github" class="sso-icon"/></a>
+                <a href="/api/auth/sso/google"><Icon icon="ri:google-fill" class="sso-icon" /></a>
+                <a href="/api/auth/sso/github"><Icon icon="mdi:github" class="sso-icon"/></a>
             </div>
         </Form>
 

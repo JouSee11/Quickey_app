@@ -179,7 +179,7 @@ onMounted(async () => {
     <Image :src="logo" class="logo-top" width="80" alt="quickey-logo"/>
     <h1 class="main-header">Quickey Macropad</h1>
 
-    <p class="catch-phrase">Designed to simplify your workflow and keep your focus where it matters most.</p>
+    <p class="catch-phrase">Simplify your workflow. Works everywhere. No downloads needed.</p>
     
     <div class="main-button-cont">
       <Button 

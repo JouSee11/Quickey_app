@@ -1,10 +1,10 @@
 import passport from 'passport';
 import { Strategy as GitHubStrategy} from 'passport-github2';
 import dotenv from "dotenv";
-import User from '../../models/user_model.js';
+import User from '../../models/user_model';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt'
-import { IUser } from '../../@types/user.js';
+import { IUser } from '../../@types/user';
 
 dotenv.config();
 
@@ -19,13 +19,15 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-      callbackURL: `${process.env.APP_URL}/auth/sso/github/callback`,
+      callbackURL: `${process.env.APP_URL}/api/auth/sso/github/callback`,
       scope: ['user:email'] // ensure email is returned
     },
     async (accessToken: string, refreshToken: string, profile: any, cb: VerifyCallback) => {
       try {
+        console.log(JSON.stringify(profile.emails[0].value))
+
         //safety check for emails
-        if (!profile._json.email || !profile.emails[0]?.value) {
+        if (!profile._json.email && !profile.emails[0]?.value) {
             return cb(new Error('No email provided by github'));
         }
 
@@ -76,7 +78,7 @@ passport.serializeUser((user, done) => {
 
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (id: string, done) => {
   try {
     const user = await User.findById(id);
     done(null, user);

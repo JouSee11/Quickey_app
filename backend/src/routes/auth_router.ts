@@ -5,6 +5,7 @@ import { verifyEmail } from "../controllers/auth/email_verify_controller";
 import { registrationLimiter } from "../middleware/rate_limiter";
 import passport from "passport"
 import ssoRouter from "./sso_router"
+import { refreshToken } from "../controllers/auth/jwt_controller";
 
 const router = express.Router()
 
@@ -16,6 +17,8 @@ router.post("/register", registrationLimiter, registerFormValidation, createPend
 
 router.post("/register-verify", verifyEmail)
 
-router.use(ssoRouter)
+router.use("/sso", ssoRouter)
+
+router.post("/refresh-token", refreshToken)
 
 export default router

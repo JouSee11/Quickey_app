@@ -13,7 +13,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      callbackURL: `${process.env.APP_URL}/auth/sso/google/callback`,
+      callbackURL: `${process.env.APP_URL}/api/auth/sso/google/callback`,
     },
     async (accessToken: string, refreshToken: string, profile: Profile, cb: VerifyCallback) => {
         try {
@@ -58,7 +58,7 @@ passport.serializeUser((user, done: DoneCallback) => {
   done(null, (user as IUser)._id);
 });
 
-passport.deserializeUser(async (id: number, done: DoneCallback) => {
+passport.deserializeUser(async (id: string, done: DoneCallback) => {
   try {
     const user = await User.findById(id);
     done(null, user);
