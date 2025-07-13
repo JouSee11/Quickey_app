@@ -18,11 +18,12 @@ export const ssoCallback = (req: Request, res: Response, next: NextFunction) => 
                     window.opener.postMessage({
                         type: 'SSO_ERROR',
                         error: 'Autherntication failed'
-                    }, window.location.origin)
+                    }, '${process.env.FRONTEND_URL}')
                     window.close()
                 </script>
             `)
         }
+
 
         const accessToken = generateJWT(user)
         const refreshToken = generateRefreshToken(user)
@@ -50,7 +51,7 @@ export const ssoCallback = (req: Request, res: Response, next: NextFunction) => 
                 window.opener.postMessage({
                     type: 'SSO_SUCCESS',
                     authData: ${JSON.stringify(authData)}
-                }, window.location.origin)
+                }, '*')
                 window.close()
             </script>`
         )
@@ -72,14 +73,16 @@ export const ssoCallback = (req: Request, res: Response, next: NextFunction) => 
         //         }
         //     }
         // })
-    } catch (error) {
+    } catch (error: any) {
         // res.status(500).json({status: 'error', msg: "Token generation failed"})
+        console.log(error.message);
+        
         res.status(500).send(
             `<script>
                 window.opener.postMessage({
                     type: 'SSO_ERROR',
                     error: 'Token generation failed'
-                }, window.location.origin)
+                }, '${process.env.FRONTEND_URL}')
                 window.close()
             </script>`
         )

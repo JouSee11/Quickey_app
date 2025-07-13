@@ -1,4 +1,3 @@
-import type { IntervalHistogram } from "perf_hooks"
 import { authApi, type AuthResponse } from "./auth_token"
 
 export interface AuthUser {
@@ -62,50 +61,36 @@ export class AuthService {
                 return
             }
 
-            let messageReceived = false
-            let checkClosedInterval: number
-
-            // Function to clean up and reject
-            const cleanup = (error: string) => {
-                if (messageReceived) return // Don't reject if we already got a message
-                
-                clearInterval(checkClosedInterval)
-                window.removeEventListener('message', messageListener)
-                console.log('SSO popup cleanup:', error)
-                reject(new Error(error))
-            }
-
-            // Check if popup is closed - but with better logic
-            checkClosedInterval = setInterval(() => {
-                try {
-                    // Only check if popup is truly closed and we haven't received a message
-                    if (popup.closed && !messageReceived) {
-                        cleanup("SSO login cancelled")
-                    }
-                } catch (error) {
-                    // Cross-origin errors during OAuth flow are normal
-                    // Don't treat them as the popup being closed
-                    console.log('Cross-origin check (normal during OAuth):', error)
+            let cleanupCalled = false
+            const cleanup = (error?: string) => {
+                if (cleanupCalled) return;
+                cleanupCalled = true;
+                window.removeEventListener('message', messageListener);
+                if (timeoutId) clearTimeout(timeoutId);
+                if (popup && !popup.closed) popup.close();
+                if (error) {
+                    console.log('SSO login failed:', error);
+                    reject(new Error(error));
                 }
-            }, 2000) // Check less frequently
+            };
+
+            const timeoutId = setTimeout(() => cleanup('SSO login timed out.'), 60000); // 1 minute timeout
 
             //check for successfull login
             const messageListener = (event: MessageEvent) => {
                 //only accept messages form smae origin - SECURITY
-                if (event.origin !== window.location.origin) return
+                // if (event.origin !== window.location.origin) return
+                console.log("event recieved");
+                
 
                 if ( event.data.type === 'SSO_SUCCESS') {
-                    clearInterval(checkClosedInterval)
-                    window.removeEventListener('message', messageListener)
-                    popup.close()
                     //save the auth data
                     this.saveAuthData(event.data.authData)
                     resolve(event.data.authData.user)
+                    cleanup()
                 } else {
-                    clearInterval(checkClosedInterval)
-                    window.removeEventListener('message', messageListener)
-                    popup.close()
                     reject(new Error(event.data.error))
+                    cleanup()
                 }
             }
 
