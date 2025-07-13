@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import { IUser } from "../../@types/user"
-import { generateJWT, generateRefreshToken, verifyJWT } from "../../utils/jwt"
+import { generateJWT, generateRefreshToken, verifyJWT, verifyRefreshToken } from "../../utils/jwt"
 import User from "../../models/user_model"
 
 
@@ -9,16 +9,25 @@ export const ssoCallback = (req: Request, res: Response, next: NextFunction) => 
         const user = req.user as IUser 
 
         if (!user) {
-            res.status(401).json({
-                status: "error",
-                msg: "Authentication failed"
-            })
+            // res.status(401).json({
+            //     status: "error",
+            //     msg: "Authentication failed"
+            // })
+            res.status(401).send(`
+                <script>
+                    window.opener.postMessage({
+                        type: 'SSO_ERROR',
+                        error: 'Autherntication failed'
+                    }, window.location.origin)
+                    window.close()
+                </script>
+            `)
         }
 
         const accessToken = generateJWT(user)
         const refreshToken = generateRefreshToken(user)
 
-        res.status(200).json({
+        const authData = {
             status: "success",
             msg: "Login successfull",
             data: {
@@ -34,9 +43,46 @@ export const ssoCallback = (req: Request, res: Response, next: NextFunction) => 
                     tokenType: "Bearer"
                 }
             }
-        })
+        }
+        
+        res.status(200).send(
+            `<script>
+                window.opener.postMessage({
+                    type: 'SSO_SUCCESS',
+                    authData: ${JSON.stringify(authData)}
+                }, window.location.origin)
+                window.close()
+            </script>`
+        )
+
+        // res.status(200).json({
+        //     status: "success",
+        //     msg: "Login successfull",
+        //     data: {
+        //         user: {
+        //             id: user._id,
+        //             username: user.username,
+        //             role: user.role
+        //             //later possibly add some other more staff that i would need to show on the profile
+        //         },
+        //         tokens: {
+        //             accessToken,
+        //             refreshToken,
+        //             tokenType: "Bearer"
+        //         }
+        //     }
+        // })
     } catch (error) {
-        res.status(500).json({status: 'error', msg: "Token generation failed"})
+        // res.status(500).json({status: 'error', msg: "Token generation failed"})
+        res.status(500).send(
+            `<script>
+                window.opener.postMessage({
+                    type: 'SSO_ERROR',
+                    error: 'Token generation failed'
+                }, window.location.origin)
+                window.close()
+            </script>`
+        )
     } 
 }
 
@@ -52,7 +98,7 @@ export const refreshToken = async (req: Request, res: Response) => {
             return
         }
 
-        const decoded = verifyJWT(refreshToken)
+        const decoded = verifyRefreshToken(refreshToken)
         if (!decoded) {
             res.status(403).json({
                 status: "error",

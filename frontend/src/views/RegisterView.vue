@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { authFormApi } from '@/api/auth/register_form';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue';
+import { AuthService } from '@/api/auth/auth_service';
+import { useAuth } from '@/composables/useAuth';
 
 const router = useRouter()
 const toast = useToast()
@@ -109,6 +111,27 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
     }
     isSubmitting.value = false      
 }
+
+
+// loggins 
+const {loginWithGoogle, loginWithGithub} = useAuth()
+
+const handleGoogleLogin = async () => {
+    try {
+        const success = await loginWithGoogle()
+        if (success) {
+            router.push('/')
+        } 
+    } catch (error) {
+        toast.add({ 
+            severity: 'error', 
+            summary: 'Login failed', 
+            detail: 'Please try again', 
+            life: 3000 
+        })
+        
+    }
+} 
 </script>
 
 <template>
@@ -244,7 +267,7 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
             </div>
 
             <div class="sso-buttons">
-                <a href="/api/auth/sso/google"><Icon icon="ri:google-fill" class="sso-icon" /></a>
+                <a @click="handleGoogleLogin"><Icon icon="ri:google-fill" class="sso-icon" /></a>
                 <a href="/api/auth/sso/github"><Icon icon="mdi:github" class="sso-icon"/></a>
             </div>
         </Form>
