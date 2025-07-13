@@ -3,7 +3,6 @@ import { IUser } from "../../@types/user"
 import { generateJWT, generateRefreshToken, verifyJWT, verifyRefreshToken } from "../../utils/jwt"
 import User from "../../models/user_model"
 
-
 export const ssoCallback = (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user as IUser 
@@ -88,6 +87,7 @@ export const ssoCallback = (req: Request, res: Response, next: NextFunction) => 
         )
     } 
 }
+
 
 export const refreshToken = async (req: Request, res: Response) => {
     try {

@@ -12,6 +12,7 @@ import 'primeicons/primeicons.css';
 import ConfirmationService from 'primevue/confirmationservice'
 import ToastService from 'primevue/toastservice'
 import { AnimateOnScroll } from 'primevue'
+import vue3GoogleLogin from "vue3-google-login"
 
 
 
@@ -23,6 +24,11 @@ app.use(pinia)
 app.use(ConfirmationService)
 app.use(ToastService)
 app.directive('animateonscroll', AnimateOnScroll)
+
+//google login
+app.use(vue3GoogleLogin, {
+    clientId: "334363320387-vat0donvkrlt35a07rvf54rkgoltbq6s.apps.googleusercontent.com"
+})
 
 //setup the ui libary
 app.use(PrimeVue, {

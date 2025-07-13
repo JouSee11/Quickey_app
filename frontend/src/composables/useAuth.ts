@@ -38,25 +38,25 @@ export function useAuth() {
         }
     }
 
-    const loginWithGithub = async () => {
-        try {
-            const user = await AuthService.initiateGitHubLogin()
-            if (user) {
-                currentUser.value = user
-                console.log('GitHub login successful:', user.username)
-                return true
-            }
-            return false
-        } catch (error) {
-            console.error('GitHub login failed:', error)
-            return false
-        }
-    }
+    // const loginWithGithub = async () => {
+    //     try {
+    //         const user = await AuthService.initiateGitHubLogin()
+    //         if (user) {
+    //             currentUser.value = user
+    //             console.log('GitHub login successful:', user.username)
+    //             return true
+    //         }
+    //         return false
+    //     } catch (error) {
+    //         console.error('GitHub login failed:', error)
+    //         return false
+    //     }
+    // }
 
-    const logout = () => {
-        AuthService.logout()
-        currentUser.value = null
-    }
+    // const logout = () => {
+    //     AuthService.logout()
+    //     currentUser.value = null
+    // }
 
 
     return {
@@ -65,7 +65,7 @@ export function useAuth() {
         isAuthLoading: computed(() => isAuthLoading.value),
         initializeAuth,
         loginWithGoogle,
-        loginWithGithub,
-        logout
+        // loginWithGithub,
+        // logout
     }
 }

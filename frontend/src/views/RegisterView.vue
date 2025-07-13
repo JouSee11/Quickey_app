@@ -8,6 +8,8 @@ import { useRouter } from 'vue-router';
 import { useToast } from 'primevue';
 import { AuthService } from '@/api/auth/auth_service';
 import { useAuth } from '@/composables/useAuth';
+import { GoogleLogin } from 'vue3-google-login';
+import { authApi } from '@/api/auth/auth_token';
 
 const router = useRouter()
 const toast = useToast()
@@ -116,22 +118,36 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
 // loggins 
 const {loginWithGoogle, loginWithGithub} = useAuth()
 
-const handleGoogleLogin = async () => {
+const handleGoogleSuccess = async (response: any) => {
     try {
-        const success = await loginWithGoogle()
-        if (success) {
-            router.push('/')
-        } 
-    } catch (error) {
+        const result = await authApi.googleSSO(response.credential)
+
+        if (result.status === 'success') {
+            //save auth data
+            AuthService.saveAuthData(result.data)
+        }
+        router.push("/app")
+    } catch (error: any) {
+        console.log(error.message);
+        
         toast.add({ 
             severity: 'error', 
             summary: 'Login failed', 
             detail: 'Please try again', 
             life: 3000 
         })
-        
     }
-} 
+}
+
+const handleGoogleError = () => {
+        toast.add({ 
+            severity: 'error', 
+            summary: 'Google login failed', 
+            detail: 'Try google login later', 
+            life: 3000 
+        })
+}
+
 </script>
 
 <template>
@@ -267,7 +283,8 @@ const handleGoogleLogin = async () => {
             </div>
 
             <div class="sso-buttons">
-                <a @click="handleGoogleLogin"><Icon icon="ri:google-fill" class="sso-icon" /></a>
+                <GoogleLogin :callback="handleGoogleSuccess" :error="handleGoogleError"/>
+                <!-- <a @click="handleGoogleLogin"><Icon icon="ri:google-fill" class="sso-icon" /></a> -->
                 <a href="/api/auth/sso/github"><Icon icon="mdi:github" class="sso-icon"/></a>
             </div>
         </Form>
