@@ -30,7 +30,7 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
 
         const user = await User.findById(decoded.userId)
         if (!user) {
-            res.status(403).json({
+            res.status(400).json({
                 status: "error",
                 msg: "User not found"
             })

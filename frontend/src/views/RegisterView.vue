@@ -116,7 +116,7 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
 
 
 // loggins 
-const {loginWithGoogle, loginWithGithub} = useAuth()
+const {setCurrentUser} = useAuth()
 
 const handleGoogleSuccess = async (response: any) => {
     try {
@@ -125,6 +125,8 @@ const handleGoogleSuccess = async (response: any) => {
         if (result.status === 'success') {
             //save auth data
             AuthService.saveAuthData(result.data)
+
+            setCurrentUser(result.data.user)
         }
         router.push("/app")
     } catch (error: any) {

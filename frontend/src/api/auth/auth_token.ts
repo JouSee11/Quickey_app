@@ -21,7 +21,7 @@ export interface AuthResponse{
 export const authApi = {
     async refreshToken(refreshToken: string) {
         //uses axios to prevert axios loop with automatic token refresh
-        const response = await axios.post('/auth/refresh-token', {refreshToken})
+        const response = await axios.post('/api/auth/refresh-token', {refreshToken})
 
         return response.data
     },

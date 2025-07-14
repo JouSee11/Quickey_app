@@ -3,6 +3,7 @@ import logoBeta from "@/assets/images/icons/logo-beta.svg"
 import { ref, onMounted } from "vue"
 import { Icon } from '@iconify/vue'
 import {RouterLink, useRoute} from 'vue-router'
+import { useAuth } from "@/composables/useAuth"
 
 //get if the user is logged in from the parrent
 const props = defineProps<{
@@ -10,6 +11,7 @@ const props = defineProps<{
     username?: string
 }>()
 
+const {logout} = useAuth()
 //check on which page are we
 
 const route = useRoute();
@@ -73,7 +75,7 @@ const otherItems = ref([
                 id="login-button-nav"
                 >
                 <!-- v-tooltip="'Availible soon'" -->
-                <RouterLink v-if="isLoggedIn" to="/profile">
+                <RouterLink v-if="isLoggedIn" to="/profile" @click="logout">
                     <Icon icon="iconamoon:profile-fill" class="icon-nav" />
                     {{ username }}
                 </RouterLink>

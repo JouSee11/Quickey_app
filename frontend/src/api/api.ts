@@ -39,7 +39,7 @@ api.interceptors.response.use(
                 // try to refresh the token
                 const refreshResponse = await authApi.refreshToken(refreshToken)
 
-                if (refreshResponse.status === 'success') {
+                if (refreshResponse.status === 'success') {                    
                     localStorage.setItem('accessToken', refreshResponse.data.accessToken) // store new token
 
                     //send the orignal requst with correct auth headers
@@ -48,6 +48,8 @@ api.interceptors.response.use(
                     return api(originalRequest)
                 }
             } catch (error) {
+                console.log("here nigga");
+                
                 //refresh failed
                 console.log("Token refresh failed");
                 localStorage.removeItem('accessToken')

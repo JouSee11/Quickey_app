@@ -2,19 +2,29 @@
 import { RouterLink, RouterView } from 'vue-router'
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
-import {ref} from "vue"
-import { getOS } from './utils'
-import UnsupportedScreen from './components/UnsupportedScreen.vue'
-import { useScreenSize } from './composables/useScreenSize'
+import { useAuth } from './composables/useAuth'
+import { onMounted } from 'vue'
+import { Toast, useToast } from 'primevue'
 
+const {currentUser, isLoggedIn, initializeAuth} = useAuth()
 
 // TODO: check if the user is logged in, using JWT????
 // const isLoggedIn = ref(true)
+const toast = useToast()
+
+onMounted(async () => {
+  const result = await initializeAuth()
+
+  if (!result) {
+    toast.add({severity: 'warn', summary: "Session expired", detail: "Your have been logged out for security reasons", life: 3000})    
+  }
+})
 
 </script>
 
 <template>
-  <Navbar :is-logged-in="false"/>
+  <Toast/>
+  <Navbar :is-logged-in="isLoggedIn" :username="currentUser?.username"/>
 
 
   <RouterView/>

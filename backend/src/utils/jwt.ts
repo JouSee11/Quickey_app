@@ -48,7 +48,7 @@ export const generateRefreshToken = (user: IUser) => {
     return jwt.sign(
         payload,
         process.env.JWT_REFRESH_SECRET as string,
-        {expiresIn: '2d'}
+        {expiresIn: process.env.JWT_EXPIRES_REFRESH || '1d'} as jwt.SignOptions
     )
 }
 

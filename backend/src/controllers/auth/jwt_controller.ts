@@ -90,6 +90,8 @@ export const ssoCallback = (req: Request, res: Response, next: NextFunction) => 
 
 
 export const refreshToken = async (req: Request, res: Response) => {
+    console.log("refreshing token backend");
+    
     try {
         const {refreshToken} = req.body
 
@@ -135,6 +137,25 @@ export const refreshToken = async (req: Request, res: Response) => {
         res.status(500).json({
             status: "error",
             msg: "Token refresh failed"
+        })
+    }
+}
+
+export const verifyToken = async (req: Request, res: Response) =>  {
+    try {
+        const user = req.user as IUser
+
+        res.status(200).json({
+            valid: true,
+            user: {
+                id: user._id,
+                username: user.username,
+                role: user.role
+            }
+        })
+    } catch (error) {
+        res.status(500).json({
+            valid: false
         })
     }
 }
