@@ -47,9 +47,7 @@ api.interceptors.response.use(
 
                     return api(originalRequest)
                 }
-            } catch (error) {
-                console.log("here nigga");
-                
+            } catch (error) {                
                 //refresh failed
                 console.log("Token refresh failed");
                 localStorage.removeItem('accessToken')
