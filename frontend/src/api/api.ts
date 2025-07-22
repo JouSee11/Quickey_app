@@ -41,6 +41,7 @@ api.interceptors.response.use(
 
                 if (refreshResponse.status === 'success') {                    
                     localStorage.setItem('accessToken', refreshResponse.data.accessToken) // store new token
+                    localStorage.setItem('refreshToken', refreshResponse.data.refreshToken) // store new token
 
                     //send the orignal requst with correct auth headers
                     originalRequest.headers.Authorization = `Bearer ${refreshResponse.data.accessToken}`

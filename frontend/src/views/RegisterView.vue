@@ -283,13 +283,20 @@ const handleGoogleError = () => {
                     :loading="isSubmitting"
                 />
             </div>
-
+            
             <div class="sso-buttons">
-                <GoogleLogin :callback="handleGoogleSuccess" :error="handleGoogleError"/>
+                <GoogleLogin 
+                    :callback="handleGoogleSuccess"
+                    :error="handleGoogleError"
+                    popup-type="TOKEN"
+                >
+                    <button type="button" class="sso-button"><Icon icon="ri:google-fill" class="sso-icon"/></button>
+                </GoogleLogin>
                 <!-- <a @click="handleGoogleLogin"><Icon icon="ri:google-fill" class="sso-icon" /></a> -->
-                <a href="/api/auth/sso/github"><Icon icon="mdi:github" class="sso-icon"/></a>
+                <!-- <a href="/api/auth/sso/github"><Icon icon="mdi:github" class="sso-icon"/></a> -->
             </div>
         </Form>
+
 
     </div>
 </template>
@@ -415,5 +422,10 @@ const handleGoogleError = () => {
 
 .sso-icon:hover{
     color: var(--primary-0);
+}
+
+.sso-button{
+    background-color: transparent;
+    border: none;
 }
 </style>

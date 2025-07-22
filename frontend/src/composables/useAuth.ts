@@ -24,7 +24,7 @@ export function useAuth() {
             }
             return true
         } catch (error) {
-            console.log("Error not provided");
+            console.log("Error - not provided");
             logout()
 
             return false

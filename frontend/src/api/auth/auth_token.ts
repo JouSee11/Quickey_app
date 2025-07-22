@@ -27,8 +27,7 @@ export const authApi = {
     },
 
     async googleSSO(credential: string) {
-        const response = await api.post('/auth/sso/google/verify', { credential})
-
+        const response = await api.post('/auth/sso/google/verify', {credential})
         return response.data
     }
 

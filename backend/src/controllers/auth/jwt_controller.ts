@@ -122,12 +122,14 @@ export const refreshToken = async (req: Request, res: Response) => {
         }
 
         const newAccessToken = generateJWT(user)
+        const newRefreshToken = generateRefreshToken(user)
         
         res.status(200).json({
             status: "success",
             msg: "token created successfully",
             data: {
                 accessToken: newAccessToken,
+                refreshToken: newRefreshToken,
                 tokenType: "Bearer"
             }
             
