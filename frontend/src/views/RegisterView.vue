@@ -94,7 +94,7 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
             life: 6000 
         });
         //reset input fileds
-        reset()
+        router.push("/login")
 
         serverError.value = {
             username: '',
@@ -288,10 +288,10 @@ const handleGoogleError = () => {
                 <GoogleLogin 
                     :callback="handleGoogleSuccess"
                     :error="handleGoogleError"
-                    popup-type="TOKEN"
-                >
-                    <button type="button" class="sso-button"><Icon icon="ri:google-fill" class="sso-icon"/></button>
-                </GoogleLogin>
+                    :buttonConfig="{theme: 'outline', size: 'normal', text: 'login_with', shape: 'pill'}"
+                />
+                    <!-- <button type="button" class="sso-button"><Icon icon="ri:google-fill" class="sso-icon"/></button> -->
+                <!-- </GoogleLogin> -->
                 <!-- <a @click="handleGoogleLogin"><Icon icon="ri:google-fill" class="sso-icon" /></a> -->
                 <!-- <a href="/api/auth/sso/github"><Icon icon="mdi:github" class="sso-icon"/></a> -->
             </div>

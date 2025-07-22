@@ -27,7 +27,8 @@ app.directive('animateonscroll', AnimateOnScroll)
 
 //google login
 app.use(vue3GoogleLogin, {
-    clientId: "334363320387-vat0donvkrlt35a07rvf54rkgoltbq6s.apps.googleusercontent.com"
+    clientId: "334363320387-vat0donvkrlt35a07rvf54rkgoltbq6s.apps.googleusercontent.com",
+    // autoLogin: true,
 })
 
 //setup the ui libary

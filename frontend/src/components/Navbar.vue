@@ -11,7 +11,7 @@ const props = defineProps<{
     username?: string
 }>()
 
-const {logout} = useAuth()
+// const {logout} = useAuth()
 //check on which page are we
 
 const route = useRoute();
@@ -75,7 +75,7 @@ const otherItems = ref([
                 id="login-button-nav"
                 >
                 <!-- v-tooltip="'Availible soon'" -->
-                <RouterLink v-if="isLoggedIn" to="/profile" @click="logout">
+                <RouterLink v-if="isLoggedIn" to="/profile">
                     <Icon icon="iconamoon:profile-fill" class="icon-nav" />
                     {{ username }}
                 </RouterLink>

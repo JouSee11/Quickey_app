@@ -2,14 +2,70 @@
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
+import { useAuth } from '@/composables/useAuth';
+import { authApi } from '@/api/auth/auth_token';
+import { AuthService } from '@/api/auth/auth_service';
+import { useRouter } from 'vue-router';
+import { useToast } from 'primevue';
+import { z } from 'zod' 
 
-const resolver = zodResolver
+const router = useRouter()
+const toast = useToast()
 
-const usernameValue = ref(null)
-const passValue = ref(null)
+const isSubmitting = ref(false)
+
+
+const resolver = zodResolver(
+    z.object({
+        username: z.string().trim().min(1, "Username is requiered"),
+        password: z.string().min(1, "Password is requiered")
+    })
+)
 
 const onFormSubmit = () => {
 
+}
+
+// loggins 
+const {setCurrentUser} = useAuth()
+
+const handleGoogleSuccess = async (response: any) => {
+    try {
+        const result = await authApi.googleSSO(response.credential)
+
+        if (result.status === 'success') {
+            //save auth data
+            AuthService.saveAuthData(result.data)
+
+            setCurrentUser(result.data.user)
+            router.push("/profile")
+        } else {
+            toast.add({
+                severity: 'error',
+                summary: "Login failed",
+                detail: result.msg,
+                life: 3000
+            })
+        }
+    } catch (error: any) {
+        console.log(error.message);
+        
+        toast.add({ 
+            severity: 'error', 
+            summary: 'Login error', 
+            detail: 'Please try again later', 
+            life: 3000 
+        })
+    }
+}
+
+const handleGoogleError = () => {
+        toast.add({ 
+            severity: 'error', 
+            summary: 'Google login failed', 
+            detail: 'Try google login later', 
+            life: 3000 
+        })
 }
 
 </script>
@@ -17,20 +73,23 @@ const onFormSubmit = () => {
 
 <template>
     <div class="form-cont box-shadow-normal">
-        <Form v-slot="$form" :resolver="resolver" @submit="onFormSubmit" class="form-element">
+        <Toast/>
+        <Form v-slot="$form" :resolver="resolver" @submit="onFormSubmit" class="form-element" :validateOnBlur="true">
             <div class="form-header">
                 <Icon icon="mdi:user" class="icon-header" />
                 <span class="header-text">Login</span>
             </div>
             
             <div class="form-inputs">
+
                 <FloatLabel variant="out">
-                    <InputText id="username" name="username" v-model="usernameValue" class="form-input"></InputText>
+                    <InputText id="username" name="username" class="form-input"/>
                     <label for="username" class="input-label">Username or email</label>
                 </FloatLabel>
 
+
                 <FloatLabel variant="out">
-                    <Password id="password" name="password" v-model="passValue" class="form-input" :feedback="false"></Password>
+                    <Password id="password" name="password" class="form-input" :feedback="false"></Password>
                     <label for="password" class="input-label">Password</label>
                 </FloatLabel>
             </div>
@@ -47,8 +106,13 @@ const onFormSubmit = () => {
             </div>
 
             <div class="sso-buttons">
-                <a><Icon icon="ri:google-fill" class="sso-icon" /></a>
-                <a><Icon icon="mdi:github" class="sso-icon"/></a>
+                <GoogleLogin 
+                    :callback="handleGoogleSuccess"
+                    :error="handleGoogleError"
+                    :buttonConfig="{theme: 'outline', size: 'normal', text: 'login_with', shape: 'pill'}"
+                />
+                <!-- <a><Icon icon="ri:google-fill" class="sso-icon" /></a> -->
+                <!-- <a><Icon icon="mdi:github" class="sso-icon"/></a> -->
             </div>
         </Form>
 
@@ -59,6 +123,9 @@ const onFormSubmit = () => {
 
 <style scoped>
 .form-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 600px;
     height: 450px;
     border-radius: var(--border-rad-bigger);
@@ -129,6 +196,12 @@ const onFormSubmit = () => {
     color: var(--green-bright);
 }
 
+.error-msg{
+    margin-right: auto;
+    font-size: var(--smaller-text);
+    color: var(--red-vivid);
+}
+
 .sso-buttons{
     margin-top: 10px;
     width: 100%;
@@ -146,5 +219,6 @@ const onFormSubmit = () => {
 .sso-icon:hover{
     color: var(--primary-0);
 }
+
 
 </style>

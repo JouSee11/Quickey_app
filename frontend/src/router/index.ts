@@ -8,6 +8,7 @@ import PrivacyPolicyView from '@/views/PrivacyPolicyView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import EmailVerifyView from '@/views/EmailVerifyView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +47,11 @@ const router = createRouter({
       path: '/shop',
       name: 'shop',
       component: AvailableSoonView,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
     },
     {
       path: '/privacy-policy',
