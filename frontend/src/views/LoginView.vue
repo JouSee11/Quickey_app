@@ -8,6 +8,7 @@ import { AuthService } from '@/api/auth/auth_service';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue';
 import { z } from 'zod' 
+import { authFormApi } from '@/api/auth/auth_form';
 
 const router = useRouter()
 const toast = useToast()
@@ -22,8 +23,29 @@ const resolver = zodResolver(
     })
 )
 
-const onFormSubmit = () => {
+const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any, reset: () => void}) => {
+    if (!valid) return 
 
+    isSubmitting.value = true
+
+    try {
+        const logged = await authFormApi.sendLoginForm(values.username, values.email)
+
+        if (logged.status === 'success') {
+            router.push("/profile")
+        } else {
+            toast.add({
+                severity: "error",
+                summary: "Login failed",
+                detail: logged.msg,
+                life: 3000
+            })
+        }
+    } catch (error) {
+        
+    } finally {
+        isSubmitting.value = false
+    }
 }
 
 // loggins 
@@ -43,7 +65,7 @@ const handleGoogleSuccess = async (response: any) => {
             toast.add({
                 severity: 'error',
                 summary: "Login failed",
-                detail: result.msg,
+                detail: "Google login failed",
                 life: 3000
             })
         }
@@ -98,6 +120,7 @@ const handleGoogleError = () => {
                 <span>Don't have account? <RouterLink to="register">Register</RouterLink></span>
                 <Button
                     label="Log in"
+                    type="submit"
                     icon="pi pi-sign-in"
                     outlined
                     rounded
@@ -109,7 +132,8 @@ const handleGoogleError = () => {
                 <GoogleLogin 
                     :callback="handleGoogleSuccess"
                     :error="handleGoogleError"
-                    :buttonConfig="{theme: 'outline', size: 'normal', text: 'login_with', shape: 'pill'}"
+                    :buttonConfig="{type: 'normal',theme: 'normal', size: 'medium', text: 'continue_with', shape: 'pill'}"
+
                 />
                 <!-- <a><Icon icon="ri:google-fill" class="sso-icon" /></a> -->
                 <!-- <a><Icon icon="mdi:github" class="sso-icon"/></a> -->

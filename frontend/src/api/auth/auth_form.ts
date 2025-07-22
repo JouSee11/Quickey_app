@@ -43,5 +43,15 @@ export const authFormApi = {
             console.log("Error loggin in!");
             return {msg: error.response?.data?.msg || 'Something went wrong. Try again later.'}
         }
+    },
+
+    async sendLoginForm(name: string, password: string) {
+        try {
+            const response = await api.post('/auth/login', {name, password})
+            return response.data
+        } catch (error: any) {
+            return {msg: 'Something went wrong. Try again later.'}
+            
+        }
     }
 }

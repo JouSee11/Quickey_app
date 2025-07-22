@@ -3,7 +3,7 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 import { z } from 'zod';
-import { authFormApi } from '@/api/auth/register_form';
+import { authFormApi } from '@/api/auth/auth_form';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue';
 import { AuthService } from '@/api/auth/auth_service';
@@ -288,7 +288,8 @@ const handleGoogleError = () => {
                 <GoogleLogin 
                     :callback="handleGoogleSuccess"
                     :error="handleGoogleError"
-                    :buttonConfig="{theme: 'outline', size: 'normal', text: 'login_with', shape: 'pill'}"
+                    :buttonConfig="{type: 'normal',theme: 'normal', size: 'medium', text: 'signup_with', shape: 'pill'}"
+
                 />
                     <!-- <button type="button" class="sso-button"><Icon icon="ri:google-fill" class="sso-icon"/></button> -->
                 <!-- </GoogleLogin> -->

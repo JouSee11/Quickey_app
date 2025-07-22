@@ -7,6 +7,7 @@ import passport from "passport"
 import ssoRouter from "./sso_router"
 import { refreshToken, verifyToken } from "../controllers/auth/jwt_controller";
 import { authenticateToken } from "../middleware/auth_middleware";
+import { validateLogin } from "../controllers/auth/login_controller";
 
 const router = express.Router()
 
@@ -17,6 +18,8 @@ router.get("/form/check-username", checkUniqueUsername)
 router.post("/register", registrationLimiter, registerFormValidation, createPendingUser)
 
 router.post("/register-verify", verifyEmail)
+
+router.post("/login", registrationLimiter, validateLogin)
 
 router.use("/sso", ssoRouter)
 
