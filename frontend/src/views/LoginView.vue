@@ -137,6 +137,8 @@ const {handleGoogleSuccess, handleGoogleError} = useGoogleLogin()
                     outlined
                     rounded
                     class="log-in-button"
+                    :disabled="isSubmitting"
+                    :loading="isSubmitting"
                 />
             </div>
 

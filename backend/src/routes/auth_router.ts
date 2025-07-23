@@ -2,7 +2,7 @@ import express from "express";
 import { checkUniqueEmail, checkUniqueUsername, createPendingUser } from "../controllers/auth/registration_form_controller";
 import { registerFormValidation } from "../middleware/validate_register_form";
 import { verifyEmail } from "../controllers/auth/email_verify_controller";
-import { registrationLimiter } from "../middleware/rate_limiter";
+import { loginLimiter, registrationLimiter } from "../middleware/rate_limiter";
 import passport from "passport"
 import ssoRouter from "./sso_router"
 import { refreshToken, verifyToken } from "../controllers/auth/jwt_controller";
@@ -19,7 +19,7 @@ router.post("/register", registrationLimiter, registerFormValidation, createPend
 
 router.post("/register-verify", verifyEmail)
 
-router.post("/login", registrationLimiter, validateLogin)
+router.post("/login", loginLimiter, validateLogin)
 // router.post("/login", validateLogin)
 
 router.use("/sso", ssoRouter)
