@@ -46,10 +46,11 @@ export const authFormApi = {
     },
 
     async sendLoginForm(name: string, password: string) {
-        try {
+        try {            
             const response = await api.post('/auth/login', {name, password})
             return response.data
         } catch (error: any) {
+            console.log(error)
             return {msg: 'Something went wrong. Try again later.'}
             
         }

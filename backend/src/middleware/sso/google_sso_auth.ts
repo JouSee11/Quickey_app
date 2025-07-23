@@ -66,96 +66,99 @@
 //     done(error);
 //   }
 // });
-import { OAuth2Client } from "google-auth-library"
-import {Request, Response} from 'express'
-import User from "../../models/user_model"
-import crypto from 'crypto'
-import bcrypt from 'bcrypt'
-import { generateJWT, generateRefreshToken } from "../../utils/jwt"
 
 
-export const googleSSO = async (req: Request, res: Response) => {
-    try {
-        const {credential} = req.body
 
-        if (!credential) {
-            res.status(400).json({
-                status: 'error',
-                msg: 'No credential provided'
-            })
-            return
-        }
+// import { OAuth2Client } from "google-auth-library"
+// import {Request, Response} from 'express'
+// import User from "../../models/user_model"
+// import crypto from 'crypto'
+// import bcrypt from 'bcrypt'
+// import { generateJWT, generateRefreshToken } from "../../utils/jwt"
 
-        //verify google jwt token
-        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
-        const ticket = await client.verifyIdToken({
-            idToken: credential,
-            audience: process.env.GOOGLE_CLIENT_ID 
-        })
+// export const googleSSO = async (req: Request, res: Response) => {
+//     try {
+//         const {credential} = req.body
 
-        const payload = ticket.getPayload()
-        const email = payload?.email
-        const name = payload?.name
+//         if (!credential) {
+//             res.status(400).json({
+//                 status: 'error',
+//                 msg: 'No credential provided'
+//             })
+//             return
+//         }
 
-        if (!email) {
-          res.status(400).json({
-            status: 'error',
-            msg: 'Email not provided by google'
-          })
-        }
+//         //verify google jwt token
+//         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
-        // Check if user exists or create new one
-        let user = await User.findOne({ email })
+//         const ticket = await client.verifyIdToken({
+//             idToken: credential,
+//             audience: process.env.GOOGLE_CLIENT_ID 
+//         })
 
-        if (!user) {
-            const pwdGenerated = crypto.randomBytes(32).toString("hex")
-            const hashedPassword = await bcrypt.hash(pwdGenerated, 10)
+//         const payload = ticket.getPayload()
+//         const email = payload?.email
+//         const name = payload?.name
+
+//         if (!email) {
+//           res.status(400).json({
+//             status: 'error',
+//             msg: 'Email not provided by google'
+//           })
+//         }
+
+//         // Check if user exists or create new one
+//         let user = await User.findOne({ email })
+
+//         if (!user) {
+//             const pwdGenerated = crypto.randomBytes(32).toString("hex")
+//             const hashedPassword = await bcrypt.hash(pwdGenerated, 10)
             
-            let username = name || email?.split('@')[0]
-            const userSameName = await User.findOne({ username })
-            if (userSameName) {
-                const number = crypto.randomInt(1000, 10000)
-                username = `${username}_${number}`
-            }
+//             let username = name || email?.split('@')[0]
+//             const userSameName = await User.findOne({ username })
+//             if (userSameName) {
+//                 const number = crypto.randomInt(1000, 10000)
+//                 username = `${username}_${number}`
+//             }
             
-            user = await User.create({
-                username,
-                email,
-                password: hashedPassword,
-                registerType: "sso"
-            })
-        }
+//             user = await User.create({
+//                 username,
+//                 email,
+//                 password: hashedPassword,
+//                 registerType: "sso"
+//             })
+//         }
 
-        //generate tokens
-        const accessToken = generateJWT(user)
-        const refreshToken = generateRefreshToken(user)
+//         //generate tokens
+//         const accessToken = generateJWT(user)
+//         const refreshToken = generateRefreshToken(user)
 
-        const authData = {
-            status: "success",
-            msg: "login successfull",
-            data: {
-                user: {
-                    id: user._id,
-                    username: user.username,
-                    role: user.role
-                },
-                tokens: {
-                    accessToken,
-                    refreshToken,
-                    tokenType: "Bearer"
-                }
-            }
-        }
+//         const authData = {
+//             status: "success",
+//             msg: "login successfull",
+//             data: {
+//                 user: {
+//                     id: user._id,
+//                     username: user.username,
+//                     role: user.role
+//                 },
+//                 tokens: {
+//                     accessToken,
+//                     refreshToken,
+//                     tokenType: "Bearer"
+//                 }
+//             }
+//         }
 
-        res.status(200).json(authData)
+//         res.status(200).json(authData)
 
 
-    } catch (error) {
-      console.error('Google SSO error:', error)
-      res.status(500).json({
-          status: 'error',
-          msg: 'Authentication failed'
-      }) 
-    }
-}
+//     } catch (error) {
+//       console.error('Google SSO error:', error)
+//       res.status(500).json({
+//           status: 'error',
+//           msg: 'Authentication failed'
+//       }) 
+//     }
+// }

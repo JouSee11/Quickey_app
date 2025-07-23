@@ -10,14 +10,14 @@ export const registrationLimiter = rateLimit({
         msg: 'Too many registration attempts, try again later.',
     },
     handler: (req: Request, res: Response) => {
-        res.status(429).json({
+        res.status(200).json({
             status: 'error',
             msg: 'Too many registration attempts. Please try again later.',
         })
     }
 })
 
-//
+// max 10 registration attempts per minute
 export const loginLimiter = rateLimit({
     windowMs: 60 * 1000,
     max: 10,

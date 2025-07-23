@@ -1,7 +1,7 @@
 import passport from "passport"
 import express from "express"
 // import "../middleware/sso/google_sso_auth"
-import { googleSSO } from "../middleware/sso/google_sso_auth"
+import { googleSSO } from "../controllers/auth/google_sso_controller"
 import "../middleware/sso/github_sso_auth"
 import {ssoCallback } from "../controllers/auth/jwt_controller"
 

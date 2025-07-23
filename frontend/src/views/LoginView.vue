@@ -29,20 +29,28 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
     isSubmitting.value = true
 
     try {
-        const logged = await authFormApi.sendLoginForm(values.username, values.email)
+        const result = await authFormApi.sendLoginForm(values.username, values.password)
 
-        if (logged.status === 'success') {
+        if (result.status === 'success') {
+            AuthService.saveAuthData(result.data)
+
+            setCurrentUser(result.data.user)
             router.push("/profile")
         } else {
             toast.add({
                 severity: "error",
                 summary: "Login failed",
-                detail: logged.msg,
+                detail: result.msg,
                 life: 3000
             })
         }
     } catch (error) {
-        
+        toast.add({
+            severity: "error",
+            summary: "Login failed",
+            detail: "Internal server error. Try again later.",
+            life: 3000
+        })
     } finally {
         isSubmitting.value = false
     }

@@ -20,6 +20,7 @@ router.post("/register", registrationLimiter, registerFormValidation, createPend
 router.post("/register-verify", verifyEmail)
 
 router.post("/login", registrationLimiter, validateLogin)
+// router.post("/login", validateLogin)
 
 router.use("/sso", ssoRouter)
 

@@ -67,7 +67,7 @@ class EmailService {
 
     async sendVerificationEmail(email: string, username: string, verificationToken: string): Promise<boolean> {
         try {
-            const verificationUrl = `${process.env.APP_URL}/register-verify?token=${verificationToken}`
+            const verificationUrl = `${process.env.FRONTEND_URL}/register-verify?token=${verificationToken}`
     
             const mailOptions: EmailOptions = {
                 to: email,
