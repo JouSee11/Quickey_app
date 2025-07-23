@@ -10,6 +10,7 @@ import { AuthService } from '@/api/auth/auth_service';
 import { useAuth } from '@/composables/useAuth';
 import { GoogleLogin } from 'vue3-google-login';
 import { authApi } from '@/api/auth/auth_token';
+import { useGoogleLogin } from '@/composables/useGoogleLogin';
 
 const router = useRouter()
 const toast = useToast()
@@ -118,37 +119,39 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
 // loggins 
 const {setCurrentUser} = useAuth()
 
-const handleGoogleSuccess = async (response: any) => {
-    try {
-        const result = await authApi.googleSSO(response.credential)
+const {handleGoogleSuccess, handleGoogleError} = useGoogleLogin()
 
-        if (result.status === 'success') {
-            //save auth data
-            AuthService.saveAuthData(result.data)
+// const handleGoogleSuccess = async (response: any) => {
+//     try {
+//         const result = await authApi.googleSSO(response.credential)
 
-            setCurrentUser(result.data.user)
-        }
-        router.push("/app")
-    } catch (error: any) {
-        console.log(error.message);
+//         if (result.status === 'success') {
+//             //save auth data
+//             AuthService.saveAuthData(result.data)
+
+//             setCurrentUser(result.data.user)
+//         }
+//         router.push("/app")
+//     } catch (error: any) {
+//         console.log(error.message);
         
-        toast.add({ 
-            severity: 'error', 
-            summary: 'Login failed', 
-            detail: 'Please try again', 
-            life: 3000 
-        })
-    }
-}
+//         toast.add({ 
+//             severity: 'error', 
+//             summary: 'Login failed', 
+//             detail: 'Please try again', 
+//             life: 3000 
+//         })
+//     }
+// }
 
-const handleGoogleError = () => {
-        toast.add({ 
-            severity: 'error', 
-            summary: 'Google login failed', 
-            detail: 'Try google login later', 
-            life: 3000 
-        })
-}
+// const handleGoogleError = () => {
+//         toast.add({ 
+//             severity: 'error', 
+//             summary: 'Google login failed', 
+//             detail: 'Try google login later', 
+//             life: 3000 
+//         })
+// }
 
 </script>
 
