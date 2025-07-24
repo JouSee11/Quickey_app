@@ -16,6 +16,8 @@ const toast = useToast()
 
 const isSubmitting = ref(false)
 
+let lastValues: {name: string, password: string}  | null = {name: '', password: ''}
+
 
 const resolver = zodResolver(
     z.object({
@@ -26,6 +28,8 @@ const resolver = zodResolver(
 
 const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any, reset: () => void}) => {
     if (!valid) return 
+    //dont submit twice with the same values 
+    if (lastValues?.name === values.username && lastValues?.password === values.password) return
 
     isSubmitting.value = true
 
@@ -44,6 +48,8 @@ const onFormSubmit = async ({valid, values, reset}: {valid: boolean, values: any
                 detail: result.msg,
                 life: 3000
             })
+
+            lastValues = {name: values.username, password: values.password} 
         }
     } catch (error) {
         toast.add({

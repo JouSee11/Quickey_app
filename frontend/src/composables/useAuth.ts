@@ -43,6 +43,7 @@ export function useAuth() {
     }
 
 
+
     return {
         currentUser: computed(() => currentUser.value),
         isLoggedIn,

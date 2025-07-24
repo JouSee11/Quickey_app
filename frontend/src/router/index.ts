@@ -9,6 +9,7 @@ import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import EmailVerifyView from '@/views/EmailVerifyView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import { AuthService } from '@/api/auth/auth_service'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,7 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/privacy-policy',
@@ -79,6 +81,17 @@ const router = createRouter({
       component: NotFoundView,
     },
   ],
+})
+
+//simple auth guard
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    if (!AuthService.isLoggedIn()) {
+      next('/login')
+      return
+    }
+  }
+  next()
 })
 
 export default router
