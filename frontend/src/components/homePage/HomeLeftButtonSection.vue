@@ -3,11 +3,21 @@ import {computed} from "vue"
 import { useDeviceStore } from "@/stores/deviceStore";
 import { storeToRefs } from "pinia";
 import { useDeviceActions } from "@/composables/useButtonActions";
+import { useAuth } from "@/composables/useAuth";
+import SaveBindingDialog from "../modals/saveBindingDialog.vue";
+import { useSaveDialog } from "@/composables/useSaveDialog";
 
 const deviceStore = useDeviceStore()
 const {isConnected} = storeToRefs(deviceStore)
 
 const {resetButtons, importData} = useDeviceActions()
+
+const {isLoggedIn} = useAuth()
+
+const {showDialog} = useSaveDialog()
+const showSaveDialog = () => {
+    showDialog()
+}
 
 
 //items in the menu
@@ -29,7 +39,8 @@ const items = computed(() => [
             {
                 label: 'Save preset',
                 icon: 'pi pi-save',
-                disabled: true
+                disabled: !isLoggedIn.value,
+                command: showSaveDialog
             }
         ]
     }
@@ -42,6 +53,7 @@ const items = computed(() => [
         <div>
             <Toast />
             <ConfirmDialog/>
+            <SaveBindingDialog/>
             <Menu :model="items" id="binding-controlls-menu" class="box-shadow-normal"/>
         </div>
 
