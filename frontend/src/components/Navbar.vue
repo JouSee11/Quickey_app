@@ -4,12 +4,14 @@ import { ref, onMounted } from "vue"
 import { Icon } from '@iconify/vue'
 import {RouterLink, useRoute} from 'vue-router'
 import { useAuth } from "@/composables/useAuth"
+import { AuthService } from "@/api/auth/auth_service"
 
 //get if the user is logged in from the parrent
 const props = defineProps<{
     isLoggedIn: boolean
     username?: string
 }>()
+
 
 // const {logout} = useAuth()
 //check on which page are we

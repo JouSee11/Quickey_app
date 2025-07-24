@@ -2,32 +2,46 @@
 import { onMounted, ref } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 import { useRouter } from 'vue-router';
+import { AuthService } from '@/api/auth/auth_service';
+import ProfileMenu from '@/components/profile/ProfileMenu.vue'
 
 const router = useRouter()
 const {logout} = useAuth()
-const username = ref()
+const user = AuthService.getUser()
 
 const logoutUser = () => {
     logout()
     router.push('/login')
 }
 
-onMounted(() => {
-    username.value = JSON.parse(localStorage.getItem("user") as string).username 
-})
+// onMounted(() => {
+//     user?.username = JSON.parse(localStorage.getItem("user") as string).username 
+// })
 
 </script>
 
 <template>
-    <h1>{{username}}</h1>
-    <Button
-    variant="outlined"
-    severity="danger"
-    label="logout"
-    icon="pi pi-times"
-    @click="logoutUser"
-    />
+    <div class="profile-layout">
+        <ProfileMenu class="left-menu"/>
+        <div class="content-area">
+        </div>
+    </div>
 
 </template>
 
-<style scoped></style>
+<style scoped>
+.profile-layout{
+    display: flex;
+    flex-direction: column;
+    width: 95vw;
+    height: 85%;
+    background-color: var(--blue-dark);
+    border-radius: var(--border-rad-main);
+    border: 1px var(--primary-800) solid;
+    overflow: hidden;
+}
+
+
+
+
+</style>
