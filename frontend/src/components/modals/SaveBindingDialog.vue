@@ -134,6 +134,12 @@ const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
                     <Textarea id="save-description" name="saveDescription" class="form-input" placeholder="Description ... " maxlength="3000"/>
                 </FormField>
 
+                <FormField initial-value="">
+                    <label for="save-category" class="input-label">Category</label>
+                    <Select id="save-category" name="saveCategory" class="form-input" placeholder="Select category" :options="['one', 'two']"/>
+                </FormField>
+
+
                 <div class="button-area">
                     <Button
                         label="Save"
@@ -174,7 +180,7 @@ const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
 }
 
 #save-description{
-    height: 200px;
+    height: 150px;
     resize: none !important;
 }
 

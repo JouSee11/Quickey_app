@@ -60,6 +60,12 @@ const keyBindingSchema = new Schema<IKeyBinding>({
         required: [true, "The number of keybiding use must be initialized"],
         default: 0
     },
+    category: {
+        type: String,
+        enum: ['general', 'gaming', 'media', 'creative', 'programming', 'productivity'],
+        default: 'general',
+        required: true
+    }
 })
 
 // enforce uniqueness on user and save name combiantion

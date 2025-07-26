@@ -16,5 +16,6 @@ export interface IKeyBinding extends Document {
     updatedAt: Date
     useNumber: Number
     likes: Number
+    category: String
 }
 

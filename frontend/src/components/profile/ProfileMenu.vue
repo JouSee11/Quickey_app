@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 
 const router = useRouter()
+const activeIndex = ref(0)
 
 const items = ref([
     {label: 'Dashboard', icon: 'pi pi-th-large'},
@@ -22,11 +23,21 @@ const logoutUser = () => {
     router.push('/login')
 }
 
+//tabs changing
+const emit = defineEmits<{
+    tabChanged: [index: number]
+}>()
+
+const onTabChange = (event: any) => {
+    console.log(activeIndex.value)
+    emit('tabChanged', activeIndex.value)
+}
+
 </script>
 
 <template>
     <div class="menu-section">
-        <TabMenu :model="items"></TabMenu>
+        <TabMenu :model="items" v-model:activeIndex="activeIndex" @tab-change="onTabChange"></TabMenu>
 
         <!-- <div class="profile-section">
             <img :src='placeholderImage' alt='profile picture' id='menu-profile-picture'/>
