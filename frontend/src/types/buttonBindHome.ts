@@ -7,6 +7,11 @@ export interface ButtonBindHome {
     value: string[]
 }
 
+export interface ButtonBindSave {
+    id: String,
+    value: string[]
+}
+
 export interface KnobBindHome {
     state: "binded" | "notBinded"
     values: {

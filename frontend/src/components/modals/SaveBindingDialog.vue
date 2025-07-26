@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { useSaveDialog } from '@/composables/useSaveDialog';
-import {ref} from 'vue'
+import {ref, toRaw} from 'vue'
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod'
-import { Icon } from '@iconify/vue';
+import { saveKeybindingApi } from '@/api/keybinding/save_keybinding';
+import type { ButtonBindHome, ButtonBindSave, KnobBindHome } from '@/types/buttonBindHome';
+import { useButtons } from '@/composables/useButtonsBindingHome';
+import { useToast } from 'primevue';
 
 
 const {isDialogVisible, hideDialog} = useSaveDialog()
 const nameServerError = ref('')
+const {allButtons, knobElement} = useButtons()
+const toast = useToast()
 
 const handleCancel = () => {
     hideDialog()
@@ -20,24 +25,72 @@ const resolver = zodResolver(
             .min(1, "Name is requiered")
             .min(3, "Minimum 3 characters are requiered")
             .max(50, "Maximum 50 characters allowed"),
-        saveDescription: z.string().trim()
-            .max(3000, "Maximum description length is 3000 characters")
+        saveDescription: z.union([z.string().url().nullish(), z.literal(""), z.string().max(3000, "Max desc length is 3000 characters")])
+
     })
 )
 
-const checkNameBlur = async (name: string): Promise<Boolean> => {
+const checkNameBlur = async (name: string) => {
     nameServerError.value = ''
-    // const nameAvailible = await 
-    // TODO - on the backend create the model and then check on the 
+
+    const nameAvailible = await saveKeybindingApi.verifyKeybindingName(name.trim())
+
+    if (!nameAvailible) {
+        nameServerError.value = "Name is already used"
+    } 
 }
 
 const onSubmit = async ({valid, values, reset}: {valid: boolean, values: any, reset: () => void}) => {
     if (!valid) return
+
+    if (nameServerError.value) return
+
+    //get data for save
+    const saveBidingData = convertDataForSave(allButtons.value, knobElement.value)
+    if (allDefaultValues(saveBidingData)) {
+        toast.add({severity: 'error', summary: "Error saving", detail: "Cannot save empty values", life: 1500})
+        return
+    }
+
+    const saveResult = await saveKeybindingApi.saveKeybinding(saveBidingData, values.saveName, values.saveDescription)
+    
+    if (saveResult) {
+        toast.add({severity: 'success', summary: "Keybinding saved successfully", life: 1000})
+        hideDialog()
+    } else {
+        toast.add({severity: 'error', summary: "Error saving key binding", life: 1000})
+    }
 }
+
+//helper funcations
+const convertDataForSave = (originalData: ButtonBindHome[], knobData: KnobBindHome): ButtonBindSave[] => {
+    const saveData: ButtonBindSave[] =  []
+    //add buttons data
+    originalData.forEach((btn: ButtonBindHome) => {
+        saveData.push({id: String(btn.id), value: btn.value})
+    })
+
+    //add knob data
+    saveData.push({id: 'knob', value: [knobData.values.left, knobData.values.right, knobData.values.button]})
+
+    return saveData
+}   
+
+
+const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
+    for (const btn of saveData) {
+        if (btn.value.length > 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 </script>
 
 <template>
+    <Toast/>
     <Dialog
         v-model:visible="isDialogVisible"
         modal
@@ -47,15 +100,28 @@ const onSubmit = async ({valid, values, reset}: {valid: boolean, values: any, re
     >
             <Form v-slot="$form" :resolver="resolver" @submit="onSubmit" class="dialog-form">
 
-                <label for="save-name" class="input-label">Save name*</label>
-                <InputText id="save-name" name="save-name" class="form-input" placeholder="Name - must be unique within your saves" maxlength="50"/>
-                <!-- <FloatLabel variant="out">
-                </FloatLabel> -->
+                <FormField initial-value="">
+                    <label for="save-name" class="input-label">Save name*</label>
+                    <InputText 
+                        id="save-name" 
+                        name="saveName" 
+                        :class="['form-input', {'input-incorrect': nameServerError}]"
+                        @blur="(event: Event) => checkNameBlur((event.target as HTMLInputElement).value)"
+                        placeholder="Name - must be unique within your saves" 
+                        maxlength="50"
+                        v-tooltip.top="{
+                            value: nameServerError,
+                            pt: {
+                                text: {class: 'error-tooltip-text'}
+                            }
+                        }"
+                    />
+                </FormField>
 
-                <!-- <FloatLabel variant="out"> -->
-                <label for="save-description" class="input-label">Save description</label>
-                <Textarea id="save-description" name="save-description" class="form-input" placeholder="Description ... " maxlength="3000"/>
-                <!-- </FloatLabel> -->
+                <FormField initial-value="">
+                    <label for="save-description" class="input-label">Save description</label>
+                    <Textarea id="save-description" name="saveDescription" class="form-input" placeholder="Description ... " maxlength="3000"/>
+                </FormField>
 
                 <div class="button-area">
                     <Button
@@ -63,6 +129,7 @@ const onSubmit = async ({valid, values, reset}: {valid: boolean, values: any, re
                         outlined
                         icon="pi pi-save"
                         class="save-button"
+                        type="submit"
                     />
                     <Button
                         label="Cancel"
@@ -88,6 +155,11 @@ const onSubmit = async ({valid, values, reset}: {valid: boolean, values: any, re
     width: 100% !important;
     margin-top: 10px;
     margin-bottom: 30px;
+}
+
+.input-incorrect{
+    color: var(--red-vivid);
+    border: var(--red-vivid) 1px solid;
 }
 
 #save-description{
