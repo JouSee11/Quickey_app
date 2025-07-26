@@ -78,12 +78,23 @@ const convertDataForSave = (originalData: ButtonBindHome[], knobData: KnobBindHo
 
 
 const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
-    for (const btn of saveData) {
-        if (btn.value.length > 0) {
-            return false;
+    // for (const btn of saveData) {
+    //     if (btn.value.length > 0) {
+    //         if (btn.id === "knob" && btn.value === ["", "", ""])
+    //         return false;
+    //     }
+    // }
+    // return true;
+
+    return saveData.every(btn => {
+        if (btn.id === "knob") {
+            // Knob is empty if all three values are empty strings
+            return btn.value.length === 3 && btn.value.every(val => val.trim() === "")
+        } else {
+            // Regular button is empty if no non-empty values
+            return btn.value.length === 0
         }
-    }
-    return true;
+    })
 }
 
 
