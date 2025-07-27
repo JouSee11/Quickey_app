@@ -30,7 +30,7 @@ const handleTabChange = (index: number) => {
     <div class="profile-layout">
         <ProfileMenu class="left-menu" @tab-changed="handleTabChange"/>
         <div class="content-area">
-            <ProfileDashboard v-if="activeTab === 0"/>
+            <ProfileDashboard v-if="activeTab === 0" />
             <h1 v-else-if="activeTab === 1">Profile nibba</h1>
             <h1 v-else-if="activeTab === 2">settings</h1>
             <h1 v-else-if="activeTab === 3">sercurinty</h1>

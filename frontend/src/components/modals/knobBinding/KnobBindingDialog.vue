@@ -72,6 +72,7 @@ const closeDialog = () => {
         modal
         header="Knob binding"
         :style="{width: '70%', height: '300px'}"
+        :breakpoints="{'1200px': 'height: 700px'}"
         @hide="dialogStore.closeDialog"
         
     >
@@ -160,15 +161,18 @@ const closeDialog = () => {
     color: var(--green-dark);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
     .knob-dialog-content{
         flex-direction: column;
+        align-items: center;
     }
 
     .dialog-content-section{
         width: 90%;
         margin-bottom: 40px;
     }
+
+
 }
 
 </style>

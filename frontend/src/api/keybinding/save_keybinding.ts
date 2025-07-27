@@ -23,5 +23,17 @@ export const saveKeybindingApi = {
             console.log(error)
             return false
         }
-    }
+    },
+
+    async getCategories(): Promise<string[]> {
+        try {
+            const response = await api.get('/keybinding/get-categories')
+
+            return response.data.categories
+        } catch (error) {
+            return []
+        }
+    },
+
+    
 }

@@ -1,5 +1,6 @@
 import mongoose, {Schema} from "mongoose"
 import { IKeyBinding, KeyBindingData } from "../@types/keybinding"
+import { KEYBINDING_CATEGORIES } from "../constants/keybinding_categories"
 
 //subscheam for keybinding insers
 const keyBindingDataSchema = new Schema<KeyBindingData>({
@@ -62,7 +63,10 @@ const keyBindingSchema = new Schema<IKeyBinding>({
     },
     category: {
         type: String,
-        enum: ['general', 'gaming', 'media', 'creative', 'programming', 'productivity'],
+        enum: {
+            values: KEYBINDING_CATEGORIES,
+            message: "Category is not valid"
+        },
         default: 'general',
         required: true
     }

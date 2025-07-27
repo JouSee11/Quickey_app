@@ -1,9 +1,11 @@
 import { Document, Model } from "mongoose";
+import { KeyBindingCategory } from "../constants/keybinding_categories";
 
 export interface KeyBindingData {
     id: String,
     value: String[]
 }
+
 
 export interface IKeyBinding extends Document {
     _id: string,
@@ -16,6 +18,6 @@ export interface IKeyBinding extends Document {
     updatedAt: Date
     useNumber: Number
     likes: Number
-    category: String
+    category: KeyBindingCategory
 }
 

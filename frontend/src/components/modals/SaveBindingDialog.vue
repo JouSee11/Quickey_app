@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { useSaveDialog } from '@/composables/useSaveDialog';
-import {ref, toRaw} from 'vue'
+import {onBeforeMount, onMounted, ref, toRaw} from 'vue'
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod'
 import { saveKeybindingApi } from '@/api/keybinding/save_keybinding';
 import type { ButtonBindHome, ButtonBindSave, KnobBindHome } from '@/types/buttonBindHome';
 import { useButtons } from '@/composables/useButtonsBindingHome';
 import { useToast } from 'primevue';
+import { useConstantsStore } from '@/stores/constantsStore';
 
 
 const {isDialogVisible, hideDialog} = useSaveDialog()
 const nameServerError = ref('')
 const {allButtons, knobElement} = useButtons()
 const toast = useToast()
+
+//get the categories
+const {keybindingCategories} = useConstantsStore()
 
 const handleCancel = () => {
     hideDialog()
@@ -25,8 +29,8 @@ const resolver = zodResolver(
             .min(1, "Name is requiered")
             .min(3, "Minimum 3 characters are requiered")
             .max(50, "Maximum 50 characters allowed"),
-        saveDescription: z.union([z.string().url().nullish(), z.literal(""), z.string().max(3000, "Max desc length is 3000 characters")])
-
+        saveDescription: z.union([z.string().url().nullish(), z.literal(""), z.string().max(3000, "Max desc length is 3000 characters")]),
+        saveCategory: z.string().min(1, "Please select a category")
     })
 )
 
@@ -78,14 +82,6 @@ const convertDataForSave = (originalData: ButtonBindHome[], knobData: KnobBindHo
 
 
 const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
-    // for (const btn of saveData) {
-    //     if (btn.value.length > 0) {
-    //         if (btn.id === "knob" && btn.value === ["", "", ""])
-    //         return false;
-    //     }
-    // }
-    // return true;
-
     return saveData.every(btn => {
         if (btn.id === "knob") {
             // Knob is empty if all three values are empty strings
@@ -96,6 +92,7 @@ const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
         }
     })
 }
+
 
 
 </script>
@@ -112,7 +109,7 @@ const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
             <Form v-slot="$form" :resolver="resolver" @submit="onSubmit" class="dialog-form">
 
                 <FormField initial-value="">
-                    <label for="save-name" class="input-label">Save name*</label>
+                    <label for="save-name" class="input-label"><i class="pi pi-save"/>Save name*</label>
                     <InputText 
                         id="save-name" 
                         name="saveName" 
@@ -130,13 +127,19 @@ const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
                 </FormField>
 
                 <FormField initial-value="">
-                    <label for="save-description" class="input-label">Save description</label>
+                    <label for="save-description" class="input-label"><i class="pi pi-pencil"/>Save description</label>
                     <Textarea id="save-description" name="saveDescription" class="form-input" placeholder="Description ... " maxlength="3000"/>
                 </FormField>
 
-                <FormField initial-value="">
-                    <label for="save-category" class="input-label">Category</label>
-                    <Select id="save-category" name="saveCategory" class="form-input" placeholder="Select category" :options="['one', 'two']"/>
+                <FormField initial-value="general">
+                    <label for="save-category" class="input-label"><i class="pi pi-bars"/>Category*</label>
+                    <Select 
+                        id="save-category" 
+                        name="saveCategory" 
+                        class="form-input" 
+                        placeholder="Select category" 
+                        :options="keybindingCategories"
+                    />
                 </FormField>
 
 
@@ -186,6 +189,10 @@ const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
 
 .input-label{
     color: var(--gray-bright);
+}
+
+.input-label i {
+    margin-right: 10px;
 }
 
 #save-description{ 

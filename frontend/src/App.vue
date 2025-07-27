@@ -5,8 +5,10 @@ import Footer from '@/components/Footer.vue'
 import { useAuth } from './composables/useAuth'
 import { onMounted } from 'vue'
 import { Toast, useToast } from 'primevue'
+import { useConstantsStore } from './stores/constantsStore'
 
 const {currentUser, isLoggedIn, initializeAuth} = useAuth()
+const constantsStore = useConstantsStore()
 
 // TODO: check if the user is logged in, using JWT????
 // const isLoggedIn = ref(true)
@@ -18,6 +20,9 @@ onMounted(async () => {
   if (!result) {
     toast.add({severity: 'warn', summary: "Session expired", detail: "Your have been logged out for security reasons", life: 3000})    
   }
+
+  //init constants
+  await constantsStore.getFilterCategories()
 })
 
 </script>

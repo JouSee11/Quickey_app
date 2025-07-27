@@ -2,7 +2,7 @@ import {Request, Response} from "express"
 import KeyBinding from "../../models/keybinding_model"
 import { IUser } from "../../@types/user"
 import { bindingNameValid } from "./keybinding_user_controller"
-import { KeyBindingData } from "../../@types/keybinding"
+import { KEYBINDING_CATEGORIES } from "../../constants/keybinding_categories"
 
 const saveKeyBinding = async (req: Request, res: Response) => {
     const {bindingData, name, description = ""} = req.body
@@ -55,6 +55,15 @@ const saveKeyBinding = async (req: Request, res: Response) => {
     }
 }
 
+const getCategories = (req: Request, res: Response) => {
+    res.status(200).json({
+        status: 'successfull',
+        categories: KEYBINDING_CATEGORIES
+    })
+    return
+}
+
+//helper functions
 const validateName = async (name: string, userId: string): Promise<boolean> => {
     if (name.length > 50 || name.length < 3) {
         return false
@@ -81,4 +90,4 @@ const validateKeybindingData = (keyBinding: any) => {
     )
 }
 
-export {saveKeyBinding}
+export {saveKeyBinding, getCategories}
