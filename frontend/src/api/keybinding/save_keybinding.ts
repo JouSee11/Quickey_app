@@ -12,16 +12,16 @@ export const saveKeybindingApi = {
         }
     },
 
-    async saveKeybinding(keybidingData: any, name: string, description: string): Promise<boolean> {
+    async saveKeybinding(keybidingData: any, name: string, description: string) {
         try {
             console.log(description)
             console.log(name)
             const response = await api.post('/keybinding/save', {bindingData: keybidingData, name: name, description: description})
 
-            return response.data.status === "success"
+            return response.data
         } catch (error) {
             console.log(error)
-            return false
+            return {status: 'error', msg: 'Error saving data'}
         }
     },
 

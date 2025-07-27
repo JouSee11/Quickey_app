@@ -8,6 +8,7 @@ import type { ButtonBindHome, ButtonBindSave, KnobBindHome } from '@/types/butto
 import { useButtons } from '@/composables/useButtonsBindingHome';
 import { useToast } from 'primevue';
 import { useConstantsStore } from '@/stores/constantsStore';
+import { storeToRefs } from 'pinia';
 
 
 const {isDialogVisible, hideDialog} = useSaveDialog()
@@ -16,7 +17,8 @@ const {allButtons, knobElement} = useButtons()
 const toast = useToast()
 
 //get the categories
-const {keybindingCategories} = useConstantsStore()
+const constantsStore = useConstantsStore()
+const {keybindingCategories} = storeToRefs(constantsStore)
 
 const handleCancel = () => {
     hideDialog()
@@ -58,11 +60,11 @@ const onSubmit = async ({valid, values, reset}: {valid: boolean, values: any, re
 
     const saveResult = await saveKeybindingApi.saveKeybinding(saveBidingData, values.saveName, values.saveDescription)
     
-    if (saveResult) {
+    if (saveResult.status === 'success') {
         toast.add({severity: 'success', summary: "Keybinding saved successfully", life: 1000})
         hideDialog()
     } else {
-        toast.add({severity: 'error', summary: "Error saving key binding", life: 1000})
+        toast.add({severity: 'error', summary: "Error", detail: saveResult.msg, life: 2000})
     }
 }
 
