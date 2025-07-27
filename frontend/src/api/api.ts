@@ -1,10 +1,12 @@
 import axios from "axios";
 import { authApi } from "./auth/auth_token";
+import { useAuth } from "@/composables/useAuth";
 
 export const api = axios.create({
     baseURL: '/api'
 })
 
+const {logout} = useAuth()
 
 //add auth token to header with each request
 api.interceptors.request.use(
@@ -54,9 +56,12 @@ api.interceptors.response.use(
                 localStorage.removeItem('accessToken')
                 localStorage.removeItem('refreshToken')
                 localStorage.removeItem('user')
+                logout()
 
                 //go back to login
-                window.location.href = '/login'
+                if (window.location.pathname === '/profile') {
+                    window.location.href = '/login'
+                }
                 return Promise.reject(error)
 
                 
