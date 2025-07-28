@@ -3,7 +3,7 @@ import { useSaveDialog } from '@/composables/useSaveDialog';
 import {onBeforeMount, onMounted, ref, toRaw} from 'vue'
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod'
-import { saveKeybindingApi } from '@/api/keybinding/save_keybinding';
+import { userKeybindingApi } from '@/api/keybinding/keybinding_user';
 import type { ButtonBindHome, ButtonBindSave, KnobBindHome } from '@/types/buttonBindHome';
 import { useButtons } from '@/composables/useButtonsBindingHome';
 import { useToast } from 'primevue';
@@ -39,7 +39,7 @@ const resolver = zodResolver(
 const checkNameBlur = async (name: string) => {
     nameServerError.value = ''
 
-    const nameAvailible = await saveKeybindingApi.verifyKeybindingName(name.trim())
+    const nameAvailible = await userKeybindingApi.verifyKeybindingName(name.trim())
 
     if (!nameAvailible) {
         nameServerError.value = "Name is already used"
@@ -58,7 +58,7 @@ const onSubmit = async ({valid, values, reset}: {valid: boolean, values: any, re
         return
     }
 
-    const saveResult = await saveKeybindingApi.saveKeybinding(saveBidingData, values.saveName, values.saveDescription, values.saveCategory)
+    const saveResult = await userKeybindingApi.saveKeybinding(saveBidingData, values.saveName, values.saveDescription, values.saveCategory)
     
     if (saveResult.status === 'success') {
         toast.add({severity: 'success', summary: "Keybinding saved successfully", life: 1000})

@@ -1,6 +1,6 @@
 import {api} from "@/api/api"
 
-export const saveKeybindingApi = {
+export const userKeybindingApi = {
     async verifyKeybindingName(name: string): Promise<boolean> {
         try {
             const response = await api.post('/keybinding/validate-name', {saveName: name})
@@ -14,14 +14,32 @@ export const saveKeybindingApi = {
 
     async saveKeybinding(keybidingData: any, name: string, description: string, category: string) {
         try {
-            console.log(description)
-            console.log(name)
             const response = await api.post('/keybinding/save', {bindingData: keybidingData, name: name, description: description, category: category})
 
             return response.data
         } catch (error) {
             console.log(error)
             return {status: 'error', msg: 'Error saving data'}
+        }
+    },
+
+    async getKeybindingUser(searchText: string, filterCategories: string[], sortBy: string, publicFilter: string, likedFilter: boolean) {
+        try {
+            console.log(filterCategories)
+            const response = await api.get('/keybinding/get-user-binding', {
+                params: {
+                    searchText,
+                    filterCategories: filterCategories.join(','),
+                    sortBy,
+                    publicFilter,
+                    likedFilter
+                }
+            })
+            
+            return response.data
+        } catch (error) {
+            console.log(error)
+            return {status: 'error', msg: 'Failed to get saved data'}
         }
     },
 

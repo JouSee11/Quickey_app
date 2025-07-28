@@ -30,7 +30,6 @@ const getBindingUser = async (req: Request, res: Response) => {
         const user = req.user as IUser
         //get the filter values
         const {searchText, filterCategories, sortBy = "date_desc", publicFilter = "all", likedFilter = "false"} = req.query
-
         // const query: any = {userId: user._id, }
         const pipeline: PipelineStage[] = []
 
@@ -39,9 +38,11 @@ const getBindingUser = async (req: Request, res: Response) => {
             initMatch.name = {$regex: searchText, $options: 'i'} //case insensitive search
         }
 
-        if (filterCategories) {
-            const categories = Array.isArray(filterCategories) ? filterCategories : [filterCategories]
-            initMatch.category = {$in: categories}
+        if (filterCategories && typeof filterCategories === 'string') {
+            const categories = filterCategories.split(',').filter(cat => cat.trim() !== '')
+            if (categories.length > 0) {
+                initMatch.category = {$in: categories}
+            }
         }
 
         if (publicFilter !== 'all' && typeof publicFilter === 'string') {

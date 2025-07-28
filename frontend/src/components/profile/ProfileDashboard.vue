@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { AuthService } from '@/api/auth/auth_service';
-import { saveKeybindingApi } from '@/api/keybinding/save_keybinding';
+import { userKeybindingApi } from '@/api/keybinding/keybinding_user';
 import { useConstantsStore } from '@/stores/constantsStore';
 import { storeToRefs } from 'pinia';
 import { onBeforeMount, ref } from 'vue';
+import KeybindingSave from '@/components/profile/KeybindingSave.vue';
 
 //search and filter values
 const searchValues = ref('')
@@ -32,7 +33,27 @@ const resetFilters = () => {
     selectedCategories.value = []
     sortBy.value = 'date_desc'
     filterPublic.value = 'all'
+}
 
+
+// ========= displaying binding data =====================
+const displayData = ref([])
+const dataLoading = ref(true)
+
+const updateDisplayData = async () => {
+    displayData.value = await userKeybindingApi.getKeybindingUser(
+        searchValues.value,
+        selectedCategories.value,
+        sortBy.value,
+        filterPublic.value,
+        filterLiked.value
+    )
+}
+
+const filterValueChanged = async () => {
+    dataLoading.value = true
+    await updateDisplayData()
+    dataLoading.value = false
 }
 
 
@@ -76,6 +97,7 @@ const resetFilters = () => {
                     size="small"
                     placeholder="Filter categories"
                     class="category-select"
+                    @change="filterValueChanged"
                 />
 
                 <Dropdown
@@ -108,6 +130,11 @@ const resetFilters = () => {
 
 
         </Toolbar>
+
+        <!-- disaply binding data -->
+        <div class="keybinding-display-cont">
+            <KeybindingSave/>
+        </div>
 
 
     </div>
