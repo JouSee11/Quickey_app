@@ -61,11 +61,12 @@ const getBindingUser = async (req: Request, res: Response) => {
             }
         })
 
-        //add like count field to the results
+        //add like count field to the results 
         pipeline.push({
             $addFields: {
                 likeCount: { $size: '$likesData'},
-                isLiked: {$in: [user._id, '$likesData.userId']}
+                isLiked: {$in: [user._id, '$likesData.userId']},
+                username: user.username
             }
         })
 
@@ -80,7 +81,11 @@ const getBindingUser = async (req: Request, res: Response) => {
         //clean up the outpuyt
         pipeline.push({
             $project: {
-                likesData: 0
+                likesData: 0,
+                userId: 0,
+                useNumber: 0,
+                updatedAt: 0,
+                description: 0
             }
         })
 

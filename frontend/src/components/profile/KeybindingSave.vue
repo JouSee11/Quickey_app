@@ -1,22 +1,10 @@
 <script setup lang="ts">
+import type { KeybindingDataSave } from '@/types/keybindingSaveTypes';
 import {ref} from 'vue'
 
-interface KeybindingData {
-    _id: string,
-    name: string,
-    category: string,
-    bindingData: Array<{id: string, value: string[] | string}>,
-    public: boolean,
-    likeCount: number,
-    isLiked: boolean,
-    createdAt: string,
-    user: {
-        username: string
-    }
-}
 
 interface Props {
-    keybinding: KeybindingData
+    keybinding: KeybindingDataSave
 }
 
 const props = defineProps<Props>()
@@ -26,10 +14,16 @@ const totalPages = 3
 
 
 const getCurrentPageButtons = () => {
+    const returnData = props.keybinding.keyBinding.filter(entry => {
+        if (Number(entry.id) < 10) return true
+    })
 
+    console.log(returnData)
+    return returnData
 }
 
 const handlePageChange = (pageNumber: number) => {
+    currentPage.value = pageNumber
     return
 }
 
@@ -47,41 +41,41 @@ const handlePageChange = (pageNumber: number) => {
             <div class="save-keys-cont active">
                 <!-- 9 buttons page  -->
                 <div
-                    v-for="button in getCurrentPageButtons"
-                    :key="button"
+                    v-for="button in getCurrentPageButtons()"
+                    :key="button.id"
                     class="save-key"
                     :class="{
                         // 'save-key-binded': !button.isEmpty,
-                        'save-key-binded': false,
+                        'save-key-binded': button.value && button.value.length > 0,
                     }"
                 ></div>
             </div>
 
             <!-- page indicator -->
-            <p class="page-num-display">Page: <span class="page-num-val">1</span></p>
+            <p class="page-num-display">Page: <span class="page-num-val">{{ currentPage }}</span></p>
 
             <!-- public/private state show -->
             <i
                 class="save-public-state"
-                :class="false ? 'pi pi-globe' : 'pi pi-lock'"
+                :class="props.keybinding.public ? 'pi pi-globe' : 'pi pi-lock'"
             ></i>
 
             <!-- likes section -->
             <div class="save-likes-const">
                 <i
                     class="save-likes-ico pi pi-heart"
-                    :class="true ? 'liked' : 'not-liked'"
+                    :class="props.keybinding.isLiked ? 'icon-liked' : 'icon-not-liked'"
                 ></i>    
-                <p class="save-likes-num">40</p>
+                <p class="save-likes-num">{{ props.keybinding.likeCount}}</p>
             </div>
 
             <!-- bottom stats -->
             <div class="save-stats-bottom">
-                <p class="save-name">Discord communication</p>
-                <p class="save-date">21.2.2002</p>
+                <p class="save-name">{{ props.keybinding.name }}</p>
+                <p class="save-date">{{ props.keybinding.createdAt }}</p>
                 
                 <div class="save-username-ico-cont">
-                    <p class="save-username">Josef Talac</p>
+                    <p class="save-username">{{ props.keybinding.username }}</p>
                     <i class="pi pi-user"></i>
                 </div>
             </div>
@@ -110,9 +104,11 @@ const handlePageChange = (pageNumber: number) => {
     background-color: var(--primary-800);
     padding: 20px;
     border-radius: var(--border-rad-main);
-    margin: 0;
+    border: 1px var(--gray-dark) solid;
+    margin: 15px;
     color: var(--primary-0);
-    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    /* transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out; */
+    transition: border 0.2s ease-in-out;
 }
 
 .save-keys-cont {
@@ -128,6 +124,7 @@ const handlePageChange = (pageNumber: number) => {
     height: 20px;
     border-radius: 5px;
     transition: all 0.2s ease;
+    background-color: var(--blue-dark);
 }
 
 .save-key-binded {
@@ -247,7 +244,7 @@ const handlePageChange = (pageNumber: number) => {
 
 .hovering-section {
     display: block;
-    position: absolute;
+    position: relative;
     width: 33.3%;
     height: 200px;
 }
@@ -268,8 +265,9 @@ const handlePageChange = (pageNumber: number) => {
 }
 
 .save-cont:hover {
-    box-shadow: 5px 5px 0 var(--green-dark);
-    transform: scale(1.02);
+    /* box-shadow: 5px 5px 0 var(--green-dark); */
+    /* transform: scale(1.02); */
+    border: 1px var(--gray-main) solid;
 }
 
 .save-cont:hover .save-username-ico-cont {
@@ -278,6 +276,14 @@ const handlePageChange = (pageNumber: number) => {
 
 .save-cont:hover .save-likes-ico {
     color: var(--red-dark);
+}
+
+.icon-liked {
+    color: var(--red-vivid);
+}
+
+.icon-not-liked{
+    color: var(--gray-main);
 }
 
 </style>

@@ -58,10 +58,7 @@ api.interceptors.response.use(
                 localStorage.removeItem('user')
                 logout()
 
-                //go back to login
-                if (window.location.pathname === '/profile') {
-                    window.location.href = '/login'
-                }
+    
                 return Promise.reject(error)
 
                 

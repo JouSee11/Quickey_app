@@ -5,6 +5,7 @@ import { useConstantsStore } from '@/stores/constantsStore';
 import { storeToRefs } from 'pinia';
 import { onBeforeMount, ref } from 'vue';
 import KeybindingSave from '@/components/profile/KeybindingSave.vue';
+import type { KeybindingDataSave } from '@/types/keybindingSaveTypes';
 
 //search and filter values
 const searchValues = ref('')
@@ -133,7 +134,8 @@ const filterValueChanged = async () => {
 
         <!-- disaply binding data -->
         <div class="keybinding-display-cont">
-            <KeybindingSave/>
+            <!-- <p>{{ displayData }}</p> -->
+            <KeybindingSave v-for="bindingSave in displayData" :keybinding="bindingSave"/>
         </div>
 
 
@@ -230,6 +232,17 @@ const filterValueChanged = async () => {
 .public-select{
     height: 31px;
     margin-right: 10px;
+}
+
+/* display cont of all bidings */
+.keybinding-display-cont{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 30px;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
 }
 
 </style>
