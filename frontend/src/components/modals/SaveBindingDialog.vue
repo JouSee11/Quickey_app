@@ -58,7 +58,7 @@ const onSubmit = async ({valid, values, reset}: {valid: boolean, values: any, re
         return
     }
 
-    const saveResult = await saveKeybindingApi.saveKeybinding(saveBidingData, values.saveName, values.saveDescription)
+    const saveResult = await saveKeybindingApi.saveKeybinding(saveBidingData, values.saveName, values.saveDescription, values.saveCategory)
     
     if (saveResult.status === 'success') {
         toast.add({severity: 'success', summary: "Keybinding saved successfully", life: 1000})

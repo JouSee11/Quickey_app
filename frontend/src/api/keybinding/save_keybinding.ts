@@ -12,11 +12,11 @@ export const saveKeybindingApi = {
         }
     },
 
-    async saveKeybinding(keybidingData: any, name: string, description: string) {
+    async saveKeybinding(keybidingData: any, name: string, description: string, category: string) {
         try {
             console.log(description)
             console.log(name)
-            const response = await api.post('/keybinding/save', {bindingData: keybidingData, name: name, description: description})
+            const response = await api.post('/keybinding/save', {bindingData: keybidingData, name: name, description: description, category: category})
 
             return response.data
         } catch (error) {

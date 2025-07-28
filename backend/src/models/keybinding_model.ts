@@ -49,12 +49,8 @@ const keyBindingSchema = new Schema<IKeyBinding>({
     },
     updatedAt: {
         type: Date,
-        default: null
-    },
-    likes: {
-        type: Number,
-        required: [true, "The number of likes must be initialized"],
-        default: 0
+        required: true,
+        default: Date.now
     },
     useNumber: {
         type: Number,

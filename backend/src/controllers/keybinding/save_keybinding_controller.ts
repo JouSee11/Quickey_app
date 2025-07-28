@@ -5,7 +5,7 @@ import { bindingNameValid } from "./keybinding_user_controller"
 import { KEYBINDING_CATEGORIES } from "../../constants/keybinding_categories"
 
 const saveKeyBinding = async (req: Request, res: Response) => {
-    const {bindingData, name, description = ""} = req.body
+    const {bindingData, name, description = "", category} = req.body
     //check if all data is provided
     if (!bindingData || !name) {        
         res.status(400).json({
@@ -27,8 +27,9 @@ const saveKeyBinding = async (req: Request, res: Response) => {
     const nameValid = await validateName(name, user._id)
     const descriptionValid = validateDescription(description)
     const keyBindingDataValid = validateKeybindingData(bindingData)
+    const categoryValid = validateCategory(category)
 
-    if (!nameValid || !descriptionValid || !keyBindingDataValid) {
+    if (!nameValid || !descriptionValid || !keyBindingDataValid || !categoryValid) {
         res.status(400).json({
             status: "error",
             msg: "Invalid data provided"
@@ -42,7 +43,8 @@ const saveKeyBinding = async (req: Request, res: Response) => {
             userId: user._id,
             keyBinding: bindingData,
             name: name.trim(),
-            description: (description || "").trim()
+            description: (description || "").trim(),
+            category: category
         })
 
         res.status(201).json({
@@ -88,6 +90,12 @@ const validateKeybindingData = (keyBinding: any) => {
         typeof item.id === 'string' &&
         Array.isArray(item.value) 
     )
+}
+
+const validateCategory = (category: string): boolean => {
+    if (!category) return false
+
+    return (KEYBINDING_CATEGORIES as readonly string[]).includes(category)
 }
 
 export {saveKeyBinding, getCategories}

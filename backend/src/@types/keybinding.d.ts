@@ -17,7 +17,6 @@ export interface IKeyBinding extends Document {
     createdAt: Date
     updatedAt: Date
     useNumber: Number
-    likes: Number
     category: KeyBindingCategory
 }
 
