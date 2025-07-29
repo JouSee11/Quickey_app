@@ -11,21 +11,35 @@ const props = defineProps<Props>()
 
 const currentPage = ref(1)
 const totalPages = 3
+const isPageChanging = ref(false)
 
 
 const getCurrentPageButtons = () => {
     const returnData = props.keybinding.keyBinding.filter(entry => {
-        if (Number(entry.id) < 10) return true
+        const firstIndex = 9 * (currentPage.value - 1) + 1
+        const lastIndex = firstIndex + 8
+        if (Number(entry.id) >= firstIndex && Number(entry.id) <= lastIndex) return true
     })
 
-    console.log(returnData)
     return returnData
 }
 
 const handlePageChange = (pageNumber: number) => {
+    if (pageNumber === currentPage.value) return 
+
+    isPageChanging.value = true
+
     currentPage.value = pageNumber
+
+    setTimeout(() => {
+        isPageChanging.value = false
+    }, 200)
     return
 }
+
+const convertDataFormat = (dateUnformated: string) => {
+    return new Date(props.keybinding.createdAt).toLocaleDateString()
+} 
 
 </script>
 
@@ -35,10 +49,15 @@ const handlePageChange = (pageNumber: number) => {
     <div class="save-block-link">
         <div class="save-cont">
             <!-- hovering areas  -->
-            <div v-for="sectionNumber in 3" class="hovering-section" @mouseenter="handlePageChange(sectionNumber)"></div>
+            <div 
+                v-for="sectionNumber in 3"
+                class="hover-section"
+                :class="'hover-page-' + sectionNumber"
+                @mouseenter="handlePageChange(sectionNumber)">
+            </div>
 
             <!-- keys display-->
-            <div class="save-keys-cont active">
+            <div class="save-keys-cont active" :class="{'page-transition': isPageChanging}">
                 <!-- 9 buttons page  -->
                 <div
                     v-for="button in getCurrentPageButtons()"
@@ -61,10 +80,10 @@ const handlePageChange = (pageNumber: number) => {
             ></i>
 
             <!-- likes section -->
-            <div class="save-likes-const">
+            <div class="save-likes-cont">
                 <i
-                    class="save-likes-ico pi pi-heart"
-                    :class="props.keybinding.isLiked ? 'icon-liked' : 'icon-not-liked'"
+                    class="save-likes-ico"
+                    :class="props.keybinding.isLiked ? 'icon-liked pi pi-heart-fill' : 'icon-not-liked pi pi-heart'"
                 ></i>    
                 <p class="save-likes-num">{{ props.keybinding.likeCount}}</p>
             </div>
@@ -72,7 +91,7 @@ const handlePageChange = (pageNumber: number) => {
             <!-- bottom stats -->
             <div class="save-stats-bottom">
                 <p class="save-name">{{ props.keybinding.name }}</p>
-                <p class="save-date">{{ props.keybinding.createdAt }}</p>
+                <p class="save-date">{{ convertDataFormat(props.keybinding.createdAt) }}</p>
                 
                 <div class="save-username-ico-cont">
                     <p class="save-username">{{ props.keybinding.username }}</p>
@@ -92,6 +111,7 @@ const handlePageChange = (pageNumber: number) => {
     text-decoration: none;
     position: relative;
     cursor: pointer;
+    z-index: 1;
 }
 
 .save-cont {
@@ -108,7 +128,7 @@ const handlePageChange = (pageNumber: number) => {
     margin: 15px;
     color: var(--primary-0);
     /* transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out; */
-    transition: border 0.2s ease-in-out;
+    transition: border 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 .save-keys-cont {
@@ -118,6 +138,21 @@ const handlePageChange = (pageNumber: number) => {
     gap: 10px;
     transition: all 0.3s ease-in-out;
 }
+.save-keys-cont.page-transition {
+    animation: scale 0.2s ease-in-out, flicker 0.2s ease-in-out;
+}
+
+@keyframes flicker {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(0.9); }
+    100% { filter: brightness(1); }
+}
+@keyframes scale {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 
 .save-key {
     width: 20px;
@@ -233,40 +268,38 @@ const handlePageChange = (pageNumber: number) => {
     transition: color 0.2s ease;
 }
 
-.save-likes-cont:hover {
-    color: var(--red-vivid);
-}
+
 
 .save-likes-num {
     margin: 0;
     margin-left: 5px;
 }
 
-.hovering-section {
+.hover-section {
     display: block;
-    position: relative;
+    position: absolute;
     width: 33.3%;
-    height: 200px;
+    height: 100%;
 }
 
-.hover-page-one {
+.hover-page-1 {
     top: 0;
     left: 0;
 }
 
-.hover-page-two {
+.hover-page-2 {
     top: 0;
     left: 33.3%;
 }
 
-.hover-page-three {
+.hover-page-3 {
     top: 0;
     left: 66.6%;
 }
 
 .save-cont:hover {
     /* box-shadow: 5px 5px 0 var(--green-dark); */
-    /* transform: scale(1.02); */
+    transform: scale(1.01);
     border: 1px var(--gray-main) solid;
 }
 
@@ -274,12 +307,8 @@ const handlePageChange = (pageNumber: number) => {
     color: var(--primary-0);
 }
 
-.save-cont:hover .save-likes-ico {
-    color: var(--red-dark);
-}
-
 .icon-liked {
-    color: var(--red-vivid);
+    color: var(--red-dark);
 }
 
 .icon-not-liked{

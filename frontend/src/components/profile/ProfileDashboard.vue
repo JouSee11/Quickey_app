@@ -3,7 +3,7 @@ import { AuthService } from '@/api/auth/auth_service';
 import { userKeybindingApi } from '@/api/keybinding/keybinding_user';
 import { useConstantsStore } from '@/stores/constantsStore';
 import { storeToRefs } from 'pinia';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, TransitionGroup, watch } from 'vue';
 import KeybindingSave from '@/components/profile/KeybindingSave.vue';
 import type { KeybindingDataSave } from '@/types/keybindingSaveTypes';
 
@@ -29,6 +29,7 @@ const sortOptions = ref([
 
 const publicOptions = ref(['all', 'public', 'private'])
 
+
 const resetFilters = () => {
     filterLiked.value = false
     selectedCategories.value = []
@@ -38,10 +39,11 @@ const resetFilters = () => {
 
 
 // ========= displaying binding data =====================
-const displayData = ref([])
-const dataLoading = ref(true)
+const displayData = ref<KeybindingDataSave[]>([])
+const dataLoading = ref(false)
 
 const updateDisplayData = async () => {
+    displayData.value = []
     displayData.value = await userKeybindingApi.getKeybindingUser(
         searchValues.value,
         selectedCategories.value,
@@ -53,9 +55,29 @@ const updateDisplayData = async () => {
 
 const filterValueChanged = async () => {
     dataLoading.value = true
+
     await updateDisplayData()
+    
     dataLoading.value = false
+
 }
+
+watch([filterLiked, selectedCategories, sortBy, filterPublic], ()=> {
+    filterValueChanged()
+})
+
+//debounce for seaching 
+let searchTimeout: ReturnType<typeof setTimeout>
+watch(searchValues, () => {
+    clearTimeout(searchTimeout)
+    searchTimeout = setTimeout(() => {
+        filterValueChanged()
+    }, 500)  
+})
+
+onBeforeMount(() => {
+    filterValueChanged()
+})
 
 
 </script>
@@ -64,7 +86,7 @@ const filterValueChanged = async () => {
     <div class="dashboard-container">
         <!-- title -->
         <div class="dashboard-header">
-            <span class="header-title"><i class="pi pi-save"/>My saves</span>
+            <span class="header-title">My saves</span>
             <span class="header-name"><i class="pi pi-user"/>{{ user?.username }}</span>
         </div>
         
@@ -98,10 +120,9 @@ const filterValueChanged = async () => {
                     size="small"
                     placeholder="Filter categories"
                     class="category-select"
-                    @change="filterValueChanged"
                 />
 
-                <Dropdown
+                <Select
                     v-model="sortBy"
                     :options="sortOptions"
                     option-label="label"
@@ -118,7 +139,7 @@ const filterValueChanged = async () => {
                     class="public-select"
                 />
 
-                <Button 
+                <Button
                     :label="filterLiked ? 'Liked' : 'All'"
                     @click="filterLiked = !filterLiked" 
                     :class="['filter-liked-button', { 'active-button': filterLiked }]"
@@ -134,8 +155,27 @@ const filterValueChanged = async () => {
 
         <!-- disaply binding data -->
         <div class="keybinding-display-cont">
-            <!-- <p>{{ displayData }}</p> -->
-            <KeybindingSave v-for="bindingSave in displayData" :keybinding="bindingSave"/>
+            <!-- display the loading cont -->
+            <Skeleton v-for="skeleton in 8" v-if="dataLoading" :key="skeleton" width="350px" height="200px" class="skeleton-loading"/>
+            <p v-else-if="displayData.length === 0" class="no-saves-text">No saves availible</p>
+
+            <!-- actual blocks of saves -->
+            <TransitionGroup
+                v-else
+                name="save-appear"
+                tag="div"
+                class="saves-container"
+                appear
+            >
+                <KeybindingSave 
+                    v-for="(bindingSave, index) in displayData" 
+                    :key="bindingSave._id"
+                    :keybinding="bindingSave"
+                    :style="{animationDelay: `${index * 30}ms`}"
+                    class="save-item"
+                />
+            </TransitionGroup>
+
         </div>
 
 
@@ -207,6 +247,8 @@ const filterValueChanged = async () => {
     padding: 5px 0px;
     margin-top: 10px;
     border: none;
+    /* box-shadow: 0 10px 15px rgba(0, 0, 0, 0.135); */
+    z-index: 2;
 }
 
 .filter-liked-button{
@@ -215,9 +257,9 @@ const filterValueChanged = async () => {
     height: 31px;
 }
 
-.filter-liked-button.active-button{
-    color: var(--red-vivid);
-}
+/* .filter-liked-button.active-button{
+    color: var(--red-dark);
+} */
 
 .category-select{
     width: 200px;
@@ -240,9 +282,64 @@ const filterValueChanged = async () => {
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 30px;
+    padding-bottom: 30px;
     width: 100%;
     height: 100%;
     overflow: scroll;
+}
+
+/* Saves container */
+.saves-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Vue transition animations */
+.save-appear-enter-active {
+    animation: popIn 0.2s ease-out forwards;
+    animation-delay: var(--animation-delay, 0ms);
+}
+
+.save-appear-leave-active {
+    transition: all 0.2s ease-in;
+}
+
+.save-appear-leave-to {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+}
+
+/* Pop-in keyframe animation */
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(30px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05) translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* empty binding state */
+.skeleton-loading{
+    margin: 15px;
+}
+
+.no-saves-text{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: var(--big-title-text);
+    font-weight: bold;
+    color: var(--gray-main);
+    transform: translate(-50%, 50%);
 }
 
 </style>

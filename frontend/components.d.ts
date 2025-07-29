@@ -84,6 +84,7 @@ declare module 'vue' {
     Select: typeof import('primevue/select')['default']
     SelectButton: typeof import('primevue/selectbutton')['default']
     SendEmailDialog: typeof import('./src/components/about/SendEmailDialog.vue')['default']
+    Skeleton: typeof import('primevue/skeleton')['default']
     TabMenu: typeof import('primevue/tabmenu')['default']
     Terminal: typeof import('primevue/terminal')['default']
     Textarea: typeof import('primevue/textarea')['default']
