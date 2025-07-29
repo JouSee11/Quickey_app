@@ -175,7 +175,8 @@ onBeforeMount(() => {
                     class="save-item"
                 />
             </TransitionGroup>
-
+            
+            <Paginator></Paginator>
         </div>
 
 
@@ -282,10 +283,10 @@ onBeforeMount(() => {
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
     width: 100%;
-    height: 100%;
-    overflow: scroll;
+    /* height: 100%; */
+    overflow: auto;
 }
 
 /* Saves container */
@@ -293,6 +294,7 @@ onBeforeMount(() => {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: start;
     width: 100%;
 }
 

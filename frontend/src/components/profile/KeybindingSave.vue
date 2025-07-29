@@ -41,6 +41,17 @@ const convertDataFormat = (dateUnformated: string) => {
     return new Date(props.keybinding.createdAt).toLocaleDateString()
 } 
 
+const getCategoryIcon = (categoryName: string) => {
+    switch (categoryName) {
+        case 'general': return 'pi pi-circle-fill'
+        case 'gaming': return 'pi pi-trophy'
+        case 'media': return 'pi pi-play-circle'
+        case 'creative': return 'pi pi-palette'
+        case 'programming': return 'pi pi-code'
+        case 'productivity': return 'pi pi-briefcase'
+    }
+}
+
 </script>
 
 
@@ -71,13 +82,25 @@ const convertDataFormat = (dateUnformated: string) => {
             </div>
 
             <!-- page indicator -->
-            <p class="page-num-display">Page: <span class="page-num-val">{{ currentPage }}</span></p>
+            <!-- <p class="page-num-display">Page: <span class="page-num-val">{{ currentPage }}</span></p> -->
+            
+            <div class="page-num-display">
+                <div
+                    v-for="pageNumber in 3"
+                    :key="pageNumber"
+                    class="page-indicator"
+                    :class="{'active': pageNumber === currentPage}"
+                />
+            </div>
 
             <!-- public/private state show -->
             <i
                 class="save-public-state"
                 :class="props.keybinding.public ? 'pi pi-globe' : 'pi pi-lock'"
             ></i>
+
+            <!-- category show -->
+            <i :class="getCategoryIcon(props.keybinding.category)" class="category-icon"/>
 
             <!-- likes section -->
             <div class="save-likes-cont">
@@ -205,10 +228,25 @@ const convertDataFormat = (dateUnformated: string) => {
 }
 
 .page-num-display {
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40px;
+    margin-top: 15px;
     margin-bottom: 0;
     font-size: var(--small-text);
     color: var(--gray-main);
+}
+
+.page-indicator{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--gray-dark);
+}
+
+.page-indicator.active{
+    background-color: var(--gray-main);
 }
 
 .save-name {
@@ -223,7 +261,7 @@ const convertDataFormat = (dateUnformated: string) => {
 
 .save-stats-bottom {
     position: relative;
-    margin-top: 10px;
+    margin-top: 5px;
     width: 100%;
 }
 
@@ -257,6 +295,13 @@ const convertDataFormat = (dateUnformated: string) => {
     color: var(--gray-main);
 }
 
+.category-icon{
+    position: absolute;
+    left: 20px;
+    top: 50px;
+    color: var(--gray-main);
+}
+
 .save-likes-cont {
     display: flex;
     align-items: center;
@@ -280,6 +325,7 @@ const convertDataFormat = (dateUnformated: string) => {
     position: absolute;
     width: 33.3%;
     height: 100%;
+    z-index: 3;
 }
 
 .hover-page-1 {

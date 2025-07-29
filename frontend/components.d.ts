@@ -72,6 +72,7 @@ declare module 'vue' {
     MultiSelect: typeof import('primevue/multiselect')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     OverlayBadge: typeof import('primevue/overlaybadge')['default']
+    Paginator: typeof import('primevue/paginator')['default']
     Password: typeof import('primevue/password')['default']
     ProfileDashboard: typeof import('./src/components/profile/ProfileDashboard.vue')['default']
     ProfileMenu: typeof import('./src/components/profile/ProfileMenu.vue')['default']
