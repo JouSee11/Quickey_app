@@ -29,7 +29,7 @@ const getBindingUser = async (req: Request, res: Response) => {
     try {
         const user = req.user as IUser
         //get the filter values
-        const {searchText, filterCategories, sortBy = "date_desc", publicFilter = "all", likedFilter = "false"} = req.query
+        const {searchText, filterCategories, sortBy = "date_desc", publicFilter = "all", likedFilter = "false", page = "1", limit = "15"} = req.query
         // const query: any = {userId: user._id, }
         const pipeline: PipelineStage[] = []
 
@@ -66,7 +66,7 @@ const getBindingUser = async (req: Request, res: Response) => {
             $addFields: {
                 likeCount: { $size: '$likesData'},
                 isLiked: {$in: [user._id, '$likesData.userId']},
-                username: user.username
+                username: user.username,
             }
         })
 

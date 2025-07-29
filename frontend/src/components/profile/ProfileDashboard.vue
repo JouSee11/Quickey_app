@@ -14,6 +14,11 @@ const selectedCategories = ref([])
 const sortBy = ref('date_desc')
 const filterPublic = ref('all')
 
+//pagination
+const currentPage = ref(1)
+const pageSize = ref(15)
+const totalRecords = ref(0)
+
 const user = AuthService.getUser()
 
 const constantsStore = useConstantsStore()
@@ -37,6 +42,13 @@ const resetFilters = () => {
     filterPublic.value = 'all'
 }
 
+//pagination
+const onPageChange = (event: {page: number, rows: number}) => {
+    currentPage.value = event.page + 1
+    pageSize.value = event.rows
+    filterValueChanged() 
+}
+
 
 // ========= displaying binding data =====================
 const displayData = ref<KeybindingDataSave[]>([])
@@ -44,19 +56,25 @@ const dataLoading = ref(false)
 
 const updateDisplayData = async () => {
     displayData.value = []
-    displayData.value = await userKeybindingApi.getKeybindingUser(
+    const response = await userKeybindingApi.getKeybindingUser(
         searchValues.value,
         selectedCategories.value,
         sortBy.value,
         filterPublic.value,
-        filterLiked.value
+        filterLiked.value,
+        currentPage.value,
+        totalRecords.value
     )
+
+    displayData.value = response
+    totalRecords.value = response.count
 }
 
 const filterValueChanged = async () => {
     dataLoading.value = true
 
     await updateDisplayData()
+    
     
     dataLoading.value = false
 
@@ -176,7 +194,7 @@ onBeforeMount(() => {
                 />
             </TransitionGroup>
             
-            <Paginator></Paginator>
+            <Paginator :rows="pageSize" :total-records="totalRecords" :rows-per-page-options="[10, 15, 30]" @page="onPageChange"></Paginator>
         </div>
 
 
@@ -343,5 +361,11 @@ onBeforeMount(() => {
     color: var(--gray-main);
     transform: translate(-50%, 50%);
 }
+
+/* pagination styles */
+/* :deep(.p-paginator){
+    background-color: transparent !important;
+    color: var(--gray-bright) !important;
+} */
 
 </style>

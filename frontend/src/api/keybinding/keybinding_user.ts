@@ -23,7 +23,7 @@ export const userKeybindingApi = {
         }
     },
 
-    async getKeybindingUser(searchText: string, filterCategories: string[], sortBy: string, publicFilter: string, likedFilter: boolean) {
+    async getKeybindingUser(searchText: string, filterCategories: string[], sortBy: string, publicFilter: string, likedFilter: boolean, page: Number, limit: Number) {
         try {
             console.log(filterCategories)
             const response = await api.get('/keybinding/get-user-binding', {
@@ -32,7 +32,9 @@ export const userKeybindingApi = {
                     filterCategories: filterCategories.join(','),
                     sortBy,
                     publicFilter,
-                    likedFilter
+                    likedFilter,
+                    page,
+                    limit
                 }
             })
             
