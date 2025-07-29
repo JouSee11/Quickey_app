@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ButtonBindingsMain from "@/components/homePage/HomeCenterSection.vue"
-import LeftButtonSection from "@/components/homePage/HomeLeftButtonSection.vue"
-import RightLogSection from "@/components/homePage/HomeRightLogArea.vue"
+import ButtonBindingsMain from "@/components/home_page/HomeCenterSection.vue"
+import LeftButtonSection from "@/components/home_page/HomeLeftButtonSection.vue"
+import RightLogSection from "@/components/home_page/HomeRightLogArea.vue"
 import devInfoDialogHome from "@/components/modals/devInfoDialogHome.vue"
 import { Icon } from "@iconify/vue"
 import { onMounted, ref, watch } from "vue"

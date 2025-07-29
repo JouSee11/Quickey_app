@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import ButtonBox from "@/components/homePage/ButtonBox.vue"
-import RoundPageButton from "@/components/homePage/RoundPageButton.vue"
+import ButtonBox from "@/components/home_page/ButtonBox.vue"
+import RoundPageButton from "@/components/home_page/RoundPageButton.vue"
 import {onMounted, toRaw, watch} from "vue"
 import {useButtons} from "@/composables/useButtonsBindingHome"
 import { Button } from "primevue"
 import { Icon } from '@iconify/vue'
 import {ref} from 'vue'
-import HomeKnob from "@/components/homePage/HomeKnob.vue"
+import HomeKnob from "@/components/home_page/HomeKnob.vue"
 import { useDeviceStore } from "@/stores/deviceStore"
 import { storeToRefs } from "pinia"
 import type { ButtonBindHome } from "@/types/buttonBindHome"

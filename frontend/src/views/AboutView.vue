@@ -32,6 +32,7 @@ import ScrollText from '@/components/about/ScrollText.vue'
 import { Dialog, Toast } from 'primevue'
 import SendEmailDialog from '@/components/about/SendEmailDialog.vue'
 import FaqSection from '@/components/about/FaqSection.vue'
+import TextPressure from '@/components/vue_bits/TextPressure.vue'
 
 
 const imagesCarousel = [
