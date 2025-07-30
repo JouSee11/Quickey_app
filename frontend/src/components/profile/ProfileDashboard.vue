@@ -194,7 +194,7 @@ onBeforeMount(() => {
             </TransitionGroup>
             
             <Paginator 
-                v-if="displayData.length > 0" 
+                v-if="totalRecords > 5" 
                 :rows="pageSize" :totalRecords="totalRecords" 
                 :rows-per-page-options="[5, 15, 30]" 
                 :first="(currentPage - 1) * pageSize"
@@ -307,10 +307,10 @@ onBeforeMount(() => {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding-top: 30px;
+    margin-top: 30px;
     padding-bottom: 50px;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     overflow: auto;
 }
 
@@ -369,7 +369,7 @@ onBeforeMount(() => {
 }
 
 .paginator{
-    margin-top: auto;
+    margin-top: 40px;
 }
 
 
