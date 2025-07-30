@@ -77,6 +77,16 @@ const getBindingUser = async (req: Request, res: Response) => {
         //sort the results based on the sort filter
         const sortData = getSortOptions(sortBy as string)
         pipeline.push({$sort: sortData})
+
+        const totalCount = await getTotalCountResults(pipeline)
+
+        //handle paginaiton
+        const pageNum = parseInt(page as string) || 1
+        const pageSize = parseInt(limit as string) || 1
+        const skip = (pageNum - 1) * pageSize
+        pipeline.push({$skip: skip})
+        pipeline.push({$limit: pageSize})
+
         
         //clean up the outpuyt
         pipeline.push({
@@ -93,7 +103,8 @@ const getBindingUser = async (req: Request, res: Response) => {
 
         res.status(200).json({
             status: 'success',
-            data: bindingData
+            data: bindingData,
+            count: totalCount
         })
     } catch (error) {
         console.log(error)
@@ -127,6 +138,12 @@ const getSortOptions = (sortValue: string): Record<string, 1 | -1> => {
         default: // "date_desc"
             return { updatedAt: -1 }
     }
+}
+
+const getTotalCountResults = async (pipeline: PipelineStage[]) => {
+    const totalCountPipeline = [...pipeline, {$count: "count"}]
+    const countResult = await KeyBinding.aggregate(totalCountPipeline)
+    return countResult[0]?.count || 0
 }
 
 export {verfiyBindingName, bindingNameValid, getBindingUser}

@@ -63,11 +63,12 @@ const updateDisplayData = async () => {
         filterPublic.value,
         filterLiked.value,
         currentPage.value,
-        totalRecords.value
+        pageSize.value
     )
 
-    displayData.value = response
+    displayData.value = response.data
     totalRecords.value = response.count
+    console.log(totalRecords.value)
 }
 
 const filterValueChanged = async () => {
@@ -75,9 +76,7 @@ const filterValueChanged = async () => {
 
     await updateDisplayData()
     
-    
     dataLoading.value = false
-
 }
 
 watch([filterLiked, selectedCategories, sortBy, filterPublic], ()=> {
@@ -194,7 +193,15 @@ onBeforeMount(() => {
                 />
             </TransitionGroup>
             
-            <Paginator :rows="pageSize" :total-records="totalRecords" :rows-per-page-options="[10, 15, 30]" @page="onPageChange"></Paginator>
+            <Paginator 
+                v-if="displayData.length > 0" 
+                :rows="pageSize" :totalRecords="totalRecords" 
+                :rows-per-page-options="[5, 15, 30]" 
+                :first="(currentPage - 1) * pageSize"
+                @page="onPageChange"
+                class="paginator"
+                >
+            </Paginator>
         </div>
 
 
@@ -303,7 +310,7 @@ onBeforeMount(() => {
     padding-top: 30px;
     padding-bottom: 50px;
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
     overflow: auto;
 }
 
@@ -362,10 +369,9 @@ onBeforeMount(() => {
     transform: translate(-50%, 50%);
 }
 
-/* pagination styles */
-/* :deep(.p-paginator){
-    background-color: transparent !important;
-    color: var(--gray-bright) !important;
-} */
+.paginator{
+    margin-top: auto;
+}
+
 
 </style>

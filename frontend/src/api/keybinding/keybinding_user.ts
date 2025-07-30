@@ -38,7 +38,7 @@ export const userKeybindingApi = {
                 }
             })
             
-            return response.data.data
+            return response.data
         } catch (error) {
             console.log(error)
             return {status: 'error', msg: 'Failed to get saved data'}
