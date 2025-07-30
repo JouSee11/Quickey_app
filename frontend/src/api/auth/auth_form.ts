@@ -51,7 +51,7 @@ export const authFormApi = {
             return response.data
         } catch (error: any) {
             console.log(error)
-            return {msg: 'Something went wrong. Try again later.'}
+            return {msg: error.response?.data?.msg || 'Something went wrong. Try again later.'}
             
         }
     }

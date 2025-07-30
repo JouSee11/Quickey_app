@@ -20,7 +20,7 @@ export const registrationLimiter = rateLimit({
 // max 10 registration attempts per minute
 export const loginLimiter = rateLimit({
     windowMs: 60 * 1000,
-    max: 10,
+    max: 6,
     message: {
         status: 'error',
         msg: 'Too many login attempts, try again later.',

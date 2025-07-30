@@ -32,8 +32,9 @@ import ScrollText from '@/components/about/ScrollText.vue'
 import { Dialog, Toast } from 'primevue'
 import SendEmailDialog from '@/components/about/SendEmailDialog.vue'
 import FaqSection from '@/components/about/FaqSection.vue'
-import TextPressure from '@/components/vue_bits/TextPressure.vue'
-
+import RotatingText from '@/components/vue_bits/RotatingText.vue'
+import TextType from '@/components/vue_bits/TextType.vue'
+import ShinyText from '@/components/vue_bits/ShinyText.vue'
 
 const imagesCarousel = [
   productImage1,
@@ -172,7 +173,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Toast />
   <Dialog />
 
   <div class="about">
@@ -180,17 +180,30 @@ onMounted(async () => {
     <Image :src="logo" class="logo-top" width="80" alt="quickey-logo"/>
     <h1 class="main-header">Quickey Macropad</h1>
 
-    <p class="catch-phrase">Simplify your workflow. Works everywhere. No downloads needed.</p>
+    <!-- <p class="catch-phrase">Simplify your workflow. Works everywhere. No downloads needed.</p> -->
+    <!-- <RotatingText
+      :texts="['one', 'two', 'three']"
+    /> -->
+
+    <TextType 
+      :text="['No downloads', 'Work everywhere' ,'Improve productivity', 'Gaming shortcuts']"
+      :typingSpeed="75"
+      :pauseDuration="1500"
+      :showCursor="true"
+      cursorCharacter="|"
+      class="text-type"
+    />
     
     <div class="main-button-cont">
-      <Button 
-        label="I am interested"
-        icon="pi pi-info-circle"
+      <Button
         outlined
         rounded
         class="notify-button"
         @click="openEmailDialog"
-      />
+      >
+        <ShinyText text="I am interested" :disabled="false" :speed="3"/>
+        <i class="pi pi-info-circle"></i>
+      </Button>
       <SendEmailDialog v-model:visible="dialogVisible"/>
     </div>
 
@@ -706,4 +719,10 @@ onMounted(async () => {
   }
 }
 
+
+.text-type{
+  font-size: var(--bigger-text);
+  margin-top: 20px;
+  font-weight: bold;
+}
 </style>

@@ -113,7 +113,6 @@ const {handleGoogleSuccess, handleGoogleError} = useGoogleLogin()
 
 <template>
     <div class="form-cont box-shadow-normal">
-        <Toast/>
         <Form v-slot="$form" :resolver="resolver" @submit="onFormSubmit" class="form-element" :validateOnBlur="true">
             <div class="form-header">
                 <Icon icon="mdi:user" class="icon-header" />

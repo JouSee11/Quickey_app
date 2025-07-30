@@ -100,7 +100,6 @@ const allDefaultValues = (saveData: ButtonBindSave[]): boolean => {
 </script>
 
 <template>
-    <Toast/>
     <Dialog
         v-model:visible="isDialogVisible"
         modal

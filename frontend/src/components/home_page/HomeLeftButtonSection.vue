@@ -4,7 +4,7 @@ import { useDeviceStore } from "@/stores/deviceStore";
 import { storeToRefs } from "pinia";
 import { useDeviceActions } from "@/composables/useButtonActions";
 import { useAuth } from "@/composables/useAuth";
-import SaveBindingDialog from "../modals/saveBindingDialog.vue";
+import SaveBindingDialog from "@/components/modals/SaveBindingDialog.vue";
 import { useSaveDialog } from "@/composables/useSaveDialog";
 
 const deviceStore = useDeviceStore()
@@ -51,7 +51,6 @@ const items = computed(() => [
 <template>
     <div id="left-section">
         <div>
-            <Toast />
             <ConfirmDialog/>
             <SaveBindingDialog/>
             <Menu :model="items" id="binding-controlls-menu" class="box-shadow-normal"/>
