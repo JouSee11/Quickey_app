@@ -5,7 +5,7 @@ import {onMounted, toRaw, watch} from "vue"
 import {useButtons} from "@/composables/useButtonsBindingHome"
 import { Button } from "primevue"
 import { Icon } from '@iconify/vue'
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import HomeKnob from "@/components/home_page/HomeKnob.vue"
 import { useDeviceStore } from "@/stores/deviceStore"
 import { storeToRefs } from "pinia"
@@ -23,6 +23,7 @@ const {
     currentPage,
     currentPageButtons,
     initButtons,
+    copiedBtnNumber,
     resetKnob,
     changePage,
     bindButtonValue,
@@ -31,7 +32,8 @@ const {
     showKnob,
     knobElement,
     resetButton,
-    getButtonValue
+    getButtonValue,
+    pasteCopied
     
 } = useButtons()
 
@@ -109,7 +111,7 @@ const activeButtonContext = ref<any>(null)
 const showMultiBindingDialog = ref<boolean>(false)
 const buttonForMultibinding = ref<any>(null)
 
-const menuItems = ref([
+const menuItems = computed(() => [
     {
         label: 'Multi-key',
         icon: 'pi pi-pencil',
@@ -123,7 +125,22 @@ const menuItems = ref([
         command: () => {
             handleResetButton(activeButtonContext.value)
         }
-    }
+    },
+    { 
+        label: 'Copy',
+        icon: 'pi pi-copy',
+        command: () => {
+            copiedBtnNumber.value = activeButtonContext.value
+        }
+    },
+    { 
+        label: 'Paste',
+        icon: 'pi pi-arrow-down-right',
+        disabled: copiedBtnNumber.value === null,
+        command: () => {
+            pasteCopied(activeButtonContext.value)
+        }
+    },
 ])
 
 const handleContextMenu = (buttonId: number, event: MouseEvent) => {

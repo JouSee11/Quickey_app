@@ -8,6 +8,7 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
     const currentPage = ref<number>(1)
     const totalPages = ref<number>(3)
     const buttonsPerPage = ref<number>(9)
+    const copiedBtnNumber = ref<number | null>(null)
     
     const showKnob = ref<number>(1)
     const knobElement = ref<KnobBindHome>({state: 'notBinded', values: {left: '', right: '', button: ''}})
@@ -73,6 +74,14 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
         }
     }
 
+    //paste the copied value to button
+    const pasteCopiedValues = (buttonIdTo: number) => {
+        const dataToCopy: Partial<ButtonBindHome> = { ...allButtons.value[copiedBtnNumber.value!! - 1] } // need to create deep copy to not effect the original list
+        dataToCopy.id = buttonIdTo
+
+        updateButton(buttonIdTo, dataToCopy)
+    }
+
     return {
         allButtons,
         currentPage,
@@ -80,6 +89,7 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
         buttonsPerPage,
         showKnob,
         knobElement,
+        copiedBtnNumber,
 
         resetAllButtons,
         setCurrentPage,
@@ -87,6 +97,7 @@ export const useButtonBindStore = defineStore("buttonBind", () => {
         updateButton,
         getButtonText,
         incrementPage,
-        setKnob
+        setKnob,
+        pasteCopiedValues
     }
 })

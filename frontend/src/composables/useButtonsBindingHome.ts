@@ -87,6 +87,11 @@ export const useButtons = () => {
         })
     }
 
+
+    const pasteCopied = (buttonTo: number) => {
+        store.pasteCopiedValues(buttonTo)
+    } 
+
     const changePageTabClick = (e: KeyboardEvent) => {
         // console.log(e.code);
 
@@ -109,6 +114,10 @@ export const useButtons = () => {
         showKnob: computed(() => store.showKnob),
         knobElement: computed(() => store.knobElement),
         currentPageButtons,
+        copiedBtnNumber: computed({
+            get: () => store.copiedBtnNumber,
+            set: (val) => store.copiedBtnNumber = val
+        }),
 
         
         initButtons,
@@ -117,7 +126,8 @@ export const useButtons = () => {
         listeningButton,
         resetKnob,
         resetButton,
-        getButtonValue
+        getButtonValue,
+        pasteCopied
         // resetButton
     }
 }
