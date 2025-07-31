@@ -186,8 +186,20 @@ onMounted(async () => {
     /> -->
 
     <TextType 
-      :text="['No downloads', 'Work everywhere' ,'Improve productivity', 'Gaming shortcuts']"
-      :typingSpeed="75"
+      :text="[
+        'Boosts productivity',
+        'No software required',
+        'Works on any device',
+        'Streamline your workflow',
+        'Speed up your coding',
+        'Ideal for gaming',
+        'Made for creators',
+        'One tap control',
+        'Portable and powerful',
+        'Plug-and-play simplicity',
+        'Customize everything'
+      ]"
+      :typingSpeed="90"
       :pauseDuration="1500"
       :showCursor="true"
       cursorCharacter="|"
@@ -559,6 +571,15 @@ onMounted(async () => {
   margin: 10px 10px;
 }
 
+.text-type{
+  font-size: var(--bigger-text);
+  margin-top: 20px;
+  font-weight: bold;
+  background-color: var(--primary-600);
+  border-radius: var(--border-rad-main);
+  padding: 5px 15px;
+}
+
 
 
 /* ============ scroll test ============== */
@@ -717,12 +738,10 @@ onMounted(async () => {
   :deep(.p-datatable-table){
     font-size: var(--smaller-text) !important;
   }
+
+  .text-type{
+    font-size: var(--normal-text);
+  }
 }
 
-
-.text-type{
-  font-size: var(--bigger-text);
-  margin-top: 20px;
-  font-weight: bold;
-}
 </style>

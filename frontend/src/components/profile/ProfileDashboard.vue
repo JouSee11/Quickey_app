@@ -6,6 +6,8 @@ import { storeToRefs } from 'pinia';
 import { onBeforeMount, ref, TransitionGroup, watch } from 'vue';
 import KeybindingSave from '@/components/profile/KeybindingSave.vue';
 import type { KeybindingDataSave } from '@/types/keybindingSaveTypes';
+import KeybindingSaveProfileDialog from '../modals/keybindingSaveProfile/keybindingSaveProfileDialog.vue';
+import { useEditSaveDialog } from '@/composables/useKeybindingProfileEditDialog';
 
 //search and filter values
 const searchValues = ref('')
@@ -97,6 +99,16 @@ onBeforeMount(() => {
 })
 
 
+// ========== edit save dialog =====================
+const {showDialog} = useEditSaveDialog()
+const currentDialogData = ref<KeybindingDataSave | null>(null)
+
+const showEditSaveDialog = (currentData: KeybindingDataSave) => {
+    currentDialogData.value = currentData
+    showDialog()
+}
+
+
 </script>
 
 <template>
@@ -184,12 +196,14 @@ onBeforeMount(() => {
                 class="saves-container"
                 appear
             >
+                <KeybindingSaveProfileDialog :keybiding-data="currentDialogData"/>
                 <KeybindingSave 
                     v-for="(bindingSave, index) in displayData" 
                     :key="bindingSave._id"
                     :keybinding="bindingSave"
                     :style="{animationDelay: `${index * 30}ms`}"
                     class="save-item"
+                    @click="showEditSaveDialog(bindingSave)"
                 />
             </TransitionGroup>
             
