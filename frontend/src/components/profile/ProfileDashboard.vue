@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia';
 import { onBeforeMount, ref, TransitionGroup, watch } from 'vue';
 import KeybindingSave from '@/components/profile/KeybindingSave.vue';
 import type { KeybindingDataSave } from '@/types/keybindingSaveTypes';
-import KeybindingSaveProfileDialog from '../modals/keybindingSaveProfile/keybindingSaveProfileDialog.vue';
+import KeybindingSaveProfileDialog from '@/components/modals/keybindingSaveProfile/KeybindingSaveProfileDialog.vue';
 import { useEditSaveDialog } from '@/composables/useKeybindingProfileEditDialog';
 
 //search and filter values

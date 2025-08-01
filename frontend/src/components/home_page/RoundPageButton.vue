@@ -4,6 +4,7 @@ interface Props {
     numberDisplay: number | string,
     enabled: boolean
     icon?: string
+    mode?: 'read' | 'edit'
 }
 
 const props = defineProps<Props>()
@@ -15,7 +16,7 @@ const props = defineProps<Props>()
         :label="props.numberDisplay.toString()"
         rounded
         severity="secondary"
-        :class="['page-button',{ disabled: enabled === false }]"
+        :class="['page-button',{ disabled: enabled === false, readOnly: mode === 'read' }]"
     />
 
 </template>
@@ -44,6 +45,12 @@ const props = defineProps<Props>()
     box-shadow: 0 0 20px var(--green-vivid-shadow);
     color: var(--primary-0);
     border: 2px solid var(--green-bright);
+}
+
+.page-button.readOnly.active{
+    background-color: var(--blue-sky-dark);
+    border-color: var(--blue-sky-bright);
+    box-shadow: 0 0 20px rgba(84, 158, 218, 0.226);
 }
 
 .page-button.disabled{

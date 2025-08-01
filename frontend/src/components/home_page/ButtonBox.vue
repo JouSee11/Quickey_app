@@ -9,10 +9,13 @@ interface Props {
     buttonId: number,
     text: string,
     state: ButtonState,
-    activeContextMenu: number | null
+    activeContextMenu: number | null,
+    mode?: 'edit' | 'read'
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+    mode: 'edit'
+})
 
 const emit = defineEmits<{
     bindButton: [buttonId: number]
@@ -43,6 +46,7 @@ const openContextMenu = (event: MouseEvent) => {
             listening: props.state === 'listening' || props.activeContextMenu === props.buttonId,
             binded: props.state === 'binded',
             multi: props.state === 'multiBinding',
+            readOnly: props.mode === 'read'
             }
         ]"
         :id="`key-${props.buttonId}`"
@@ -52,7 +56,7 @@ const openContextMenu = (event: MouseEvent) => {
         @click="bindButtonClick" 
         @contextmenu="openContextMenu"
     >
-        <Icon v-if="props.state === 'notBinded'" icon="mdi:keyboard-caps" class="icon" />
+        <Icon v-if="props.state === 'notBinded' && props.mode === 'edit'" icon="mdi:keyboard-caps" class="icon" />
         <Icon v-if="props.state === 'multiBinding'" icon="material-symbols:layers-rounded" class="icon"/>
         <Icon v-if="props.state === 'listening'" icon="tabler:click" class="icon"/>
         
@@ -100,9 +104,22 @@ const openContextMenu = (event: MouseEvent) => {
     cursor: default;
 }
 
+/* readonly mode */
+.button-bind.readOnly{
+    cursor: default;
+    box-shadow: none;
+    border: var(--primary-600) 1px solid;
+}
+
+.button-bind.readOnly.binded{
+    background-color: var(--blue-sky-bright);
+}
+.button-bind.readOnly.multi{
+    background-color: var(--blue-sky-dark);
+}
 
 .button-bind.listening{
-    background-color: rgba(80, 163, 205, 0.644);
+    background-color: var(--blue-sky-bright);
     box-shadow: 0 0 30px rgba(44, 153, 207, 0.322);
 }
 
