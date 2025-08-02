@@ -73,5 +73,5 @@ export const useMulitBindingImport = () => {
         store.actionsBinded.push(importedAction)
     }
 
-    return {importExistingValues}
+    return {importExistingValues, findActionDefinition}
 }

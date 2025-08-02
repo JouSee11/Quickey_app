@@ -271,9 +271,11 @@ const knobDialogStore = useKnobDialogStore()
 
 #buttons-container{
     display: grid;
-    min-height: 510px;
+    height: 510px;
+    width: 510px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    position: relative;
 }
 
 /* pages switch */
